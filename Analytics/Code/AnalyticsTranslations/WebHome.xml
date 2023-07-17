@@ -1,0 +1,92 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<xwikidoc version="1.4" reference="Analytics.Code.AnalyticsTranslations.WebHome" locale="">
+  <web>Analytics.Code.AnalyticsTranslations</web>
+  <name>WebHome</name>
+  <language/>
+  <defaultLanguage>en</defaultLanguage>
+  <translation>0</translation>
+  <creator>XWiki.Admin</creator>
+  <creationDate>1689582316000</creationDate>
+  <parent>Analytics.Code.WebHome</parent>
+  <author>XWiki.Admin</author>
+  <contentAuthor>XWiki.Admin</contentAuthor>
+  <date>1689591503000</date>
+  <contentUpdateDate>1689591503000</contentUpdateDate>
+  <version>9.3</version>
+  <title>AnalyticsTranslations</title>
+  <comment/>
+  <minorEdit>true</minorEdit>
+  <syntaxId>xwiki/2.1</syntaxId>
+  <hidden>false</hidden>
+  <content># Class fields
+Analytics.Code.AnalyticsDashboardClass_start=Start Interval
+
+Analytics.Code.AnalyticsDashboardClass_end=End Interval
+
+Analytics.Code.AnalyticsDashboardClass_content=
+
+Analytics.Code.AnalyticsDashboardClass_description=Description
+
+Analytics.Code.AnalyticsDashboardClass_listOfWidgets=List of Available Widgets
+
+# Live table generic keys
+analytics.livetable.doc.title=Page Title
+analytics.livetable.doc.name=Page Name
+analytics.livetable.doc.space=Space
+analytics.livetable.doc.fullname=Page full name
+analytics.livetable.doc.location=Location
+analytics.livetable.doc.author=Last Author
+analytics.livetable.doc.creator=Creator
+analytics.livetable.doc.date=Date
+analytics.livetable.doc.creationDate=Creation Date
+analytics.livetable._avatar=Avatar
+analytics.livetable._images=Images
+analytics.livetable._attachments=Attachments
+analytics.livetable._actions=Actions
+analytics.livetable._actions.edit=Edit
+analytics.livetable._actions.delete=Delete
+analytics.livetable.emptyvalue=-
+
+
+# Live table specific keys
+analytics.livetable.TimeInterval = Time Interval
+analytics.livetable.start = Start Interval
+analytics.livetable.end = End Interval</content>
+  <object>
+    <name>Analytics.Code.AnalyticsTranslations.WebHome</name>
+    <number>0</number>
+    <className>XWiki.TranslationDocumentClass</className>
+    <guid>a8bf8377-6d46-4f84-bd57-bb4aa619259c</guid>
+    <class>
+      <name>XWiki.TranslationDocumentClass</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <scope>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <freeText>forbidden</freeText>
+        <largeStorage>0</largeStorage>
+        <multiSelect>0</multiSelect>
+        <name>scope</name>
+        <number>1</number>
+        <prettyName>Scope</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators>|, </separators>
+        <size>1</size>
+        <unmodifiable>0</unmodifiable>
+        <values>GLOBAL|WIKI|USER|ON_DEMAND</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </scope>
+    </class>
+    <property>
+      <scope>WIKI</scope>
+    </property>
+  </object>
+</xwikidoc>

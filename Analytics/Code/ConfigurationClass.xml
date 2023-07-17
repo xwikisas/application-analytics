@@ -1,0 +1,49 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<xwikidoc version="1.4" reference="Analytics.Code.ConfigurationClass" locale="">
+  <web>Analytics.Code</web>
+  <name>ConfigurationClass</name>
+  <language/>
+  <defaultLanguage>en</defaultLanguage>
+  <translation>0</translation>
+  <creator>XWiki.Admin</creator>
+  <creationDate>1689595634000</creationDate>
+  <parent>WebHome</parent>
+  <author>XWiki.Admin</author>
+  <contentAuthor>XWiki.Admin</contentAuthor>
+  <date>1689595756000</date>
+  <contentUpdateDate>1689595634000</contentUpdateDate>
+  <version>1.6</version>
+  <title>ConfigurationClass</title>
+  <comment>Update document after refactoring.</comment>
+  <minorEdit>true</minorEdit>
+  <syntaxId>xwiki/2.1</syntaxId>
+  <hidden>false</hidden>
+  <content/>
+  <class>
+    <name>Analytics.Code.ConfigurationClass</name>
+    <customClass/>
+    <customMapping/>
+    <defaultViewSheet/>
+    <defaultEditSheet/>
+    <defaultWeb/>
+    <nameField/>
+    <validationScript/>
+    <trackerCode>
+      <contenttype>---</contenttype>
+      <customDisplay/>
+      <disabled>0</disabled>
+      <editor>---</editor>
+      <hint/>
+      <name>trackerCode</name>
+      <number>1</number>
+      <picker>1</picker>
+      <prettyName>trackerCode</prettyName>
+      <rows>5</rows>
+      <size>40</size>
+      <unmodifiable>0</unmodifiable>
+      <validationMessage/>
+      <validationRegExp/>
+      <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+    </trackerCode>
+  </class>
+</xwikidoc>
