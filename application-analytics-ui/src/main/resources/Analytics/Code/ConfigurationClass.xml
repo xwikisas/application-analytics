@@ -10,11 +10,11 @@
   <parent>WebHome</parent>
   <author>XWiki.Admin</author>
   <contentAuthor>XWiki.Admin</contentAuthor>
-  <date>1689595756000</date>
+  <date>1689661649000</date>
   <contentUpdateDate>1689595634000</contentUpdateDate>
-  <version>1.6</version>
+  <version>1.10</version>
   <title>ConfigurationClass</title>
-  <comment>Update document after refactoring.</comment>
+  <comment>Updated class property</comment>
   <minorEdit>true</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>false</hidden>
@@ -28,11 +28,25 @@
     <defaultWeb/>
     <nameField/>
     <validationScript/>
-    <trackerCode>
-      <contenttype>---</contenttype>
+    <authToken>
       <customDisplay/>
       <disabled>0</disabled>
-      <editor>---</editor>
+      <hint/>
+      <name>authToken</name>
+      <number>2</number>
+      <picker>1</picker>
+      <prettyName>authToken</prettyName>
+      <size>30</size>
+      <unmodifiable>0</unmodifiable>
+      <validationMessage/>
+      <validationRegExp/>
+      <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+    </authToken>
+    <trackerCode>
+      <contenttype>PureText</contenttype>
+      <customDisplay/>
+      <disabled>0</disabled>
+      <editor>PureText</editor>
       <hint/>
       <name>trackerCode</name>
       <number>1</number>

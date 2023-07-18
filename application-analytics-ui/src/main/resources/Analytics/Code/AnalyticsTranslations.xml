@@ -1,20 +1,20 @@
 <?xml version='1.1' encoding='UTF-8'?>
-<xwikidoc version="1.4" reference="Analytics.Code.AnalyticsTranslations.WebHome" locale="">
-  <web>Analytics.Code.AnalyticsTranslations</web>
-  <name>WebHome</name>
+<xwikidoc version="1.4" reference="Analytics.Code.AnalyticsTranslations" locale="">
+  <web>Analytics.Code</web>
+  <name>AnalyticsTranslations</name>
   <language/>
   <defaultLanguage>en</defaultLanguage>
   <translation>0</translation>
   <creator>XWiki.Admin</creator>
   <creationDate>1689582316000</creationDate>
-  <parent>Analytics.Code.WebHome</parent>
+  <parent>WebHome</parent>
   <author>XWiki.Admin</author>
   <contentAuthor>XWiki.Admin</contentAuthor>
-  <date>1689591503000</date>
+  <date>1689665108000</date>
   <contentUpdateDate>1689591503000</contentUpdateDate>
-  <version>9.3</version>
+  <version>9.4</version>
   <title>AnalyticsTranslations</title>
-  <comment/>
+  <comment>Update document after refactoring.</comment>
   <minorEdit>true</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>false</hidden>
@@ -53,7 +53,7 @@ analytics.livetable.TimeInterval = Time Interval
 analytics.livetable.start = Start Interval
 analytics.livetable.end = End Interval</content>
   <object>
-    <name>Analytics.Code.AnalyticsTranslations.WebHome</name>
+    <name>Analytics.Code.AnalyticsTranslations</name>
     <number>0</number>
     <className>XWiki.TranslationDocumentClass</className>
     <guid>a8bf8377-6d46-4f84-bd57-bb4aa619259c</guid>
