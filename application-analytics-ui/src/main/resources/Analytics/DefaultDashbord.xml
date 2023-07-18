@@ -58,7 +58,7 @@
         <disabled>0</disabled>
         <displayType>radio</displayType>
         <freeText/>
-        <hint/>
+        <hint>List of available widgets.</hint>
         <largeStorage>0</largeStorage>
         <multiSelect>1</multiSelect>
         <name>ListOfWidgets</name>
@@ -81,7 +81,7 @@
         <customDisplay/>
         <disabled>0</disabled>
         <editor>---</editor>
-        <hint/>
+        <hint>Description of the dashbord.</hint>
         <name>description</name>
         <number>3</number>
         <picker>1</picker>
@@ -93,13 +93,13 @@
         <validationRegExp/>
         <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
       </description>
-      <end>
+      <endDate>
         <customDisplay/>
         <dateFormat>dd/MM/yyyy</dateFormat>
         <disabled>0</disabled>
         <emptyIsToday>0</emptyIsToday>
-        <hint/>
-        <name>end</name>
+        <hint>Enter the date that marks the end point for calculating statistics.</hint>
+        <name>endDate</name>
         <number>2</number>
         <picker>1</picker>
         <prettyName>End Date</prettyName>
@@ -108,14 +108,14 @@
         <validationMessage/>
         <validationRegExp/>
         <classType>com.xpn.xwiki.objects.classes.DateClass</classType>
-      </end>
-      <start>
+      </endDate>
+      <startDate>
         <customDisplay/>
         <dateFormat>dd/MM/yyyy</dateFormat>
         <disabled>0</disabled>
         <emptyIsToday>0</emptyIsToday>
-        <hint/>
-        <name>start</name>
+        <hint>Specify the starting date from which you want the statistics to be calculated.</hint>
+        <name>startDate</name>
         <number>1</number>
         <picker>1</picker>
         <prettyName>Start Date</prettyName>
@@ -124,7 +124,7 @@
         <validationMessage/>
         <validationRegExp/>
         <classType>com.xpn.xwiki.objects.classes.DateClass</classType>
-      </start>
+      </startDate>
     </class>
     <property>
       <ListOfWidgets>
@@ -138,10 +138,10 @@
       <description>This is a default dashbord.</description>
     </property>
     <property>
-      <end>2023-07-17 00:00:00.0</end>
+      <endDate/>
     </property>
     <property>
-      <start>2023-07-17 00:00:00.0</start>
+      <startDate/>
     </property>
   </object>
 </xwikidoc>

@@ -37,40 +37,24 @@
   <syntaxId>plain/1.0</syntaxId>
   <hidden>true</hidden>
   <content># Class fields
-Analytics.Code.AnalyticsDashboardClass_start=Start Interval
-Analytics.Code.AnalyticsDashboardClass_end=End Interval
+Analytics.Code.AnalyticsDashboardClass_startDate=Start Date
+Analytics.Code.AnalyticsDashboardClass_endDate=End Date
 Analytics.Code.AnalyticsDashboardClass_description=Description
 Analytics.Code.AnalyticsDashboardClass_listOfWidgets=List of Available Widgets
 
-#
 
+
+# Live table keys
+analytics.livetable.doc.title=Page Title
+analytics.livetable.startDate = Start Date
+analytics.livetable.endDate = End Date
+analytics.livetable.doc.name=Page Name
+
+# Others
 analytics.extension.name=Analytics Application (Pro)
 
 
-# Live table generic keys
-analytics.livetable.doc.title=Page Title
-analytics.livetable.doc.name=Page Name
-analytics.livetable.doc.space=Space
-analytics.livetable.doc.fullname=Page full name
-analytics.livetable.doc.location=Location
-analytics.livetable.doc.author=Last Author
-analytics.livetable.doc.creator=Creator
-analytics.livetable.doc.date=Date
-analytics.livetable.doc.creationDate=Creation Date
-analytics.livetable._avatar=Avatar
-analytics.livetable._images=Images
-analytics.livetable._attachments=Attachments
-analytics.livetable._actions=Actions
-analytics.livetable._actions.edit=Edit
-analytics.livetable._actions.delete=Delete
-analytics.livetable.emptyvalue=-
-
-
-
-# Live table specific keys
-analytics.livetable.TimeInterval = Time Interval
-analytics.livetable.start = Start Interval
-analytics.livetable.end = End Interval</content>
+</content>
   <object>
     <name>Analytics.Code.AnalyticsTranslations</name>
     <number>0</number>

@@ -41,8 +41,8 @@
 #macro(analyticsLiveTable)
   #set ($columnsProperties = {
     'doc.title': {"link":"view"},
-    'start': {"html":true},
-    'end': {"html":true}
+    'startDate': {"html":true},
+    'endDate': {"html":true}
   })
   #set ($options = {
     'className': 'Analytics.Code.AnalyticsDashboardClass',
@@ -53,7 +53,7 @@
     'selectedColumn': 'doc.title',
     'defaultOrder': 'asc'
   })
-  #set ($columns = ['doc.title', 'start', 'end'])
+  #set ($columns = ['doc.title', 'startDate', 'endDate'])
   #livetable('analytics' $columns $columnsProperties $options)
 #end
 {{/velocity}}
@@ -62,7 +62,7 @@
     $services.model.createDocumentReference('', ['Analytics', 'Code'], 'AnalyticsDashboardClass')))
   #analyticsLiveTable()
 #else
-    {{error}}#getMissingLicenseMessage('analytics.extension.name'){{/error}}
+  {{error}}#getMissingLicenseMessage('analytics.extension.name'){{/error}}
 #end
 {{/velocity}}</content>
   <object>

@@ -91,7 +91,7 @@
     $services.model.createDocumentReference('', ['Analytics', 'Code'], 'AnalyticsDashboardClass')))
   #analyticsDashboardSheet()
 #else
-    {{error}}#getMissingLicenseMessage('analytics.extension.name'){{/error}}
+  {{error}}#getMissingLicenseMessage('analytics.extension.name'){{/error}}
 #end
 {{/velocity}}</content>
 </xwikidoc>
