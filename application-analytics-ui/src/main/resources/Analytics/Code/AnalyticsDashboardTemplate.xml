@@ -51,31 +51,6 @@
       <defaultWeb/>
       <nameField/>
       <validationScript/>
-      <ListOfWidgets>
-        <cache>0</cache>
-        <customDisplay/>
-        <defaultValue/>
-        <disabled>0</disabled>
-        <displayType>radio</displayType>
-        <freeText/>
-        <hint>List of available widgets.</hint>
-        <largeStorage>0</largeStorage>
-        <multiSelect>1</multiSelect>
-        <name>ListOfWidgets</name>
-        <number>4</number>
-        <picker>1</picker>
-        <prettyName>listOfWidgets</prettyName>
-        <relationalStorage>0</relationalStorage>
-        <separator> </separator>
-        <separators> ,|</separators>
-        <size>1</size>
-        <sort/>
-        <unmodifiable>0</unmodifiable>
-        <validationMessage/>
-        <validationRegExp/>
-        <values>Random | Words | For | Now</values>
-        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
-      </ListOfWidgets>
       <description>
         <contenttype>---</contenttype>
         <customDisplay/>
@@ -93,6 +68,31 @@
         <validationRegExp/>
         <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
       </description>
+      <displayedStatistics>
+        <cache>0</cache>
+        <customDisplay/>
+        <defaultValue/>
+        <disabled>0</disabled>
+        <displayType>radio</displayType>
+        <freeText/>
+        <hint>You should selected the widgets that you want to display.</hint>
+        <largeStorage>0</largeStorage>
+        <multiSelect>1</multiSelect>
+        <name>displayedStatistics</name>
+        <number>4</number>
+        <picker>1</picker>
+        <prettyName>Displayed Statistics</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators> ,|</separators>
+        <size>1</size>
+        <sort/>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <values>Random | Words | For | Now</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </displayedStatistics>
       <endDate>
         <customDisplay/>
         <dateFormat>dd/MM/yyyy</dateFormat>
@@ -127,10 +127,10 @@
       </startDate>
     </class>
     <property>
-      <ListOfWidgets/>
+      <description/>
     </property>
     <property>
-      <description/>
+      <displayedStatistics/>
     </property>
     <property>
       <endDate/>

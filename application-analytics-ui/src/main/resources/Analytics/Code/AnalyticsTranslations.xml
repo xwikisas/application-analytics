@@ -40,7 +40,7 @@
 Analytics.Code.AnalyticsDashboardClass_startDate=Start Date
 Analytics.Code.AnalyticsDashboardClass_endDate=End Date
 Analytics.Code.AnalyticsDashboardClass_description=Description
-Analytics.Code.AnalyticsDashboardClass_listOfWidgets=List of Available Widgets
+Analytics.Code.AnalyticsDashboardClass_displayedStatistics=Displayed Statistics
 
 
 
@@ -49,6 +49,7 @@ analytics.livetable.doc.title=Page Title
 analytics.livetable.startDate = Start Date
 analytics.livetable.endDate = End Date
 analytics.livetable.doc.name=Page Name
+analytics.livetable.emptyvalue=Missing Value
 
 # Others
 analytics.extension.name=Analytics Application (Pro)
