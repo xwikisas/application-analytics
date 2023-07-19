@@ -47,18 +47,20 @@
     <nameField/>
     <validationScript/>
     <authToken>
+      <algorithm/>
       <customDisplay/>
       <disabled>0</disabled>
       <hint/>
       <name>authToken</name>
-      <number>2</number>
+      <number>3</number>
       <picker>1</picker>
       <prettyName>Authentication Token </prettyName>
       <size>30</size>
+      <storageType>Hash</storageType>
       <unmodifiable>0</unmodifiable>
       <validationMessage/>
       <validationRegExp/>
-      <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      <classType>com.xpn.xwiki.objects.classes.PasswordClass</classType>
     </authToken>
     <idSite>
       <customDisplay/>

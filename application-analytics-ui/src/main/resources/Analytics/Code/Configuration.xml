@@ -52,18 +52,20 @@
       <nameField/>
       <validationScript/>
       <authToken>
+        <algorithm/>
         <customDisplay/>
         <disabled>0</disabled>
         <hint/>
         <name>authToken</name>
-        <number>2</number>
+        <number>3</number>
         <picker>1</picker>
         <prettyName>Authentication Token </prettyName>
         <size>30</size>
+        <storageType>Hash</storageType>
         <unmodifiable>0</unmodifiable>
         <validationMessage/>
         <validationRegExp/>
-        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+        <classType>com.xpn.xwiki.objects.classes.PasswordClass</classType>
       </authToken>
       <idSite>
         <customDisplay/>
@@ -98,13 +100,27 @@
       </trackerCode>
     </class>
     <property>
-      <authToken></authToken>
+      <authToken>DSFSDFFDSFSD</authToken>
     </property>
     <property>
       <idSite/>
     </property>
     <property>
-      <trackerCode>
+      <trackerCode>&lt;!-- Matomo --&gt;
+&lt;script&gt;
+  var _paq = window._paq = window._paq || [];
+  /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="http://130.61.233.19/matomo/";
+    _paq.push(['setTrackerUrl', u+'matomo.php']);
+    _paq.push(['setSiteId', '3']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+  })();
+&lt;/script&gt;
+&lt;!-- End Matomo Code --&gt;
 </trackerCode>
     </property>
   </object>
@@ -361,157 +377,10 @@
       <propertiesToShow/>
     </property>
     <property>
-      <scope>WIKI+ALL_SPACES</scope>
+      <scope>WIKI</scope>
     </property>
     <property>
       <sectionOrder/>
-    </property>
-  </object>
-  <object>
-    <name>Analytics.Code.Configuration</name>
-    <number>0</number>
-    <className>XWiki.UIExtensionClass</className>
-    <guid>879e93f4-6b8e-4817-a7d1-e877887a95e9</guid>
-    <class>
-      <name>XWiki.UIExtensionClass</name>
-      <customClass/>
-      <customMapping/>
-      <defaultViewSheet/>
-      <defaultEditSheet/>
-      <defaultWeb/>
-      <nameField/>
-      <validationScript/>
-      <async_cached>
-        <defaultValue>0</defaultValue>
-        <disabled>0</disabled>
-        <displayFormType>select</displayFormType>
-        <displayType/>
-        <name>async_cached</name>
-        <number>3</number>
-        <prettyName>Cached</prettyName>
-        <unmodifiable>0</unmodifiable>
-        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
-      </async_cached>
-      <async_context>
-        <cache>0</cache>
-        <disabled>0</disabled>
-        <displayType>select</displayType>
-        <freeText>forbidden</freeText>
-        <largeStorage>0</largeStorage>
-        <multiSelect>1</multiSelect>
-        <name>async_context</name>
-        <number>4</number>
-        <prettyName>Context elements</prettyName>
-        <relationalStorage>0</relationalStorage>
-        <separator>, </separator>
-        <separators>|, </separators>
-        <size>5</size>
-        <unmodifiable>0</unmodifiable>
-        <values>action=Action|doc.reference=Document|icon.theme=Icon theme|locale=Language|rendering.defaultsyntax=Default syntax|rendering.restricted=Restricted|rendering.targetsyntax=Target syntax|request.base=Request base URL|request.parameters=Request parameters|request.url=Request URL|request.wiki=Request wiki|user=User|wiki=Wiki</values>
-        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
-      </async_context>
-      <async_enabled>
-        <defaultValue>0</defaultValue>
-        <disabled>0</disabled>
-        <displayFormType>select</displayFormType>
-        <displayType/>
-        <name>async_enabled</name>
-        <number>2</number>
-        <prettyName>Asynchronous rendering</prettyName>
-        <unmodifiable>0</unmodifiable>
-        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
-      </async_enabled>
-      <content>
-        <disabled>0</disabled>
-        <editor>Text</editor>
-        <name>content</name>
-        <number>1</number>
-        <prettyName>Executed Content</prettyName>
-        <rows>25</rows>
-        <size>120</size>
-        <unmodifiable>0</unmodifiable>
-        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
-      </content>
-      <extensionPointId>
-        <disabled>0</disabled>
-        <name>extensionPointId</name>
-        <number>5</number>
-        <prettyName>Extension Point ID</prettyName>
-        <size>30</size>
-        <unmodifiable>0</unmodifiable>
-        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-      </extensionPointId>
-      <name>
-        <disabled>0</disabled>
-        <name>name</name>
-        <number>6</number>
-        <prettyName>Extension ID</prettyName>
-        <size>30</size>
-        <unmodifiable>0</unmodifiable>
-        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-      </name>
-      <parameters>
-        <contenttype>PureText</contenttype>
-        <disabled>0</disabled>
-        <editor>PureText</editor>
-        <name>parameters</name>
-        <number>7</number>
-        <prettyName>Extension Parameters</prettyName>
-        <rows>10</rows>
-        <size>40</size>
-        <unmodifiable>0</unmodifiable>
-        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
-      </parameters>
-      <scope>
-        <cache>0</cache>
-        <disabled>0</disabled>
-        <displayType>select</displayType>
-        <freeText>forbidden</freeText>
-        <largeStorage>0</largeStorage>
-        <multiSelect>0</multiSelect>
-        <name>scope</name>
-        <number>8</number>
-        <prettyName>Extension Scope</prettyName>
-        <relationalStorage>0</relationalStorage>
-        <separator> </separator>
-        <separators>|, </separators>
-        <size>1</size>
-        <unmodifiable>0</unmodifiable>
-        <values>wiki=Current Wiki|user=Current User|global=Global</values>
-        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
-      </scope>
-    </class>
-    <property>
-      <async_cached>0</async_cached>
-    </property>
-    <property>
-      <async_context/>
-    </property>
-    <property>
-      <async_enabled>0</async_enabled>
-    </property>
-    <property>
-      <content>{{velocity}}
-#set($myAge = 21)
-#set($object =  $xwiki.getDocument("Analytics.Code.Configuration").getObject('Analytics.Code.ConfigurationClass'))
-#set($value = $object.getProperty("trackerCode").value)
-{{html clean="false"}}
-$value
-{{/html}}
-{{/velocity}}
-</content>
-    </property>
-    <property>
-      <extensionPointId>org.xwiki.platform.html.head</extensionPointId>
-    </property>
-    <property>
-      <name>analytics.trackercode</name>
-    </property>
-    <property>
-      <parameters/>
-    </property>
-    <property>
-      <scope>wiki</scope>
     </property>
   </object>
 </xwikidoc>
