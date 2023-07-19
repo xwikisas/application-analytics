@@ -41,7 +41,6 @@
 #macro(analyticsDashboardSheet)
   ## You can modify this page to customize the presentation of your object.
   ## At first you should keep the default presentation and just save the document.
-
   ## We have to use wiki=true because $doc.display() can produce wiki syntax.
   {{html wiki="true" clean="false"}}
   ## Load the JavaScript code required to make the object properties editable in-place.

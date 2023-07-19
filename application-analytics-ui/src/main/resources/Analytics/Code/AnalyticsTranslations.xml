@@ -40,7 +40,11 @@
 Analytics.Code.AnalyticsDashboardClass_startDate=Start Date
 Analytics.Code.AnalyticsDashboardClass_endDate=End Date
 Analytics.Code.AnalyticsDashboardClass_description=Description
-Analytics.Code.AnalyticsDashboardClass_displayedStatistics=Displayed Statistics
+Analytics.Code.AnalyticsDashboardClass_displayedStatistics=displayed Statistics
+Analytics.Code.AnalyticsDashboardClass_startDate.hint=Start time of the date interval used on all statistics of this dashboard.
+Analytics.Code.AnalyticsDashboardClass_endDate.hint=End time of the date interval used on all statistics of this dashboard.
+Analytics.Code.AnalyticsDashboardClass_description.hint=Additional information to be displayed.
+Analytics.Code.AnalyticsDashboardClass_displayedStatistics.hint=List of statistics widgets that will be displayed in the current dashboard, in order.
 
 
 
@@ -53,9 +57,7 @@ analytics.livetable.emptyvalue=Missing Value
 
 # Others
 analytics.extension.name=Analytics Application (Pro)
-
-
-</content>
+analytics.extension.title=Analytics</content>
   <object>
     <name>Analytics.Code.AnalyticsTranslations</name>
     <number>0</number>

@@ -57,6 +57,7 @@
   #livetable('analytics' $columns $columnsProperties $options)
 #end
 {{/velocity}}
+
 {{velocity}}
 #if ($services.licensing.licensor.hasLicensureForEntity(
     $services.model.createDocumentReference('', ['Analytics', 'Code'], 'AnalyticsDashboardClass')))
@@ -198,7 +199,7 @@
       <name>platform.panels.AnalyticsApplication</name>
     </property>
     <property>
-      <parameters>label=Analytics
+      <parameters>label=$services.localization.render('analytics.extension.title')
 target=Analytics.WebHome
 icon=icon:application</parameters>
     </property>
@@ -280,10 +281,10 @@ icon=icon:application</parameters>
       <allow>0</allow>
     </property>
     <property>
-      <groups>XWiki.XWikiAllGroup</groups>
+      <groups>XWiki.XWikiAllGroup,</groups>
     </property>
     <property>
-      <levels>view,comment,edit,script,delete</levels>
+      <levels>view,edit,delete,comment,script</levels>
     </property>
     <property>
       <users/>
@@ -363,10 +364,10 @@ icon=icon:application</parameters>
       <allow>1</allow>
     </property>
     <property>
-      <groups>XWiki.XWikiAdminGroup</groups>
+      <groups>XWiki.XWikiAdminGroup,</groups>
     </property>
     <property>
-      <levels>view,comment,edit,script,delete</levels>
+      <levels>view,edit,delete,comment,script</levels>
     </property>
     <property>
       <users/>

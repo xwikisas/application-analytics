@@ -197,7 +197,7 @@
       <groups>XWiki.XWikiAdminGroup</groups>
     </property>
     <property>
-      <levels>view,comment,edit,script,delete,admin</levels>
+      <levels>script,delete,admin</levels>
     </property>
     <property>
       <users/>
