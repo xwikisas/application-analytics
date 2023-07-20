@@ -76,6 +76,20 @@
       <validationRegExp/>
       <classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
     </idSite>
+    <requestAddress>
+      <customDisplay/>
+      <disabled>0</disabled>
+      <hint/>
+      <name>requestAddress</name>
+      <number>4</number>
+      <picker>1</picker>
+      <prettyName>requestAddress</prettyName>
+      <size>30</size>
+      <unmodifiable>0</unmodifiable>
+      <validationMessage/>
+      <validationRegExp/>
+      <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+    </requestAddress>
     <trackerCode>
       <contenttype>PureText</contenttype>
       <customDisplay/>
