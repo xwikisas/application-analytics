@@ -250,10 +250,10 @@
       <description/>
     </property>
     <property>
-      <icon>book</icon>
+      <icon>chart-bar</icon>
     </property>
     <property>
-      <name>Analytics Template</name>
+      <name>Analytics</name>
     </property>
     <property>
       <spaces/>

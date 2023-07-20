@@ -31,11 +31,11 @@
   <author>xwiki:XWiki.Admin</author>
   <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
   <version>1.1</version>
-  <title>DefaultDashbord</title>
+  <title>DefaultDashboard</title>
   <comment/>
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
-  <hidden>true</hidden>
+  <hidden>false</hidden>
   <content/>
   <object>
     <name>Analytics.DefaultDashbord</name>
@@ -127,7 +127,7 @@
       </startDate>
     </class>
     <property>
-      <description>This is a default dashbord.</description>
+      <description>This is a default dashboard</description>
     </property>
     <property>
       <displayedStatistics>

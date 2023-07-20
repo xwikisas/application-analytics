@@ -53,7 +53,7 @@ analytics.livetable.doc.title=Page Title
 analytics.livetable.startDate = Start Date
 analytics.livetable.endDate = End Date
 analytics.livetable.doc.name=Page Name
-analytics.livetable.emptyvalue=Missing Value
+analytics.livetable.emptyvalue=Not Defined
 
 # Others
 analytics.extension.name=Analytics Application (Pro)

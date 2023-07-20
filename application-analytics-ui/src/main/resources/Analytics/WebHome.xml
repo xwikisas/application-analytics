@@ -35,7 +35,7 @@
   <comment/>
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
-  <hidden>true</hidden>
+  <hidden>false</hidden>
   <content>{{include reference="Licenses.Code.VelocityMacros"/}}
 {{velocity}}
 #macro(analyticsLiveTable)
@@ -201,7 +201,7 @@
     <property>
       <parameters>label=$services.localization.render('analytics.extension.title')
 target=Analytics.WebHome
-icon=icon:application</parameters>
+icon=icon:chart-bar</parameters>
     </property>
     <property>
       <scope>wiki</scope>
