@@ -86,13 +86,11 @@
 {{/velocity}}
 
 {{velocity}}
-
 #if ($services.licensing.licensor.hasLicensureForEntity(
 $services.model.createDocumentReference('', ['Analytics', 'Code'], 'AnalyticsDashboardClass')))
   #analyticsDashboardSheet()
 #else
   {{error}}#getMissingLicenseMessage('analytics.extension.name'){{/error}}
 #end
-
 {{/velocity}}</content>
 </xwikidoc>

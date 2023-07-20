@@ -44,9 +44,7 @@ Analytics.Code.AnalyticsDashboardClass_displayedStatistics=displayed Statistics
 Analytics.Code.AnalyticsDashboardClass_startDate.hint=Start time of the date interval used on all statistics of this dashboard.
 Analytics.Code.AnalyticsDashboardClass_endDate.hint=End time of the date interval used on all statistics of this dashboard.
 Analytics.Code.AnalyticsDashboardClass_description.hint=Additional information to be displayed.
-Analytics.Code.AnalyticsDashboardClass_displayedStatistics.hint=List of statistics widgets that will be displayed in the current dashboard, in order.
-
-
+Analytics.Code.AnalyticsDashboardClass_DisplayedStatistics.hint=List of statistics widgets that will be displayed in the current dashboard, in order.
 
 # Live table keys
 analytics.livetable.doc.title=Page Title
