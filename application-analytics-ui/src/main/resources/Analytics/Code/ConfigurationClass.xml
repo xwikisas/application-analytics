@@ -76,6 +76,23 @@
       <validationRegExp/>
       <classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
     </idSite>
+    <matomoTrackingCode>
+      <contenttype>PureText</contenttype>
+      <customDisplay/>
+      <disabled>0</disabled>
+      <editor>PureText</editor>
+      <hint/>
+      <name>matomoTrackingCode</name>
+      <number>1</number>
+      <picker>1</picker>
+      <prettyName>Matomo Tracking Code</prettyName>
+      <rows>20</rows>
+      <size>40</size>
+      <unmodifiable>0</unmodifiable>
+      <validationMessage/>
+      <validationRegExp/>
+      <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+    </matomoTrackingCode>
     <requestAddress>
       <customDisplay/>
       <disabled>0</disabled>
@@ -90,22 +107,5 @@
       <validationRegExp/>
       <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
     </requestAddress>
-    <trackerCode>
-      <contenttype>PureText</contenttype>
-      <customDisplay/>
-      <disabled>0</disabled>
-      <editor>PureText</editor>
-      <hint/>
-      <name>trackerCode</name>
-      <number>1</number>
-      <picker>1</picker>
-      <prettyName>Tracker Code</prettyName>
-      <rows>20</rows>
-      <size>40</size>
-      <unmodifiable>0</unmodifiable>
-      <validationMessage/>
-      <validationRegExp/>
-      <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
-    </trackerCode>
   </class>
 </xwikidoc>

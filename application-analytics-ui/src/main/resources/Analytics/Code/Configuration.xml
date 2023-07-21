@@ -81,6 +81,23 @@
         <validationRegExp/>
         <classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
       </idSite>
+      <matomoTrackingCode>
+        <contenttype>PureText</contenttype>
+        <customDisplay/>
+        <disabled>0</disabled>
+        <editor>PureText</editor>
+        <hint/>
+        <name>matomoTrackingCode</name>
+        <number>1</number>
+        <picker>1</picker>
+        <prettyName>Matomo Tracking Code</prettyName>
+        <rows>20</rows>
+        <size>40</size>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </matomoTrackingCode>
       <requestAddress>
         <customDisplay/>
         <disabled>0</disabled>
@@ -95,35 +112,15 @@
         <validationRegExp/>
         <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
       </requestAddress>
-      <trackerCode>
-        <contenttype>PureText</contenttype>
-        <customDisplay/>
-        <disabled>0</disabled>
-        <editor>PureText</editor>
-        <hint/>
-        <name>trackerCode</name>
-        <number>1</number>
-        <picker>1</picker>
-        <prettyName>Tracker Code</prettyName>
-        <rows>20</rows>
-        <size>40</size>
-        <unmodifiable>0</unmodifiable>
-        <validationMessage/>
-        <validationRegExp/>
-        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
-      </trackerCode>
     </class>
     <property>
-      <authToken>DSFSDFFDSFSD</authToken>
+      <authToken>hash:SHA-512:d4ae17d9d401a0c762344c7ba8d280a10e11940b748c304e08ccc3dc7ee88ccc:58d56cfb7c46a994d2e4d9de69d14eed7f49252769217e8ed04b2a44413785ee7b3b3e9460af8b81edda1c6c39768596a0c04a465f013303b408929d28ee72d6</authToken>
     </property>
     <property>
       <idSite/>
     </property>
     <property>
-      <requestAddress/>
-    </property>
-    <property>
-      <trackerCode>&lt;!-- Matomo --&gt;
+      <matomoTrackingCode>&lt;!-- Matomo --&gt;
 &lt;script&gt;
   var _paq = window._paq = window._paq || [];
   /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
@@ -138,7 +135,10 @@
   })();
 &lt;/script&gt;
 &lt;!-- End Matomo Code --&gt;
-</trackerCode>
+</matomoTrackingCode>
+    </property>
+    <property>
+      <requestAddress/>
     </property>
   </object>
   <object>
@@ -379,7 +379,7 @@
       <displayInCategory/>
     </property>
     <property>
-      <displayInSection>Analytics Config</displayInSection>
+      <displayInSection>analytics.application</displayInSection>
     </property>
     <property>
       <heading/>

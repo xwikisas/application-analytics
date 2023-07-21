@@ -162,12 +162,12 @@
     </property>
     <property>
       <content>{{velocity}}
-#set($myAge = 21)
+
 #set($object =  $xwiki.getDocument("Analytics.Code.Configuration").getObject('Analytics.Code.ConfigurationClass'))
 #set($value = $object.getProperty("trackerCode").value)
 #if($value)
   {{html clean="false"}}
-  $value
+    $value
   {{/html}}
 #end
 {{/velocity}}

@@ -53,6 +53,11 @@ analytics.livetable.endDate = End Date
 analytics.livetable.doc.name=Page Name
 analytics.livetable.emptyvalue=Not Defined
 
+#Admin Section
+admin.analytics.application=Analytics
+
+
+
 # Others
 analytics.extension.name=Analytics Application (Pro)
 analytics.extension.title=Analytics</content>
