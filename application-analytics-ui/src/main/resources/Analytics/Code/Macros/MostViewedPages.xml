@@ -126,89 +126,88 @@
       <cache>long</cache>
     </property>
     <property>
-      <code>require(['jquery'], function($) {
+      <code>require(['jquery'], function ($) {
+  function getAttributes(element) {
+    return Array.from(element.attributes).reduce((acc, attribute) =&gt; {
+      acc[attribute.name] = attribute.value;
+      return acc;
+    }, {});
+  }
 
-    function getAttributes(element) {
-        return Array.from(element.attributes).reduce((acc, attribute) =&gt; {
-            acc[attribute.name] = attribute.value;
-            return acc;
-        }, {});
-    }
+  function constructUrl(attributes) {
+    return attributes.ip + 'index.php?module=API&amp;method=Actions.getPageTitles&amp;idSite=' + attributes.id + '&amp;period=range&amp;date=' + attributes.startdate.replaceAll('/', '-') + ',' + attributes.enddate.replaceAll('/', '-') + '&amp;format=json&amp;filter_sort_column=nb_hits&amp;filter_sort_order=desc&amp;token_auth=' + attributes.auth;
+  }
 
-    function constructUrl(attributes) {
-        return attributes.ip + 'index.php?module=API&amp;method=Actions.getPageTitles&amp;idSite=' + attributes.id + '&amp;period=range&amp;date=' + attributes.startdate.replaceAll('/', '-') + ',' + attributes.enddate.replaceAll('/', '-') + '&amp;format=json&amp;filter_sort_column=nb_hits&amp;filter_sort_order=desc&amp;token_auth=' + attributes.auth;
-    }
-
-    function createHeader(headersTranslations) {
-        let headerRow = document.createElement('tr');
-        headersTranslations.forEach(header =&gt; {
-            let headerCell = document.createElement('th');
-            headerCell.classList.add('xwiki-mostviewedpages-header');
-            headerCell.textContent = header;
-            headerRow.appendChild(headerCell);
-        });
-        return headerRow;
-    }
-
-    async function createTable(table, currentPage, pageSize, tableIndex, attributes) {
-        pageSize = parseInt(pageSize); // Convert pageSize to a number
-        let fragment = document.createDocumentFragment();
-        table.classList.add('xwiki-mostviewedpages-table');
-
-        let url = constructUrl(attributes);
-        let response = await fetch(url);
-        let data = await response.json();
-
-        let offset = (currentPage - 1) * pageSize;
-        let limit = offset + pageSize;
-        let currentPageData = data.slice(offset, limit);
-        let headers = ['label', 'nb_visits', 'nb_hits', 'sum_time_spent', 'entry_nb_visits', 'entry_nb_actions', 'bounce_rate', 'exit_rate'];
-        let headersTranslations = ['Page Title', 'Unique Vistators', 'Page Views', 'Time spent(s)', 'entry_nb_visits', 'No. of views that started on this page', 'Bounce Rate', 'Exit Rate'];
-
-        fragment.appendChild(createHeader(headersTranslations));
-
-        currentPageData.forEach((item, index) =&gt; {
-            let row = document.createElement('tr');
-            if (index % 2 === 0) {
-                row.classList.add('xwiki-mostviewedpages-evenRow');
-            }
-            headers.forEach(header =&gt; {
-                let cell = document.createElement('td');
-                cell.classList.add('xwiki-mostviewedpages-cell');
-                cell.textContent = item[header];
-                row.appendChild(cell);
-            });
-            fragment.appendChild(row);
-        });
-
-        let totalPages = Math.ceil(data.length / pageSize);
-        let pagination = document.createElement('div');
-        pagination.id = 'pagination' + tableIndex;
-        pagination.style.textAlign = 'left';
-        for (let i = 1; i &lt;= totalPages; i++) {
-            let pageLink = document.createElement('a');
-            pageLink.href = '#';
-            pageLink.textContent = i;
-            pageLink.style.margin = '0 10px';
-            pageLink.addEventListener('click', function(e) {
-                e.preventDefault();
-                createTable(table, i, pageSize, tableIndex, attributes);
-            });
-            pagination.appendChild(pageLink);
-        }
-        fragment.appendChild(pagination);
-
-        table.innerHTML = '';
-        table.appendChild(fragment);
-    }
-
-    $(function () {
-        let tables = document.querySelectorAll('.mostViewedPages');
-        tables.forEach((table, index) =&gt; {
-            let attributes = getAttributes(table);
-            createTable(table, 1, parseInt(attributes.rows), index, attributes);
-        });
+  function createHeader(headersTranslations) {
+    let headerRow = document.createElement('tr');
+    headersTranslations.forEach(header =&gt; {
+      let headerCell = document.createElement('th');
+      headerCell.classList.add('xwiki-mostviewedpages-header');
+      headerCell.textContent = header;
+      headerRow.appendChild(headerCell);
     });
+    return headerRow;
+  }
+
+  async function createTable(table, currentPage, pageSize, tableIndex, attributes) {
+    pageSize = parseInt(pageSize); // Convert pageSize to a number
+    let fragment = document.createDocumentFragment();
+    table.classList.add('xwiki-mostviewedpages-table');
+
+    let url = constructUrl(attributes);
+    let response = await fetch(url);
+    let data = await response.json();
+
+    let offset = (currentPage - 1) * pageSize;
+    let limit = offset + pageSize;
+    let currentPageData = data.slice(offset, limit);
+    let headers = ['label', 'nb_visits', 'nb_hits', 'sum_time_spent', 'entry_nb_visits', 'entry_nb_actions', 'bounce_rate', 'exit_rate'];
+    let headersTranslations = ['Page Title', 'Unique Vistators', 'Page Views', 'Time spent(s)', 'entry_nb_visits', 'No. of views that started on this page', 'Bounce Rate', 'Exit Rate'];
+
+    fragment.appendChild(createHeader(headersTranslations));
+
+    currentPageData.forEach((item, index) =&gt; {
+      let row = document.createElement('tr');
+      if (index % 2 === 0) {
+        row.classList.add('xwiki-mostviewedpages-evenRow');
+      }
+      headers.forEach(header =&gt; {
+        let cell = document.createElement('td');
+        cell.classList.add('xwiki-mostviewedpages-cell');
+        cell.textContent = item[header];
+        row.appendChild(cell);
+      });
+      fragment.appendChild(row);
+    });
+
+    let totalPages = Math.ceil(data.length / pageSize);
+    let pagination = document.createElement('div');
+    pagination.id = 'pagination' + tableIndex;
+    pagination.style.textAlign = 'left';
+    for (let i = 1; i &lt;= totalPages; i++) {
+      let pageLink = document.createElement('a');
+      pageLink.href = '#';
+      pageLink.textContent = i;
+      pageLink.style.margin = '0 10px';
+      pageLink.addEventListener('click', function (e) {
+        e.preventDefault();
+        createTable(table, i, pageSize, tableIndex, attributes);
+      });
+      pagination.appendChild(pageLink);
+    }
+    fragment.appendChild(pagination);
+
+    table.innerHTML = '';
+    table.appendChild(fragment);
+  }
+
+  $(function () {
+    let tables = document.querySelectorAll('.mostViewedPages');
+    tables.forEach((table, index) =&gt; {
+      let attributes = getAttributes(table);
+      createTable(table, 1, parseInt(attributes.rows), index, attributes);
+    });
+  });
 });
 </code>
     </property>
@@ -609,10 +608,9 @@
 #set ($endTime = $endTime.substring(0, $index))
 #end
 {{html}}
-&lt;div class="mostViewedPages" ip=$ip id=$idSite startDate=$startTime endDate=$endTime auth=$authToken rows = $rows&gt;
-&lt;div&gt;
+  &lt;div class="mostViewedPages" ip=$ip id=$idSite startDate=$startTime endDate=$endTime auth=$authToken rows = $rows&gt;
+  &lt;div&gt;
 {{/html}}
-
 {{/velocity}}
 </code>
     </property>
