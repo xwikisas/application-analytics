@@ -163,9 +163,9 @@
     <property>
       <content>{{velocity}}
 
-#set($object =  $xwiki.getDocument("Analytics.Code.Configuration").getObject('Analytics.Code.ConfigurationClass'))
-#set($value = $object.getProperty("trackerCode").value)
-#if($value)
+#set ($object =  $xwiki.getDocument("Analytics.Code.Configuration").getObject('Analytics.Code.ConfigurationClass'))
+#set ($value = $object.getProperty("trackerCode").value)
+#if ($value)
   {{html clean="false"}}
     $value
   {{/html}}
