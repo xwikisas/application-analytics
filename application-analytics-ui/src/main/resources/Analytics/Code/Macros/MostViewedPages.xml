@@ -37,8 +37,8 @@
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>true</hidden>
   <content>{{mostViewedPages numberOfRows="50" startDate="2023/07/01 13:37" endDate="2023/08/01 16:37"/}}
-    
-    {{mostViewedPages numberOfRows="5" startDate="2023/07/01 13:37" endDate="2023/07/14 16:37"/}}</content>
+
+{{mostViewedPages numberOfRows="5" startDate="2023/07/01 13:37" endDate="2023/07/14 16:37"/}}</content>
   <object>
     <name>Analytics.Code.Macros.MostViewedPages</name>
     <number>0</number>
@@ -127,84 +127,84 @@
     </property>
     <property>
       <code>require(['jquery'], function ($) {
-        function getAttributes(element) {
+    function getAttributes(element) {
         return Array.from(element.attributes).reduce((acc, attribute) =&gt; {
-        acc[attribute.name] = attribute.value;
-        return acc;
+            acc[attribute.name] = attribute.value;
+            return acc;
         }, {});
-        }
-        
-        function constructUrl(attributes) {
-        const paramString =  $.param({
-        module: 'API',
-        method: 'Actions.getPageTitles',
-        idSite: attributes.id,
-        period: 'range',
-        date: `${attributes.startdate.replaceAll('/', '-')},${attributes.enddate.replaceAll('/', '-')}`, //the data processing could be moved to velocity
-        format: 'json',
-        filter_sort_column: 'nb_hits',
-        filter_sort_order: 'desc',
-        token_auth: attributes.auth
+    }
+    function constructUrl(attributes) {
+        const paramString = $.param({
+            module: 'API',
+            method: 'Actions.getPageTitles',
+            idSite: attributes.id,
+            period: 'range',
+            date: `${attributes.startdate.replaceAll('/', '-')},${attributes.enddate.replaceAll('/', '-')}`, //the data processing could be moved to velocity
+            format: 'json',
+            filter_sort_column: 'nb_hits',
+            filter_sort_order: 'desc',
+            token_auth: attributes.auth
         });
-        return attributes.ip+'index.php?'+paramString;
-        }
-        
-        
-        function createHeader(headersTranslations) {
+        return attributes.ip + 'index.php?' + paramString;
+    }
+
+
+    function createHeader(headersTranslations) {
         let headerRow = document.createElement('tr');
         headersTranslations.forEach(header =&gt; {
-        let headerCell = document.createElement('th');
-        headerCell.classList.add('xwiki-mostviewedpages-header');
-        headerCell.textContent = header;
-        headerRow.appendChild(headerCell);
+            let headerCell = document.createElement('th');
+            headerCell.classList.add('xwiki-mostviewedpages-header');
+            headerCell.textContent = header;
+            headerRow.appendChild(headerCell);
         });
         return headerRow;
-        }
-        function createTable(table, attributes) {
+    }
+    function createTable(table, attributes) {
         let fragment = document.createDocumentFragment();
         table.classList.add('xwiki-mostviewedpages-table');
-        
+
         let url = constructUrl(attributes);
-        
+        console.log(url);
         $.getJSON(url)
-        .done(function(data) {
-        let headers = ['label', 'nb_visits', 'nb_hits', 'sum_time_spent', 'entry_nb_visits', 'entry_nb_actions', 'bounce_rate', 'exit_rate'];
-        let headersTranslations = ['Page Title', 'Unique Vistators', 'Page Views', 'Time spent(s)', 'entry_nb_visits', 'No. of views that started on this page', 'Bounce Rate', 'Exit Rate'];
-        
-        fragment.appendChild(createHeader(headersTranslations));
-        
-        data.forEach((item, index) =&gt; {
-        let row = document.createElement('tr');
-        if (index % 2 === 0) {
-        row.classList.add('xwiki-mostviewedpages-evenRow');
-        }
-        headers.forEach(header =&gt; {
-        let cell = document.createElement('td');
-        cell.classList.add('xwiki-mostviewedpages-cell');
-        cell.textContent = item[header];
-        row.appendChild(cell);
-        });
-        fragment.appendChild(row);
-        });
-        table.innerHTML = '';
-        table.appendChild(fragment);
-        })
-        .fail(function(jqxhr, textStatus, error) {
-        let err = textStatus + ", " + error;
-        console.log("Request Failed: " + err);
-        // Handle the error in a user-friendly way here.
-        });
-        }
-        
-        $(function () {
+            .done(function (data) {
+                let headers = ['label', 'nb_visits', 'nb_hits', 'sum_time_spent', 'entry_nb_visits', 'entry_nb_actions', 'bounce_rate', 'exit_rate'];
+                let headersTranslations = ['Page Title', 'Unique Vistators', 'Page Views', 'Time spent(s)', 'entry_nb_visits', 'No. of views that started on this page', 'Bounce Rate', 'Exit Rate'];
+
+                fragment.appendChild(createHeader(headersTranslations));
+
+                data.forEach((item, index) =&gt; {
+                    let row = document.createElement('tr');
+                    if (index % 2 === 0) {
+                        row.classList.add('xwiki-mostviewedpages-evenRow');
+                    }
+                    headers.forEach(header =&gt; {
+                        let cell = document.createElement('td');
+                        cell.classList.add('xwiki-mostviewedpages-cell');
+                        cell.textContent = item[header];
+                        row.appendChild(cell);
+                    });
+                    fragment.appendChild(row);
+                });
+                table.innerHTML = '';
+                table.appendChild(fragment);
+            })
+            .fail(function (jqxhr, textStatus, error) {
+                let err = textStatus + ", " + error;
+                console.log("Request Failed: " + err);
+                // Handle the error in a user-friendly way here.
+            });
+    }
+
+    $(function () {
         let tables = document.querySelectorAll('.mostViewedPages');
+        console.log(tables)
         tables.forEach((table, index) =&gt; {
-        let attributes = getAttributes(table);
-        createTable(table, attributes);
+            let attributes = getAttributes(table);
+            createTable(table, attributes);
         });
-        });
-        });
-      </code>
+    });
+});
+</code>
     </property>
     <property>
       <name/>
@@ -580,34 +580,35 @@
     </property>
     <property>
       <code>{{velocity}}
-        #set ($discard = $xwiki.jsx.use('Analytics.Code.Macros.MostViewedPages'))
-        #set ($object =  $xwiki.getDocument("Analytics.Code.Configuration").getObject('Analytics.Code.ConfigurationClass'))
-        #set ($ip = $object.getProperty("requestAddress").value)
-        #set ($idSite = $object.getProperty("idSite").value)
-        #set ($authToken = $object.getProperty("authToken").value)
-        #set ($dashbord =  $doc.getObject('Analytics.Code.AnalyticsDashboardClass'))
-        #if ($dashbord)
-        #set ( $startTime =  $dashbord.getProperty("startDate"))
-        #set ( $endTime =  $dashbord.getProperty("endDate"))
-        #else
-        #set ( $startTime = $xcontext.macro.params.startDate.toString() )
-        #set ( $endTime = $xcontext.macro.params.endDate.toString() )
-        #end
-        #set ($rows = $xcontext.macro.params.numberOfRows )
-        #set ($index =$startTime.indexOf(' '))
-        #if ($index != -1)
-        #set ($startTime = $startTime.substring(0, $index))
-        #end
-        #set ($index =$endTime.indexOf(' '))
-        #if ($index != -1)
-        #set ($endTime = $endTime.substring(0, $index))
-        #end
-        {{html}}
-        &lt;div class="mostViewedPages" ip=$ip id=$idSite startDate=$startTime endDate=$endTime auth=$authToken rows = $rows&gt;
-        &lt;div&gt;
-        {{/html}}
-        {{/velocity}}
-      </code>
+#set ($discard = $xwiki.jsx.use('Analytics.Code.Macros.MostViewedPages'))
+#set ($object =  $xwiki.getDocument("Analytics.Code.Configuration").getObject('Analytics.Code.ConfigurationClass'))
+#set ($ip = $object.getProperty("requestAddress").value)
+#set ($idSite = $object.getProperty("idSite").value)
+#set ($authToken = $object.getProperty("authToken").value)
+#set ($dashbord =  $doc.getObject('Analytics.Code.AnalyticsDashboardClass'))
+#if ($dashbord)
+  #set ( $startTime =  $dashbord.getProperty("startDate"))
+  #set ( $endTime =  $dashbord.getProperty("endDate"))
+#else
+  #set ( $startTime = $xcontext.macro.params.startDate.toString() )
+  #set ( $endTime = $xcontext.macro.params.endDate.toString() )
+#end
+#set ($rows = $xcontext.macro.params.numberOfRows )
+#set ($index =$startTime.indexOf(' '))
+#if ($index != -1)
+  #set ($startTime = $startTime.substring(0, $index))
+#end
+#set ($index =$endTime.indexOf(' '))
+#if ($index != -1)
+  #set ($endTime = $endTime.substring(0, $index))
+#end
+
+{{html}}
+  &lt;div class="mostViewedPages" ip=$ip id=$idSite startDate=$startTime endDate=$endTime auth=$authToken rows = $rows&gt;
+  &lt;div&gt;
+{{/html}}
+
+{{/velocity}}</code>
     </property>
     <property>
       <contentDescription/>
