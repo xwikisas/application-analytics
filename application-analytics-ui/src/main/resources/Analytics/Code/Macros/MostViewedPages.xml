@@ -127,7 +127,7 @@
     </property>
     <property>
       <code>define('mostViewedPagesTranslation', {
-  prefix: 'mostViewedPages.',
+  prefix: 'Analytics.Code.Macros.',
   keys: [
     "label",
     "nb_visits",
@@ -141,82 +141,82 @@
 });
 
 
-require(['jquery', 'xwiki-l10n!mostViewedPagesTranslation'], function ($,l10n) {
-    function getAttributes(element) {
-        return Array.from(element.attributes).reduce((acc, attribute) =&gt; {
-            acc[attribute.name] = attribute.value;
-            return acc;
-        }, {});
-    }
-    function constructUrl(attributes) {
-        const paramString = $.param({
-            module: 'API',
-            method: 'Actions.getPageTitles',
-            idSite: attributes.id,
-            period: 'range',
-            date: `${attributes.startdate.replaceAll('/', '-')},${attributes.enddate.replaceAll('/', '-')}`, //the data processing could be moved to velocity
-            format: 'json',
-            filter_sort_column: 'nb_hits',
-            filter_sort_order: 'desc',
-            token_auth: attributes.auth
-        });
-        return attributes.ip + 'index.php?' + paramString;
-    }
-
-
-    function createHeader(headersTranslations) {
-        let headerRow = document.createElement('tr');
-        headersTranslations.forEach(header =&gt; {
-            let headerCell = document.createElement('th');
-            headerCell.classList.add('xwiki-mostviewedpages-header');
-            headerCell.textContent = l10n[header];
-            headerRow.appendChild(headerCell);
-        });
-        return headerRow;
-    }
-    function createTable(table, attributes) {
-        let fragment = document.createDocumentFragment();
-        table.classList.add('xwiki-mostviewedpages-table');
-
-        let url = constructUrl(attributes);
-        console.log(url);
-        $.getJSON(url)
-            .done(function (data) {
-                let headers = ['label', 'nb_visits', 'nb_hits', 'sum_time_spent', 'entry_nb_visits', 'entry_nb_actions', 'bounce_rate', 'exit_rate'];
-
-                fragment.appendChild(createHeader(headers));
-
-                data.forEach((item, index) =&gt; {
-                    let row = document.createElement('tr');
-                    if (index % 2 === 0) {
-                        row.classList.add('xwiki-mostviewedpages-evenRow');
-                    }
-                    headers.forEach(header =&gt; {
-                        let cell = document.createElement('td');
-                        cell.classList.add('xwiki-mostviewedpages-cell');
-                        cell.textContent = item[header];
-                        row.appendChild(cell);
-                    });
-                    fragment.appendChild(row);
-                });
-                table.innerHTML = '';
-                table.appendChild(fragment);
-            })
-            .fail(function (jqxhr, textStatus, error) {
-                let err = textStatus + ", " + error;
-                console.log("Request Failed: " + err);
-                // Handle the error in a user-friendly way here.
-            });
-    }
-
-    $(function () {
-        let tables = document.querySelectorAll('.mostViewedPages');
-        console.log(tables)
-        tables.forEach((table, index) =&gt; {
-            let attributes = getAttributes(table);
-            createTable(table, attributes);
-        });
+require(['jquery', 'xwiki-l10n!mostViewedPagesTranslation'], function ($, l10n) {
+  function getAttributes(element) {
+    return Array.from(element.attributes).reduce((acc, attribute) =&gt; {
+      acc[attribute.name] = attribute.value;
+      return acc;
+    }, {});
+  }
+  function constructUrl(attributes) {
+    const paramString = $.param({
+      module: 'API',
+      method: 'Actions.getPageTitles',
+      idSite: attributes.id,
+      period: 'range',
+      date: `${attributes.startdate.replaceAll('/', '-')},${attributes.enddate.replaceAll('/', '-')}`, //the data processing could be moved to velocity
+      format: 'json',
+      filter_sort_column: 'nb_hits',
+      filter_sort_order: 'desc',
+      token_auth: attributes.auth
     });
+    return attributes.ip + 'index.php?' + paramString;
+  }
+
+
+  function createHeader(headersTranslations) {
+    let headerRow = document.createElement('tr');
+    headersTranslations.forEach(header =&gt; {
+      let headerCell = document.createElement('th');
+      headerCell.classList.add('xwiki-mostviewedpages-header');
+      headerCell.textContent = l10n[header];
+      headerRow.appendChild(headerCell);
+    });
+    return headerRow;
+  }
+  function createTable(table, attributes) {
+    let fragment = document.createDocumentFragment();
+    table.classList.add('xwiki-mostviewedpages-table');
+
+    let url = constructUrl(attributes);
+    console.log(url);
+    $.getJSON(url)
+      .done(function (data) {
+        let headers = ['label', 'nb_visits', 'nb_hits', 'sum_time_spent', 'entry_nb_visits', 'entry_nb_actions', 'bounce_rate', 'exit_rate'];
+
+        fragment.appendChild(createHeader(headers));
+
+        data.forEach((item, index) =&gt; {
+          let row = document.createElement('tr');
+          if (index % 2 === 0) {
+            row.classList.add('xwiki-mostviewedpages-evenRow');
+          }
+          headers.forEach(header =&gt; {
+            let cell = document.createElement('td');
+            cell.classList.add('xwiki-mostviewedpages-cell');
+            cell.textContent = item[header];
+            row.appendChild(cell);
+          });
+          fragment.appendChild(row);
+        });
+        table.innerHTML = '';
+        table.appendChild(fragment);
+      })
+      .fail(function (jqxhr, textStatus, error) {
+        let err = textStatus + ", " + error;
+        console.log("Request Failed: " + err);
+        // Handle the error in a user-friendly way here.
+      });
+  }
+
+  $(function () {
+    let tables = document.querySelectorAll('.mostViewedPages');
+    console.log(tables)
+    tables.forEach((table, index) =&gt; {
+      let attributes = getAttributes(table);
+      createTable(table, attributes);
+    });
+  });
 });
 </code>
     </property>
@@ -335,46 +335,31 @@ require(['jquery', 'xwiki-l10n!mostViewedPagesTranslation'], function ($,l10n) {
       <cache>long</cache>
     </property>
     <property>
-      <code>.xwiki-mostviewedpages-table {
+      <code>#template('colorThemeInit.vm')
+        .xwiki-mostviewedpages-table {
         width: 100%;
         border-collapse: collapse;
         text-align: left;
         margin: 20px 0;
         }
-        
+
         .xwiki-mostviewedpages-cell {
         padding: 10px;
         border-bottom: 1px solid #ddd;
         }
-        
+
         .xwiki-mostviewedpages-header {
-        background-color: #4CAF50;
-        color: white;
+        background-color:  $theme.menuBackgroundColor;
+        color: $theme.textColor;
         padding:10px;
         }
-        
+
         .xwiki-mostviewedpages-evenRow {
-        background-color: #f2f2f2;
+        background-color: $theme.backgroundSecondaryColor;
         }
-        
+
         .xwiki-mostviewedpages-table tr:hover {
-        background-color: #ddd;
-        }
-        
-        .xwiki-mostviewedpages-pagination a {
-        color: black;
-        float: left;
-        padding: 8px 16px;
-        text-decoration: none;
-        }
-        
-        .xwiki-mostviewedpages-pagination a.active {
-        background-color: #4CAF50;
-        color: white;
-        }
-        
-        .xwiki-mostviewedpages-pagination a:hover:not(.active) {
-        background-color: #ddd;
+        background-color: $theme.panelCollapsedBackgroundColor;
         }</code>
     </property>
     <property>
