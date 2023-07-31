@@ -126,7 +126,22 @@
       <cache>long</cache>
     </property>
     <property>
-      <code>require(['jquery'], function ($) {
+      <code>define('mostViewedPagesTranslation', {
+  prefix: 'mostViewedPages.',
+  keys: [
+    "label",
+    "nb_visits",
+    "nb_hits",
+    "sum_time_spent",
+    "entry_nb_visits",
+    "entry_nb_actions",
+    "bounce_rate",
+    "exit_rate"
+  ]
+});
+
+
+require(['jquery', 'xwiki-l10n!mostViewedPagesTranslation'], function ($,l10n) {
     function getAttributes(element) {
         return Array.from(element.attributes).reduce((acc, attribute) =&gt; {
             acc[attribute.name] = attribute.value;
@@ -154,7 +169,7 @@
         headersTranslations.forEach(header =&gt; {
             let headerCell = document.createElement('th');
             headerCell.classList.add('xwiki-mostviewedpages-header');
-            headerCell.textContent = header;
+            headerCell.textContent = l10n[header];
             headerRow.appendChild(headerCell);
         });
         return headerRow;
@@ -168,9 +183,8 @@
         $.getJSON(url)
             .done(function (data) {
                 let headers = ['label', 'nb_visits', 'nb_hits', 'sum_time_spent', 'entry_nb_visits', 'entry_nb_actions', 'bounce_rate', 'exit_rate'];
-                let headersTranslations = ['Page Title', 'Unique Vistators', 'Page Views', 'Time spent(s)', 'entry_nb_visits', 'No. of views that started on this page', 'Bounce Rate', 'Exit Rate'];
 
-                fragment.appendChild(createHeader(headersTranslations));
+                fragment.appendChild(createHeader(headers));
 
                 data.forEach((item, index) =&gt; {
                     let row = document.createElement('tr');
