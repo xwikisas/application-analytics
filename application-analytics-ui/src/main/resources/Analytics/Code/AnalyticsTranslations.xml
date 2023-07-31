@@ -62,8 +62,6 @@ mostViewedPages.entry_nb_actions= No. Of Actions
 mostViewedPages.bounce_rate=Bounce Rate
 mostViewedPages.exit_rate=Exit Rate
 
-
-
 # Live table keys
 analytics.livetable.doc.title=Page Title
 analytics.livetable.startDate=Start Date
