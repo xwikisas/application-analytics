@@ -36,9 +36,9 @@
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>true</hidden>
-  <content>{{mostViewedPages numberOfRows="50" startDate="2023/07/01 13:37" endDate="2023/08/01 16:37"/}}
+  <content>{{mostViewedPages  startDate="2023/07/01 13:37" endDate="2023/08/01 16:37"/}}
 
-{{mostViewedPages numberOfRows="5" startDate="2023/07/01 13:37" endDate="2023/07/14 16:37"/}}</content>
+{{mostViewedPages  startDate="2023/07/01 13:37" endDate="2023/07/14 16:37"/}}</content>
   <object>
     <name>Analytics.Code.Macros.MostViewedPages</name>
     <number>0</number>
@@ -604,7 +604,7 @@
 #end
 
 {{html}}
-  &lt;div class="mostViewedPages" ip=$ip id=$idSite startDate=$startTime endDate=$endTime auth=$authToken rows = $rows&gt;
+  &lt;div class="mostViewedPages" ip=$ip id=$idSite startDate=$startTime endDate=$endTime auth=$authToken&gt;
   &lt;div&gt;
 {{/html}}
 
@@ -795,84 +795,6 @@
     </property>
     <property>
       <type>java.util.Date</type>
-    </property>
-  </object>
-  <object>
-    <name>Analytics.Code.Macros.MostViewedPages</name>
-    <number>2</number>
-    <className>XWiki.WikiMacroParameterClass</className>
-    <guid>06350f40-9f2b-4a0e-8ac2-ba606e1af0b4</guid>
-    <class>
-      <name>XWiki.WikiMacroParameterClass</name>
-      <customClass/>
-      <customMapping/>
-      <defaultViewSheet/>
-      <defaultEditSheet/>
-      <defaultWeb/>
-      <nameField/>
-      <validationScript/>
-      <defaultValue>
-        <disabled>0</disabled>
-        <name>defaultValue</name>
-        <number>4</number>
-        <prettyName>Parameter default value</prettyName>
-        <size>30</size>
-        <unmodifiable>0</unmodifiable>
-        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-      </defaultValue>
-      <description>
-        <disabled>0</disabled>
-        <name>description</name>
-        <number>2</number>
-        <prettyName>Parameter description</prettyName>
-        <rows>5</rows>
-        <size>40</size>
-        <unmodifiable>0</unmodifiable>
-        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
-      </description>
-      <mandatory>
-        <disabled>0</disabled>
-        <displayFormType>select</displayFormType>
-        <displayType>yesno</displayType>
-        <name>mandatory</name>
-        <number>3</number>
-        <prettyName>Parameter mandatory</prettyName>
-        <unmodifiable>0</unmodifiable>
-        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
-      </mandatory>
-      <name>
-        <disabled>0</disabled>
-        <name>name</name>
-        <number>1</number>
-        <prettyName>Parameter name</prettyName>
-        <size>30</size>
-        <unmodifiable>0</unmodifiable>
-        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-      </name>
-      <type>
-        <disabled>0</disabled>
-        <name>type</name>
-        <number>5</number>
-        <prettyName>Parameter type</prettyName>
-        <size>60</size>
-        <unmodifiable>0</unmodifiable>
-        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-      </type>
-    </class>
-    <property>
-      <defaultValue/>
-    </property>
-    <property>
-      <description>How many rows should each page of the table have.</description>
-    </property>
-    <property>
-      <mandatory>1</mandatory>
-    </property>
-    <property>
-      <name>numberOfRows</name>
-    </property>
-    <property>
-      <type>java.lang.Integer</type>
     </property>
   </object>
 </xwikidoc>
