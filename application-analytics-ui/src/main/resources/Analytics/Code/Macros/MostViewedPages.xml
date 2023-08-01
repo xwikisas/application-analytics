@@ -221,17 +221,17 @@ function createTable(container) {
   $.getJSON(url)
     .done(function (data) {
       let headers = Array.isArray(data)
+        ? ['title', 'visits', 'hits', 'timeSpent', 'entryNbVisits', 'entryNbActions', 'bounceRate', 'exitRate']
+        : ['year', 'title', 'visits', 'hits', 'timeSpent', 'entryNbVisits', 'entryNbActions', 'bounceRate', 'exitRate'];
+      let jsonKeys = Array.isArray(data)
         ? ['label', 'nb_visits', 'nb_hits', 'sum_time_spent', 'entry_nb_visits', 'entry_nb_actions', 'bounce_rate', 'exit_rate']
         : ['year', 'label', 'nb_visits', 'nb_hits', 'sum_time_spent', 'entry_nb_visits', 'entry_nb_actions', 'bounce_rate', 'exit_rate'];
-
       thead.appendChild(createHeader(headers));
-
       if (Array.isArray(data)) {
-        handleArrayData(fragment, headers, data);
+        handleArrayData(fragment, jsonKeys, data);
       } else {
-        handleJsonData(fragment, headers, data);
+        handleJsonData(fragment, jsonKeys, data);
       }
-
       tbody.appendChild(fragment);
       table.appendChild(thead);
       table.appendChild(tbody);
