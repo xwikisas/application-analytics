@@ -141,7 +141,6 @@
 
 require(['jquery', 'xwiki-l10n!mostViewedPagesTranslation'], function ($, l10n) {
 
-
   function constructUrl(element) {
     const paramString = $.param({
       module: 'API',
@@ -209,11 +208,14 @@ function handleJsonData(fragment, headers, data) {
 
 function createTable(container) {
   let table = document.createElement('table');
+  let thead = document.createElement('thead');
+  let tbody = document.createElement('tbody');
   let fragment = document.createDocumentFragment();
-  // table.classList.add('xwiki-mostviewedpages-table');
-  table.classList.add('table-bordered');
-  table.classList.add('table-hover');
+
   table.classList.add('table');
+  table.classList.add('table-hover');
+  table.classList.add('table-striped');
+
 
   let url = constructUrl(container);
   $.getJSON(url)
@@ -222,7 +224,7 @@ function createTable(container) {
         ? ['label', 'nb_visits', 'nb_hits', 'sum_time_spent', 'entry_nb_visits', 'entry_nb_actions', 'bounce_rate', 'exit_rate']
         : ['year', 'label', 'nb_visits', 'nb_hits', 'sum_time_spent', 'entry_nb_visits', 'entry_nb_actions', 'bounce_rate', 'exit_rate'];
 
-      fragment.appendChild(createHeader(headers));
+      thead.appendChild(createHeader(headers));
 
       if (Array.isArray(data)) {
         handleArrayData(fragment, headers, data);
@@ -230,7 +232,9 @@ function createTable(container) {
         handleJsonData(fragment, headers, data);
       }
 
-      table.appendChild(fragment);
+      tbody.appendChild(fragment);
+      table.appendChild(thead);
+      table.appendChild(tbody);
       container.appendChild(table);
     })
     .fail(function (jqxhr, textStatus, error) {
@@ -239,6 +243,7 @@ function createTable(container) {
       new XWiki.widgets.Notification(l10n.get('error', error), 'error');
     });
 };
+
 
 $(function () {
   let containers = document.querySelectorAll('.mostViewedPages');
@@ -365,32 +370,16 @@ $(function () {
     </property>
     <property>
       <code>#template('colorThemeInit.vm')
-
-.xwiki-mostviewedpages-table {
-        width: 100%;
-        border-collapse: collapse;
-        text-align: left;
-        margin: 20px 0;
-        }
-        
         .xwiki-mostviewedpages-cell {
         padding: 10px;
         border-bottom: 1px solid #ddd;
         }
-        
         .xwiki-mostviewedpages-header {
         background-color:  $theme.menuBackgroundColor;
         color: $theme.textColor;
         padding:10px;
         }
-
-        .xwiki-mostviewedpages-evenRow {
-        background-color: $theme.backgroundSecondaryColor;
-        }
-
-        .xwiki-mostviewedpages-table tr:hover {
-        background-color: $theme.panelCollapsedBackgroundColor;
-        }</code>
+</code>
     </property>
     <property>
       <contentType>CSS</contentType>
