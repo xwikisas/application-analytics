@@ -125,7 +125,7 @@
     </property>
     <property>
       <code>define('mostViewedPagesTranslation', {
-  prefix: 'analytics.mostViewedPages.',
+  prefix: 'analytics.mostViewedPages.header.',
   keys: [
     'year',
     'title',
