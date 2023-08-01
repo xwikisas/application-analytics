@@ -36,9 +36,7 @@
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>true</hidden>
-  <content>{{mostViewedPages  startDate="2023/07/01 13:37" endDate="2023/08/01 16:37"/}}
-
-{{mostViewedPages  startDate="2023/07/01 13:37" endDate="2023/07/14 16:37"/}}</content>
+  <content>{{mostViewedPages}}</content>
   <object>
     <name>Analytics.Code.Macros.MostViewedPages</name>
     <number>0</number>
@@ -127,42 +125,37 @@
     </property>
     <property>
       <code>define('mostViewedPagesTranslation', {
-  prefix: 'Analytics.Code.Macros.',
+  prefix: 'analytics.mostViewedPages.',
   keys: [
-    "label",
-    "nb_visits",
-    "nb_hits",
-    "sum_time_spent",
-    "entry_nb_visits",
-    "entry_nb_actions",
-    "bounce_rate",
-    "exit_rate"
+    'year',
+    'label',
+    'nb_visits',
+    'nb_hits',
+    'sum_time_spent',
+    'entry_nb_visits',
+    'entry_nb_actions',
+    'bounce_rate',
+    'exit_rate'
   ]
 });
 
-
 require(['jquery', 'xwiki-l10n!mostViewedPagesTranslation'], function ($, l10n) {
-  function getAttributes(element) {
-    return Array.from(element.attributes).reduce((acc, attribute) =&gt; {
-      acc[attribute.name] = attribute.value;
-      return acc;
-    }, {});
-  }
-  function constructUrl(attributes) {
+
+
+  function constructUrl(element) {
     const paramString = $.param({
       module: 'API',
       method: 'Actions.getPageTitles',
-      idSite: attributes.id,
-      period: 'range',
-      date: `${attributes.startdate.replaceAll('/', '-')},${attributes.enddate.replaceAll('/', '-')}`, //the data processing could be moved to velocity
+      idSite: element.dataset.idSite,
+      period: element.dataset.period,
+      date: element.dataset.date,
       format: 'json',
       filter_sort_column: 'nb_hits',
       filter_sort_order: 'desc',
-      token_auth: attributes.auth
+      token_auth: element.dataset.authToken
     });
-    return attributes.ip + 'index.php?' + paramString;
-  }
-
+    return element.dataset.ipMatomo + 'index.php?' + paramString;
+  };
 
   function createHeader(headersTranslations) {
     let headerRow = document.createElement('tr');
@@ -172,51 +165,87 @@ require(['jquery', 'xwiki-l10n!mostViewedPagesTranslation'], function ($, l10n) 
       headerCell.textContent = l10n[header];
       headerRow.appendChild(headerCell);
     });
-    return headerRow;
-  }
-  function createTable(table, attributes) {
-    let fragment = document.createDocumentFragment();
-    table.classList.add('xwiki-mostviewedpages-table');
-
-    let url = constructUrl(attributes);
-    console.log(url);
-    $.getJSON(url)
-      .done(function (data) {
-        let headers = ['label', 'nb_visits', 'nb_hits', 'sum_time_spent', 'entry_nb_visits', 'entry_nb_actions', 'bounce_rate', 'exit_rate'];
-
-        fragment.appendChild(createHeader(headers));
-
-        data.forEach((item, index) =&gt; {
-          let row = document.createElement('tr');
-          if (index % 2 === 0) {
-            row.classList.add('xwiki-mostviewedpages-evenRow');
-          }
-          headers.forEach(header =&gt; {
-            let cell = document.createElement('td');
-            cell.classList.add('xwiki-mostviewedpages-cell');
-            cell.textContent = item[header];
-            row.appendChild(cell);
-          });
-          fragment.appendChild(row);
-        });
-        table.innerHTML = '';
-        table.appendChild(fragment);
-      })
-      .fail(function (jqxhr, textStatus, error) {
-        let err = textStatus + ", " + error;
-        console.log("Request Failed: " + err);
-        // Handle the error in a user-friendly way here.
-      });
-  }
-
-  $(function () {
-    let tables = document.querySelectorAll('.mostViewedPages');
-    console.log(tables)
-    tables.forEach((table, index) =&gt; {
-      let attributes = getAttributes(table);
-      createTable(table, attributes);
-    });
+return headerRow;
+    };
+function createHeader(headersTranslations) {
+  console.log(l10n);
+  let headerRow = $('&lt;tr class="table"&gt;&lt;/tr&gt;');
+  headersTranslations.forEach(header =&gt; {
+    let headerCell = $(`&lt;th class='xwiki-mostviewedpages-header'&gt;${l10n[header]}&lt;/th&gt;`);
+    headerRow.append(headerCell);
   });
+  return headerRow[0];
+};
+
+
+
+function createRowFromData(headers, dataItem, index) {
+  let $row = $('&lt;tr&gt;');
+  headers.forEach(header =&gt; {
+    let $cell = $(`&lt;td class='xwiki-mostviewedpages-cell'&gt; ${dataItem[header] !== undefined ? dataItem[header] : ""}&lt;/td&gt;`);
+    $row.append($cell);
+  });
+  return $row[0]; // returns the first (and only) element, which is the raw DOM node
+};
+
+
+function handleArrayData(fragment, headers, data) {
+  data.forEach((item, index) =&gt; {
+    let row = createRowFromData(headers, item, index);
+    fragment.appendChild(row);
+  });
+}
+
+function handleJsonData(fragment, headers, data) {
+  for (let year in data) {
+    data[year].forEach((item, index) =&gt; {
+      // Add 'year' to each item. At some point, we might want to unify the data from different years. For the time being, I don't know how Matomo handles data from multiple years.
+      item.year = year;
+      let row = createRowFromData(headers, item, index);
+      fragment.appendChild(row);
+    });
+  }
+}
+
+function createTable(container) {
+  let table = document.createElement('table');
+  let fragment = document.createDocumentFragment();
+  // table.classList.add('xwiki-mostviewedpages-table');
+  table.classList.add('table-bordered');
+  table.classList.add('table-hover');
+  table.classList.add('table');
+
+  let url = constructUrl(container);
+  $.getJSON(url)
+    .done(function (data) {
+      let headers = Array.isArray(data)
+        ? ['label', 'nb_visits', 'nb_hits', 'sum_time_spent', 'entry_nb_visits', 'entry_nb_actions', 'bounce_rate', 'exit_rate']
+        : ['year', 'label', 'nb_visits', 'nb_hits', 'sum_time_spent', 'entry_nb_visits', 'entry_nb_actions', 'bounce_rate', 'exit_rate'];
+
+      fragment.appendChild(createHeader(headers));
+
+      if (Array.isArray(data)) {
+        handleArrayData(fragment, headers, data);
+      } else {
+        handleJsonData(fragment, headers, data);
+      }
+
+      table.appendChild(fragment);
+      container.appendChild(table);
+    })
+    .fail(function (jqxhr, textStatus, error) {
+      let err = textStatus + ", " + error;
+      console.log("Request Failed: " + err);
+      new XWiki.widgets.Notification(l10n.get('error', error), 'error');
+    });
+};
+
+$(function () {
+  let containers = document.querySelectorAll('.mostViewedPages');
+  containers.forEach((container, index) =&gt; {
+    createTable(container);
+  });
+});
 });
 </code>
     </property>
@@ -336,18 +365,19 @@ require(['jquery', 'xwiki-l10n!mostViewedPagesTranslation'], function ($, l10n) 
     </property>
     <property>
       <code>#template('colorThemeInit.vm')
-        .xwiki-mostviewedpages-table {
+
+.xwiki-mostviewedpages-table {
         width: 100%;
         border-collapse: collapse;
         text-align: left;
         margin: 20px 0;
         }
-
+        
         .xwiki-mostviewedpages-cell {
         padding: 10px;
         border-bottom: 1px solid #ddd;
         }
-
+        
         .xwiki-mostviewedpages-header {
         background-color:  $theme.menuBackgroundColor;
         color: $theme.textColor;
@@ -369,7 +399,7 @@ require(['jquery', 'xwiki-l10n!mostViewedPagesTranslation'], function ($, l10n) 
       <name/>
     </property>
     <property>
-      <parse>0</parse>
+      <parse>1</parse>
     </property>
     <property>
       <use>currentPage</use>
@@ -585,25 +615,35 @@ require(['jquery', 'xwiki-l10n!mostViewedPagesTranslation'], function ($, l10n) 
 #set ($idSite = $object.getProperty("idSite").value)
 #set ($authToken = $object.getProperty("authToken").value)
 #set ($dashbord =  $doc.getObject('Analytics.Code.AnalyticsDashboardClass'))
+#set ($period = 'range')
+##A dashboard will have a date inside and that date will take precedence over the date set by the macro
 #if ($dashbord)
-  #set ( $startTime =  $dashbord.getProperty("startDate"))
-  #set ( $endTime =  $dashbord.getProperty("endDate"))
+  #set ($startTime =  $dashbord.getProperty("startDate"))
+  #set ($endTime =  $dashbord.getProperty("endDate"))
 #else
-  #set ( $startTime = $xcontext.macro.params.startDate.toString() )
-  #set ( $endTime = $xcontext.macro.params.endDate.toString() )
+  #set ($startTime = $xcontext.macro.params.startDate.toString())
+  #set ($endTime = $xcontext.macro.params.endDate.toString())
 #end
-#set ($rows = $xcontext.macro.params.numberOfRows )
-#set ($index =$startTime.indexOf(' '))
+#set ($rows = $xcontext.macro.params.numberOfRows)
+#set ($index = $startTime.indexOf(' '))
 #if ($index != -1)
   #set ($startTime = $startTime.substring(0, $index))
 #end
-#set ($index =$endTime.indexOf(' '))
+#set ($index = $endTime.indexOf(' '))
 #if ($index != -1)
   #set ($endTime = $endTime.substring(0, $index))
 #end
-
+#set ($startTime = $datetool.toDate('yyyy/MM/dd', $startTime))
+#set ($endTime = $datetool.toDate('yyyy/MM/dd', $endTime))
+#set ($startTime = $datetool.format('yyyy-MM-dd', $startTime))
+#set ($endTime = $datetool.format('yyyy-MM-dd', $endTime))
+#set ($date = $startTime + ','+$endTime)
+#if(!$startTime || !$endTime)
+  #set($period = 'year')
+  #set($date = 'last1')
+#end
 {{html}}
-  &lt;div class="mostViewedPages" ip=$ip id=$idSite startDate=$startTime endDate=$endTime auth=$authToken&gt;
+  &lt;div class="mostViewedPages" data-ip-matomo=$ip data-period=$period data-id-site=$idSite data-date=$date data-auth-token=$authToken&gt;
   &lt;div&gt;
 {{/html}}
 
@@ -706,7 +746,7 @@ require(['jquery', 'xwiki-l10n!mostViewedPagesTranslation'], function ($, l10n) 
       <defaultValue/>
     </property>
     <property>
-      <description/>
+      <description>Start time of the date interval used for this macro</description>
     </property>
     <property>
       <mandatory>0</mandatory>
@@ -784,7 +824,7 @@ require(['jquery', 'xwiki-l10n!mostViewedPagesTranslation'], function ($, l10n) 
       <defaultValue/>
     </property>
     <property>
-      <description/>
+      <description>End time of the date interval used for this macro</description>
     </property>
     <property>
       <mandatory>0</mandatory>

@@ -46,15 +46,20 @@ Analytics.Code.AnalyticsDashboardClass_endDate.hint=End time of the date interva
 Analytics.Code.AnalyticsDashboardClass_description.hint=Additional information to be displayed.
 Analytics.Code.AnalyticsDashboardClass_DisplayedStatistics.hint=List of statistics widgets that will be displayed in the current dashboard, in order.
 
-## Most Viewed Pages
-Analytics.Code.Macros.label=Page Title
-Analytics.Code.Macros.nb_visits=Unique Vistators
-Analytics.Code.Macros.nb_hits=Page Views
-Analytics.Code.Macros.sum_time_spent=Time spent(s)
-Analytics.Code.Macros.entry_nb_visits=No. of views that started on this page
-Analytics.Code.Macros.entry_nb_actions= No. Of Actions
-Analytics.Code.Macros.bounce_rate=Bounce Rate
-Analytics.Code.Macros.exit_rate=Exit Rate
+##Most Viewed Pages Table Header
+analytics.mostViewedPages.year=Year
+analytics.mostViewedPages.label=Page Title
+analytics.mostViewedPages.nb_visits=Unique Vistators
+analytics.mostViewedPages.nb_hits=Page Views
+analytics.mostViewedPages.sum_time_spent=Time spent(s)
+analytics.mostViewedPages.entry_nb_visits=No. Of Views That Started On This Page
+analytics.mostViewedPages.entry_nb_actions= No. Of Actions
+analytics.mostViewedPages.bounce_rate=Bounce Rate
+analytics.mostViewedPages.exit_rate=Exit Rate
+
+##Most Viewed Pages Macro
+rendering.macro.MostViewedPages.parameter.label.startDate=Start time of the date interval used for this macro
+rendering.macro.MostViewedPages.parameter.label.endDate=End time of the date interval used for this macro
 
 ## Live table keys
 analytics.livetable.doc.title=Page Title
