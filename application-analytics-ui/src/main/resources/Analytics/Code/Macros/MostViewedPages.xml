@@ -128,14 +128,14 @@
   prefix: 'analytics.mostViewedPages.',
   keys: [
     'year',
-    'label',
-    'nb_visits',
-    'nb_hits',
-    'sum_time_spent',
-    'entry_nb_visits',
-    'entry_nb_actions',
-    'bounce_rate',
-    'exit_rate'
+    'title',
+    'visits',
+    'hits',
+    'timeSpent',
+    'entryNbVisits',
+    'entryNbActions',
+    'bounceRate',
+    'exitRate'
   ]
 });
 
