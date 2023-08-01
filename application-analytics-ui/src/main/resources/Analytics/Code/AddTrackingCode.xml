@@ -177,7 +177,7 @@
       <extensionPointId>org.xwiki.platform.html.head</extensionPointId>
     </property>
     <property>
-      <name>analytics.trackercode</name>
+      <name>com.xwiki.analytics.trackerCode</name>
     </property>
     <property>
       <parameters/>
