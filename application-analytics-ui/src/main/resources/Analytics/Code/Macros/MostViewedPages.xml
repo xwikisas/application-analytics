@@ -176,7 +176,7 @@ function createRowFromData(headers, dataItem, index) {
     let cell = $(`&lt;td class='xwiki-mostviewedpages-cell'&gt; ${dataItem[header] !== undefined ? dataItem[header] : ""}&lt;/td&gt;`);
     row.append(cell);
   });
-  return row[0]; // returns the first (and only) element, which is the raw DOM node
+  return row[0];
 };
 
 
@@ -191,7 +191,8 @@ function handleArrayData(fragment, headers, data) {
 function handleJsonData(fragment, headers, data) {
   for (let year in data) {
     data[year].forEach((item, index) =&gt; {
-      // Add 'year' to each item. At some point, we might want to unify the data from different years. For the time being, I don't know how Matomo handles data from multiple years.
+      // Add 'year' to each item.
+      //At some point, we might want to unify the data from different years. For the time being, I don't know how Matomo handles data from multiple years.
       item.year = year;
       let row = createRowFromData(headers, item, index);
       fragment.appendChild(row);
@@ -213,10 +214,12 @@ function createTable(container) {
   let url = constructUrl(container);
   $.getJSON(url)
     .done(function (data) {
+      //if the response is a json of jsons then we select the one with the year
       let headers = Array.isArray(data)
         ? ['title', 'visits', 'hits', 'timeSpent', 'entryNbVisits', 'entryNbActions', 'bounceRate', 'exitRate']
         : ['year', 'title', 'visits', 'hits', 'timeSpent', 'entryNbVisits', 'entryNbActions', 'bounceRate', 'exitRate'];
       let jsonKeys = Array.isArray(data)
+        //The keys that matomo will return
         ? ['label', 'nb_visits', 'nb_hits', 'sum_time_spent', 'entry_nb_visits', 'entry_nb_actions', 'bounce_rate', 'exit_rate']
         : ['year', 'label', 'nb_visits', 'nb_hits', 'sum_time_spent', 'entry_nb_visits', 'entry_nb_actions', 'bounce_rate', 'exit_rate'];
       thead.appendChild(createHeader(headers));
