@@ -164,7 +164,7 @@
       <content>{{velocity}}
 
 #set ($object =  $xwiki.getDocument("Analytics.Code.Configuration").getObject('Analytics.Code.ConfigurationClass'))
-#set ($value = $object.getProperty("trackerCode").value)
+#set ($value = $object.getProperty("matomoTrackingCode").value)
 #if ($value)
   {{html clean="false"}}
     $value
