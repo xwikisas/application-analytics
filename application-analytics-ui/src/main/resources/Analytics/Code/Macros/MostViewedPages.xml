@@ -139,7 +139,9 @@
   ]
 });
 
+
 require(['jquery', 'xwiki-l10n!mostViewedPagesTranslation'], function ($, l10n) {
+
 
   function constructUrl(element) {
     const paramString = $.param({
@@ -155,6 +157,7 @@ require(['jquery', 'xwiki-l10n!mostViewedPagesTranslation'], function ($, l10n) 
     });
     return element.dataset.ipMatomo + 'index.php?' + paramString;
   };
+
 
   function createHeader(headersTranslations) {
     let headerRow = document.createElement('tr');
@@ -177,7 +180,6 @@ function createHeader(headersTranslations) {
 };
 
 
-
 function createRowFromData(headers, dataItem, index) {
   let row = $('&lt;tr&gt;');
   headers.forEach(header =&gt; {
@@ -193,7 +195,8 @@ function handleArrayData(fragment, headers, data) {
     let row = createRowFromData(headers, item, index);
     fragment.appendChild(row);
   });
-}
+};
+
 
 function handleJsonData(fragment, headers, data) {
   for (let year in data) {
@@ -204,7 +207,8 @@ function handleJsonData(fragment, headers, data) {
       fragment.appendChild(row);
     });
   }
-}
+};
+
 
 function createTable(container) {
   let table = document.createElement('table');
@@ -215,7 +219,6 @@ function createTable(container) {
   table.classList.add('table');
   table.classList.add('table-hover');
   table.classList.add('table-striped');
-
 
   let url = constructUrl(container);
   $.getJSON(url)
