@@ -55,6 +55,11 @@
       <artifactId>application-licensing-licensor-api</artifactId>
       <version>${licensing.version}</version>
     </dependency>
+    <dependency>
+      <groupId>com.xwiki.analytics</groupId>
+      <artifactId>application-analytics-default</artifactId>
+      <version>${project.version}</version>
+    </dependency>
   </dependencies>
   <build>
     <plugins>
