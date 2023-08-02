@@ -179,12 +179,12 @@ function createHeader(headersTranslations) {
 
 
 function createRowFromData(headers, dataItem, index) {
-  let $row = $('&lt;tr&gt;');
+  let row = $('&lt;tr&gt;');
   headers.forEach(header =&gt; {
-    let $cell = $(`&lt;td class='xwiki-mostviewedpages-cell'&gt; ${dataItem[header] !== undefined ? dataItem[header] : ""}&lt;/td&gt;`);
-    $row.append($cell);
+    let cell = $(`&lt;td class='xwiki-mostviewedpages-cell'&gt; ${dataItem[header] !== undefined ? dataItem[header] : ""}&lt;/td&gt;`);
+    row.append(cell);
   });
-  return $row[0]; // returns the first (and only) element, which is the raw DOM node
+  return row[0]; // returns the first (and only) element, which is the raw DOM node
 };
 
 
