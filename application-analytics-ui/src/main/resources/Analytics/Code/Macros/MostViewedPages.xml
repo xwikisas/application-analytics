@@ -159,16 +159,6 @@ require(['jquery', 'xwiki-l10n!mostViewedPagesTranslation'], function ($, l10n) 
   };
 
 
-  function createHeader(headersTranslations) {
-    let headerRow = document.createElement('tr');
-    headersTranslations.forEach(header =&gt; {
-      let headerCell = document.createElement('th');
-      headerCell.classList.add('xwiki-mostviewedpages-header');
-      headerCell.textContent = l10n[header];
-      headerRow.appendChild(headerCell);
-    });
-return headerRow;
-    };
 function createHeader(headersTranslations) {
   console.log(l10n);
   let headerRow = $('&lt;tr class="table"&gt;&lt;/tr&gt;');
