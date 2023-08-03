@@ -50,7 +50,7 @@
     <!-- The list of documents that are not covered by the extension license. The user that installs the extension has
     full access to these documents (view, edit, delete) without having a license, so use this property wisely. -->
     <xwiki.extension.licensing.excludedDocuments>
-      Analytics.DefaultDashboard
+      Analytics.DefaultDashboard,
       Analytics.Code.Configuration
     </xwiki.extension.licensing.excludedDocuments>
     <xwiki.clirr.skip>true</xwiki.clirr.skip>
@@ -70,7 +70,7 @@
         <configuration>
           <contentPages>
             <contentPage>.*/Analytics/WebHome\.xml</contentPage>
-            <contentPage>.*/Analytics/DefaultDashbord\.xml</contentPage>
+            <contentPage>.*/Analytics/DefaultDashboard\.xml</contentPage>
           </contentPages>
         </configuration>
       </plugin>

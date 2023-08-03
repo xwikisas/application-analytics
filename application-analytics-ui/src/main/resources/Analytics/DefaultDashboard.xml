@@ -20,9 +20,9 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc version="1.4" reference="Analytics.DefaultDashbord" locale="">
+<xwikidoc version="1.4" reference="Analytics.DefaultDashboard" locale="">
   <web>Analytics</web>
-  <name>DefaultDashbord</name>
+  <name>DefaultDashboard</name>
   <language/>
   <defaultLanguage>en</defaultLanguage>
   <translation>0</translation>
@@ -38,7 +38,7 @@
   <hidden>false</hidden>
   <content/>
   <object>
-    <name>Analytics.DefaultDashbord</name>
+    <name>Analytics.DefaultDashboard</name>
     <number>0</number>
     <className>Analytics.Code.AnalyticsDashboardClass</className>
     <guid>7b39d782-6af2-42dd-9312-949ec8841c4a</guid>
