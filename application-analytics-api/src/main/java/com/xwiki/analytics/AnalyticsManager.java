@@ -17,38 +17,19 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package com.xwiki.analytics.script;
+package com.xwiki.analytics;
 
-import com.xwiki.analytics.configuration.AnalyticsConfiguration;
-import org.xwiki.component.annotation.Component;
-import org.xwiki.script.service.ScriptService;
+
+import org.xwiki.component.annotation.Role;
 import org.xwiki.stability.Unstable;
-
-import javax.inject.Inject;
-import javax.inject.Named;
-import javax.inject.Singleton;
-
 
 /**
  * @version $Id$
- * @since 1.1
+ * @since 1.0
  */
-@Component
-@Named("analytics")
+@Role
 @Unstable
-@Singleton
-public class AnalyticsScriptService implements ScriptService
+public class AnalyticsManager
 {
-    @Inject
-    private AnalyticsConfiguration configuration;
 
-    /**
-     *
-     * @return Will return the configuration
-     */
-
-    public AnalyticsConfiguration getConfiguration()
-    {
-        return configuration;
-    }
 }

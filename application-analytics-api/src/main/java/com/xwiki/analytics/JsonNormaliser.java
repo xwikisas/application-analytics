@@ -17,38 +17,20 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package com.xwiki.analytics.script;
+package com.xwiki.analytics;
 
-import com.xwiki.analytics.configuration.AnalyticsConfiguration;
-import org.xwiki.component.annotation.Component;
-import org.xwiki.script.service.ScriptService;
-import org.xwiki.stability.Unstable;
-
-import javax.inject.Inject;
-import javax.inject.Named;
-import javax.inject.Singleton;
-
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 /**
  * @version $Id$
- * @since 1.1
  */
-@Component
-@Named("analytics")
-@Unstable
-@Singleton
-public class AnalyticsScriptService implements ScriptService
+public interface JsonNormaliser
 {
-    @Inject
-    private AnalyticsConfiguration configuration;
-
     /**
      *
-     * @return Will return the configuration
+     * @param jsonString
+     * @return Returns the json in string format
+     * @throws JsonProcessingException
      */
-
-    public AnalyticsConfiguration getConfiguration()
-    {
-        return configuration;
-    }
+    String normaliseData(String jsonString) throws JsonProcessingException;
 }
