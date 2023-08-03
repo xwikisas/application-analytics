@@ -596,7 +596,7 @@ require(['jquery', 'xwiki-l10n!mostViewedPagesTranslation'], function ($, l10n) 
 #set ($discard = $xwiki.jsx.use('Analytics.Code.Macros.MostViewedPages'))
 #set ($object =  $xwiki.getDocument('Analytics.Code.Configuration').getObject('Analytics.Code.ConfigurationClass'))
 #set ($ip = $object.getProperty('requestAddress').value)
-#set ($idSite = $object.getProperty('idSite').value)
+#set ($siteId = $object.getProperty('siteId').value)
 #set ($authToken = $object.getProperty('authToken').value)
 #set ($dashbord =  $doc.getObject('Analytics.Code.AnalyticsDashboardClass'))
 #set ($period = 'range')
@@ -624,7 +624,7 @@ require(['jquery', 'xwiki-l10n!mostViewedPagesTranslation'], function ($, l10n) 
 #set ($date = $startDate + ',' + $endDate)
 
 {{html}}
-  &lt;div class="mostViewedPages" data-ip-matomo=$ip data-period=$period data-id-site=$idSite data-date=$date
+  &lt;div class="mostViewedPages" data-ip-matomo=$ip data-period=$period data-id-site=$siteId data-date=$date
     data-auth-token=$authToken&gt;
   &lt;div&gt;
 {{/html}}
