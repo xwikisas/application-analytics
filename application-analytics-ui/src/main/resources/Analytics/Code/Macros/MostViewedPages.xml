@@ -178,7 +178,7 @@ require(['jquery', 'xwiki-l10n!mostViewedPagesTranslation'], function ($, l10n) 
   * This function handles the case where you get the data unified or receive data for a specific year. The function
   * iterates through all the data and creates new rows.
   */
-  function handleArrayData(fragment, headers, data) {
+  function createMergedYearsRows(fragment, headers, data) {
     data.forEach((item, index) =&gt; {
       let row = createRowFromData(headers, item, index);
       fragment.appendChild(row);
@@ -186,17 +186,15 @@ require(['jquery', 'xwiki-l10n!mostViewedPagesTranslation'], function ($, l10n) 
   };
   /**
   * The data is organized as a JSON of JSONs, where each internal JSON represents data for a specific year.
-  * This function will call 'handleArrayData' to process the data for each year and create rows for all the data in that year.
-  *
   */
-  function handleJsonData(fragment, headers, data) {
+  function createMultipleYearsRows(fragment, headers, data) {
     for (let year in data) {
       data[year].forEach((item, index) =&gt; {
         // Add 'year' to each item.
         // At some point, we might want to unify the data from different years. For the time being, I don't know how
         // Matomo handles data from multiple years.
         // The fragmentation is caused by matomo when you use the period argument with the value of month, year or day,
-        // you can unify the data by using period=range
+        // you can unify the data by using period=range.
         item.year = year;
         let row = createRowFromData(headers, item, index);
         fragment.appendChild(row);
@@ -216,7 +214,7 @@ require(['jquery', 'xwiki-l10n!mostViewedPagesTranslation'], function ($, l10n) 
 
     let url = constructUrl(container);
     $.getJSON(url).done(function (data) {
-      // if the response is a json of jsons then we select the one with the year
+      // If the response is a json of jsons then we select the one with the year.
       let headers = Array.isArray(data)
         ? ['title', 'visits', 'hits', 'timeSpent', 'entryNbVisits', 'entryNbActions', 'bounceRate', 'exitRate']
         : ['year', 'title', 'visits', 'hits', 'timeSpent', 'entryNbVisits', 'entryNbActions', 'bounceRate', 'exitRate'];
@@ -226,18 +224,18 @@ require(['jquery', 'xwiki-l10n!mostViewedPagesTranslation'], function ($, l10n) 
         : ['year', 'label', 'nb_visits', 'nb_hits', 'sum_time_spent', 'entry_nb_visits', 'entry_nb_actions', 'bounce_rate', 'exit_rate'];
       thead.appendChild(createHeader(headers));
       if (Array.isArray(data)) {
-        handleArrayData(fragment, jsonKeys, data);
+        createMergedYearsRows(fragment, jsonKeys, data);
       } else {
-        handleJsonData(fragment, jsonKeys, data);
+        createMultipleYearsRows(fragment, jsonKeys, data);
       }
       tbody.appendChild(fragment);
       table.appendChild(thead);
       table.appendChild(tbody);
       container.appendChild(table);
       }).fail(function (jqxhr, textStatus, error) {
-      let err = textStatus + ", " + error;
-      console.log("Request Failed: " + err);
-      new XWiki.widgets.Notification(l10n.get('error', error), 'error');
+        let err = textStatus + ', ' + error;
+        console.log('Request Failed: ' + err);
+        new XWiki.widgets.Notification(l10n.get('error', error), 'error');
       });
   };
 
@@ -248,6 +246,7 @@ require(['jquery', 'xwiki-l10n!mostViewedPagesTranslation'], function ($, l10n) 
     });
   });
 });
+
 </code>
     </property>
     <property>
@@ -595,16 +594,16 @@ require(['jquery', 'xwiki-l10n!mostViewedPagesTranslation'], function ($, l10n) 
     <property>
       <code>{{velocity}}
 #set ($discard = $xwiki.jsx.use('Analytics.Code.Macros.MostViewedPages'))
-#set ($object =  $xwiki.getDocument("Analytics.Code.Configuration").getObject('Analytics.Code.ConfigurationClass'))
-#set ($ip = $object.getProperty("requestAddress").value)
-#set ($idSite = $object.getProperty("idSite").value)
-#set ($authToken = $object.getProperty("authToken").value)
+#set ($object =  $xwiki.getDocument('Analytics.Code.Configuration').getObject('Analytics.Code.ConfigurationClass'))
+#set ($ip = $object.getProperty('requestAddress').value)
+#set ($idSite = $object.getProperty('idSite').value)
+#set ($authToken = $object.getProperty('authToken').value)
 #set ($dashbord =  $doc.getObject('Analytics.Code.AnalyticsDashboardClass'))
 #set ($period = 'range')
 ## A dashboard will have a date inside and that date will take precedence over the date set by the macro.
 #if ($dashbord)
-  #set ($startDate =  $dashbord.getProperty("startDate"))
-  #set ($endTimeDate =  $dashbord.getProperty("endDate"))
+  #set ($startDate =  $dashbord.getProperty('startDate'))
+  #set ($endTimeDate =  $dashbord.getProperty('endDate'))
 #else
   #set ($startDate = $xcontext.macro.params.startDate.toString())
   #set ($endTimeDate = $xcontext.macro.params.endDate.toString())
@@ -614,17 +613,19 @@ require(['jquery', 'xwiki-l10n!mostViewedPagesTranslation'], function ($, l10n) 
 #set ($startDate = $datetool.format('yyyy-MM-dd', $startDateObj))
 #set ($endDateObj = $datetool.toDate('yyyy/MM/dd HH:MM', $endDate))
 #set ($endDate = $datetool.format('yyyy-MM-dd', $endDateObj))
-#set ($date = $startDate + ',' + $endDate)
-## This will check if either the startDate or the endDate is missing, and replace the missing time interval with
-## '2007-01-01' and the current date. The date '2007-01-01' is the oldest one accepted by Matomo.
-# if(!$startDate || !$endTimeDate)
-  #set($period = 'year')
-  #set($date = 'last1')
+## Check if startDate or endDate are not defined and replace them with some default values, in order to match the end of
+## the time interval. For startDate we use '2007-01-01' since it's the oldest one accepted by Matomo.
+#if (!$startDate)
+  #set ($startDate = '2007-01-01')
 #end
+#if (!$endDate)
+  #set ($endDate = $datetool.get('yyyy-MM-dd'))
+#end
+#set ($date = $startDate + ',' + $endDate)
 
 {{html}}
   &lt;div class="mostViewedPages" data-ip-matomo=$ip data-period=$period data-id-site=$idSite data-date=$date
-  data-auth-token=$authToken&gt;
+    data-auth-token=$authToken&gt;
   &lt;div&gt;
 {{/html}}
 

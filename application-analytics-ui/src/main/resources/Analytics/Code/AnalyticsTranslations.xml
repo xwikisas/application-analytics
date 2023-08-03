@@ -39,11 +39,11 @@
   <content>## Class fields
 Analytics.Code.AnalyticsDashboardClass_description.hint=Additional information to be displayed.
 Analytics.Code.AnalyticsDashboardClass_description=Description
-Analytics.Code.AnalyticsDashboardClass_displayedStatistics=Displayed Statistics
-Analytics.Code.AnalyticsDashboardClass_endDate=End Date
+Analytics.Code.AnalyticsDashboardClass_displayedStatistics=Displayed statistics
+Analytics.Code.AnalyticsDashboardClass_endDate=End date
 Analytics.Code.AnalyticsDashboardClass_endDate.hint=End time of the date interval used on all statistics of this dashboard.
 Analytics.Code.AnalyticsDashboardClass_DisplayedStatistics.hint=List of statistics widgets that will be displayed in the current dashboard, in order.
-Analytics.Code.AnalyticsDashboardClass_startDate=Start Date
+Analytics.Code.AnalyticsDashboardClass_startDate=Start date
 Analytics.Code.AnalyticsDashboardClass_startDate.hint=Start time of the date interval used on all statistics of this dashboard.
 
 ## Most Viewed Pages Macro
