@@ -174,14 +174,21 @@ require(['jquery', 'xwiki-l10n!mostViewedPagesTranslation'], function ($, l10n) 
     });
     return row[0];
   };
-
+  /**
+  * This function handles the case where you get the data unified or receive data for a specific year. The function
+  * iterates through all the data and creates new rows.
+  */
   function handleArrayData(fragment, headers, data) {
     data.forEach((item, index) =&gt; {
       let row = createRowFromData(headers, item, index);
       fragment.appendChild(row);
     });
   };
-
+  /**
+  * The data is organized as a JSON of JSONs, where each internal JSON represents data for a specific year.
+  * This function will call 'handleArrayData' to process the data for each year and create rows for all the data in that year.
+  *
+  */
   function handleJsonData(fragment, headers, data) {
     for (let year in data) {
       data[year].forEach((item, index) =&gt; {
