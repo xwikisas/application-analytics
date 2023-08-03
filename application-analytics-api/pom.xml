@@ -33,7 +33,7 @@
   <dependencies>
     <dependency>
       <groupId>org.xwiki.platform</groupId>
-      <artifactId>xwiki-platform-rest-server</artifactId>
+      <artifactId>xwiki-platform-configuration-default</artifactId>
       <version>${platform.version}</version>
     </dependency>
         <dependency>

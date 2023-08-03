@@ -15,19 +15,25 @@ import javax.inject.Named;
 @Singleton
 public class DefaultAnalyticsConfiguration implements AnalyticsConfiguration {
     @Inject
+    @Named("analytics")
     private ConfigurationSource configDocument;
     @Override
     public String getRequestAddress() {
-        return null;
+        return getProperty("requestAddress", "");
     }
 
     @Override
     public String getIdSite() {
-        return null;
+        return  getProperty("siteId","");
     }
 
     @Override
     public String getAuthenticationToken() {
-        return null;
+        return getProperty("authToken", "");
+    }
+
+    private <T> T getProperty(String key, T defaultValue)
+    {
+            return this.configDocument.getProperty(key, defaultValue);
     }
 }
