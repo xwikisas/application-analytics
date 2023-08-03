@@ -168,7 +168,8 @@ require(['jquery', 'xwiki-l10n!mostViewedPagesTranslation'], function ($, l10n) 
   function createRowFromData(headers, dataItem, index) {
     let row = $('&lt;tr&gt;&lt;/tr&gt;');
     headers.forEach(header =&gt; {
-      let cell = $(`&lt;td class='xwiki-mostviewedpages-cell'&gt; ${dataItem[header] !== undefined ? dataItem[header] : ""}&lt;/td&gt;`);
+      let cell = $(`&lt;td class='xwiki-mostviewedpages-cell'&gt; ${dataItem[header] !== undefined ? dataItem[header] : ""}
+      &lt;/td&gt;`);
       row.append(cell);
     });
     return row[0];
@@ -208,7 +209,7 @@ require(['jquery', 'xwiki-l10n!mostViewedPagesTranslation'], function ($, l10n) 
 
     let url = constructUrl(container);
     $.getJSON(url).done(function (data) {
-      //if the response is a json of jsons then we select the one with the year
+      // if the response is a json of jsons then we select the one with the year
       let headers = Array.isArray(data)
         ? ['title', 'visits', 'hits', 'timeSpent', 'entryNbVisits', 'entryNbActions', 'bounceRate', 'exitRate']
         : ['year', 'title', 'visits', 'hits', 'timeSpent', 'entryNbVisits', 'entryNbActions', 'bounceRate', 'exitRate'];
@@ -226,11 +227,10 @@ require(['jquery', 'xwiki-l10n!mostViewedPagesTranslation'], function ($, l10n) 
       table.appendChild(thead);
       table.appendChild(tbody);
       container.appendChild(table);
-      })
-      .fail(function (jqxhr, textStatus, error) {
-        let err = textStatus + ", " + error;
-        console.log("Request Failed: " + err);
-        new XWiki.widgets.Notification(l10n.get('error', error), 'error');
+      }).fail(function (jqxhr, textStatus, error) {
+      let err = textStatus + ", " + error;
+      console.log("Request Failed: " + err);
+      new XWiki.widgets.Notification(l10n.get('error', error), 'error');
       });
   };
 
@@ -240,7 +240,7 @@ require(['jquery', 'xwiki-l10n!mostViewedPagesTranslation'], function ($, l10n) 
       createTable(container);
     });
   });
-  });
+});
 </code>
     </property>
     <property>
@@ -603,20 +603,21 @@ require(['jquery', 'xwiki-l10n!mostViewedPagesTranslation'], function ($, l10n) 
   #set ($endTimeDate = $xcontext.macro.params.endDate.toString())
 #end
 #set ($rows = $xcontext.macro.params.numberOfRows)
-#set ($startDate = $datetool.toDate('yyyy/MM/dd HH:MM', $startDate))
-#set ($endTimeDate = $datetool.toDate('yyyy/MM/dd', $endTimeDate))
-#set ($startDate = $datetool.format('yyyy-MM-dd HH:MM', $startDate))
-#set ($endTimeDate = $datetool.format('yyyy-MM-dd', $endTimeDate))
-#set ($date = $startDate + ','+$endTimeDate)
-## This will check if any either the startDate or the endDate is missing and replace the values to retrive the data for
-## the last year
+#set ($startDateObj = $datetool.toDate('yyyy/MM/dd HH:MM', $startDate))
+#set ($startDate = $datetool.format('yyyy-MM-dd', $startDateObj))
+#set ($endDateObj = $datetool.toDate('yyyy/MM/dd HH:MM', $endDate))
+#set ($endDate = $datetool.format('yyyy-MM-dd', $endDateObj))
+#set ($date = $startDate + ',' + $endDate)
+## This will check if either the startDate or the endDate is missing, and replace the missing time interval with
+## '2007-01-01' and the current date. The date '2007-01-01' is the oldest one accepted by Matomo.
 # if(!$startDate || !$endTimeDate)
   #set($period = 'year')
   #set($date = 'last1')
 #end
 
 {{html}}
-  &lt;div class="mostViewedPages" data-ip-matomo=$ip data-period=$period data-id-site=$idSite data-date=$date data-auth-token=$authToken&gt;
+  &lt;div class="mostViewedPages" data-ip-matomo=$ip data-period=$period data-id-site=$idSite data-date=$date
+  data-auth-token=$authToken&gt;
   &lt;div&gt;
 {{/html}}
 

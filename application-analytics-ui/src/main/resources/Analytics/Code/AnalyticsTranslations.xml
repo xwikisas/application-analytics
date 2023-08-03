@@ -56,8 +56,8 @@ analytics.mostViewedPages.header.timeSpent=Time spent
 analytics.mostViewedPages.header.title=Page title
 analytics.mostViewedPages.header.visits=Unique visitors
 analytics.mostViewedPages.header.year=Year
-analytics.mostViewedPages.parameter.label.startDate=Start time of the date interval used for this macro
-analytics.mostViewedPages.parameter.label.endDate=End time of the date interval used for this macro
+parameter.label.startDate=Start time of the date interval used for this macro
+parameter.label.endDate=End time of the date interval used for this macro
 
 ## Live table keys
 analytics.livetable.emptyvalue=Not Defined
