@@ -67,11 +67,11 @@
         <validationRegExp/>
         <classType>com.xpn.xwiki.objects.classes.PasswordClass</classType>
       </authToken>
-      <idSite>
+      <siteId>
         <customDisplay/>
         <disabled>0</disabled>
         <hint/>
-        <name>idSite</name>
+        <name>siteId</name>
         <number>3</number>
         <numberType>long</numberType>
         <prettyName>ID Site</prettyName>
@@ -80,7 +80,7 @@
         <validationMessage/>
         <validationRegExp/>
         <classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
-      </idSite>
+      </siteId>
       <matomoTrackingCode>
         <contenttype>PureText</contenttype>
         <customDisplay/>
@@ -118,7 +118,7 @@
       </authToken>
     </property>
     <property>
-      <idSite/>
+      <siteId/>
     </property>
     <property>
       <matomoTrackingCode>
