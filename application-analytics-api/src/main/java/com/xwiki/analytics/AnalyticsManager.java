@@ -20,8 +20,12 @@
 package com.xwiki.analytics;
 
 
+import com.fasterxml.jackson.databind.JsonNode;
 import org.xwiki.component.annotation.Role;
 import org.xwiki.stability.Unstable;
+
+import java.io.IOException;
+import java.util.Map;
 
 /**
  * @version $Id$
@@ -29,7 +33,13 @@ import org.xwiki.stability.Unstable;
  */
 @Role
 @Unstable
-public class AnalyticsManager
+public interface AnalyticsManager
 {
-
+    /**
+     * This function will make the request to get the data.
+     * @param address The address where the request will be made.
+     * @param parameterList A list of key, value pairs that will represent the parameters for the request.
+     * @return A JSON string.
+     */
+    JsonNode requestData(String address, Map<String, String> parameterList) throws IOException, InterruptedException;
 }

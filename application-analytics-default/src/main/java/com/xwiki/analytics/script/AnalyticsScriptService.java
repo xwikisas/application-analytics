@@ -19,6 +19,8 @@
  */
 package com.xwiki.analytics.script;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.xwiki.analytics.AnalyticsManager;
 import com.xwiki.analytics.configuration.AnalyticsConfiguration;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.script.service.ScriptService;
@@ -27,6 +29,8 @@ import org.xwiki.stability.Unstable;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
+import java.io.IOException;
+import java.util.Map;
 
 
 /**
@@ -41,14 +45,34 @@ public class AnalyticsScriptService implements ScriptService
 {
     @Inject
     private AnalyticsConfiguration configuration;
+    @Inject
+    @Named("Matomo")
+    private AnalyticsManager analyticsManager;
+    /**
+     * @param parameterList A map of the parameters for the url
+     * @return  Will return a json string. The method is temporary
+     */
+
+    public JsonNode getDataFromRequest(Map<String, String> parameterList)
+    {
+        parameterList.put("idSite", configuration.getIdSite());
+        parameterList.put("token_auth", configuration.getAuthenticationToken());
+        try {
+            return analyticsManager.requestData(configuration.getRequestAddress(), parameterList);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     /**
      *
-     * @return Will return the configuration
+     * @return Will return the Analytics configuration.
      */
-
     public AnalyticsConfiguration getConfiguration()
     {
         return configuration;
     }
+
 }

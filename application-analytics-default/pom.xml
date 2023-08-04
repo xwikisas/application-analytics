@@ -24,7 +24,7 @@
   <parent>
     <groupId>com.xwiki.analytics</groupId>
     <artifactId>application-analytics</artifactId>
-    <version>1.11-SNAPSHOT</version>
+    <version>1.16-SNAPSHOT</version>
   </parent>
   <artifactId>application-analytics-default</artifactId>
   <packaging>jar</packaging>
@@ -44,4 +44,16 @@
       <version>${platform.version}</version>
     </dependency>
   </dependencies>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>11</source>
+          <target>11</target>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 </project>

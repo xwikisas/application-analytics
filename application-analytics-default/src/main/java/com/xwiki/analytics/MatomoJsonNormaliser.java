@@ -36,12 +36,11 @@ public class MatomoJsonNormaliser implements JsonNormaliser
     private static final String DATE = "date";
 
     /**
-     *
      * @param jsonString The json provided by Matomo.
-     * @return  The normalised json as a string.
+     * @return The normalised json as a string.
      * @throws JsonProcessingException
      */
-    public String normaliseData(String jsonString) throws JsonProcessingException
+    public JsonNode normaliseData(String jsonString) throws JsonProcessingException
     {
         JsonNode jsonNode = OBJECT_MAPPER.readTree(jsonString);
         if (jsonNode.isArray()) {
@@ -49,11 +48,12 @@ public class MatomoJsonNormaliser implements JsonNormaliser
         } else {
             jsonNode = processObjectNode(jsonNode);
         }
-        return jsonNode.toString();
+        return jsonNode;
     }
 
     /**
      * This function will add the date field to all rows when the user uses period="range" and the data is merged.
+     *
      * @param jsonNode
      */
 
@@ -68,6 +68,7 @@ public class MatomoJsonNormaliser implements JsonNormaliser
 
     /**
      * This function will process the json from Matomo and return a new one with the date field added.
+     *
      * @param jsonNode
      * @return
      */

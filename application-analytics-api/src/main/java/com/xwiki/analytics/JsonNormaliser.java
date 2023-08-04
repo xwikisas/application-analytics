@@ -20,6 +20,7 @@
 package com.xwiki.analytics;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
 
 /**
  * @version $Id$
@@ -32,5 +33,5 @@ public interface JsonNormaliser
      * @return Returns the json in string format
      * @throws JsonProcessingException
      */
-    String normaliseData(String jsonString) throws JsonProcessingException;
+    JsonNode normaliseData(String jsonString) throws JsonProcessingException;
 }

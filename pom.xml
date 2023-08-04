@@ -28,7 +28,7 @@
   </parent>
   <groupId>com.xwiki.analytics</groupId>
   <artifactId>application-analytics</artifactId>
-  <version>1.11-SNAPSHOT</version>
+  <version>1.16-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>Analytics Application (Pro) Parent POM</name>
   <description>Discover unique insights to help you better understand the usage of your instance. Streamline and improve internal processes by having full visibility on the most viewed pages. Understand how you can help your teams boost productivity by using real-time statistics.</description>
