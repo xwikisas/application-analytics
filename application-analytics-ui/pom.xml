@@ -33,6 +33,11 @@
   <description>Discover unique insights to help you better understand the usage of your instance. Streamline and improve internal processes by having full visibility on the most viewed pages. Understand how you can help your teams boost productivity by using real-time statistics.</description>
   <properties>
     <!-- Name to display by the Extension Manager -->
+    <!-- The list of documents that are not covered by the extension license. The user that installs the extension has
+    full access to these documents (view, edit, delete) without having a license, so use this property wisely. -->
+    <xwiki.extension.licensing.excludedDocuments>
+      Analytics.Code.Configuration
+    </xwiki.extension.licensing.excludedDocuments>
     <xwiki.extension.name>Analytics Application (Pro)</xwiki.extension.name>
     <xwiki.extension.category>application</xwiki.extension.category>
 
@@ -45,7 +50,8 @@
     <!-- The list of documents that are not covered by the extension license. The user that installs the extension has
     full access to these documents (view, edit, delete) without having a license, so use this property wisely. -->
     <xwiki.extension.licensing.excludedDocuments>
-      Analytics.DefaultDashboard
+      Analytics.DefaultDashboard,
+      Analytics.Code.Configuration
     </xwiki.extension.licensing.excludedDocuments>
     <xwiki.clirr.skip>true</xwiki.clirr.skip>
   </properties>
@@ -69,7 +75,7 @@
         <configuration>
           <contentPages>
             <contentPage>.*/Analytics/WebHome\.xml</contentPage>
-            <contentPage>.*/Analytics/DefaultDashbord\.xml</contentPage>
+            <contentPage>.*/Analytics/DefaultDashboard\.xml</contentPage>
           </contentPages>
         </configuration>
       </plugin>
