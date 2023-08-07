@@ -184,6 +184,7 @@ require(['jquery', 'xwiki-l10n!mostViewedPagesTranslation'], function ($, l10n) 
       fragment.appendChild(row);
     });
   };
+
   /**
   * The data is organized as a JSON of JSONs, where each internal JSON represents data for a specific year.
   */
