@@ -36,9 +36,10 @@ public class MatomoJsonNormaliser implements JsonNormaliser
     private static final String DATE = "date";
 
     /**
+     * This method will normalise the jsons returned by Matomo into a single format.
      * @param jsonString The json provided by Matomo.
      * @return The normalised json as a string.
-     * @throws JsonProcessingException
+     * @throws JsonProcessingException Throws this error when the jsonString param is not a proper json.
      */
     public JsonNode normaliseData(String jsonString) throws JsonProcessingException
     {
@@ -52,9 +53,9 @@ public class MatomoJsonNormaliser implements JsonNormaliser
     }
 
     /**
-     * This function will add the date field to all rows when the user uses period="range" and the data is merged.
-     *
-     * @param jsonNode
+     * This function will add the date field to all rows when the user uses and the data is merged and is returned
+     * as an array of jsons.
+     * @param jsonNode The json node created from the Matomo response.
      */
 
     private void processArrayNode(JsonNode jsonNode)
@@ -67,10 +68,10 @@ public class MatomoJsonNormaliser implements JsonNormaliser
     }
 
     /**
-     * This function will process the json from Matomo and return a new one with the date field added.
-     *
-     * @param jsonNode
-     * @return
+     * This function will process the data returned by Matomo when it returns a json and each field represents a time
+     * interval.
+     * @param jsonNode The json node created from the Matomo response.
+     * @return Will return a new array of jsons.
      */
     private ArrayNode processObjectNode(JsonNode jsonNode)
     {

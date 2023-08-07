@@ -50,7 +50,7 @@ public class AnalyticsScriptService implements ScriptService
     private AnalyticsManager analyticsManager;
     /**
      * @param parameterList A map of the parameters for the url
-     * @return  Will return a json string. The method is temporary
+     * @return  Will return a json string.
      */
 
     public JsonNode getDataFromRequest(Map<String, String> parameterList)
@@ -67,7 +67,7 @@ public class AnalyticsScriptService implements ScriptService
     }
 
     /**
-     *
+     * This method is only for testing purposes; it will be removed before the pull request is merged.
      * @return Will return the Analytics configuration.
      */
     public AnalyticsConfiguration getConfiguration()

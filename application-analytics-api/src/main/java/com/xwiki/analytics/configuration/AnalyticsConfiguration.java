@@ -34,7 +34,7 @@ public interface AnalyticsConfiguration
 
     /**
      *
-     * @return Returns the address where the Matomo requests will be made.
+     * @return Returns the address where the requests will be made.
      */
     String getRequestAddress();
 

@@ -28,10 +28,10 @@ import com.fasterxml.jackson.databind.JsonNode;
 public interface JsonNormaliser
 {
     /**
-     *
-     * @param jsonString
+     * This function will normalise the data returned to have only one format.
+     * @param jsonString A string that has a proper json format.
      * @return Returns the json in string format
-     * @throws JsonProcessingException
+     * @throws JsonProcessingException Throws this error when the jsonString param is not a proper json.
      */
     JsonNode normaliseData(String jsonString) throws JsonProcessingException;
 }

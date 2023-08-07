@@ -36,6 +36,7 @@ import java.util.Map;
 
 
 /**
+ * The Matomo request manager.This class will make request towards Matomo and return the data.
  * @version $Id$
  */
 @Component
@@ -44,6 +45,14 @@ import java.util.Map;
 
 public class MatomoAnalyticsManger implements AnalyticsManager
 {
+    /**
+     *
+     * @param address The address where the request will be made.
+     * @param parameterList A list of key, value pairs that will represent the parameters for the request.
+     * @return Will return a json with all the data returned by Matomo.
+     * @throws IOException
+     * @throws InterruptedException
+     */
     @Override
     public JsonNode requestData(String address, Map<String, String> parameterList)
         throws IOException, InterruptedException
@@ -54,6 +63,13 @@ public class MatomoAnalyticsManger implements AnalyticsManager
         MatomoJsonNormaliser matomoJsonNormaliser = new MatomoJsonNormaliser();
         return matomoJsonNormaliser.normaliseData(response.body());
     }
+
+    /**
+     * This function will create the URI for the matomo request by appending all the necessary data.
+     * @param address Address of the Matomo server.
+     * @param parameterList List of the url parameters.
+     * @return The final URI in string format.
+     */
     private String buildURI(String address, Map<String, String> parameterList)
     {
         StringBuilder url = new StringBuilder();
