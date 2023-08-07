@@ -51,7 +51,6 @@
     #set ($limit = 15)
   #end
   ##
-  ## Apply live table filters.
   #set ($keys = {
       'date' : 'date',
       'title' : 'label',
@@ -62,10 +61,10 @@
       'entryNbActions' : 'entry_nb_actions',
       'bounceRate' : 'bounce_rate',
       'exitRate' : 'exit_rate'
-})
+  })
   #set ($sort = 'nb_hits')
   #set ($order = 'desc')
-  #if($request.sort)
+  #if($request.sort &amp;&amp; $request.reqNo!='1')
     #set($sort = $keys.get($request.sort))
     #set($order = $request.dir)
   #end
@@ -79,12 +78,11 @@
     'filter_limit' : $request.limitEntries,
     'filter_sort_column' : $sort,
     'filter_sort_order' : $order
-  }
-  )
+  })
   #set ($analyticsResult = $services.analytics.getDataFromRequest($parameters))
   #set ($results = {
     "totalrows": $analyticsResult.size(),
-    "returnedrows":  $analyticsResult.size(),
+    "returnedrows": $analyticsResult.size(),
     "offset": $mathtool.add($offset, 1),
     "reqNo": $numbertool.toNumber($request.reqNo).intValue(),
     "rows": []
@@ -93,7 +91,7 @@
     #set ($discard = $results.rows.add(
     {
       'date' : $currentEntry.get('date').asText(),
-      'title' :  $currentEntry.get('label').asText(),
+      'title' : $currentEntry.get('label').asText(),
       'visits' :  $currentEntry.get('nb_visits').asText(),
       'hits' : $currentEntry.get('nb_hits').asText(),
       'timeSpent' : $currentEntry.get('sum_time_spent').asText(),
@@ -101,8 +99,7 @@
       'entryNbActions' : $currentEntry.get('entry_nb_actions').asText(),
       'bounceRate' : $currentEntry.get('bounce_rate').asText(),
       'exitRate' : $currentEntry.get('exit_rate').asText()
-    }
-    ))
+    }))
   #end
   #jsonResponse($results)
 #end

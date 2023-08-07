@@ -241,11 +241,11 @@
     </property>
     <property>
       <code>{{velocity}}
-#set ($dashbord =  $doc.getObject('Analytics.Code.AnalyticsDashboardClass'))
+#set ($dashbord = $doc.getObject('Analytics.Code.AnalyticsDashboardClass'))
 #set ($period = 'range')
 #if ($dashbord)
-  #set ($startDate =  $dashbord.getProperty('startDate'))
-  #set ($endDate =  $dashbord.getProperty('endDate'))
+  #set ($startDate = $dashbord.getProperty('startDate'))
+  #set ($endDate = $dashbord.getProperty('endDate'))
 #else
   #set ($startDate = $xcontext.macro.params.startDate.toString())
   #set ($endDate = $xcontext.macro.params.endDate.toString())
@@ -260,26 +260,27 @@
 #if (!$endDate)
   #set ($endDate = $datetool.get('yyyy-MM-dd'))
 #end
-##Prepare the livetable with the fields and properties
+## Prepare the livetable with the fields and properties.
+## Any suggestions on how to do this more cleanly?
 #set ($parameters = '&amp;date=' + $startDate + "," + $endDate + '&amp;period=' + $period + '&amp;limitEntries=-1')
 #set ($columns = ['date', 'title', 'visits', 'hits', 'timeSpent', 'entryNbVisits', 'entryNbActions', 'bounceRate', 'exitRate'])
 #set ($columnsProperties = {
-'date' : { 'type' : 'text', 'sortable' : true },
-'title' : { 'type' : 'text', 'sortable' : true },
-'visits' : { 'type' : 'text', 'sortable' : true },
-'hits' : { 'type' : 'text', 'sortable' : true },
-'timeSpent' : { 'type' : 'text', 'sortable' : true },
-'entryNbVisits' : { 'type' : 'text', 'sortable' : true },
-'entryNbActions' : { 'type' : 'text', 'sortable' : true },
-'bounceRate' : { 'type' : 'text', 'sortable' : true },
-'exitRate' : { 'type' : 'text', 'sortable' : true }
+  'date' : { 'type' : 'text', 'sortable' : true },
+  'title' : { 'type' : 'text', 'sortable' : true },
+  'visits' : { 'type' : 'text', 'sortable' : true },
+  'hits' : { 'type' : 'text', 'sortable' : true },
+  'timeSpent' : { 'type' : 'text', 'sortable' : true },
+  'entryNbVisits' : { 'type' : 'text', 'sortable' : true },
+  'entryNbActions' : { 'type' : 'text', 'sortable' : true },
+  'bounceRate' : { 'type' : 'text', 'sortable' : true },
+  'exitRate' : { 'type' : 'text', 'sortable' : true }
 })
 #set($options = {
-    'translationPrefix': 'analytics.mostViewedPages.header.',
-    'resultPage': 'Analytics.Code.Macros.MostViewedPageJSON',
-    'extraParams': $parameters
+  'translationPrefix': 'analytics.mostViewedPages.header.',
+  'resultPage': 'Analytics.Code.Macros.MostViewedPageJSON',
+  'extraParams': $parameters
 })
-#livetable('mostViwedPages' $columns $columnsProperties $options)
+#livetable('mostViewedPages' $columns $columnsProperties $options)
 {{/velocity}}</code>
     </property>
     <property>
