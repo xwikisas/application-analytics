@@ -19,19 +19,33 @@
  */
 package com.xwiki.analytics;
 
+import java.net.MalformedURLException;
+
+import org.xwiki.component.annotation.Role;
+import org.xwiki.resource.CreateResourceReferenceException;
+import org.xwiki.resource.CreateResourceTypeException;
+import org.xwiki.resource.UnsupportedResourceReferenceException;
+import org.xwiki.stability.Unstable;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 
 /**
  * @version $Id$
+ * @since 1.0
  */
+@Role
+@Unstable
 public interface JsonNormaliser
 {
     /**
      * This function will normalise the data returned to have only one format.
+     *
      * @param jsonString A string that has a proper json format.
      * @return Returns the json in string format
      * @throws JsonProcessingException Throws this error when the jsonString param is not a proper json.
      */
-    JsonNode normaliseData(String jsonString) throws JsonProcessingException;
+    JsonNode normaliseData(String jsonString)
+        throws JsonProcessingException, MalformedURLException, UnsupportedResourceReferenceException,
+        CreateResourceTypeException, CreateResourceReferenceException;
 }

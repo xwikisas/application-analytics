@@ -24,12 +24,15 @@
   <parent>
     <groupId>com.xwiki.analytics</groupId>
     <artifactId>application-analytics</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.6-SNAPSHOT</version>
   </parent>
   <artifactId>application-analytics-default</artifactId>
   <packaging>jar</packaging>
-  <name> Analytics Application (Pro) - DEFAULT  </name>
-  <description>Discover unique insights to help you better understand the usage of your instance. Streamline and improve internal processes by having full visibility on the most viewed pages. Understand how you can help your teams boost productivity by using real-time statistics.</description>
+  <name>Analytics Application (Pro) - DEFAULT</name>
+  <description>Discover unique insights to help you better understand the usage of your instance. Streamline and improve
+    internal processes by having full visibility on the most viewed pages. Understand how you can help your teams boost
+    productivity by using real-time statistics.
+  </description>
   <properties>
   </properties>
   <dependencies>
@@ -41,6 +44,11 @@
     <dependency>
       <groupId>org.xwiki.platform</groupId>
       <artifactId>xwiki-platform-configuration-default</artifactId>
+      <version>${platform.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.xwiki.platform</groupId>
+      <artifactId>xwiki-platform-annotation-reference</artifactId>
       <version>${platform.version}</version>
     </dependency>
   </dependencies>

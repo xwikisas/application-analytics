@@ -19,16 +19,18 @@
  */
 package com.xwiki.analytics.internal.configuration;
 
+import javax.inject.Inject;
+import javax.inject.Named;
 import javax.inject.Singleton;
-import com.xwiki.analytics.configuration.AnalyticsConfiguration;
+
 import org.xwiki.component.annotation.Component;
 import org.xwiki.configuration.ConfigurationSource;
 
-import javax.inject.Inject;
-import javax.inject.Named;
+import com.xwiki.analytics.configuration.AnalyticsConfiguration;
 
 /**
  * Default implementation of {@AnalyticsConfiguration}.
+ *
  * @version $Id$
  */
 @Component
@@ -38,6 +40,7 @@ public class DefaultAnalyticsConfiguration implements AnalyticsConfiguration
     @Inject
     @Named("analytics")
     private ConfigurationSource configDocument;
+
     @Override
     public String getRequestAddress()
     {
@@ -47,7 +50,7 @@ public class DefaultAnalyticsConfiguration implements AnalyticsConfiguration
     @Override
     public String getIdSite()
     {
-        return  getProperty("siteId", "");
+        return getProperty("siteId", "");
     }
 
     @Override

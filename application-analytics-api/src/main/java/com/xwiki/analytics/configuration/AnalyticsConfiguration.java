@@ -24,29 +24,24 @@ import org.xwiki.stability.Unstable;
 
 /**
  * @version $Id$
- * @since 1.0
- * Analytics configuration options.
+ * @since 1.0 Analytics configuration options.
  */
 @Role
 @Unstable
 public interface AnalyticsConfiguration
 {
-
     /**
-     *
      * @return Returns the address where the requests will be made.
      */
     String getRequestAddress();
 
     /**
-     *
      * @return Returns the id of the site that we want to see the statistics for.
      */
     String getIdSite();
 
     /**
-     *
-     * @return  Returns the Authentication Token that permits to access the statistics.
+     * @return Returns the Authentication Token that permits to access the statistics.
      */
     String getAuthenticationToken();
 }

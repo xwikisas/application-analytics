@@ -19,13 +19,17 @@
  */
 package com.xwiki.analytics;
 
-
-import com.fasterxml.jackson.databind.JsonNode;
-import org.xwiki.component.annotation.Role;
-import org.xwiki.stability.Unstable;
-
 import java.io.IOException;
 import java.util.Map;
+
+import org.xwiki.component.annotation.Role;
+import org.xwiki.component.manager.ComponentLookupException;
+import org.xwiki.resource.CreateResourceReferenceException;
+import org.xwiki.resource.CreateResourceTypeException;
+import org.xwiki.resource.UnsupportedResourceReferenceException;
+import org.xwiki.stability.Unstable;
+
+import com.fasterxml.jackson.databind.JsonNode;
 
 /**
  * @version $Id$
@@ -37,9 +41,12 @@ public interface AnalyticsManager
 {
     /**
      * This function will make the request to get the data.
+     * @param jsonNormaliserHint Hint to select the json normaliser.
      * @param address The address where the request will be made.
      * @param parameterList A list of key, value pairs that will represent the parameters for the request.
      * @return A JSON string.
      */
-    JsonNode requestData(String address, Map<String, String> parameterList) throws IOException, InterruptedException;
+    JsonNode requestData(String address, Map<String, String> parameterList, String jsonNormaliserHint)
+        throws IOException, InterruptedException, ComponentLookupException, UnsupportedResourceReferenceException,
+        CreateResourceTypeException, CreateResourceReferenceException;
 }

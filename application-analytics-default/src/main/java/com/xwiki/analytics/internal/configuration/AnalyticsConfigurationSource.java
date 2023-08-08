@@ -18,15 +18,17 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package com.xwiki.analytics.internal.configuration;
-import javax.inject.Singleton;
-import org.xwiki.component.annotation.Component;
-import org.xwiki.model.reference.DocumentReference;
-import org.xwiki.configuration.internal.AbstractDocumentConfigurationSource;
-import org.xwiki.model.reference.LocalDocumentReference;
 
-import javax.inject.Named;
 import java.util.Arrays;
 import java.util.List;
+
+import javax.inject.Named;
+import javax.inject.Singleton;
+
+import org.xwiki.component.annotation.Component;
+import org.xwiki.configuration.internal.AbstractDocumentConfigurationSource;
+import org.xwiki.model.reference.DocumentReference;
+import org.xwiki.model.reference.LocalDocumentReference;
 
 /**
  * @version $Id$
@@ -37,11 +39,12 @@ import java.util.List;
 public class AnalyticsConfigurationSource extends AbstractDocumentConfigurationSource
 {
     private static final List<String> SPACE_NAMES = Arrays.asList("Analytics", "Code");
-    private static final LocalDocumentReference DOCUMENT_REFERENCE =
-            new LocalDocumentReference(SPACE_NAMES, "Configuration");
-    private static final LocalDocumentReference CLASS_REFERENCE =
-            new LocalDocumentReference(SPACE_NAMES, "ConfigurationClass");
 
+    private static final LocalDocumentReference DOCUMENT_REFERENCE =
+        new LocalDocumentReference(SPACE_NAMES, "Configuration");
+
+    private static final LocalDocumentReference CLASS_REFERENCE =
+        new LocalDocumentReference(SPACE_NAMES, "ConfigurationClass");
 
     @Override
     protected DocumentReference getDocumentReference()
