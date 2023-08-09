@@ -36,7 +36,8 @@
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>true</hidden>
-  <content>{{velocity}}
+  <content>{{include reference='Analytics.Code.Macros.Macros'/}}
+{{velocity}}
 #template('attachment_macros.vm')
 #template('hierarchy_macros.vm')
 #if ($xcontext.action == 'get')
@@ -73,13 +74,15 @@
     'period' : $request.period,
     'date' : $request.date,
     'module' : 'API',
-    'method' : 'Actions.getPageTitles',
+    'method' : 'Actions.getPageUrls',
     'format' : 'json',
     'filter_limit' : $request.limitEntries,
     'filter_sort_column' : $sort,
-    'filter_sort_order' : $order
+    'filter_sort_order' : $order,
+    'expanded' : '1',
+    'flat' : '1'
   })
-  #set ($analyticsResult = $services.analytics.getDataFromRequest($parameters))
+  #set ($analyticsResult = $services.analytics.getDataFromRequest($parameters, 'MostViewed'))
   #set ($results = {
     "totalrows": $analyticsResult.size(),
     "returnedrows": $analyticsResult.size(),
@@ -88,6 +91,7 @@
     "rows": []
   })
   #foreach($currentEntry  in $analyticsResult)
+    #set ($url = $currentEntry.get('url').asText())
     #set ($discard = $results.rows.add(
     {
       'date' : $currentEntry.get('date').asText(),
@@ -103,5 +107,6 @@
   #end
   #jsonResponse($results)
 #end
-{{/velocity}}</content>
+{{/velocity}}
+</content>
 </xwikidoc>

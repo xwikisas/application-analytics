@@ -25,6 +25,7 @@ import javax.inject.Singleton;
 
 import org.xwiki.component.annotation.Component;
 import org.xwiki.configuration.ConfigurationSource;
+import org.xwiki.stability.Unstable;
 
 import com.xwiki.analytics.configuration.AnalyticsConfiguration;
 
@@ -32,9 +33,11 @@ import com.xwiki.analytics.configuration.AnalyticsConfiguration;
  * Default implementation of {@link AnalyticsConfiguration}.
  *
  * @version $Id$
+ * @since 1.0
  */
 @Component
 @Singleton
+@Unstable
 public class DefaultAnalyticsConfiguration implements AnalyticsConfiguration
 {
     @Inject

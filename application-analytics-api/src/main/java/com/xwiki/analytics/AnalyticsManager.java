@@ -32,6 +32,8 @@ import org.xwiki.stability.Unstable;
 import com.fasterxml.jackson.databind.JsonNode;
 
 /**
+ * The interface for the AnalyticManger.
+ *
  * @version $Id$
  * @since 1.0
  */

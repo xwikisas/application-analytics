@@ -37,31 +37,34 @@ import org.xwiki.component.manager.ComponentManager;
 import org.xwiki.resource.CreateResourceReferenceException;
 import org.xwiki.resource.CreateResourceTypeException;
 import org.xwiki.resource.UnsupportedResourceReferenceException;
+import org.xwiki.stability.Unstable;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.xwiki.analytics.AnalyticsManager;
 import com.xwiki.analytics.JsonNormaliser;
 
 /**
- * The Matomo request manager.This class will make request towards Matomo and return the data.
+ * The class would handle the Matomo request and return a json with the data.
  *
  * @version $Id$
+ * @since 1.0
  */
 @Component
 @Named("Matomo")
 @Singleton
+@Unstable
 public class MatomoAnalyticsManager implements AnalyticsManager
 {
     @Inject
     private ComponentManager componentManager;
 
     /**
-     * @param jsonNormaliserHint Hint to select the json normaliser.
-     * @param address The address where the request will be made.
-     * @param parameterList A list of key, value pairs that will represent the parameters for the request.
-     * @return Will return a json with all the data returned by Matomo.
-     * @throws IOException
-     * @throws InterruptedException
+     * This method will handle all the request made by the user and return a proper json.
+     *
+     * @param jsonNormaliserHint hint to select the json normaliser.
+     * @param address the address where the request will be made.
+     * @param parameterList a list of key, value pairs that will represent the parameters for the request.
+     * @return will return a json with all the data returned by Matomo.
      */
     @Override
     public JsonNode requestData(String address, Map<String, String> parameterList, String jsonNormaliserHint)
@@ -76,7 +79,7 @@ public class MatomoAnalyticsManager implements AnalyticsManager
     }
 
     /**
-     * This function will create the URI for the matomo request by appending all the necessary data.
+     * This function will create the URI for the Matomo request.
      *
      * @param address Address of the Matomo server.
      * @param parameterList List of the url parameters.

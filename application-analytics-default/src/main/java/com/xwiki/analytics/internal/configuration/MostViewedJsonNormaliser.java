@@ -47,7 +47,10 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.xwiki.analytics.JsonNormaliser;
 
 /**
+ * The normaliser for the MostViewedMacro.
+ *
  * @version $Id$
+ * @since 1.0
  */
 @Component
 @Named("MostViewed")
@@ -72,9 +75,9 @@ public class MostViewedJsonNormaliser implements JsonNormaliser
 
     /**
      * This method will normalise the jsons returned by Matomo into a single format.
-     * @param jsonString The json provided by Matomo.
-     * @return The normalised json as a string.
-     * @throws JsonProcessingException Throws this error when the jsonString param is not a proper json.
+     *
+     * @param jsonString the json provided by Matomo.
+     * @return the normalised json as a string.
      */
     public JsonNode normaliseData(String jsonString)
         throws JsonProcessingException, MalformedURLException, UnsupportedResourceReferenceException,
@@ -89,12 +92,6 @@ public class MostViewedJsonNormaliser implements JsonNormaliser
         return jsonNode;
     }
 
-    /**
-     * This function will add the date field to all rows when the user uses and the data is merged and is returned as an
-     * array of jsons.
-     *
-     * @param jsonNode The json node created from the Matomo response.
-     */
     private void processArrayNode(JsonNode jsonNode)
         throws MalformedURLException, UnsupportedResourceReferenceException, CreateResourceTypeException,
         CreateResourceReferenceException
@@ -112,12 +109,6 @@ public class MostViewedJsonNormaliser implements JsonNormaliser
         }
     }
 
-    /**
-     * This function will process the data returned by Matomo when it returns a json and each field represents a time
-     * interval.
-     * @param jsonNode The json node created from the Matomo response.
-     * @return Will return a new array of jsons.
-     */
     private ArrayNode processObjectNode(JsonNode jsonNode)
         throws MalformedURLException, UnsupportedResourceReferenceException, CreateResourceTypeException,
         CreateResourceReferenceException

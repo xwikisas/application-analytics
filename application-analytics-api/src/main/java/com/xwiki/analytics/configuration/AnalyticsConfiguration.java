@@ -23,8 +23,10 @@ import org.xwiki.component.annotation.Role;
 import org.xwiki.stability.Unstable;
 
 /**
+ * Analytics Configuration.
+ *
  * @version $Id$
- * @since 1.0 Analytics configuration options.
+ * @since 1.0
  */
 @Role
 @Unstable

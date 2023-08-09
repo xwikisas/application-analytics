@@ -29,13 +29,18 @@ import org.xwiki.component.annotation.Component;
 import org.xwiki.configuration.internal.AbstractDocumentConfigurationSource;
 import org.xwiki.model.reference.DocumentReference;
 import org.xwiki.model.reference.LocalDocumentReference;
+import org.xwiki.stability.Unstable;
 
 /**
+ * The Source for the configurations.
+ *
  * @version $Id$
+ * @since 1.0
  */
 @Component
 @Singleton
 @Named("analytics")
+@Unstable
 public class AnalyticsConfigurationSource extends AbstractDocumentConfigurationSource
 {
     private static final List<String> SPACE_NAMES = Arrays.asList("Analytics", "Code");

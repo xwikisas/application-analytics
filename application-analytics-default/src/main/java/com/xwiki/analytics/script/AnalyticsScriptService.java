@@ -34,6 +34,8 @@ import com.xwiki.analytics.AnalyticsManager;
 import com.xwiki.analytics.configuration.AnalyticsConfiguration;
 
 /**
+ * The scripting service for the Analytics App (Pro).
+ *
  * @version $Id$
  * @since 1.1
  */
@@ -51,9 +53,11 @@ public class AnalyticsScriptService implements ScriptService
     private AnalyticsManager analyticsManager;
 
     /**
-     * @param jsonNormaliserHint Hint to select the json normaliser.
-     * @param parameterList A map of the parameters for the url
-     * @return Will return a json string.
+     * This Method is used to interrogate the Matomo API.
+     *
+     * @param jsonNormaliserHint hint to select the json normaliser.
+     * @param parameterList a map of the parameters for the url
+     * @return will return a json string.
      */
     public JsonNode getDataFromRequest(Map<String, String> parameterList, String jsonNormaliserHint)
     {
@@ -64,15 +68,5 @@ public class AnalyticsScriptService implements ScriptService
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-    }
-
-    /**
-     * This method is only for testing purposes; it will be removed before the pull request is merged.
-     *
-     * @return Will return the Analytics configuration.
-     */
-    public AnalyticsConfiguration getConfiguration()
-    {
-        return configuration;
     }
 }

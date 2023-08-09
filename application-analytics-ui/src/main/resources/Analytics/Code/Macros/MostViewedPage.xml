@@ -36,7 +36,7 @@
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>true</hidden>
-  <content>{{mostViewedPage/}}</content>
+  <content>{{mostViewedPage startDate="2023/08/08 16:20" endDate="2023/08/08 16:20"/}}</content>
   <object>
     <name>Analytics.Code.Macros.MostViewedPage</name>
     <number>0</number>
@@ -263,7 +263,7 @@
 ## Prepare the livetable with the fields and properties.
 ## Any suggestions on how to do this more cleanly?
 #set ($parameters = '&amp;date=' + $startDate + "," + $endDate + '&amp;period=' + $period + '&amp;limitEntries=-1')
-#set ($columns = ['date', 'title', 'visits', 'hits', 'timeSpent', 'entryNbVisits', 'entryNbActions', 'bounceRate', 'exitRate'])
+#set ($columns = ['date', 'title', 'visits', 'hits', 'timeSpent', 'entryNbVisits', 'entryNbActions', 'bounceRate', 'exitRate','documentReference', 'URL', 'actions'])
 #set ($columnsProperties = {
   'date' : { 'type' : 'text', 'sortable' : true },
   'title' : { 'type' : 'text', 'sortable' : true },
