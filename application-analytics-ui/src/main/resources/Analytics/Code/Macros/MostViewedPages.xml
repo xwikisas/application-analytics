@@ -139,7 +139,7 @@
   ]
 });
 
-require(['jquery', 'xwiki-l10n!mostViewedPagesTranslation'], function ($, l10n) {
+require(['jquery', 'xwiki-l10n!mostViewedPagesTranslation'], function($, l10n) {
 
   function constructUrl(element) {
     const paramString = $.param({
@@ -234,20 +234,19 @@ require(['jquery', 'xwiki-l10n!mostViewedPagesTranslation'], function ($, l10n) 
       table.appendChild(tbody);
       container.appendChild(table);
       }).fail(function (jqxhr, textStatus, error) {
-        let err = textStatus + ', ' + error;
-        console.log('Request Failed: ' + err);
-        new XWiki.widgets.Notification(l10n.get('error', error), 'error');
+      let err = textStatus + ', ' + error;
+      console.log('Request Failed: ' + err);
+      new XWiki.widgets.Notification(l10n.get('error', error), 'error');
       });
   };
 
-  $(function () {
+  $(function() {
     let containers = document.querySelectorAll('.mostViewedPages');
     containers.forEach((container, index) =&gt; {
       createTable(container);
     });
   });
 });
-
 </code>
     </property>
     <property>
@@ -729,7 +728,7 @@ require(['jquery', 'xwiki-l10n!mostViewedPagesTranslation'], function ($, l10n) 
       <defaultValue/>
     </property>
     <property>
-      <description>Start time of the date interval used for this macro</description>
+      <description/>
     </property>
     <property>
       <mandatory>0</mandatory>
@@ -807,7 +806,7 @@ require(['jquery', 'xwiki-l10n!mostViewedPagesTranslation'], function ($, l10n) 
       <defaultValue/>
     </property>
     <property>
-      <description>End time of the date interval used for this macro</description>
+      <description/>
     </property>
     <property>
       <mandatory>0</mandatory>
