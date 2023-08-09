@@ -99,12 +99,14 @@ public class MostViewedJsonNormaliser implements JsonNormaliser
         for (JsonNode objNode : jsonNode) {
             if (objNode.isObject()) {
                 ((ObjectNode) objNode).put(DATE, "");
-                EntityResourceReference entityResourceReference =
-                    (EntityResourceReference) this.getReference(objNode.get(URL).asText());
-                ((ObjectNode) objNode).put(LABEL,
-                    entityResourceReference.getEntityReference().getName());
-                ((ObjectNode) objNode).put(DOCUMENT_REFERENCE,
-                    entityResourceReference.getEntityReference().toString());
+                if (objNode.has(URL)) {
+                    EntityResourceReference entityResourceReference =
+                        (EntityResourceReference) this.getReference(objNode.get(URL).asText());
+                    ((ObjectNode) objNode).put(LABEL,
+                        entityResourceReference.getEntityReference().getName());
+                    ((ObjectNode) objNode).put(DOCUMENT_REFERENCE,
+                        entityResourceReference.getEntityReference().toString());
+                }
             }
         }
     }
@@ -121,13 +123,15 @@ public class MostViewedJsonNormaliser implements JsonNormaliser
             for (JsonNode objNode : childNode) {
                 if (objNode.isObject()) {
                     ((ObjectNode) objNode).put(DATE, date);
-                    EntityResourceReference entityResourceReference =
-                        (EntityResourceReference) this.getReference(objNode.get(URL).asText());
-                    ((ObjectNode) objNode).put(LABEL,
-                        entityResourceReference.getEntityReference().getName());
-                    arrayNode.add(objNode);
-                    ((ObjectNode) objNode).put(DOCUMENT_REFERENCE,
-                        entityResourceReference.getEntityReference().toString());
+                    if (objNode.has(URL)) {
+                        EntityResourceReference entityResourceReference =
+                            (EntityResourceReference) this.getReference(objNode.get(URL).asText());
+                        ((ObjectNode) objNode).put(LABEL,
+                            entityResourceReference.getEntityReference().getName());
+                        arrayNode.add(objNode);
+                        ((ObjectNode) objNode).put(DOCUMENT_REFERENCE,
+                            entityResourceReference.getEntityReference().toString());
+                    }
                 }
             }
         }
