@@ -17,7 +17,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package com.xwiki.analytics;
+package com.xwiki.analytics.internal.configuration;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -44,6 +44,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.xwiki.analytics.JsonNormaliser;
 
 /**
  * @version $Id$
@@ -71,7 +72,6 @@ public class MostViewedJsonNormaliser implements JsonNormaliser
 
     /**
      * This method will normalise the jsons returned by Matomo into a single format.
-     *
      * @param jsonString The json provided by Matomo.
      * @return The normalised json as a string.
      * @throws JsonProcessingException Throws this error when the jsonString param is not a proper json.
@@ -115,7 +115,6 @@ public class MostViewedJsonNormaliser implements JsonNormaliser
     /**
      * This function will process the data returned by Matomo when it returns a json and each field represents a time
      * interval.
-     *
      * @param jsonNode The json node created from the Matomo response.
      * @return Will return a new array of jsons.
      */

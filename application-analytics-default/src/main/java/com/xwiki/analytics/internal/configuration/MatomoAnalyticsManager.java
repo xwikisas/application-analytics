@@ -17,20 +17,19 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package com.xwiki.analytics;
+package com.xwiki.analytics.internal.configuration;
 
 import java.io.IOException;
 import java.net.URI;
-import java.net.URLEncoder;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
+import javax.ws.rs.core.UriBuilder;
 
 import org.xwiki.component.annotation.Component;
 import org.xwiki.component.manager.ComponentLookupException;
@@ -40,6 +39,8 @@ import org.xwiki.resource.CreateResourceTypeException;
 import org.xwiki.resource.UnsupportedResourceReferenceException;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.xwiki.analytics.AnalyticsManager;
+import com.xwiki.analytics.JsonNormaliser;
 
 /**
  * The Matomo request manager.This class will make request towards Matomo and return the data.
@@ -49,7 +50,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 @Component
 @Named("Matomo")
 @Singleton
-public class MatomoAnalyticsManger implements AnalyticsManager
+public class MatomoAnalyticsManager implements AnalyticsManager
 {
     @Inject
     private ComponentManager componentManager;
@@ -69,7 +70,7 @@ public class MatomoAnalyticsManger implements AnalyticsManager
     {
         JsonNormaliser jsonNormaliser = componentManager.getInstance(JsonNormaliser.class, jsonNormaliserHint);
         HttpClient client = HttpClient.newHttpClient();
-        HttpRequest httpRequest = HttpRequest.newBuilder(URI.create(buildURI(address, parameterList))).build();
+        HttpRequest httpRequest = HttpRequest.newBuilder(buildURI(address, parameterList)).build();
         HttpResponse<String> response = client.send(httpRequest, HttpResponse.BodyHandlers.ofString());
         return jsonNormaliser.normaliseData(response.body());
     }
@@ -81,21 +82,14 @@ public class MatomoAnalyticsManger implements AnalyticsManager
      * @param parameterList List of the url parameters.
      * @return The final URI in string format.
      */
-    private String buildURI(String address, Map<String, String> parameterList)
+    private URI buildURI(String address, Map<String, String> parameterList)
     {
-        StringBuilder url = new StringBuilder();
-        if (!parameterList.isEmpty()) {
-            // If anyone knows a better way to build the final url please send it to me.
-            url.append(address + "index.php?");
-            parameterList.forEach((k, v) ->
-            {
-                url.append(URLEncoder.encode(k, StandardCharsets.UTF_8))
-                    .append('=')
-                    .append(URLEncoder.encode(v, StandardCharsets.UTF_8))
-                    .append('&');
-            });
-            url.deleteCharAt(url.length() - 1);
+        UriBuilder uriBuilder = UriBuilder.fromUri(address).path("index.php");
+
+        if (parameterList != null && !parameterList.isEmpty()) {
+            parameterList.forEach((k, v) -> uriBuilder.queryParam(k, v));
         }
-        return url.toString();
+
+        return uriBuilder.build();
     }
 }

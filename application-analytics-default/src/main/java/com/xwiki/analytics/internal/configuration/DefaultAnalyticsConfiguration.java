@@ -29,7 +29,7 @@ import org.xwiki.configuration.ConfigurationSource;
 import com.xwiki.analytics.configuration.AnalyticsConfiguration;
 
 /**
- * Default implementation of {@AnalyticsConfiguration}.
+ * Default implementation of {@link AnalyticsConfiguration}.
  *
  * @version $Id$
  */
