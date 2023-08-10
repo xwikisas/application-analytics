@@ -85,13 +85,13 @@ public class MostViewedJsonNormaliser implements JsonNormaliser
      */
     public JsonNode normaliseData(String jsonString) throws JsonProcessingException
     {
-        JsonNode jsonNode = OBJECT_MAPPER.readTree(jsonString);
-        if (jsonNode.isArray()) {
-            processArrayNode(jsonNode);
+        JsonNode jsonRoot = OBJECT_MAPPER.readTree(jsonString);
+        if (jsonRoot.isArray()) {
+            processArrayNode(jsonRoot);
         } else {
-            jsonNode = processObjectNode(jsonNode);
+            jsonRoot = processObjectNode(jsonRoot);
         }
-        return jsonNode;
+        return jsonRoot;
     }
 
     private void processArrayNode(JsonNode jsonNode)
@@ -100,12 +100,7 @@ public class MostViewedJsonNormaliser implements JsonNormaliser
             if (objNode.isObject()) {
                 ((ObjectNode) objNode).put(DATE, "");
                 if (objNode.has(URL)) {
-                    EntityResourceReference entityResourceReference =
-                        (EntityResourceReference) this.getResourceReferenceFromStringURL(objNode.get(URL).asText());
-                    if (entityResourceReference != null) {
-                        ((ObjectNode) objNode).put(LABEL,
-                            entityResourceReference.getEntityReference().getName());
-                    }
+                    this.handleURLNode((ObjectNode) objNode);
                 }
             }
         }
@@ -124,12 +119,7 @@ public class MostViewedJsonNormaliser implements JsonNormaliser
                 if (objNode.isObject()) {
                     ((ObjectNode) objNode).put(DATE, date);
                     if (objNode.has(URL)) {
-                        EntityResourceReference entityResourceReference =
-                            (EntityResourceReference) this.getResourceReferenceFromStringURL(objNode.get(URL).asText());
-                        if (entityResourceReference != null) {
-                            ((ObjectNode) objNode).put(LABEL,
-                                entityResourceReference.getEntityReference().getName());
-                        }
+                        this.handleURLNode((ObjectNode) objNode);
                         arrayNode.add(objNode);
                     }
                 }
@@ -148,6 +138,16 @@ public class MostViewedJsonNormaliser implements JsonNormaliser
                  | UnsupportedResourceReferenceException e) {
             logger.warn("Failed to get resource reference from URL: " + resourceReferenceURL, e);
             return null;
+        }
+    }
+
+    private void handleURLNode(ObjectNode objNode)
+    {
+        EntityResourceReference entityResourceReference =
+            (EntityResourceReference) this.getResourceReferenceFromStringURL(objNode.get(URL).asText());
+        if (entityResourceReference != null) {
+            objNode.put(LABEL,
+                entityResourceReference.getEntityReference().getName());
         }
     }
 }

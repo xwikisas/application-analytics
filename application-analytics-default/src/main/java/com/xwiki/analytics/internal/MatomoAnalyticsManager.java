@@ -55,10 +55,10 @@ import com.xwiki.analytics.configuration.AnalyticsConfiguration;
 @Unstable
 public class MatomoAnalyticsManager implements AnalyticsManager
 {
-
     @Inject
     @Named("MostViewed")
     private JsonNormaliser mostViewedNormaliser;
+
     @Inject
     private AnalyticsConfiguration configuration;
 
@@ -77,6 +77,9 @@ public class MatomoAnalyticsManager implements AnalyticsManager
         parameters.put("idSite", configuration.getIdSite());
         parameters.put("token_auth", configuration.getAuthenticationToken());
         JsonNormaliser jsonNormaliser = this.getNormaliser(jsonNormaliserHint);
+        if (jsonNormaliser == null) {
+            throw new RuntimeException("The hint that you provided is invalid.");
+        }
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest httpRequest = HttpRequest.newBuilder(buildURI(configuration.getRequestAddress(), parameters))
             .build();
@@ -101,14 +104,12 @@ public class MatomoAnalyticsManager implements AnalyticsManager
 
         return uriBuilder.build();
     }
+
     private JsonNormaliser getNormaliser(String hint)
     {
-        switch (hint)
-        {
-            case "MostViewed":
-                return this.mostViewedNormaliser;
-            default:
-                return null;
+        if (hint.equals("MostViewed")) {
+            return this.mostViewedNormaliser;
         }
+        return null;
     }
 }
