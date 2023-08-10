@@ -102,8 +102,10 @@ public class MostViewedJsonNormaliser implements JsonNormaliser
                 if (objNode.has(URL)) {
                     EntityResourceReference entityResourceReference =
                         (EntityResourceReference) this.getResourceReferenceFromStringURL(objNode.get(URL).asText());
-                    ((ObjectNode) objNode).put(LABEL,
-                        entityResourceReference.getEntityReference().getName());
+                    if (entityResourceReference != null) {
+                        ((ObjectNode) objNode).put(LABEL,
+                            entityResourceReference.getEntityReference().getName());
+                    }
                 }
             }
         }
@@ -124,8 +126,10 @@ public class MostViewedJsonNormaliser implements JsonNormaliser
                     if (objNode.has(URL)) {
                         EntityResourceReference entityResourceReference =
                             (EntityResourceReference) this.getResourceReferenceFromStringURL(objNode.get(URL).asText());
-                        ((ObjectNode) objNode).put(LABEL,
-                            entityResourceReference.getEntityReference().getName());
+                        if (entityResourceReference != null) {
+                            ((ObjectNode) objNode).put(LABEL,
+                                entityResourceReference.getEntityReference().getName());
+                        }
                         arrayNode.add(objNode);
                     }
                 }

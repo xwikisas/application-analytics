@@ -33,7 +33,6 @@ import javax.ws.rs.core.UriBuilder;
 
 import org.xwiki.component.annotation.Component;
 import org.xwiki.component.manager.ComponentLookupException;
-import org.xwiki.component.manager.ComponentManager;
 import org.xwiki.resource.CreateResourceReferenceException;
 import org.xwiki.resource.CreateResourceTypeException;
 import org.xwiki.resource.UnsupportedResourceReferenceException;
@@ -59,7 +58,7 @@ public class MatomoAnalyticsManager implements AnalyticsManager
 
     @Inject
     @Named("MostViewed")
-    private JsonNormaliser mostViwedNormaliser;
+    private JsonNormaliser mostViewedNormaliser;
     @Inject
     private AnalyticsConfiguration configuration;
 
@@ -107,7 +106,7 @@ public class MatomoAnalyticsManager implements AnalyticsManager
         switch (hint)
         {
             case "MostViewed":
-                return this.mostViwedNormaliser;
+                return this.mostViewedNormaliser;
             default:
                 return null;
         }
