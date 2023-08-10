@@ -56,8 +56,10 @@ import com.xwiki.analytics.configuration.AnalyticsConfiguration;
 @Unstable
 public class MatomoAnalyticsManager implements AnalyticsManager
 {
+
     @Inject
-    private ComponentManager componentManager;
+    @Named("MostViewed")
+    private JsonNormaliser mostViwedNormaliser;
     @Inject
     private AnalyticsConfiguration configuration;
 
@@ -75,7 +77,7 @@ public class MatomoAnalyticsManager implements AnalyticsManager
     {
         parameters.put("idSite", configuration.getIdSite());
         parameters.put("token_auth", configuration.getAuthenticationToken());
-        JsonNormaliser jsonNormaliser = componentManager.getInstance(JsonNormaliser.class, jsonNormaliserHint);
+        JsonNormaliser jsonNormaliser = this.getNormaliser(jsonNormaliserHint);
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest httpRequest = HttpRequest.newBuilder(buildURI(configuration.getRequestAddress(), parameters))
             .build();
@@ -99,5 +101,15 @@ public class MatomoAnalyticsManager implements AnalyticsManager
         }
 
         return uriBuilder.build();
+    }
+    private JsonNormaliser getNormaliser(String hint)
+    {
+        switch (hint)
+        {
+            case "MostViewed":
+                return this.mostViwedNormaliser;
+            default:
+                return null;
+        }
     }
 }
