@@ -1,5 +1,5 @@
 com.xwiki.analytics.internal.configuration.AnalyticsConfigurationSource
 com.xwiki.analytics.internal.configuration.DefaultAnalyticsConfiguration
 com.xwiki.analytics.script.AnalyticsScriptService
-com.xwiki.analytics.internal.configuration.MatomoAnalyticsManager
-com.xwiki.analytics.internal.configuration.MostViewedJsonNormaliser
+com.xwiki.analytics.internal.MatomoAnalyticsManager
+com.xwiki.analytics.internal.MostViewedJsonNormaliser

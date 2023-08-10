@@ -17,7 +17,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package com.xwiki.analytics.internal.configuration;
+package com.xwiki.analytics.internal;
 
 import java.io.IOException;
 import java.net.URI;
@@ -42,6 +42,7 @@ import org.xwiki.stability.Unstable;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.xwiki.analytics.AnalyticsManager;
 import com.xwiki.analytics.JsonNormaliser;
+import com.xwiki.analytics.configuration.AnalyticsConfiguration;
 
 /**
  * The class would handle the Matomo request and return a json with the data.
@@ -57,23 +58,27 @@ public class MatomoAnalyticsManager implements AnalyticsManager
 {
     @Inject
     private ComponentManager componentManager;
+    @Inject
+    private AnalyticsConfiguration configuration;
 
     /**
      * This method will handle all the request made by the user and return a proper json.
      *
      * @param jsonNormaliserHint hint to select the json normaliser.
-     * @param address the address where the request will be made.
-     * @param parameterList a list of key, value pairs that will represent the parameters for the request.
+     * @param parameters a list of key, value pairs that will represent the parameters for the request.
      * @return will return a json with all the data returned by Matomo.
      */
     @Override
-    public JsonNode requestData(String address, Map<String, String> parameterList, String jsonNormaliserHint)
+    public JsonNode requestData(Map<String, String> parameters, String jsonNormaliserHint)
         throws IOException, InterruptedException, ComponentLookupException, UnsupportedResourceReferenceException,
         CreateResourceTypeException, CreateResourceReferenceException
     {
+        parameters.put("idSite", configuration.getIdSite());
+        parameters.put("token_auth", configuration.getAuthenticationToken());
         JsonNormaliser jsonNormaliser = componentManager.getInstance(JsonNormaliser.class, jsonNormaliserHint);
         HttpClient client = HttpClient.newHttpClient();
-        HttpRequest httpRequest = HttpRequest.newBuilder(buildURI(address, parameterList)).build();
+        HttpRequest httpRequest = HttpRequest.newBuilder(buildURI(configuration.getRequestAddress(), parameters))
+            .build();
         HttpResponse<String> response = client.send(httpRequest, HttpResponse.BodyHandlers.ofString());
         return jsonNormaliser.normaliseData(response.body());
     }

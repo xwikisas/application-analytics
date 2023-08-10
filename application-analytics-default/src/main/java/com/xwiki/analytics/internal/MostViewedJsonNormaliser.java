@@ -17,7 +17,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package com.xwiki.analytics.internal.configuration;
+package com.xwiki.analytics.internal;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -28,6 +28,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
+import org.slf4j.Logger;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.resource.CreateResourceReferenceException;
 import org.xwiki.resource.CreateResourceTypeException;
@@ -71,6 +72,9 @@ public class MostViewedJsonNormaliser implements JsonNormaliser
     private ResourceReferenceResolver<ExtendedURL> resourceReferenceResolver;
 
     @Inject
+    private Logger logger;
+
+    @Inject
     private ResourceTypeResolver<ExtendedURL> resourceTypeResolver;
 
     /**
@@ -79,9 +83,7 @@ public class MostViewedJsonNormaliser implements JsonNormaliser
      * @param jsonString the json provided by Matomo.
      * @return the normalised json as a string.
      */
-    public JsonNode normaliseData(String jsonString)
-        throws JsonProcessingException, MalformedURLException, UnsupportedResourceReferenceException,
-        CreateResourceTypeException, CreateResourceReferenceException
+    public JsonNode normaliseData(String jsonString) throws JsonProcessingException
     {
         JsonNode jsonNode = OBJECT_MAPPER.readTree(jsonString);
         if (jsonNode.isArray()) {
@@ -93,27 +95,21 @@ public class MostViewedJsonNormaliser implements JsonNormaliser
     }
 
     private void processArrayNode(JsonNode jsonNode)
-        throws MalformedURLException, UnsupportedResourceReferenceException, CreateResourceTypeException,
-        CreateResourceReferenceException
     {
         for (JsonNode objNode : jsonNode) {
             if (objNode.isObject()) {
                 ((ObjectNode) objNode).put(DATE, "");
                 if (objNode.has(URL)) {
                     EntityResourceReference entityResourceReference =
-                        (EntityResourceReference) this.getReference(objNode.get(URL).asText());
+                        (EntityResourceReference) this.getResourceReferenceFromStringURL(objNode.get(URL).asText());
                     ((ObjectNode) objNode).put(LABEL,
                         entityResourceReference.getEntityReference().getName());
-                    ((ObjectNode) objNode).put(DOCUMENT_REFERENCE,
-                        entityResourceReference.getEntityReference().toString());
                 }
             }
         }
     }
 
     private ArrayNode processObjectNode(JsonNode jsonNode)
-        throws MalformedURLException, UnsupportedResourceReferenceException, CreateResourceTypeException,
-        CreateResourceReferenceException
     {
         ArrayNode arrayNode = OBJECT_MAPPER.createArrayNode();
         Iterator<String> fieldNames = jsonNode.fieldNames();
@@ -121,16 +117,16 @@ public class MostViewedJsonNormaliser implements JsonNormaliser
             String date = fieldNames.next();
             JsonNode childNode = jsonNode.get(date);
             for (JsonNode objNode : childNode) {
+                //This will add the date to the json itself in case the user uses another period=day/week/mont/year
+                // and will also add change the label to the name of the page.
                 if (objNode.isObject()) {
                     ((ObjectNode) objNode).put(DATE, date);
                     if (objNode.has(URL)) {
                         EntityResourceReference entityResourceReference =
-                            (EntityResourceReference) this.getReference(objNode.get(URL).asText());
+                            (EntityResourceReference) this.getResourceReferenceFromStringURL(objNode.get(URL).asText());
                         ((ObjectNode) objNode).put(LABEL,
                             entityResourceReference.getEntityReference().getName());
                         arrayNode.add(objNode);
-                        ((ObjectNode) objNode).put(DOCUMENT_REFERENCE,
-                            entityResourceReference.getEntityReference().toString());
                     }
                 }
             }
@@ -138,15 +134,16 @@ public class MostViewedJsonNormaliser implements JsonNormaliser
         return arrayNode;
     }
 
-    private ResourceReference getReference(String url)
-        throws MalformedURLException, CreateResourceTypeException, UnsupportedResourceReferenceException,
-        CreateResourceReferenceException
+    private ResourceReference getResourceReferenceFromStringURL(String resourceReferenceURL)
     {
-        ResourceReference result = null;
-        ExtendedURL extendedURL = new ExtendedURL(new URL(url), null);
-        ResourceType resourceType = this.resourceTypeResolver.resolve(extendedURL, Collections.emptyMap());
-        result = this.resourceReferenceResolver.resolve(extendedURL, resourceType, Collections.emptyMap());
-
-        return result;
+        try {
+            ExtendedURL extendedURL = new ExtendedURL(new URL(resourceReferenceURL), null);
+            ResourceType resourceType = this.resourceTypeResolver.resolve(extendedURL, Collections.emptyMap());
+            return this.resourceReferenceResolver.resolve(extendedURL, resourceType, Collections.emptyMap());
+        } catch (MalformedURLException | CreateResourceReferenceException | CreateResourceTypeException
+                 | UnsupportedResourceReferenceException e) {
+            logger.warn("Failed to get resource reference from URL: " + resourceReferenceURL, e);
+            return null;
+        }
     }
 }

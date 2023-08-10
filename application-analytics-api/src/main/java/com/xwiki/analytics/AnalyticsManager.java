@@ -44,11 +44,10 @@ public interface AnalyticsManager
     /**
      * This function will make the request to get the data.
      * @param jsonNormaliserHint Hint to select the json normaliser.
-     * @param address The address where the request will be made.
-     * @param parameterList A list of key, value pairs that will represent the parameters for the request.
+     * @param parameters A list of key, value pairs that will represent the parameters for the request.
      * @return A JSON string.
      */
-    JsonNode requestData(String address, Map<String, String> parameterList, String jsonNormaliserHint)
+    JsonNode requestData(Map<String, String> parameters, String jsonNormaliserHint)
         throws IOException, InterruptedException, ComponentLookupException, UnsupportedResourceReferenceException,
         CreateResourceTypeException, CreateResourceReferenceException;
 }
