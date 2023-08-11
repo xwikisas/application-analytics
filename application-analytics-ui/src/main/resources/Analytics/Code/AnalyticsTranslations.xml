@@ -37,15 +37,27 @@
   <syntaxId>plain/1.0</syntaxId>
   <hidden>true</hidden>
   <content>## Class fields
-Analytics.Code.AnalyticsDashboardClass_startDate=Start Date
-Analytics.Code.AnalyticsDashboardClass_endDate=End Date
-Analytics.Code.AnalyticsDashboardClass_description=Description
-Analytics.Code.AnalyticsDashboardClass_displayedStatistics=displayed Statistics
-Analytics.Code.AnalyticsDashboardClass_startDate.hint=Start time of the date interval used on all statistics of this dashboard.
-Analytics.Code.AnalyticsDashboardClass_endDate.hint=End time of the date interval used on all statistics of this dashboard.
 Analytics.Code.AnalyticsDashboardClass_description.hint=Additional information to be displayed.
+Analytics.Code.AnalyticsDashboardClass_description=Description
+Analytics.Code.AnalyticsDashboardClass_displayedStatistics=Displayed statistics
+Analytics.Code.AnalyticsDashboardClass_endDate=End date
+Analytics.Code.AnalyticsDashboardClass_endDate.hint=End time of the date interval used on all statistics of this dashboard.
 Analytics.Code.AnalyticsDashboardClass_DisplayedStatistics.hint=List of statistics widgets that will be displayed in the current dashboard, in order.
+Analytics.Code.AnalyticsDashboardClass_startDate=Start date
+Analytics.Code.AnalyticsDashboardClass_startDate.hint=Start time of the date interval used on all statistics of this dashboard.
 
+## Most Viewed Pages Macro
+analytics.mostViewedPages.header.bounceRate=Bounce rate
+analytics.mostViewedPages.header.entryNbVisits=No. of views that started on this page
+analytics.mostViewedPages.header.entryNbActions= No. of actions
+analytics.mostViewedPages.header.exitRate=Exit rate
+analytics.mostViewedPages.header.hits=Page views
+analytics.mostViewedPages.header.timeSpent=Time spent
+analytics.mostViewedPages.header.title=Page title
+analytics.mostViewedPages.header.visits=Unique visitors
+analytics.mostViewedPages.header.year=Year
+analytics.mostViewedPages.parameter.label.startDate=Start time of the date interval used for this macro
+analytics.mostViewedPages.parameter.label.endDate=End time of the date interval used for this macro
 
 ## Admin section
 admin.analytics.application=Analytics
@@ -72,16 +84,16 @@ analytics.mostViewedPages.header.visits=Unique visitors
 analytics.mostViewedPages.header.year=Year
 
 ## Live table keys
-analytics.livetable.doc.title=Page Title
-analytics.livetable.startDate = Start Date
-analytics.livetable.endDate = End Date
-analytics.livetable.doc.name=Page Name
 analytics.livetable.emptyvalue=Not Defined
-
+analytics.livetable.endDate=End Date
+analytics.livetable.doc.name=Page Name
+analytics.livetable.doc.title=Page Title
+analytics.livetable.startDate=Start Date
 
 ## Others
 analytics.extension.name=Analytics Application (Pro)
-analytics.extension.title=Analytics</content>
+analytics.extension.title=Analytics
+</content>
   <object>
     <name>Analytics.Code.AnalyticsTranslations</name>
     <number>0</number>
