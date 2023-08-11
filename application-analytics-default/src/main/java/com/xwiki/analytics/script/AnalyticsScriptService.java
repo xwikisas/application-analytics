@@ -44,24 +44,24 @@ import com.xwiki.analytics.AnalyticsManager;
 @Singleton
 public class AnalyticsScriptService implements ScriptService
 {
-
     @Inject
     @Named("Matomo")
     private AnalyticsManager analyticsManager;
+
     /**
      * This Method is used to interrogate the Matomo API.
      *
      * @param jsonNormaliserHint A hint to select the JSON normalizer. This hint is needed because Matomo returns
-     * JSON in various formats. With this hint, I can switch the normalizer at runtime.
+     *     JSON in various formats. With this hint, I can switch the normalizer at runtime.
      * @param parameters a map of the parameters for the url
      * @return will return a json string.
      */
-    public JsonNode getDataFromRequest(Map<String, String> parameters, String jsonNormaliserHint)
+    public JsonNode getMatomoRequestResult(Map<String, String> parameters, String jsonNormaliserHint)
     {
         try {
             return analyticsManager.requestData(parameters, jsonNormaliserHint);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Failed to get data for " + jsonNormaliserHint, e);
         }
     }
 }

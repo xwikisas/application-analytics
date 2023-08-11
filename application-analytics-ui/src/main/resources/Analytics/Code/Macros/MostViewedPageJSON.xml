@@ -53,15 +53,15 @@
   #end
   ##
   #set ($keys = {
-      'date' : 'date',
-      'title' : 'label',
-      'visits' : 'nb_visits',
-      'hits' : 'nb_hits',
-      'timeSpent' : 'sum_time_spent',
-      'entryNbVisits' : 'entry_nb_visits',
-      'entryNbActions' : 'entry_nb_actions',
-      'bounceRate' : 'bounce_rate',
-      'exitRate' : 'exit_rate'
+    'date' : 'date',
+    'title' : 'label',
+    'visits' : 'nb_visits',
+    'hits' : 'nb_hits',
+    'timeSpent' : 'sum_time_spent',
+    'entryNbVisits' : 'entry_nb_visits',
+    'entryNbActions' : 'entry_nb_actions',
+    'bounceRate' : 'bounce_rate',
+    'exitRate' : 'exit_rate'
   })
   #set ($sort = 'nb_hits')
   #set ($order = 'desc')
@@ -69,8 +69,7 @@
     #set($sort = $keys.get($request.sort))
     #set($order = $request.dir)
   #end
-  #set ($parameters =
-  {
+  #set ($parameters = {
     'period' : $request.period,
     'date' : $request.date,
     'module' : 'API',
@@ -82,7 +81,7 @@
     'expanded' : '1',
     'flat' : '1'
   })
-  #set ($analyticsResult = $services.analytics.getDataFromRequest($parameters, 'MostViewed'))
+  #set ($analyticsResult = $services.analytics.getMatomoRequestResult($parameters, 'MostViewedPages'))
   #set ($results = {
     "totalrows": $analyticsResult.size(),
     "returnedrows": $analyticsResult.size(),

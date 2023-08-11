@@ -47,6 +47,8 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.xwiki.analytics.JsonNormaliser;
 
+import liquibase.repackaged.org.apache.commons.lang3.exception.ExceptionUtils;
+
 /**
  * The normaliser for the MostViewedMacro.
  *
@@ -54,7 +56,7 @@ import com.xwiki.analytics.JsonNormaliser;
  * @since 1.0
  */
 @Component
-@Named("MostViewed")
+@Named("MostViewedPages")
 @Singleton
 public class MostViewedJsonNormaliser implements JsonNormaliser
 {
@@ -85,7 +87,18 @@ public class MostViewedJsonNormaliser implements JsonNormaliser
      */
     public JsonNode normaliseData(String jsonString) throws JsonProcessingException
     {
+        // I need to convert the string returned by matomo in a JSON to easily handle the processing of the nodes.
         JsonNode jsonRoot = OBJECT_MAPPER.readTree(jsonString);
+        // Matomo may return several variants of JSON formats. In one scenario, when the period is set to
+        // day/week/month/year, it returns a JSON object with keys representing dates. The corresponding value for
+        // each key is an array of JSON objects, each of which represents a page. However, if the user sets the
+        // period parameter to "range" Matomo returns an array of JSON objects, with each JSON object representing
+        // a page. Due to these variations, I need to process the result from Matomo to create a normalized format.
+        // This normalized format is an array of JSON objects and each JSON object in this array will have a new
+        // field called 'date'. This 'date' field will be set to 'N/A' when Matomo returns an array instead of an
+        // object. In the 'processArrayNode' and 'processObjectNode' methods, I also modify the 'label' field to
+        // change it from the raw URL format to the page name.
+
         if (jsonRoot.isArray()) {
             processArrayNode(jsonRoot);
         } else {
@@ -114,8 +127,6 @@ public class MostViewedJsonNormaliser implements JsonNormaliser
             String date = fieldNames.next();
             JsonNode childNode = jsonNode.get(date);
             for (JsonNode objNode : childNode) {
-                //This will add the date to the json itself in case the user uses another period=day/week/mont/year
-                // and will also add change the label to the name of the page.
                 if (objNode.isObject()) {
                     ((ObjectNode) objNode).put(DATE, date);
                     if (objNode.has(URL)) {
@@ -136,7 +147,8 @@ public class MostViewedJsonNormaliser implements JsonNormaliser
             return this.resourceReferenceResolver.resolve(extendedURL, resourceType, Collections.emptyMap());
         } catch (MalformedURLException | CreateResourceReferenceException | CreateResourceTypeException
                  | UnsupportedResourceReferenceException e) {
-            logger.warn("Failed to get resource reference from URL: " + resourceReferenceURL, e);
+            logger.warn("Failed to get resource reference from URL: [{}].", resourceReferenceURL,
+                ExceptionUtils.getRootCauseMessage(e));
             return null;
         }
     }

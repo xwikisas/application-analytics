@@ -56,7 +56,7 @@ import com.xwiki.analytics.configuration.AnalyticsConfiguration;
 public class MatomoAnalyticsManager implements AnalyticsManager
 {
     @Inject
-    @Named("MostViewed")
+    @Named("MostViewedPages")
     private JsonNormaliser mostViewedNormaliser;
 
     @Inject
@@ -107,7 +107,7 @@ public class MatomoAnalyticsManager implements AnalyticsManager
 
     private JsonNormaliser getNormaliser(String hint)
     {
-        if (hint.equals("MostViewed")) {
+        if (hint.equals("MostViewedPages")) {
             return this.mostViewedNormaliser;
         }
         return null;
