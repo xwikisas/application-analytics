@@ -40,6 +40,221 @@
   <object>
     <name>Analytics.Code.Macros.MostViewedPages</name>
     <number>0</number>
+    <className>XWiki.JavaScriptExtension</className>
+    <guid>c906186c-ff5f-40d4-bdbb-95ab83de3344</guid>
+    <class>
+      <name>XWiki.JavaScriptExtension</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <cache>
+        <cache>0</cache>
+        <defaultValue>long</defaultValue>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <freeText>forbidden</freeText>
+        <largeStorage>0</largeStorage>
+        <multiSelect>0</multiSelect>
+        <name>cache</name>
+        <number>5</number>
+        <prettyName>Caching policy</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators>|, </separators>
+        <size>1</size>
+        <unmodifiable>0</unmodifiable>
+        <values>long|short|default|forbid</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </cache>
+      <code>
+        <contenttype>PureText</contenttype>
+        <disabled>0</disabled>
+        <editor>PureText</editor>
+        <name>code</name>
+        <number>2</number>
+        <prettyName>Code</prettyName>
+        <rows>20</rows>
+        <size>50</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </code>
+      <name>
+        <disabled>0</disabled>
+        <name>name</name>
+        <number>1</number>
+        <prettyName>Name</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </name>
+      <parse>
+        <disabled>0</disabled>
+        <displayFormType>select</displayFormType>
+        <displayType>yesno</displayType>
+        <name>parse</name>
+        <number>4</number>
+        <prettyName>Parse content</prettyName>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+      </parse>
+      <use>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <freeText>forbidden</freeText>
+        <largeStorage>0</largeStorage>
+        <multiSelect>0</multiSelect>
+        <name>use</name>
+        <number>3</number>
+        <prettyName>Use this extension</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators>|, </separators>
+        <size>1</size>
+        <unmodifiable>0</unmodifiable>
+        <values>currentPage|onDemand|always</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </use>
+    </class>
+    <property>
+      <cache>long</cache>
+    </property>
+    <property>
+      <code>require.config({
+  paths: {
+    'chartjs': 'https://cdn.jsdelivr.net/npm/chart.js/dist/Chart.min',
+  }
+});
+
+require(['jquery', 'chartjs'], ($) =&gt; {
+  const PERIODS = ["Day", "Week", "Month", "Year"];
+  let chart;
+
+  const renderChart = (data) =&gt; {
+    const dates = data.map(item =&gt; item.date);
+    const nbHits = data.map(item =&gt; item[$('#field').val()] || 0);
+    const ctx = $('#chart-display');
+    chart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: dates,
+        datasets: [{
+          label: '',
+          data: nbHits,
+          borderColor: 'rgba(75, 192, 192, 1)',
+          backgroundColor: 'rgba(75, 192, 192, 0.2)',
+          fill: false
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+    $('#chartModal').modal('show');
+  };
+
+  const fetchChartData = (url) =&gt; {
+    $('#chartModal').data('url', url);
+    const period = $('#periodSelect').val().toLowerCase();
+    const date = $('#date').data('date');
+    console.log(date);
+    $.getJSON(`RowEvolutionJSON?url=${url}&amp;period=${period}&amp;date=last${date}`)
+      .done((data) =&gt; {
+        window.sessionStorage.setItem('analyticsLastRequestCache', JSON.stringify(data));
+        renderChart(data);
+      })
+      .fail((jqxhr, textStatus, error) =&gt; {
+        const err = `${textStatus}, ${error}`;
+        console.error(`Request Failed: ${err}`);
+      });
+  };
+
+  const updateVisibility = (period) =&gt; {
+    PERIODS.forEach(p =&gt; {
+      p === period ? $(`#periodDuration${p}`).show() : $(`#periodDuration${p}`).hide();
+    });
+    $('#date').data('date', $(`#periodDuration${period}`).val());
+  };
+
+  const updateOnChange = () =&gt; {
+    PERIODS.forEach(p =&gt; {
+      $(`#periodDuration${p}`).on('change', function () {
+        $('#date').data('date', $(`#periodDuration${p}`).val());
+        fetchChartData($('#chartModal').data('url'));
+      });
+    });
+  };
+
+  const restOptions = () =&gt; {
+    $('#chartModal').on('hidden.bs.modal', function () {
+      PERIODS.forEach(p =&gt; {
+        $(`#periodDuration${p}`).prop('selectedIndex', 0);
+      });
+      $('#field').prop('selectedIndex', 0);
+    });
+  };
+
+  const displayStatisitcs = () =&gt; {
+    $('#field').on('change', function () {
+      renderChart(JSON.parse(window.sessionStorage.getItem('analyticsLastRequestCache')));
+    });
+  };
+
+  const bindRowEvolutionDisplay = () =&gt; {
+    $(document).on('click', '.displayMostViewedPagesActions', function () {
+      updateVisibility('Day');
+      const url = $(this).data('url');
+      $('#periodSelect').prop('selectedIndex', 0);
+      $('#date').data('date', '30');
+      fetchChartData(url);
+    });
+  };
+
+  const bindPeriodChangeEvent = () =&gt; {
+    $('#periodSelect').on('change', function () {
+      const period = $(this).val();
+      restOptions();
+      updateVisibility(period);
+      fetchChartData($('#chartModal').data('url'));
+    });
+  };
+
+  const bindEvents = () =&gt; {
+    updateOnChange();
+    restOptions();
+    displayStatisitcs();
+    bindPeriodChangeEvent();
+    bindRowEvolutionDisplay();
+  };
+
+  $(document).ready(() =&gt; {
+    updateVisibility('Day');
+    bindEvents();
+  });
+});
+</code>
+    </property>
+    <property>
+      <name/>
+    </property>
+    <property>
+      <parse>0</parse>
+    </property>
+    <property>
+      <use>onDemand</use>
+    </property>
+  </object>
+  <object>
+    <name>Analytics.Code.Macros.MostViewedPages</name>
+    <number>0</number>
     <className>XWiki.WikiMacroClass</className>
     <guid>dc943965-6af8-4905-8508-9b8c248c3930</guid>
     <class>
@@ -240,7 +455,10 @@
       <async_enabled>0</async_enabled>
     </property>
     <property>
-      <code>{{velocity}}
+      <code>{{include reference='Analytics.Code.Macros.VelocityMacros'/}}
+{{velocity}}
+#set ($discard =$xwiki.jsx.use('Analytics.Code.Macros.MostViewedPages'))
+#set ($discard =$xwiki.ssx.use('Analytics.Code.Macros.MostViewedPages'))
 #set ($dashbord = $doc.getObject('Analytics.Code.AnalyticsDashboardClass'))
 #set ($period = 'range')
 ## A dashboard will have a date inside and that date will take precedence over the date set by the macro.
@@ -270,7 +488,7 @@
         'period': $$period,
         'limitEntries' : '-1'
 }))
-#set ($columns = ['date', 'title', 'visits', 'hits', 'timeSpent', 'entryNbVisits', 'entryNbActions', 'bounceRate', 'exitRate','documentReference', 'URL', 'actions'])
+#set ($columns = ['date', 'title', 'visits', 'hits', 'timeSpent', 'entryNbVisits', 'entryNbActions', 'bounceRate', 'exitRate', 'actions'])
 #set ($columnsProperties = {
   'date' : { 'type' : 'text', 'sortable' : true },
   'title' : { 'type' : 'text', 'sortable' : true },
@@ -280,7 +498,8 @@
   'entryNbVisits' : { 'type' : 'text', 'sortable' : true },
   'entryNbActions' : { 'type' : 'text', 'sortable' : true },
   'bounceRate' : { 'type' : 'text', 'sortable' : true },
-  'exitRate' : { 'type' : 'text', 'sortable' : true }
+  'exitRate' : { 'type' : 'text', 'sortable' : true },
+  'actions' : {'type': 'text', 'html':'true', 'sortable' : false, 'filterable' : false}
 })
 #set($options = {
   'translationPrefix': 'analytics.mostViewedPages.header.',
@@ -288,6 +507,7 @@
   'extraParams': $parameters
 })
 #livetable('mostViewedPages' $columns $columnsProperties $options)
+#modalRowEvolution()
 {{/velocity}}</code>
     </property>
     <property>
