@@ -20,9 +20,9 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc version="1.4" reference="Analytics.Code.Macros.MostViewedPageJSON" locale="">
+<xwikidoc version="1.4" reference="Analytics.Code.Macros.MostViewedPagesJSON" locale="">
   <web>Analytics.Code.Macros</web>
-  <name>MostViewedPageJSON</name>
+  <name>MostViewedPagesJSON</name>
   <language/>
   <defaultLanguage/>
   <translation>0</translation>
@@ -31,12 +31,12 @@
   <author>xwiki:XWiki.Admin</author>
   <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
   <version>1.1</version>
-  <title>MostViewedPageJSON</title>
+  <title>MostViewedPagesJSON</title>
   <comment/>
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>true</hidden>
-  <content>{{include reference='Analytics.Code.Macros.Macros'/}}
+  <content>
 {{velocity}}
 #template('attachment_macros.vm')
 #template('hierarchy_macros.vm')
@@ -91,8 +91,7 @@
   })
   #foreach($currentEntry  in $analyticsResult)
     #set ($url = $currentEntry.get('url').asText())
-    #set ($discard = $results.rows.add(
-    {
+    #set ($discard = $results.rows.add({
       'date' : $currentEntry.get('date').asText(),
       'title' : $currentEntry.get('label').asText(),
       'visits' :  $currentEntry.get('nb_visits').asText(),

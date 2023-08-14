@@ -49,8 +49,8 @@
     <tag>HEAD</tag>
   </scm>
   <modules>
-    <module>application-analytics-ui</module>
     <module>application-analytics-api</module>
     <module>application-analytics-default</module>
+    <module>application-analytics-ui</module>
   </modules>
 </project>

@@ -30,6 +30,11 @@ import org.xwiki.test.junit5.mockito.MockComponent;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
+/**
+ * Unit test for {@link DefaultAnalyticsConfiguration}
+ *
+ * @version $Id$
+ */
 @ComponentTest
 public class DefaultAnalyticsConfigurationTest
 {
@@ -48,14 +53,14 @@ public class DefaultAnalyticsConfigurationTest
     }
 
     @Test
-    public void getSiteIDTokenTest()
+    public void getSiteIDTest()
     {
         when(this.analyticsConfigurationSource.getProperty("siteId", "")).thenReturn("3");
         assertEquals("3", this.defaultAnalyticsConfiguration.getIdSite());
     }
 
     @Test
-    public void getAddressTokenTest()
+    public void getAddressTest()
     {
         when(this.analyticsConfigurationSource.getProperty("requestAddress", "")).thenReturn("13.192.200.19");
         assertEquals("13.192.200.19", this.defaultAnalyticsConfiguration.getRequestAddress());

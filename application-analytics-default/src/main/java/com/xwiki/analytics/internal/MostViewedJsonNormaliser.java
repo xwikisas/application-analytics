@@ -48,7 +48,6 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.xwiki.analytics.JsonNormaliser;
 
 import liquibase.repackaged.org.apache.commons.lang3.exception.ExceptionUtils;
-
 /**
  * The normaliser for the MostViewedMacro.
  *
@@ -98,7 +97,6 @@ public class MostViewedJsonNormaliser implements JsonNormaliser
         // field called 'date'. This 'date' field will be set to 'N/A' when Matomo returns an array instead of an
         // object. In the 'processArrayNode' and 'processObjectNode' methods, I also modify the 'label' field to
         // change it from the raw URL format to the page name.
-
         if (jsonRoot.isArray()) {
             processArrayNode(jsonRoot);
         } else {
@@ -107,6 +105,12 @@ public class MostViewedJsonNormaliser implements JsonNormaliser
         return jsonRoot;
     }
 
+    /**
+     * Handle the scenario where Matomo returns an array of JSON objects. This function processes each entry to append
+     * an empty date to it.
+     *
+     * @param jsonNode an array of jsons
+     */
     private void processArrayNode(JsonNode jsonNode)
     {
         for (JsonNode objNode : jsonNode) {
@@ -118,6 +122,15 @@ public class MostViewedJsonNormaliser implements JsonNormaliser
             }
         }
     }
+
+    /**
+     * Handle the scenario where Matomo returns an object with dates as keys and arrays of JSON objects as values. This
+     * function extracts the date from the key and adds it to each page. Ultimately, it returns an array of JSON objects
+     * instead of a single JSON object.
+     *
+     * @param jsonNode json object
+     * @return array of jsons
+     */
 
     private ArrayNode processObjectNode(JsonNode jsonNode)
     {
@@ -139,6 +152,13 @@ public class MostViewedJsonNormaliser implements JsonNormaliser
         return arrayNode;
     }
 
+    /**
+     * Process the URL of a page to obtain the documentReference. This is necessary to retrieve the document name for
+     * display when rendering the table.
+     *
+     * @param resourceReferenceURL the url of the page
+     * @return
+     */
     private ResourceReference getResourceReferenceFromStringURL(String resourceReferenceURL)
     {
         try {
@@ -153,6 +173,11 @@ public class MostViewedJsonNormaliser implements JsonNormaliser
         }
     }
 
+    /**
+     * Will change the label with the actual name of the page.
+     *
+     * @param objNode a json object
+     */
     private void handleURLNode(ObjectNode objNode)
     {
         EntityResourceReference entityResourceReference =

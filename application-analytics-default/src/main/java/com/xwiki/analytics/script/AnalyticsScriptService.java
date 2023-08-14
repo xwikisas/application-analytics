@@ -33,7 +33,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.xwiki.analytics.AnalyticsManager;
 
 /**
- * The scripting service for the Analytics App (Pro).
+ * Script service for the Analytics Application.
  *
  * @version $Id$
  * @since 1.1
@@ -49,12 +49,12 @@ public class AnalyticsScriptService implements ScriptService
     private AnalyticsManager analyticsManager;
 
     /**
-     * This Method is used to interrogate the Matomo API.
+     * Get data from Matomo API, in a format specific to the macro that will use it.
      *
-     * @param jsonNormaliserHint A hint to select the JSON normalizer. This hint is needed because Matomo returns
-     *     JSON in various formats. With this hint, I can switch the normalizer at runtime.
-     * @param parameters a map of the parameters for the url
-     * @return will return a json string.
+     * @param jsonNormaliserHint hint specific to the component that will normalize the Matomo result response, since
+     * it's given / resulted format depends on the context were is used.
+     * @param parameters a map of the parameters needed for this request
+     * @return response from Matomo API, in a normalized JSON format
      */
     public JsonNode getMatomoRequestResult(Map<String, String> parameters, String jsonNormaliserHint)
     {

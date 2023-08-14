@@ -19,6 +19,8 @@
  */
 package com.xwiki.analytics.internal;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.Collections;
 
@@ -31,9 +33,18 @@ import org.xwiki.test.junit5.mockito.InjectMockComponents;
 import org.xwiki.test.junit5.mockito.MockComponent;
 import org.xwiki.url.ExtendedURL;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.stream.JsonReader;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
+/**
+ * Unit test for {@link MatomoAnalyticsManager}
+ *
+ * @version $Id$
+ */
 @ComponentTest
 public class MostViewedJsonNormaliserTest
 {
@@ -46,23 +57,29 @@ public class MostViewedJsonNormaliserTest
     @MockComponent
     private ResourceTypeResolver<ExtendedURL> resourceTypeResolver;
 
+    private static JsonNode node;
+
     @Test
     public void testObjectJSONResponse() throws Exception
     {
-        setupMocks("http://localhost:8080/xwiki/bin/view/Analytics/",
+        readJSONS();
+        setupURLs("http://localhost:8080/xwiki/bin/view/Analytics/",
             "http://localhost:8080/xwiki/bin/view/Analytics/Code/Macros/MostViewedPage");
-        assertEquals(responseObjectJSON(), mostViewedJsonNormaliser.normaliseData(getObjectJSON()).toString());
+        assertEquals(node.get("ResponseObjectJSON"),
+            mostViewedJsonNormaliser.normaliseData(node.get("ObjectJSON").toString()));
     }
 
     @Test
     public void testArrayJSONResponse() throws Exception
     {
-        setupMocks("http://localhost:8080/xwiki/bin/view/Analytics/Code/MostViwedPages",
+        readJSONS();
+        setupURLs("http://localhost:8080/xwiki/bin/view/Analytics/Code/MostViwedPages",
             "http://localhost:8081/xwiki/bin/view/Main/");
-        assertEquals(responseArrayJSON(), mostViewedJsonNormaliser.normaliseData(getArrayJSONS()).toString());
+        assertEquals(node.get("ResponseArrayJSON"),
+            mostViewedJsonNormaliser.normaliseData(node.get("ArrayJSONS").toString()));
     }
 
-    private void setupMocks(String url1, String url2) throws Exception
+    private void setupURLs(String url1, String url2) throws Exception
     {
         ExtendedURL extendedURL1 = new ExtendedURL(new URL(url1), null);
         ExtendedURL extendedURL2 = new ExtendedURL(new URL(url2), null);
@@ -74,35 +91,10 @@ public class MostViewedJsonNormaliserTest
         when(resourceReferenceResolver.resolve(extendedURL2, resourceType2, Collections.emptyMap())).thenReturn(null);
     }
 
-    private String getObjectJSON()
+    private void readJSONS() throws IOException
     {
-        return "{\"2023-04\":[],\"2023-05\":[],\"2023-06\":[],\"2023-07\":[{\"label\":\"\\/xwiki\\/bin\\/view\\/Analy"
-            + "tics\\/Code\\/MostViwedPages\",\"url\":\"http:\\/\\/localhost:8080\\/xwiki\\/bin\\/view\\/Analytics\\/"
-            + "Code\\/MostViwedPages\"}],\"2023-08\":[{\"label\":\"\\/xwiki\\/bin\\/view\\/Analytics\\/Code\\/Macros\\"
-            + "/MostViewedPage\",\"url\":\"http:\\/\\/localhost:8080\\/xwiki\\/bin\\/view\\/Analytics\\/Code\\/Macros\\"
-            + "/MostViewedPage\"}]}"
-            + " ";
-    }
-
-    private String responseObjectJSON()
-    {
-        return "[{\"label\":\"/xwiki/bin/view/Analytics/Code/MostViwedPages\",\"url\":\"http://localhost:8080/xwiki/"
-            + "bin/view/Analytics/Code/MostViwedPages\",\"date\":\"2023-07\"},{\"label\":\"/xwiki/bin/view/Analytics"
-            + "/Code/Macros/MostViewedPage\",\"url\":\"http://localhost:8080/xwiki/bin/view/Analytics/Code/Macros/Mo"
-            + "stViewedPage\",\"date\":\"2023-08\"}]";
-    }
-
-    private String getArrayJSONS()
-    {
-        return "[{\"label\":\"\\/xwiki\\/bin\\/view\\/Analytics\\/Code\\/MostViwedPages\",\"url\":\"http:\\/\\/"
-            + "localhost:8080\\/xwiki\\/bin\\/view\\/Analytics\\/Code\\/MostViwedPages\"},{\"label\":\"\\/xwiki"
-            + "\\/bin\\/view\\/Main\\/\",\"url\":\"http:\\/\\/localhost:8081\\/xwiki\\/bin\\/view\\/Main\\/\"}]";
-    }
-
-    private String responseArrayJSON()
-    {
-        return "[{\"label\":\"/xwiki/bin/view/Analytics/Code/MostViwedPages\","
-            + "\"url\":\"http://localhost:8080/xwiki/bin/view/Analytics/Code/MostViwedPages\",\"date\":\"\"},{\"label"
-            + "\":\"/xwiki/bin/view/Main/\",\"url\":\"http://localhost:8081/xwiki/bin/view/Main/\",\"date\":\"\"}]";
+        ObjectMapper objectMapper = new ObjectMapper();
+        InputStream is = JsonReader.class.getResourceAsStream("/tests.json");
+        node = objectMapper.readTree(is);
     }
 }

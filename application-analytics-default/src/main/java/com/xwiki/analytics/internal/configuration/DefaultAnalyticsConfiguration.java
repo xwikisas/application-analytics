@@ -19,6 +19,8 @@
  */
 package com.xwiki.analytics.internal.configuration;
 
+import java.text.MessageFormat;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -64,6 +66,10 @@ public class DefaultAnalyticsConfiguration implements AnalyticsConfiguration
 
     private <T> T getProperty(String key, T defaultValue)
     {
-        return this.configDocument.getProperty(key, defaultValue);
+        T value = this.configDocument.getProperty(key, defaultValue);
+        if (value.equals(defaultValue)) {
+            throw new RuntimeException(MessageFormat.format("The {0} is missing", key));
+        }
+        return value;
     }
 }

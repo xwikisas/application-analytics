@@ -23,7 +23,7 @@ import org.xwiki.component.annotation.Role;
 import org.xwiki.stability.Unstable;
 
 /**
- * Analytics Configuration.
+ * Configuration for the Analytics Application.
  *
  * @version $Id$
  * @since 1.0
@@ -33,17 +33,17 @@ import org.xwiki.stability.Unstable;
 public interface AnalyticsConfiguration
 {
     /**
-     * @return Returns the address where the requests will be made.
+     * @return the address where the requests will be made.
      */
     String getRequestAddress();
 
     /**
-     * @return Returns the id of the site that we want to see the statistics for.
+     * @return the id of the site that we want to see the statistics for.
      */
     String getIdSite();
 
     /**
-     * @return Returns the Authentication Token that permits to access the statistics.
+     * @return the Authentication Token that permits to access the statistics.
      */
     String getAuthenticationToken();
 }

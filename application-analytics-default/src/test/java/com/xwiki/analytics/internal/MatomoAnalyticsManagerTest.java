@@ -36,9 +36,14 @@ import org.xwiki.test.junit5.mockito.MockComponent;
 import com.xwiki.analytics.JsonNormaliser;
 import com.xwiki.analytics.configuration.AnalyticsConfiguration;
 
-import static org.mockito.Mockito.when;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
 
+/**
+ * Unit test for {@link MatomoAnalyticsManager}
+ *
+ * @version $Id$
+ */
 @ComponentTest
 public class MatomoAnalyticsManagerTest
 {

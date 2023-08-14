@@ -78,7 +78,8 @@ public class MatomoAnalyticsManager implements AnalyticsManager
         parameters.put("token_auth", configuration.getAuthenticationToken());
         JsonNormaliser jsonNormaliser = this.getNormaliser(jsonNormaliserHint);
         if (jsonNormaliser == null) {
-            throw new RuntimeException("The hint that you provided is invalid.");
+            throw new RuntimeException("Error occurred while retrieving Matomo statistic results. There is no JSON"
+                    + " normalizer associated with the hint you provided.");
         }
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest httpRequest = HttpRequest.newBuilder(buildURI(configuration.getRequestAddress(), parameters))

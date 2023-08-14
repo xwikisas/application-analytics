@@ -20,25 +20,25 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc version="1.4" reference="Analytics.Code.Macros.MostViewedPage" locale="">
+<xwikidoc version="1.4" reference="Analytics.Code.Macros.MostViewedPages" locale="">
   <web>Analytics.Code.Macros</web>
-  <name>MostViewedPage</name>
+  <name>MostViewedPages</name>
   <language/>
   <defaultLanguage/>
   <translation>0</translation>
   <creator>xwiki:XWiki.Admin</creator>
-  <parent>Analytics.Code.Macros.WebHome</parent>
+  <parent>WebHome</parent>
   <author>xwiki:XWiki.Admin</author>
   <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
   <version>1.1</version>
-  <title>MostViewedPage</title>
+  <title>MostViewedPages</title>
   <comment/>
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>true</hidden>
-  <content>{{mostViewedPage startDate="2023/08/08 16:20" endDate="2023/08/08 16:20"/}}</content>
+  <content>{{mostViewedPage/}}</content>
   <object>
-    <name>Analytics.Code.Macros.MostViewedPage</name>
+    <name>Analytics.Code.Macros.MostViewedPages</name>
     <number>0</number>
     <className>XWiki.WikiMacroClass</className>
     <guid>dc943965-6af8-4905-8508-9b8c248c3930</guid>
@@ -243,6 +243,7 @@
       <code>{{velocity}}
 #set ($dashbord = $doc.getObject('Analytics.Code.AnalyticsDashboardClass'))
 #set ($period = 'range')
+## A dashboard will have a date inside and that date will take precedence over the date set by the macro.
 #if ($dashbord)
   #set ($startDate = $dashbord.getProperty('startDate'))
   #set ($endDate = $dashbord.getProperty('endDate'))
@@ -252,8 +253,10 @@
 #end
 #set ($startDateObj = $datetool.toDate('yyyy/MM/dd HH:mm', $startDate))
 #set ($startDate = $datetool.format('yyyy-MM-dd', $startDateObj))
-#set ($endDateObj = $datetool.toDate('yyyyy/MM/dd HH:mm', $endDate))
+#set ($endDateObj = $datetool.toDate('yyyy/MM/dd HH:mm', $endDate))
 #set ($endDate = $datetool.format('yyyy-MM-dd', $endDateObj))
+## Check if startDate or endDate are not defined and replace them with some default values, in order to match the end of
+## the time interval. For startDate we use '2007-01-01' since it's the oldest one accepted by Matomo.
 #if (!$startDate)
   #set ($startDate = '2007-01-01')
 #end
@@ -261,8 +264,12 @@
   #set ($endDate = $datetool.get('yyyy-MM-dd'))
 #end
 ## Prepare the livetable with the fields and properties.
-## Any suggestions on how to do this more cleanly?
-#set ($parameters = '&amp;date=' + $startDate + "," + $endDate + '&amp;period=' + $period + '&amp;limitEntries=-1')
+#set ($date = $startDate + ',' + $endDate)
+#set ($parameters = $escapetool.url({
+        'date': $date,
+        'period': $$period,
+        'limitEntries' : '-1'
+}))
 #set ($columns = ['date', 'title', 'visits', 'hits', 'timeSpent', 'entryNbVisits', 'entryNbActions', 'bounceRate', 'exitRate','documentReference', 'URL', 'actions'])
 #set ($columnsProperties = {
   'date' : { 'type' : 'text', 'sortable' : true },
@@ -277,7 +284,7 @@
 })
 #set($options = {
   'translationPrefix': 'analytics.mostViewedPages.header.',
-  'resultPage': 'Analytics.Code.Macros.MostViewedPageJSON',
+  'resultPage': 'Analytics.Code.Macros.MostViewedPagesJSON',
   'extraParams': $parameters
 })
 #livetable('mostViewedPages' $columns $columnsProperties $options)
@@ -315,7 +322,7 @@
     </property>
   </object>
   <object>
-    <name>Analytics.Code.Macros.MostViewedPage</name>
+    <name>Analytics.Code.Macros.MostViewedPages</name>
     <number>0</number>
     <className>XWiki.WikiMacroParameterClass</className>
     <guid>6e3cae3f-3127-4fb2-a590-5dce2f4be0d0</guid>
@@ -393,7 +400,7 @@
     </property>
   </object>
   <object>
-    <name>Analytics.Code.Macros.MostViewedPage</name>
+    <name>Analytics.Code.Macros.MostViewedPages</name>
     <number>1</number>
     <className>XWiki.WikiMacroParameterClass</className>
     <guid>8a9fb4a7-d7e2-4d7d-84b8-8afb71b4606d</guid>
