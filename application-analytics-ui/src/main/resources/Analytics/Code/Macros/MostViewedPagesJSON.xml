@@ -63,7 +63,7 @@
   })
   #set ($sort = 'nb_hits')
   #set ($order = 'desc')
-  #if($request.sort &amp;&amp; $request.reqNo!='1')
+  #if ($request.sort &amp;&amp; $request.reqNo!='1')
     #set($sort = $keys.get($request.sort))
     #set($order = $request.dir)
   #end
@@ -87,7 +87,7 @@
     "reqNo": $numbertool.toNumber($request.reqNo).intValue(),
     "rows": []
   })
-  #foreach($currentEntry  in $analyticsResult)
+  #foreach ($currentEntry  in $analyticsResult)
     #set ($url = $currentEntry.get('url').asText())
     #set ($discard = $results.rows.add({
       'date' : $currentEntry.get('date').asText(),
