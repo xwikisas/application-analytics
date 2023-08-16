@@ -19,7 +19,6 @@
  */
 package com.xwiki.analytics.internal;
 
-import java.net.MalformedURLException;
 import java.util.Iterator;
 
 import javax.inject.Named;
@@ -57,7 +56,7 @@ public class RowEvolutionJsonNormaliser implements JsonNormaliser
      * @param jsonString the json provided by Matomo.
      * @return the normalised json as a JsonNode.
      */
-    public JsonNode normaliseData(String jsonString) throws JsonProcessingException, MalformedURLException
+    public JsonNode normaliseData(String jsonString) throws JsonProcessingException
     {
         JsonNode jsonNode = OBJECT_MAPPER.readTree(jsonString);
         return processObjectNode(jsonNode);
