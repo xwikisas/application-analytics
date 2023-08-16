@@ -240,31 +240,10 @@
       <async_enabled>0</async_enabled>
     </property>
     <property>
-      <code>{{velocity}}
-#set ($dashbord = $doc.getObject('Analytics.Code.AnalyticsDashboardClass'))
+      <code>{{include reference='Analytics.Code.Macros.VelocityMacros'/}}
+{{velocity}}
+#getDate()
 #set ($period = 'range')
-## A dashboard will have a date inside and that date will take precedence over the date set by the macro.
-#if ($dashbord)
-  #set ($startDate = $dashbord.getProperty('startDate'))
-  #set ($endDate = $dashbord.getProperty('endDate'))
-#else
-  #set ($startDate = $xcontext.macro.params.startDate.toString())
-  #set ($endDate = $xcontext.macro.params.endDate.toString())
-#end
-#set ($startDateObj = $datetool.toDate('yyyy/MM/dd HH:mm', $startDate))
-#set ($startDate = $datetool.format('yyyy-MM-dd', $startDateObj))
-#set ($endDateObj = $datetool.toDate('yyyy/MM/dd HH:mm', $endDate))
-#set ($endDate = $datetool.format('yyyy-MM-dd', $endDateObj))
-## Check if startDate or endDate are not defined and replace them with some default values, in order to match the end of
-## the time interval. For startDate we use '2007-01-01' since it's the oldest one accepted by Matomo.
-#if (!$startDate)
-  #set ($startDate = '2007-01-01')
-#end
-#if (!$endDate)
-  #set ($endDate = $datetool.get('yyyy-MM-dd'))
-#end
-## Prepare the livetable with the fields and properties.
-#set ($date = $startDate + ',' + $endDate)
 #set ($parameters = $escapetool.url({
         'date': $date,
         'period': $$period,
