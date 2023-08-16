@@ -63,7 +63,7 @@
   #set ($date = $startDate + ',' + $endDate)
 #end
 
-#macro(displayMostViewedPageActions $parameter)
+#macro(setParameterOnAction $parameter)
 &lt;div class="displayMostViewedPagesActions"  data-parameter=$escapetool.url($parameter)&gt;
   &lt;a class="move-attachment action" title="$escapetool.xml($services.localization.render('analytics.mostViwedMacros.action.rowEvolution'))" href="#"&gt;
     &lt;span class="action-icon"&gt;$services.icon.renderHTML('eye')&lt;/span&gt;&lt;span class="action-label"&gt;$escapetool.xml($services.localization.render('analytics.mostViwedMacros.action.action.label.rowEvolution'))&lt;/span&gt;
