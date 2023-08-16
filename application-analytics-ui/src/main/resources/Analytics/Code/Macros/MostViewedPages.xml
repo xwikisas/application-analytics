@@ -270,7 +270,7 @@
         'period': $$period,
         'limitEntries' : '-1'
 }))
-#set ($columns = ['date', 'title', 'visits', 'hits', 'timeSpent', 'entryNbVisits', 'entryNbActions', 'bounceRate', 'exitRate','documentReference', 'URL', 'actions'])
+#set ($columns = ['date', 'title', 'visits', 'hits', 'timeSpent', 'entryNbVisits', 'entryNbActions', 'bounceRate', 'exitRate'])
 #set ($columnsProperties = {
   'date' : { 'type' : 'text', 'sortable' : true },
   'title' : { 'type' : 'text', 'sortable' : true },
