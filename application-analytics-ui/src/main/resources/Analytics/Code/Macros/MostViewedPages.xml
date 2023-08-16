@@ -134,6 +134,11 @@ require(['jquery', 'chartjs'], ($) =&gt; {
   const PERIODS = ["Day", "Week", "Month", "Year"];
   let chart;
 
+  /**
+   * Creates the chart
+   * 
+   * @param data json with the dataset for the current page. 
+   */
   const renderChart = (data) =&gt; {
     const dates = data.map(item =&gt; item.date);
     const nbHits = data.map(item =&gt; item[$('#field').val()] || 0);
@@ -161,6 +166,12 @@ require(['jquery', 'chartjs'], ($) =&gt; {
     $('#chartModal').modal('show');
   };
 
+  /**
+   * Fetches the data from Matomo using the XWiki server as a proxy through the RowEvolutionJSON page. It then saves the data in session 
+   * storage for easy access. This allows the user to display a different field for the same time interval without making a new request and updates the chart.
+   * 
+   * @param url the page url.
+   */
   const fetchChartData = (url) =&gt; {
     $('#chartModal').data('url', url);
     const period = $('#periodSelect').val().toLowerCase();
@@ -184,6 +195,9 @@ require(['jquery', 'chartjs'], ($) =&gt; {
     $('#date').data('date', $(`#periodDuration${period}`).val());
   };
 
+  /**
+   * Updates the chart when the time is changed.
+   */
   const updateOnChange = () =&gt; {
     PERIODS.forEach(p =&gt; {
       $(`#periodDuration${p}`).on('change', function () {
@@ -193,6 +207,9 @@ require(['jquery', 'chartjs'], ($) =&gt; {
     });
   };
 
+  /**
+   * Resets to the default option for all the selectos.
+   */
   const restOptions = () =&gt; {
     $('#chartModal').on('hidden.bs.modal', function () {
       PERIODS.forEach(p =&gt; {
@@ -208,6 +225,9 @@ require(['jquery', 'chartjs'], ($) =&gt; {
     });
   };
 
+  /**
+   * Binds the event that will open the modal and display the data when the 'Row Evolution' button is clicked. 
+   */
   const bindRowEvolutionDisplay = () =&gt; {
     $(document).on('click', '.displayMostViewedPagesActions', function () {
       updateVisibility('Day');
@@ -218,6 +238,10 @@ require(['jquery', 'chartjs'], ($) =&gt; {
     });
   };
 
+  /**
+   * Bind the event that will change the options for the time when the period is changed. Will also update the graph with
+   * the new period and the default time for that period.
+   */
   const bindPeriodChangeEvent = () =&gt; {
     $('#periodSelect').on('change', function () {
       const period = $(this).val();
@@ -458,7 +482,6 @@ require(['jquery', 'chartjs'], ($) =&gt; {
       <code>{{include reference='Analytics.Code.Macros.VelocityMacros'/}}
 {{velocity}}
 #set ($discard =$xwiki.jsx.use('Analytics.Code.Macros.MostViewedPages'))
-#set ($discard =$xwiki.ssx.use('Analytics.Code.Macros.MostViewedPages'))
 #set ($dashbord = $doc.getObject('Analytics.Code.AnalyticsDashboardClass'))
 #set ($period = 'range')
 ## A dashboard will have a date inside and that date will take precedence over the date set by the macro.
