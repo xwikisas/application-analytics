@@ -28,6 +28,7 @@ import java.util.HashMap;
 import javax.inject.Named;
 
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
 import org.xwiki.test.junit5.mockito.ComponentTest;
 import org.xwiki.test.junit5.mockito.InjectMockComponents;
 import org.xwiki.test.junit5.mockito.MockComponent;
@@ -38,6 +39,7 @@ import com.xwiki.analytics.configuration.AnalyticsConfiguration;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 /**
@@ -58,6 +60,9 @@ public class MatomoAnalyticsManagerTest
     @MockComponent
     private AnalyticsConfiguration configuration;
 
+    @MockComponent
+    private Logger logger;
+
     @Test
     public void requestDataWithCorrectHintForNormaliser() throws IOException, InterruptedException
     {
@@ -72,8 +77,20 @@ public class MatomoAnalyticsManagerTest
         assertEquals(null,  this.matomoAnalyticsManager.requestData(new HashMap<>(), "MostViewedPages"));
     }
     @Test
-    public void requestDataWithInvalidNormaliser()
+    public void requestDataWithInvalidNormaliser() throws IOException, InterruptedException
     {
+        when(this.configuration.getAuthenticationToken()).thenReturn("token");
+        when(this.configuration.getRequestAddress()).thenReturn("http://130.61.233.19/matomo");
+        when(this.configuration.getIdSite()).thenReturn("3");
+        try {
+            when(this.matomoAnalyticsManager.requestData(new HashMap<>(), "RANDOM_NORMALISER")).thenThrow(
+                new RuntimeException());
+            verify(this.logger).warn("There is no JSON normalizer associated with the [{}] hint you provided.","RANDOM_NORMALISER");
+        }
+        catch (RuntimeException e)
+        {
+            assertEquals(e.getMessage(), "Error occurred while retrieving Matomo statistic results.");
+        }
 
     }
 }
