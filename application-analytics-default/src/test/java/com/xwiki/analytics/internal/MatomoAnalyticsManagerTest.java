@@ -28,10 +28,6 @@ import java.util.HashMap;
 import javax.inject.Named;
 
 import org.junit.jupiter.api.Test;
-import org.xwiki.component.manager.ComponentLookupException;
-import org.xwiki.resource.CreateResourceReferenceException;
-import org.xwiki.resource.CreateResourceTypeException;
-import org.xwiki.resource.UnsupportedResourceReferenceException;
 import org.xwiki.test.junit5.mockito.ComponentTest;
 import org.xwiki.test.junit5.mockito.InjectMockComponents;
 import org.xwiki.test.junit5.mockito.MockComponent;
@@ -63,9 +59,7 @@ public class MatomoAnalyticsManagerTest
     private AnalyticsConfiguration configuration;
 
     @Test
-    public void MatomoAnalyticsManagerTest()
-        throws ComponentLookupException, IOException, UnsupportedResourceReferenceException, InterruptedException,
-        CreateResourceTypeException, CreateResourceReferenceException
+    public void requestDataWithCorrectHintForNormaliser() throws IOException, InterruptedException
     {
         when(this.configuration.getAuthenticationToken()).thenReturn("token");
         when(this.configuration.getRequestAddress()).thenReturn("http://130.61.233.19/matomo");
@@ -74,6 +68,12 @@ public class MatomoAnalyticsManagerTest
         HttpRequest httpRequest =  mock(HttpRequest.class);
         HttpResponse mockedResponse = mock(HttpResponse.class);
         when(client.send(eq(httpRequest), any())).thenReturn(mockedResponse);
+        when(mockedResponse.body()).thenReturn("test");
         assertEquals(null,  this.matomoAnalyticsManager.requestData(new HashMap<>(), "MostViewedPages"));
+    }
+    @Test
+    public void requestDataWithInvalidNormaliser()
+    {
+
     }
 }

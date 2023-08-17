@@ -87,7 +87,7 @@
     "reqNo": $numbertool.toNumber($request.reqNo).intValue(),
     "rows": []
   })
-  #foreach ($currentEntry  in $analyticsResult)
+  #foreach ($currentEntry in $analyticsResult)
     #set ($url = $currentEntry.get('url').asText())
     #set ($discard = $results.rows.add({
       'date' : $currentEntry.get('date').asText(),
