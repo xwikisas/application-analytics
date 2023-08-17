@@ -20,9 +20,6 @@
 package com.xwiki.analytics.internal;
 
 import java.io.IOException;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 import java.util.HashMap;
 
 import javax.inject.Named;
@@ -37,8 +34,7 @@ import com.xwiki.analytics.JsonNormaliser;
 import com.xwiki.analytics.configuration.AnalyticsConfiguration;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.mock;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -69,12 +65,8 @@ public class MatomoAnalyticsManagerTest
         when(this.configuration.getAuthenticationToken()).thenReturn("token");
         when(this.configuration.getRequestAddress()).thenReturn("http://130.61.233.19/matomo");
         when(this.configuration.getIdSite()).thenReturn("3");
-        HttpClient client = mock(HttpClient.class);
-        HttpRequest httpRequest =  mock(HttpRequest.class);
-        HttpResponse mockedResponse = mock(HttpResponse.class);
-        when(client.send(eq(httpRequest), any())).thenReturn(mockedResponse);
-        when(mockedResponse.body()).thenReturn("test");
-        assertEquals(null,  this.matomoAnalyticsManager.requestData(new HashMap<>(), "MostViewedPages"));
+        this.matomoAnalyticsManager.requestData(new HashMap<>(), "MostViewedPages");
+        verify(this.jsonNormaliser).normaliseData(any(String.class));
     }
     @Test
     public void requestDataWithInvalidNormaliser() throws IOException, InterruptedException
