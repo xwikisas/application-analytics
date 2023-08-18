@@ -25,6 +25,7 @@ import java.util.HashMap;
 import javax.inject.Named;
 
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.slf4j.Logger;
 import org.xwiki.test.junit5.mockito.ComponentTest;
 import org.xwiki.test.junit5.mockito.InjectMockComponents;
@@ -32,6 +33,7 @@ import org.xwiki.test.junit5.mockito.MockComponent;
 
 import com.xwiki.analytics.JsonNormaliser;
 import com.xwiki.analytics.configuration.AnalyticsConfiguration;
+import org.xwiki.component.util.ReflectionUtils;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -71,13 +73,15 @@ public class MatomoAnalyticsManagerTest
     @Test
     public void requestDataWithInvalidNormaliser() throws IOException, InterruptedException
     {
+        ReflectionUtils.setFieldValue(this.matomoAnalyticsManager, "logger", this.logger);
         when(this.configuration.getAuthenticationToken()).thenReturn("token");
         when(this.configuration.getRequestAddress()).thenReturn("http://130.61.233.19/matomo");
         when(this.configuration.getIdSite()).thenReturn("3");
         try {
             when(this.matomoAnalyticsManager.requestData(new HashMap<>(), "RANDOM_NORMALISER")).thenThrow(
                 new RuntimeException());
-            verify(this.logger).warn("There is no JSON normalizer associated with the [{}] hint you provided.","RANDOM_NORMALISER");
+            verify(this.logger).warn("There is no JSON normalizer associated with the [{}] hint you provided.",
+                "RANDOM_NORMALISER");
         }
         catch (RuntimeException e)
         {
