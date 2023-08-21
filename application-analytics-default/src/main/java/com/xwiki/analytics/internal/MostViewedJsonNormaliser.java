@@ -20,6 +20,8 @@
 package com.xwiki.analytics.internal;
 
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Collections;
 import java.util.Iterator;
@@ -30,6 +32,7 @@ import javax.inject.Singleton;
 
 import org.slf4j.Logger;
 import org.xwiki.component.annotation.Component;
+import org.xwiki.model.reference.EntityReferenceSerializer;
 import org.xwiki.resource.CreateResourceReferenceException;
 import org.xwiki.resource.CreateResourceTypeException;
 import org.xwiki.resource.ResourceReference;
@@ -77,19 +80,29 @@ public class MostViewedJsonNormaliser implements JsonNormaliser
     @Inject
     private ResourceTypeResolver<ExtendedURL> resourceTypeResolver;
 
-    @Override
+    @Inject
+    @Named("compactwiki")
+    private EntityReferenceSerializer<String> serializer;
+
+    /**
+     * This method will normalise the jsons returned by Matomo into a single format.
+     *
+     * @param jsonString the json provided by Matomo.
+     * @return the normalised json as a string.
+     */
     public JsonNode normaliseData(String jsonString) throws JsonProcessingException
     {
         // I need to convert the string returned by matomo in a JSON to easily handle the processing of the nodes.
         JsonNode jsonRoot = OBJECT_MAPPER.readTree(jsonString);
-        // In one scenario, when the period is set to day/week/month/year, it returns a JSON object with keys
-        // representing dates. The corresponding value for each key is an array of JSON objects, each of which
-        // represents a page. However, if the user sets the period parameter to "range" Matomo returns an array of
-        // JSON objects, with each JSON object representing a page. Due to these variations, I need to process the
-        // result from Matomo to create a normalized format. This normalized format is an array of JSON objects and
-        // each JSON object in this array will have a new field called 'date'. This 'date' field will be set to 'N/A'
-        // when Matomo returns an array instead of an object. In the 'processArrayNode' and 'processObjectNode'
-        // methods, I also modify the 'label' field to change it from the raw URL format to the page name.
+        // Matomo may return several variants of JSON formats. In one scenario, when the period is set to
+        // day/week/month/year, it returns a JSON object with keys representing dates. The corresponding value for
+        // each key is an array of JSON objects, each of which represents a page. However, if the user sets the
+        // period parameter to "range" Matomo returns an array of JSON objects, with each JSON object representing
+        // a page. Due to these variations, I need to process the result from Matomo to create a normalized format.
+        // This normalized format is an array of JSON objects and each JSON object in this array will have a new
+        // field called 'date'. This 'date' field will be set to 'N/A' when Matomo returns an array instead of an
+        // object. In the 'processArrayNode' and 'processObjectNode' methods, I also modify the 'label' field to
+        // change it from the raw URL format to the page name.
         if (jsonRoot.isArray()) {
             processArrayNode(jsonRoot);
         } else {
@@ -154,11 +167,17 @@ public class MostViewedJsonNormaliser implements JsonNormaliser
     private ResourceReference getResourceReferenceFromStringURL(String resourceReferenceURL)
     {
         try {
-            ExtendedURL extendedURL = new ExtendedURL(new URL(resourceReferenceURL), null);
+            // The URL provided by Matomo is not encoded and is in string format. To use the resourceTypeResolver,
+            // I need the URL to be properly encoded. To achieve this, I create a URL object to split the URL into its
+            // components, and then use the URI constructor to encode the URL.
+            URL url = new URL(resourceReferenceURL);
+            URL encodedUrl = new URI(url.getProtocol(), url.getUserInfo(), url.getHost(), url.getPort(), url.getPath(),
+                url.getQuery(), url.getRef()).toURL();
+            ExtendedURL extendedURL = new ExtendedURL(encodedUrl, null);
             ResourceType resourceType = this.resourceTypeResolver.resolve(extendedURL, Collections.emptyMap());
             return this.resourceReferenceResolver.resolve(extendedURL, resourceType, Collections.emptyMap());
         } catch (MalformedURLException | CreateResourceReferenceException | CreateResourceTypeException
-                 | UnsupportedResourceReferenceException e) {
+                 | UnsupportedResourceReferenceException | URISyntaxException e) {
             logger.warn("Failed to get resource reference from URL: [{}].", resourceReferenceURL,
                 ExceptionUtils.getRootCauseMessage(e));
             return null;
@@ -175,8 +194,7 @@ public class MostViewedJsonNormaliser implements JsonNormaliser
         EntityResourceReference entityResourceReference =
             (EntityResourceReference) this.getResourceReferenceFromStringURL(objNode.get(URL).asText());
         if (entityResourceReference != null) {
-            objNode.put(LABEL,
-                entityResourceReference.getEntityReference().getName());
+            objNode.put(LABEL, this.serializer.serialize(entityResourceReference.getEntityReference()));
         }
     }
 }
