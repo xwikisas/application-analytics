@@ -20,6 +20,8 @@
 package com.xwiki.analytics.internal;
 
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Collections;
 import java.util.Iterator;
@@ -30,6 +32,7 @@ import javax.inject.Singleton;
 
 import org.slf4j.Logger;
 import org.xwiki.component.annotation.Component;
+import org.xwiki.model.reference.EntityReferenceSerializer;
 import org.xwiki.resource.CreateResourceReferenceException;
 import org.xwiki.resource.CreateResourceTypeException;
 import org.xwiki.resource.ResourceReference;
@@ -48,6 +51,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.xwiki.analytics.JsonNormaliser;
 
 import liquibase.repackaged.org.apache.commons.lang3.exception.ExceptionUtils;
+
 /**
  * The normaliser for the MostViewedMacro.
  *
@@ -67,7 +71,6 @@ public class MostViewedJsonNormaliser implements JsonNormaliser
 
     private static final String LABEL = "label";
 
-
     @Inject
     private ResourceReferenceResolver<ExtendedURL> resourceReferenceResolver;
 
@@ -76,6 +79,10 @@ public class MostViewedJsonNormaliser implements JsonNormaliser
 
     @Inject
     private ResourceTypeResolver<ExtendedURL> resourceTypeResolver;
+
+    @Inject
+    @Named("compactwiki")
+    private EntityReferenceSerializer<String> serializer;
 
     /**
      * This method will normalise the jsons returned by Matomo into a single format.
@@ -130,7 +137,6 @@ public class MostViewedJsonNormaliser implements JsonNormaliser
      * @param jsonNode json object
      * @return array of jsons
      */
-
     private ArrayNode processObjectNode(JsonNode jsonNode)
     {
         ArrayNode arrayNode = OBJECT_MAPPER.createArrayNode();
@@ -161,11 +167,17 @@ public class MostViewedJsonNormaliser implements JsonNormaliser
     private ResourceReference getResourceReferenceFromStringURL(String resourceReferenceURL)
     {
         try {
-            ExtendedURL extendedURL = new ExtendedURL(new URL(resourceReferenceURL), null);
+            // The URL provided by Matomo is not encoded and is in string format. To use the resourceTypeResolver,
+            // I need the URL to be properly encoded. To achieve this, I create a URL object to split the URL into its
+            // components, and then use the URI constructor to encode the URL.
+            URL url = new URL(resourceReferenceURL);
+            URL encodedUrl = new URI(url.getProtocol(), url.getUserInfo(), url.getHost(), url.getPort(), url.getPath(),
+                url.getQuery(), url.getRef()).toURL();
+            ExtendedURL extendedURL = new ExtendedURL(encodedUrl, null);
             ResourceType resourceType = this.resourceTypeResolver.resolve(extendedURL, Collections.emptyMap());
             return this.resourceReferenceResolver.resolve(extendedURL, resourceType, Collections.emptyMap());
         } catch (MalformedURLException | CreateResourceReferenceException | CreateResourceTypeException
-                 | UnsupportedResourceReferenceException e) {
+                 | UnsupportedResourceReferenceException | URISyntaxException e) {
             logger.warn("Failed to get resource reference from URL: [{}].", resourceReferenceURL,
                 ExceptionUtils.getRootCauseMessage(e));
             return null;
@@ -182,8 +194,7 @@ public class MostViewedJsonNormaliser implements JsonNormaliser
         EntityResourceReference entityResourceReference =
             (EntityResourceReference) this.getResourceReferenceFromStringURL(objNode.get(URL).asText());
         if (entityResourceReference != null) {
-            objNode.put(LABEL,
-                entityResourceReference.getEntityReference().getName());
+            objNode.put(LABEL, this.serializer.serialize(entityResourceReference.getEntityReference()));
         }
     }
 }
