@@ -21,9 +21,7 @@ package com.xwiki.analytics.internal;
 
 import java.io.IOException;
 import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
+
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -31,6 +29,11 @@ import javax.inject.Named;
 import javax.inject.Singleton;
 import javax.ws.rs.core.UriBuilder;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.stability.Unstable;
@@ -84,11 +87,11 @@ public class MatomoAnalyticsManager implements AnalyticsManager
             logger.warn("There is no JSON normalizer associated with the [{}] hint you provided.", jsonNormaliserHint);
             throw new RuntimeException("Error occurred while retrieving Matomo statistic results.");
         }
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest httpRequest = HttpRequest.newBuilder(buildURI(parameters))
-            .build();
-        HttpResponse<String> response = client.send(httpRequest, HttpResponse.BodyHandlers.ofString());
-        return jsonNormaliser.normaliseData(response.body());
+        HttpClient client = HttpClients.createDefault();
+        HttpGet request =  new HttpGet(buildURI(parameters));
+        HttpResponse response = client.execute(request);
+        String responseBody  = EntityUtils.toString(response.getEntity());
+        return jsonNormaliser.normaliseData(responseBody);
     }
 
     /**
