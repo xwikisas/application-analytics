@@ -246,9 +246,9 @@
 #set ($discard =$xwiki.jsx.use('Analytics.Code.Macros.RowEvolution'))
 #set ($period = 'range')
 #set ($parameters = $escapetool.url({
-        'date': $date,
-        'period': $$period,
-        'limitEntries' : '-1'
+  'date': $date,
+  'period': $period,
+  'limitEntries': '-1'
 }))
 #set ($columns = ['date', 'title', 'visits', 'hits', 'timeSpent', 'entryNbActions', 'bounceRate', 'exitRate'])
 #set ($columnsProperties = {

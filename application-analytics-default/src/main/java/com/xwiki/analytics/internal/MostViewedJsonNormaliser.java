@@ -53,7 +53,7 @@ import com.xwiki.analytics.JsonNormaliser;
 import liquibase.repackaged.org.apache.commons.lang3.exception.ExceptionUtils;
 
 /**
- * The normaliser for the MostViewedMacro.
+ * Implementation for {@link JsonNormaliser}.
  *
  * @version $Id$
  * @since 1.0
@@ -63,6 +63,10 @@ import liquibase.repackaged.org.apache.commons.lang3.exception.ExceptionUtils;
 @Singleton
 public class MostViewedJsonNormaliser implements JsonNormaliser
 {
+    /**
+     * Hint for the MostViewedJsonNormaliser.
+     */
+    public static final String HINT = "MostViewedPages";
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
     private static final String DATE = "date";
@@ -85,24 +89,23 @@ public class MostViewedJsonNormaliser implements JsonNormaliser
     private EntityReferenceSerializer<String> serializer;
 
     /**
-     * This method will normalise the jsons returned by Matomo into a single format.
+     * Normalize Matomo response for format consistency and add extra information needed by XWiki.
      *
-     * @param jsonString the json provided by Matomo.
-     * @return the normalised json as a string.
+     * @param jsonString the Matomo JSON response, in {@code String} format
+     * @return the normalised json
      */
     public JsonNode normaliseData(String jsonString) throws JsonProcessingException
     {
-        // I need to convert the string returned by matomo in a JSON to easily handle the processing of the nodes.
+        // Convert the string returned by Matomo in a JSON format to easily handle the processing of the nodes.
         JsonNode jsonRoot = OBJECT_MAPPER.readTree(jsonString);
         // Matomo may return several variants of JSON formats. In one scenario, when the period is set to
         // day/week/month/year, it returns a JSON object with keys representing dates. The corresponding value for
         // each key is an array of JSON objects, each of which represents a page. However, if the user sets the
         // period parameter to "range" Matomo returns an array of JSON objects, with each JSON object representing
-        // a page. Due to these variations, I need to process the result from Matomo to create a normalized format.
+        // a page. Due to these variations, the result needs to be processed to create a single format.
         // This normalized format is an array of JSON objects and each JSON object in this array will have a new
         // field called 'date'. This 'date' field will be set to 'N/A' when Matomo returns an array instead of an
-        // object. In the 'processArrayNode' and 'processObjectNode' methods, I also modify the 'label' field to
-        // change it from the raw URL format to the page name.
+        // object. For both type of formats, the label field is also altered in order to contain the full page name
         if (jsonRoot.isArray()) {
             processArrayNode(jsonRoot);
         } else {
@@ -112,8 +115,7 @@ public class MostViewedJsonNormaliser implements JsonNormaliser
     }
 
     /**
-     * Handle the scenario where Matomo returns an array of JSON objects. This function processes each entry to append
-     * an empty date to it.
+     * This method processes each entry to append an empty date to it.
      *
      * @param jsonNode an array of jsons
      */
@@ -122,6 +124,7 @@ public class MostViewedJsonNormaliser implements JsonNormaliser
         for (JsonNode objNode : jsonNode) {
             if (objNode.isObject()) {
                 ((ObjectNode) objNode).put(DATE, "");
+                // Just in case that this normalsier wil be used in the future for other macros that do not have an url.
                 if (objNode.has(URL)) {
                     this.handleURLNode((ObjectNode) objNode);
                 }
@@ -147,6 +150,8 @@ public class MostViewedJsonNormaliser implements JsonNormaliser
             for (JsonNode objNode : childNode) {
                 if (objNode.isObject()) {
                     ((ObjectNode) objNode).put(DATE, date);
+                    // Just in case that this normalsier wil be used in the future for other macros that do not have an
+                    // url.
                     if (objNode.has(URL)) {
                         this.handleURLNode((ObjectNode) objNode);
                         arrayNode.add(objNode);
@@ -161,15 +166,16 @@ public class MostViewedJsonNormaliser implements JsonNormaliser
      * Process the URL of a page to obtain the documentReference. This is necessary to retrieve the document name for
      * display when rendering the table.
      *
-     * @param resourceReferenceURL the url of the page
-     * @return
+     * @param resourceReferenceURL the URL of the page
+     * @return the reference associated to the given URL, or {@code null} in case it couldn't be resolved
      */
     private ResourceReference getResourceReferenceFromStringURL(String resourceReferenceURL)
     {
         try {
-            // The URL provided by Matomo is not encoded and is in string format. To use the resourceTypeResolver,
-            // I need the URL to be properly encoded. To achieve this, I create a URL object to split the URL into its
-            // components, and then use the URI constructor to encode the URL.
+
+            // The URL provided by Matomo is an unencoded string. For utilization with the resourceTypeResolver,
+            // this URL needs proper encoding. This is achieved by creating a URL object to split the URL into its
+            // respective components and after that the URL is encoded using the URI constructor.
             URL url = new URL(resourceReferenceURL);
             URL encodedUrl = new URI(url.getProtocol(), url.getUserInfo(), url.getHost(), url.getPort(), url.getPath(),
                 url.getQuery(), url.getRef()).toURL();
@@ -185,7 +191,7 @@ public class MostViewedJsonNormaliser implements JsonNormaliser
     }
 
     /**
-     * Will change the label with the actual name of the page.
+     * Change the label node to contain the actual page name instead of an URL.
      *
      * @param objNode a json object
      */
