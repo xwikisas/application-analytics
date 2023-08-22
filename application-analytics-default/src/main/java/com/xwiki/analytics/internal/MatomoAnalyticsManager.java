@@ -56,18 +56,18 @@ public class MatomoAnalyticsManager implements AnalyticsManager
     private Logger logger;
 
     @Inject
-    @Named("MostViewedPages")
+    @Named(MostViewedJsonNormaliser.HINT)
     private JsonNormaliser mostViewedNormaliser;
 
     @Inject
     private AnalyticsConfiguration configuration;
 
     /**
-     * This method will handle all the request made by the user and return a proper json.
+     * Request specific data from Matomo and return an enhanced response.
      *
-     * @param jsonNormaliserHint hint to select the json normaliser.
-     * @param parameters a list of key, value pairs that will represent the parameters for the request.
-     * @return will return a json with all the data returned by Matomo.
+     * @param jsonNormaliserHint hint for the component that will alter the returned response
+     * @param parameters a list of key, value pairs that will represent the parameters for the request
+     * @return the altered Matomo request response, as JSON format
      */
     @Override
     public JsonNode requestData(Map<String, String> parameters, String jsonNormaliserHint)
@@ -81,25 +81,26 @@ public class MatomoAnalyticsManager implements AnalyticsManager
             throw new RuntimeException("Error occurred while retrieving Matomo statistic results.");
         }
         HttpClient client = HttpClient.newHttpClient();
-        HttpRequest httpRequest = HttpRequest.newBuilder(buildURI(configuration.getRequestAddress(), parameters))
+        HttpRequest httpRequest = HttpRequest.newBuilder(buildURI(parameters))
             .build();
         HttpResponse<String> response = client.send(httpRequest, HttpResponse.BodyHandlers.ofString());
         return jsonNormaliser.normaliseData(response.body());
     }
 
     /**
-     * This function will create the URI for the Matomo request.
+     * Create URI for Matomo request.
      *
-     * @param address Address of the Matomo server.
-     * @param parameterList List of the url parameters.
-     * @return The final URI in string format.
+     * @param parameterList List of the url parameters
+     * @return The final URI in string format
      */
-    private URI buildURI(String address, Map<String, String> parameterList)
+    private URI buildURI(Map<String, String> parameterList)
     {
-        UriBuilder uriBuilder = UriBuilder.fromUri(address).path("index.php");
+        UriBuilder uriBuilder = UriBuilder.fromUri(configuration.getRequestAddress()).path("index.php");
 
         if (parameterList != null && !parameterList.isEmpty()) {
-            parameterList.forEach((k, v) -> uriBuilder.queryParam(k, v));
+            for (Map.Entry<String, String> entry : parameterList.entrySet()) {
+                uriBuilder.queryParam(entry.getKey(), entry.getValue());
+            }
         }
 
         return uriBuilder.build();
@@ -107,7 +108,7 @@ public class MatomoAnalyticsManager implements AnalyticsManager
 
     private JsonNormaliser getNormaliser(String hint)
     {
-        if (hint.equals("MostViewedPages")) {
+        if (hint.equals(MostViewedJsonNormaliser.HINT)) {
             return this.mostViewedNormaliser;
         }
         return null;
