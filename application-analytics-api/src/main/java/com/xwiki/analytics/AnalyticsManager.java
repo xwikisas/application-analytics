@@ -23,10 +23,6 @@ import java.io.IOException;
 import java.util.Map;
 
 import org.xwiki.component.annotation.Role;
-import org.xwiki.component.manager.ComponentLookupException;
-import org.xwiki.resource.CreateResourceReferenceException;
-import org.xwiki.resource.CreateResourceTypeException;
-import org.xwiki.resource.UnsupportedResourceReferenceException;
 import org.xwiki.stability.Unstable;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -42,12 +38,10 @@ import com.fasterxml.jackson.databind.JsonNode;
 public interface AnalyticsManager
 {
     /**
-     * This function will make the request to get the data.
-     * @param jsonNormaliserHint Hint to select the json normaliser
-     * @param parameters A list of key, value pairs that will represent the parameters for the request
-     * @return A JSON string.
+     * Request specific analytics data.
+     * @param jsonNormaliserHint hint to select the json normaliser
+     * @param parameters a list of key, value pairs that will represent the parameters for the request
+     * @return a jsonNode with the processed data
      */
-    JsonNode requestData(Map<String, String> parameters, String jsonNormaliserHint)
-        throws IOException, InterruptedException, ComponentLookupException, UnsupportedResourceReferenceException,
-        CreateResourceTypeException, CreateResourceReferenceException;
+    JsonNode requestData(Map<String, String> parameters, String jsonNormaliserHint) throws IOException;
 }

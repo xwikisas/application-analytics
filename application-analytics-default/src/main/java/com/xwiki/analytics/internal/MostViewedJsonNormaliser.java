@@ -67,6 +67,7 @@ public class MostViewedJsonNormaliser implements JsonNormaliser
      * Hint for the MostViewedJsonNormaliser.
      */
     public static final String HINT = "MostViewedPages";
+
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
     private static final String DATE = "date";
@@ -124,7 +125,6 @@ public class MostViewedJsonNormaliser implements JsonNormaliser
         for (JsonNode objNode : jsonNode) {
             if (objNode.isObject()) {
                 ((ObjectNode) objNode).put(DATE, "");
-                // Just in case that this normalsier wil be used in the future for other macros that do not have an url.
                 if (objNode.has(URL)) {
                     this.handleURLNode((ObjectNode) objNode);
                 }
@@ -150,13 +150,10 @@ public class MostViewedJsonNormaliser implements JsonNormaliser
             for (JsonNode objNode : childNode) {
                 if (objNode.isObject()) {
                     ((ObjectNode) objNode).put(DATE, date);
-                    // Just in case that this normalsier wil be used in the future for other macros that do not have an
-                    // url.
                     if (objNode.has(URL)) {
                         this.handleURLNode((ObjectNode) objNode);
                     }
                     arrayNode.add(objNode);
-
                 }
             }
         }
