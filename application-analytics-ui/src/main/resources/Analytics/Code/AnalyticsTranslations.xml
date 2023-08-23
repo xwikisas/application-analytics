@@ -62,6 +62,20 @@ analytics.mostViewedPages.header.year=Year
 analytics.mostViewedPages.parameter.label.startDate=Start time of the date interval used for this macro
 analytics.mostViewedPages.parameter.label.endDate=End time of the date interval used for this macro
 
+## Row Evolution
+analytics.action.label.rowEvolution=Row Evolution
+analytics.rowEvolution.label=Row Evolution
+analytics.rowEvolution.close=Close
+analytics.rowEvolution.period=Period
+analytics.rowEvolution.field=Field
+analytics.rowEvolution.day=Day
+analytics.rowEvolution.week=Week
+analytics.rowEvolution.month=Month
+analytics.rowEvolution.year=Year
+analytics.rowEvolution.field.pageviews=Pageviews
+analytics.rowEvolution.field.uniqueViews=Unique views
+analytics.rowEvolution.field.avgTime=Avg. Time on page
+
 ## Admin section
 admin.analytics.application=Analytics
 Analytics.Code.ConfigurationClass_authToken=Authentication token
