@@ -29,8 +29,11 @@
   </parent>
   <artifactId>application-analytics-ui</artifactId>
   <packaging>xar</packaging>
-  <name>Analytics  Application (Pro)</name>
-  <description>Discover unique insights to help you better understand the usage of your instance. Streamline and improve internal processes by having full visibility on the most viewed pages. Understand how you can help your teams boost productivity by using real-time statistics.</description>
+  <name>Analytics Application (Pro)</name>
+  <description>Discover unique insights to help you better understand the usage of your instance. Streamline and improve
+    internal processes by having full visibility on the most viewed pages. Understand how you can help your teams boost
+    productivity by using real-time statistics.
+  </description>
   <properties>
     <!-- Name to display by the Extension Manager -->
     <!-- The list of documents that are not covered by the extension license. The user that installs the extension has
@@ -60,6 +63,11 @@
       <groupId>com.xwiki.licensing</groupId>
       <artifactId>application-licensing-licensor-api</artifactId>
       <version>${licensing.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.xwiki.analytics</groupId>
+      <artifactId>application-analytics-default</artifactId>
+      <version>${project.version}</version>
     </dependency>
   </dependencies>
   <build>

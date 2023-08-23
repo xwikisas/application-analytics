@@ -1,0 +1,56 @@
+{
+  "ObjectJSON": {
+    "2023-04": [
+    ],
+    "2023-05": [
+    ],
+    "2023-06": [
+    ],
+    "2023-07": [
+      {
+        "label": "/xwiki/bin/view/Analytics/Code/MostViwedPages",
+        "url": "http://localhost:8080/xwiki/bin/view/Analytics/Code/MostViwedPages"
+      }
+    ],
+    "2023-08": [
+      {
+        "label": "/xwiki/bin/view/Analytics/Code/Macros/MostViewedPage",
+        "url": "http://localhost:8080/xwiki/bin/view/Analytics/Code/Macros/MostViewedPage"
+      }
+    ]
+  },
+  "ResponseObjectJSON": [
+    {
+      "label": "/xwiki/bin/view/Analytics/Code/MostViwedPages",
+      "url": "http://localhost:8080/xwiki/bin/view/Analytics/Code/MostViwedPages",
+      "date": "2023-07"
+    },
+    {
+      "label": "/xwiki/bin/view/Analytics/Code/Macros/MostViewedPage",
+      "url": "http://localhost:8080/xwiki/bin/view/Analytics/Code/Macros/MostViewedPage",
+      "date": "2023-08"
+    }
+  ],
+  "ArrayJSONS": [
+    {
+      "label": "/xwiki/bin/view/Analytics/Code/MostViwedPages",
+      "url": "http://localhost:8080/xwiki/bin/view/Analytics/Code/MostViwedPages"
+    },
+    {
+      "label": "/xwiki/bin/view/Main/",
+      "url": "http://localhost:8081/xwiki/bin/view/Main/"
+    }
+  ],
+  "ResponseArrayJSON": [
+    {
+      "label": "/xwiki/bin/view/Analytics/Code/MostViwedPages",
+      "url": "http://localhost:8080/xwiki/bin/view/Analytics/Code/MostViwedPages",
+      "date": ""
+    },
+    {
+      "label": "/xwiki/bin/view/Main/",
+      "url": "http://localhost:8081/xwiki/bin/view/Main/",
+      "date": ""
+    }
+  ]
+}

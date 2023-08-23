@@ -3,6 +3,7 @@
 Discover unique insights to help you better understand the usage of your instance. Streamline and improve
 internal processes by having full visibility on the most viewed pages. Understand how you can help your teams boost
 productivity by using real-time statistics.
+
 * Project Lead [Farcasi Alexandru](https://github.com/Farcasut)
 * Documentation & Download: N\A
 * [Issue Tracker](https://github.com/xwikisas/application-analytics/issues)
