@@ -62,6 +62,10 @@ public class MatomoAnalyticsManager implements AnalyticsManager
     private JsonNormaliser mostViewedNormaliser;
 
     @Inject
+    @Named(RowEvolutionJsonNormaliser.HINT)
+    private JsonNormaliser rowEvolution;
+
+    @Inject
     private AnalyticsConfiguration configuration;
 
     /**
@@ -112,7 +116,7 @@ public class MatomoAnalyticsManager implements AnalyticsManager
         switch (hint) {
             case MostViewedJsonNormaliser.HINT:
                 return this.mostViewedNormaliser;
-            case "RowEvolution":
+            case RowEvolutionJsonNormaliser.HINT:
                 return this.rowEvolution;
             default:
                 return null;

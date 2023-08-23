@@ -46,6 +46,10 @@ import com.xwiki.analytics.JsonNormaliser;
 @Singleton
 public class RowEvolutionJsonNormaliser implements JsonNormaliser
 {
+     /**
+     * Hint for the RowEvolution.
+     */
+    public static final String HINT = "RowEvolution";
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
     private static final String DATE = "date";
