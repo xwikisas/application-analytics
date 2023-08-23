@@ -21,7 +21,6 @@ package com.xwiki.analytics.internal;
 
 import java.io.IOException;
 import java.net.URI;
-
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -44,7 +43,7 @@ import com.xwiki.analytics.JsonNormaliser;
 import com.xwiki.analytics.configuration.AnalyticsConfiguration;
 
 /**
- * The class would handle the Matomo request and return a json with the data.
+ * Handle Matomo request and response manipulation.
  *
  * @version $Id$
  * @since 1.0
@@ -63,10 +62,6 @@ public class MatomoAnalyticsManager implements AnalyticsManager
     private JsonNormaliser mostViewedNormaliser;
 
     @Inject
-    @Named("RowEvolution")
-    private JsonNormaliser rowEvolution;
-
-    @Inject
     private AnalyticsConfiguration configuration;
 
     /**
@@ -77,8 +72,7 @@ public class MatomoAnalyticsManager implements AnalyticsManager
      * @return the altered Matomo request response, as JSON format
      */
     @Override
-    public JsonNode requestData(Map<String, String> parameters, String jsonNormaliserHint)
-        throws IOException, InterruptedException
+    public JsonNode requestData(Map<String, String> parameters, String jsonNormaliserHint) throws IOException
     {
         parameters.put("idSite", configuration.getIdSite());
         parameters.put("token_auth", configuration.getAuthenticationToken());
@@ -116,7 +110,7 @@ public class MatomoAnalyticsManager implements AnalyticsManager
     private JsonNormaliser getNormaliser(String hint)
     {
         switch (hint) {
-            case "MostViewedPages":
+            case MostViewedJsonNormaliser.HINT:
                 return this.mostViewedNormaliser;
             case "RowEvolution":
                 return this.rowEvolution;

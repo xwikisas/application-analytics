@@ -51,8 +51,8 @@ public class AnalyticsScriptService implements ScriptService
     /**
      * Get data from Matomo API, in a format specific to the macro that will use it.
      *
-     * @param jsonNormaliserHint hint specific to the component that will normalize the Matomo result response, since
-     * it's given / resulted format depends on the context were is used.
+     * @param jsonNormaliserHint hint specific to the component that will normalize the Matomo result response,
+     *     since it's given / resulted format depends on the context were is used.
      * @param parameters a map of the parameters needed for this request
      * @return response from Matomo API, in a normalized JSON format
      */

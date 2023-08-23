@@ -37,10 +37,10 @@ import com.fasterxml.jackson.databind.JsonNode;
 public interface JsonNormaliser
 {
     /**
-     * Normalise the data returned to have only one format.
+     * Normalise the data returned to have the expected format.
      *
-     * @param jsonString A string that has a proper json format
-     * @return Returns the json in string format
+     * @param jsonString a string that has the expected format
+     * @return a {@link JsonNode} with the root of the normalized JSON
      * @throws JsonProcessingException Throws this error when the jsonString param is not a proper json
      */
     JsonNode normaliseData(String jsonString) throws JsonProcessingException;
