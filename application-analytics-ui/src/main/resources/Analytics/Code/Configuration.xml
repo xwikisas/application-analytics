@@ -114,8 +114,7 @@
       </requestAddress>
     </class>
     <property>
-      <authToken>
-      </authToken>
+      <authToken/>
     </property>
     <property>
       <siteId/>

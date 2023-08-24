@@ -20,9 +20,9 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc version="1.4" reference="Analytics.Code.Macros.RowEvolutionMostViewedPagesJSON" locale="">
+<xwikidoc version="1.4" reference="Analytics.Code.Macros.RowEvolutionJson" locale="">
   <web>Analytics.Code.Macros</web>
-  <name>RowEvolutionMostViewedPagesJSON</name>
+  <name>RowEvolutionJson</name>
   <language/>
   <defaultLanguage/>
   <translation>0</translation>
@@ -31,7 +31,7 @@
   <author>xwiki:XWiki.Admin</author>
   <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
   <version>1.1</version>
-  <title>RowEvolutionMostViewedPagesJSON</title>
+  <title>RowEvolutionJson</title>
   <comment/>
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
