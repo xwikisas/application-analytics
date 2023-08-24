@@ -35,7 +35,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.xwiki.analytics.JsonNormaliser;
 
 /**
- * The normaliser for the RowEvolution.
+ * Normalizes the response needed by the RowEvolution feature.
  *
  * @version $Id$
  * @since 1.0
@@ -46,20 +46,16 @@ import com.xwiki.analytics.JsonNormaliser;
 @Singleton
 public class RowEvolutionJsonNormaliser implements JsonNormaliser
 {
-     /**
+    /**
      * Hint for the RowEvolution.
      */
     public static final String HINT = "RowEvolution";
+
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
     private static final String DATE = "date";
 
-    /**
-     * This method will normalise the jsons returned by Matomo into a single format.
-     *
-     * @param jsonString the json provided by Matomo.
-     * @return the normalised json as a JsonNode.
-     */
+    @Override
     public JsonNode normaliseData(String jsonString) throws JsonProcessingException
     {
         JsonNode jsonNode = OBJECT_MAPPER.readTree(jsonString);

@@ -268,8 +268,12 @@
   'extraParams': $parameters
 })
 #livetable('mostViewedPages' $columns $columnsProperties $options)
-#modalRowEvolution({'pageviews':'nb_hits','uniqueViews':'nb_visits', "avgTime":'avg_time_on_page'},
-        'RowEvolutionMostViewedPagesJSON')
+#set ($parameters = {
+  'pageviews':'nb_hits',
+  'uniqueViews':'nb_visits',
+  "avgTime":'avg_time_on_page'
+})
+#modalRowEvolution('mostViewedPagesModal', $parameters, 'RowEvolutionMostViewedPagesJSON')
 {{/velocity}}</code>
     </property>
     <property>
