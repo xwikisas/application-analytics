@@ -110,7 +110,7 @@
 #macro(modalRowEvolution $fields $requestPageName)
 #set ($requestPageURL = $xwiki.getURL($requestPageName))
 {{html clean=false}}
-&lt;div class="modal fade analyticsRowEvolutionModal" id="chartModal" tabindex="-1" role="dialog" aria-labelledby="chartModalLabel"
+&lt;div class="modal fade analyticsRowEvolutionModal" tabindex="-1" role="dialog" aria-labelledby="chartModalLabel"
      aria-hidden="true"&gt;
   &lt;div class="modal-dialog modal-lg"&gt;
     &lt;div class="modal-content"&gt;
@@ -142,7 +142,7 @@
           $services.localization.render('analytics.rowEvolution.field')
         &lt;/label&gt;
         #fieldsSelect($fields)
-        &lt;canvas class="analyticsApplicationRowEvolutionField"&gt;&lt;/canvas&gt;
+        &lt;canvas class="analyticsChartisplay"&gt;&lt;/canvas&gt;
       &lt;/div&gt;
       &lt;div class="modal-footer"&gt;
         &lt;button type="button" class="btn btn-default" data-dismiss="modal"&gt;
