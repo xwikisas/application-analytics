@@ -143,7 +143,7 @@ require(['jquery', 'chartjs'], ($) =&gt; {
   const renderChart = (data) =&gt; {
     const dates = data.map(item =&gt; item.date);
     const field = data.map(item =&gt; item[currentModal.find('.analyticsApplicationRowEvolutionField').val()] || 0);
-    const ctx = $('#chart-display');
+    const ctx = currentModal.find('.analyticsChartisplay');
     if (chart) {
       chart.destroy();
     }
@@ -210,11 +210,11 @@ require(['jquery', 'chartjs'], ($) =&gt; {
 
   $(document).on('show.bs.modal', '.analyticsRowEvolutionModal', function (e)
   {
-    console.log('test');
     let modal=$(e.target);
     modal.find('[class^="analyticsApplicationRowEvolutionDuration"]').each(function(){$(this).prop('selectedIndex', 0)})
+    modal.find('.analyticsApplicationRowEvolutionField').prop('selectedIndex', 0);
     modal.find('[class^="analyticsApplicationRowEvolutionDuration"]').not('.analyticsApplicationRowEvolutionDurationDay').hide();
-    modal.find('analyticsApplicationRowEvolutionDurationDay').show();
+    modal.find('.analyticsApplicationRowEvolutionDurationDay').show();
     currentOptions.data('period', 'day');
     currentOptions.find('.analyticsRowEvolutionOptions').data('date', $('.analyticsApplicationRowEvolutionDurationDay').val());
   });
@@ -226,7 +226,7 @@ require(['jquery', 'chartjs'], ($) =&gt; {
   /**
    * Binds the event that will open the modal and display the data when the 'Row Evolution' button is clicked. 
    */
-  $(document).on('click', '.xwiki-livetable-container .analyticsActions .analyticsRowEvolution', function () {
+  $(document).on('click', '.analyticsActions .analyticsRowEvolution', function () {
     const parameter = $(this).data('parameter');
     currentModal =  $(this).closest('.xwiki-livetable-container').next('.analyticsRowEvolutionModal');
     currentOptions = currentModal.find('.analyticsRowEvolutionOptions');
@@ -241,15 +241,18 @@ require(['jquery', 'chartjs'], ($) =&gt; {
   $(document).on('keyup change', '.analyticsRowEvolutionModal [class^="analyticsApplicationRowEvolutionDuration"]', function() {
     //updates the time intervals to that period options
     currentOptions.data('date', $(this).val());
-    fetchChartData(currentOptions.data('parameter'));
+    fetchChartData(currentOptions.data('parameter'));  
   });
   $(document).on("keyup change", '.analyticsRowEvolutionModal .analyticsApplicationModalPeriodSelect',function() {
       const period = $(this).val();
       displayPeriodDurations(period);
       fetchChartData(currentOptions.data('parameter'));
     })
+
+  $(document).ready(() =&gt; {
+  });
 });
-</code>
+ </code>
     </property>
     <property>
       <name/>
