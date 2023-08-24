@@ -63,18 +63,53 @@
 #end
 
 #macro(setParameterOnAction $parameter)
-&lt;div class="displayMostViewedPagesActions"  data-parameter=$escapetool.url($parameter)&gt;
-  &lt;a class="action" title="$escapetool.xml($services.localization.render(
-    'analytics.mostViwedMacros.action.rowEvolution'))" href="#"&gt;
-    &lt;span class="action-icon"&gt;$services.icon.renderHTML('eye')&lt;/span&gt;&lt;span class="action-label"&gt;
-    $escapetool.xml($services.localization.render('analytics.action.label.rowEvolution'))&lt;/span&gt;
-  &lt;/a&gt;
+&lt;div class="analyticsActions"&gt;
+  &lt;div class="analyticsRowEvolution"  data-parameter=$escapetool.url($parameter)&gt;
+    &lt;a class="action" title="$escapetool.xml($services.localization.render(
+      'analytics.mostViwedMacros.action.rowEvolution'))" href="#"&gt;
+      &lt;span class="action-icon"&gt;$services.icon.renderHTML('eye')&lt;/span&gt;&lt;span class="action-label"&gt;
+      $escapetool.xml($services.localization.render('analytics.action.label.rowEvolution'))&lt;/span&gt;
+    &lt;/a&gt;
+  &lt;/div&gt;
 &lt;/div&gt;
+#end
+
+#macro(durationSelect $className $options)
+&lt;select class="$className form-control"&gt;
+  #foreach($option in $options)
+    &lt;option value="$option"&gt;$option&lt;/option&gt;
+  #end
+&lt;/select&gt;
+#end
+
+
+#macro(durationOption $value)
+  &lt;option value="$value"&gt;
+    $services.localization.render('analytics.rowEvolution.modal.' + $value.toLowerCase() + '.label')
+  &lt;/option&gt;
+#end
+
+#macro(durationSelectList $class $options)
+  &lt;select class="$class form-control"&gt;
+    #foreach($option in $options)
+      &lt;option value="$option"&gt;$option&lt;/option&gt;
+    #end
+  &lt;/select&gt;
+#end
+
+#macro(fieldsSelect $fields)
+  &lt;select class="form-control analyticsApplicationRowEvolutionField"&gt;
+    #foreach($key in $fields.keySet())
+      &lt;option value="$fields.get($key)"&gt;
+        $services.localization.render('analytics.rowEvolution.field.' + $key)
+      &lt;/option&gt;
+    #end
+  &lt;/select&gt;
 #end
 
 #macro(modalRowEvolution $fields $requestPage)
 {{html clean=false}}
-&lt;div class="modal fade" id="chartModal" tabindex="-1" role="dialog" aria-labelledby="chartModalLabel" 
+&lt;div class="modal fade analyticsRowEvolutionModal" id="chartModal" tabindex="-1" role="dialog" aria-labelledby="chartModalLabel"
      aria-hidden="true"&gt;
   &lt;div class="modal-dialog modal-lg"&gt;
     &lt;div class="modal-content"&gt;
@@ -87,65 +122,25 @@
         &lt;/h4&gt;
       &lt;/div&gt;
       &lt;div class="modal-body"&gt;
-        &lt;label for="periodSelect"&gt;
+        &lt;label for="analyticsApplicationModalPeriodSelect"&gt;
           $services.localization.render('analytics.rowEvolution.period')
         &lt;/label&gt;
-        &lt;select id="periodSelect" class="form-control"&gt;
-          &lt;option value="Day"&gt;
-            $services.localization.render('analytics.rowEvolution.day')
-          &lt;/option&gt;
-          &lt;option value="Week"&gt;
-            $services.localization.render('analytics.rowEvolution.week')
-          &lt;/option&gt;
-          &lt;option value="Month"&gt;
-            $services.localization.render('analytics.rowEvolution.month')
-          &lt;/option&gt;
-          &lt;option value="Year"&gt;
-            $services.localization.render('analytics.rowEvolution.year')
-          &lt;/option&gt;
+        &lt;select class="analyticsApplicationModalPeriodSelect form-control"&gt;
+          #durationOption("Day")
+          #durationOption("Week")
+          #durationOption("Month")
+          #durationOption("Year")
         &lt;/select&gt;
-        &lt;div id="options" data-request-page=$requestPage&gt;
-          &lt;select id="periodDurationDay" class="form-control"&gt;
-            &lt;option value="30"&gt;30&lt;/option&gt;
-            &lt;option value="8"&gt;8&lt;/option&gt;
-            &lt;option value="60"&gt;60&lt;/option&gt;
-            &lt;option value="90"&gt;90&lt;/option&gt;
-            &lt;option value="180"&gt;180&lt;/option&gt;
-            &lt;option value="365"&gt;365&lt;/option&gt;
-            &lt;option value="500"&gt;500&lt;/option&gt;
-          &lt;/select&gt;
-          &lt;select id="periodDurationWeek" class="form-control"&gt;
-            &lt;option value="4"&gt;4&lt;/option&gt;
-            &lt;option value="12"&gt;12&lt;/option&gt;
-            &lt;option value="26"&gt;26&lt;/option&gt;
-            &lt;option value="52"&gt;52&lt;/option&gt;
-            &lt;option value="104"&gt;104&lt;/option&gt;
-            &lt;option value="500"&gt;500&lt;/option&gt;
-          &lt;/select&gt;
-          &lt;select id="periodDurationMonth" class="form-control"&gt;
-            &lt;option value="3"&gt;3&lt;/option&gt;
-            &lt;option value="6"&gt;6&lt;/option&gt;
-            &lt;option value="12"&gt;12&lt;/option&gt;
-            &lt;option value="24"&gt;24&lt;/option&gt;
-            &lt;option value="36"&gt;36&lt;/option&gt;
-            &lt;option value="120"&gt;120&lt;/option&gt;
-          &lt;/select&gt;
-          &lt;select id="periodDurationYear" class="form-control"&gt;
-            &lt;option value="3"&gt;3&lt;/option&gt;
-            &lt;option value="5"&gt;5&lt;/option&gt;
-            &lt;option value="10"&gt;10&lt;/option&gt;
-          &lt;/select&gt;
+        &lt;div class="analyticsRowEvolutionOptions" data-request-page=$requestPage data-period='day' data-date='30'&gt;
+          #durationSelectList("analyticsApplicationRowEvolutionDurationDay" [30, 8, 60, 90, 180, 365, 500])
+          #durationSelectList("analyticsApplicationRowEvolutionDurationWeek" [4, 12, 26, 52, 104, 500])
+          #durationSelectList("analyticsApplicationRowEvolutionDurationMonth" [3, 6, 12, 24, 36, 120])
+          #durationSelectList("analyticsApplicationRowEvolutionDurationYear" [3, 5, 10])
         &lt;/div&gt;
-        &lt;label for="field"&gt;
+        &lt;label for="analyticsApplicationRowEvolutionField"&gt;
           $services.localization.render('analytics.rowEvolution.field')
         &lt;/label&gt;
-        &lt;select id="field" class="form-control"&gt;
-          #foreach($key in $fields.keySet())
-            &lt;option value="$fields.get($key)"&gt;
-              $services.localization.render('analytics.rowEvolution.field.' + $key)
-            &lt;/option&gt;
-          #end
-        &lt;/select&gt;
+        #fieldsSelect($fields)
         &lt;canvas id="chart-display"&gt;&lt;/canvas&gt;
       &lt;/div&gt;
       &lt;div class="modal-footer"&gt;
@@ -156,8 +151,13 @@
     &lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;
-
 {{/html}}
+#end
+
+#set ($analyticsId = -1)
+#macro (getAnalyticsMacroId $macro)
+  #set ($analyticsId = $analyticsId + 1)
+  #set ($macroId = $macro + '_' + $analyticsId)
 #end
 {{/velocity}}</content>
 </xwikidoc>

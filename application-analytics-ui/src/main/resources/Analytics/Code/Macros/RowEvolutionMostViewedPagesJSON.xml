@@ -20,8 +20,8 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc version="1.4" reference="Analytics.Code.Macros.MostViewedPagesMacro.RowEvolutionMostViewedPagesJSON" locale="">
-  <web>Analytics.Code.Macros.MostViewedPagesMacro</web>
+<xwikidoc version="1.4" reference="Analytics.Code.Macros.RowEvolutionMostViewedPagesJSON" locale="">
+  <web>Analytics.Code.Macros</web>
   <name>RowEvolutionMostViewedPagesJSON</name>
   <language/>
   <defaultLanguage/>
@@ -45,6 +45,7 @@
   'format' : 'json',
   'pageUrl' : $request.parameter
 })
+
 #set ($analyticsResult = $services.analytics.getMatomoRequestResult($parameters, 'RowEvolution'))
 #jsonResponse($analyticsResult)
 {{/velocity}}

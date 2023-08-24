@@ -133,7 +133,8 @@
 require(['jquery', 'chartjs'], ($) =&gt; {
   const PERIODS = ["Day", "Week", "Month", "Year"];
   let chart;
-
+  let currentModal;
+  let currentOptions;
   /**
    * Creates the chart
    *
@@ -141,7 +142,7 @@ require(['jquery', 'chartjs'], ($) =&gt; {
    */
   const renderChart = (data) =&gt; {
     const dates = data.map(item =&gt; item.date);
-    const field = data.map(item =&gt; item[$('#field').val()] || 0);
+    const field = data.map(item =&gt; item[currentModal.find('.analyticsApplicationRowEvolutionField').val()] || 0);
     const ctx = $('#chart-display');
     if (chart) {
       chart.destroy();
@@ -166,7 +167,7 @@ require(['jquery', 'chartjs'], ($) =&gt; {
         }
       }
     });
-    $('#chartModal').modal('show');
+    currentModal.modal('show');
   };
 
   /**
@@ -176,11 +177,10 @@ require(['jquery', 'chartjs'], ($) =&gt; {
    * @param parameter parameter need for the request
    */
   const fetchChartData = (parameter) =&gt; {
-    $('#options').data('parameter', parameter);
-    const options = $('#options')
-    const period = options.data('period')
-    const date = options.data('date');
-    const requestPage = options.data('requestPage')
+    currentOptions.data('parameter', parameter);
+    const period = currentOptions.data('period')
+    const date = currentOptions.data('date');
+    const requestPage = currentOptions.data('requestPage')
     $.getJSON(`${requestPage}?parameter=${parameter}&amp;period=${period}&amp;date=last${date}`)
       .done((data) =&gt; {
         window.sessionStorage.setItem('analyticsLastRequestCache', JSON.stringify(data));
@@ -198,81 +198,56 @@ require(['jquery', 'chartjs'], ($) =&gt; {
    * @param period Day/Week/Month/Year
    */
   const displayPeriodDurations = (period) =&gt; {
-    PERIODS.forEach(p =&gt; {
-      p === period ? $(`#periodDuration${p}`).show() : $(`#periodDuration${p}`).hide();
-    });
-    $('#options').data('period', period.toLowerCase());
-    $('#options').data('date', $(`#periodDuration${period}`).val());
+    currentModal.find('[class^="analyticsApplicationRowEvolutionDuration"]').not(`.analyticsRowEvolutionModal .analyticsApplicationRowEvolutionDuration${period}`).hide();
+    currentModal.find(`.analyticsApplicationRowEvolutionDuration${period}`).show();
+    currentOptions.data('period', period.toLowerCase());
+    currentOptions.data('date', $(`.analyticsApplicationRowEvolutionDuration${period}`).val());
   };
 
   /**
    * Resets to the default option for all the selectos when the modal is closed.
    */
-  const restOptions = () =&gt; {
-    $('#chartModal').on('hidden.bs.modal', function () {
-      PERIODS.forEach(p =&gt; {
-        $(`#periodDuration${p}`).prop('selectedIndex', 0);
-      });
-      $('#field').prop('selectedIndex', 0);
-    });
-  };
 
-  const displayStatisitcs = () =&gt; {
-    $('#field').on('change', function () {
-      renderChart(JSON.parse(window.sessionStorage.getItem('analyticsLastRequestCache')));
-    });
-  };
+  $(document).on('show.bs.modal', '.analyticsRowEvolutionModal', function (e)
+  {
+    console.log('test');
+    let modal=$(e.target);
+    modal.find('[class^="analyticsApplicationRowEvolutionDuration"]').each(function(){$(this).prop('selectedIndex', 0)})
+    modal.find('[class^="analyticsApplicationRowEvolutionDuration"]').not('.analyticsApplicationRowEvolutionDurationDay').hide();
+    modal.find('analyticsApplicationRowEvolutionDurationDay').show();
+    currentOptions.data('period', 'day');
+    currentOptions.find('.analyticsRowEvolutionOptions').data('date', $('.analyticsApplicationRowEvolutionDurationDay').val());
+  });
+  $(document).on('keyup change', '.analyticsRowEvolutionModal .analyticsApplicationRowEvolutionField', function()
+  {
+    renderChart(JSON.parse(window.sessionStorage.getItem('analyticsLastRequestCache')));
+  });
 
   /**
    * Binds the event that will open the modal and display the data when the 'Row Evolution' button is clicked. 
    */
-  const bindRowEvolutionDisplay = () =&gt; {
-    $(document).on('click', '.displayMostViewedPagesActions', function () {
-      displayPeriodDurations('Day');
-      const parameter = $(this).data('parameter');
-      $('#periodSelect').prop('selectedIndex', 0);
-      $('#options').data('date', '30');
-      fetchChartData(parameter);
-    });
-  };
+  $(document).on('click', '.xwiki-livetable-container .analyticsActions .analyticsRowEvolution', function () {
+    const parameter = $(this).data('parameter');
+    currentModal =  $(this).closest('.xwiki-livetable-container').next('.analyticsRowEvolutionModal');
+    currentOptions = currentModal.find('.analyticsRowEvolutionOptions');
+    //setting the parameters for the first request to be period=day&amp;date=30
+    console.log(currentOptions);
+    fetchChartData(parameter);
+  });
   
   /**
    * Updates the chart when the time  
    */
-  const updateOnPeriodChange = () =&gt; {
-    PERIODS.forEach(p =&gt; {
-      $(`#periodDuration${p}`).on('change', function () {
-        //updates the time intervals to that period options
-        $('#options').data('date', $(`#periodDuration${p}`).val());
-        fetchChartData($('#options').data('parameter'));
-      });
-    });
-  };
-  
-  /**
-   * Changes the chart when the period (day/week/month/year) changes.
-   */
-  const bindPeriodChangeEvent = () =&gt; {
-    $('#periodSelect').on('change', function () {
-      const period = $(this).val();
-      restOptions();
-      displayPeriodDurations(period);
-      fetchChartData($('#options').data('parameter'));
-    });
-  };
-
-  const bindEvents = () =&gt; {
-    updateOnPeriodChange();
-    restOptions();
-    displayStatisitcs();
-    bindPeriodChangeEvent();
-    bindRowEvolutionDisplay();
-  };
-
-  $(document).ready(() =&gt; {
-    displayPeriodDurations('Day');
-    bindEvents();
+  $(document).on('keyup change', '.analyticsRowEvolutionModal [class^="analyticsApplicationRowEvolutionDuration"]', function() {
+    //updates the time intervals to that period options
+    currentOptions.data('date', $(this).val());
+    fetchChartData(currentOptions.data('parameter'));
   });
+  $(document).on("keyup change", '.analyticsRowEvolutionModal .analyticsApplicationModalPeriodSelect',function() {
+      const period = $(this).val();
+      displayPeriodDurations(period);
+      fetchChartData(currentOptions.data('parameter'));
+    })
 });
 </code>
     </property>
