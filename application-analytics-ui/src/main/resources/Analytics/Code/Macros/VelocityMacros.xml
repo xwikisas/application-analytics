@@ -142,7 +142,9 @@
           $services.localization.render('analytics.rowEvolution.field')
         &lt;/label&gt;
         #fieldsSelect($fields)
-        &lt;canvas class="analyticsChartisplay"&gt;&lt;/canvas&gt;
+        &lt;div class='loading'&gt;
+        	&lt;canvas class="analyticsChartisplay"&gt;&lt;/canvas&gt;
+		&lt;/div&gt;
       &lt;/div&gt;
       &lt;div class="modal-footer"&gt;
         &lt;button type="button" class="btn btn-default" data-dismiss="modal"&gt;
