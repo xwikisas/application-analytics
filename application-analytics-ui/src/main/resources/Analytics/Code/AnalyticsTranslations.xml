@@ -67,13 +67,14 @@ analytics.rowEvolution.label=Row Evolution
 analytics.rowEvolution.close=Close
 analytics.rowEvolution.period=Period
 analytics.rowEvolution.field=Field
+analytics.rowEvolution.periodLength=Period length
 analytics.rowEvolution.modal.day.label=Day
 analytics.rowEvolution.modal.week.label=Week
 analytics.rowEvolution.modal.month.label=Month
 analytics.rowEvolution.modal.year.label=Year
 analytics.rowEvolution.field.pageviews=Pageviews
 analytics.rowEvolution.field.uniqueViews=Unique views
-analytics.rowEvolution.field.avgTime=Avg. Time on page
+analytics.rowEvolution.field.avgTime=Avg. Time on 
 
 ## Admin section
 admin.analytics.application=Analytics

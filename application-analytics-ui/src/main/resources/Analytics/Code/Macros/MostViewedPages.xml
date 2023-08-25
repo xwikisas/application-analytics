@@ -267,7 +267,7 @@
   'resultPage': 'Analytics.Code.Macros.MostViewedPagesJSON',
   'extraParams': $parameters
 })
-#getAnalyticsMacroId('mostViwedMacro')
+#getAnalyticsMacroId('mostViwedMacro', $macroId )
 #livetable($macroId $columns $columnsProperties $options)
 #set ($parameters = {
   'pageviews':'nb_hits',

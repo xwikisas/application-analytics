@@ -136,6 +136,7 @@ require(['jquery', 'chartjs'], ($) =&gt; {
   let currentModal;
   let currentOptions;
   let currentLoadingAnimation;
+
   /**
    * Creates the chart for displaying the data.
    *
@@ -143,8 +144,8 @@ require(['jquery', 'chartjs'], ($) =&gt; {
    */
   const renderChart = (data) =&gt; {
     const dates = data.map(item =&gt; item.date);
-    const field = data.map(item =&gt; item[currentModal.find('.analyticsApplicationRowEvolutionField').val()] || 0);
-    const ctx = currentModal.find('.analyticsChartisplay');
+    const field = data.map(item =&gt; item[currentModal.find('.rowEvolutionField').val()] || 0);
+    const ctx = currentModal.find('.chartDisplay');
     if (chart) {
       chart.destroy();
     }
@@ -181,9 +182,9 @@ require(['jquery', 'chartjs'], ($) =&gt; {
     currentOptions.data('parameter', parameter);
     const period = currentOptions.data('period');
     const date = currentOptions.data('date');
-    const requestPage = currentOptions.data('requestPage');
+    const requestPageUrl = currentOptions.data('requestPageUrl');
     const macroName = currentOptions.data('macroName');
-    $.getJSON(`${requestPage}?parameter=${parameter}&amp;period=${period}&amp;date=last${date}&amp;macroName=${macroName}`)
+    $.getJSON(`${requestPageUrl}?parameter=${parameter}&amp;period=${period}&amp;date=last${date}&amp;macroName=${macroName}`)
       .done((data) =&gt; {
         window.sessionStorage.setItem('analyticsLastRequestCache', JSON.stringify(data));
         renderChart(data);
@@ -200,10 +201,10 @@ require(['jquery', 'chartjs'], ($) =&gt; {
    * @param period period day/week/month/year
    */
   const displayPeriodDurations = (period) =&gt; {
-    currentModal.find('[class^="analyticsApplicationRowEvolutionDuration"]').not(`.analyticsRowEvolutionModal .analyticsApplicationRowEvolutionDuration${period}`).hide();
-    currentModal.find(`.analyticsApplicationRowEvolutionDuration${period}`).show();
+    currentModal.find('[class^="rowEvolutionPeriodLength"]').not(`.analyticsRowEvolutionModal .rowEvolutionPeriodLength${period}`).hide();
+    currentModal.find(`.rowEvolutionPeriodLength${period}`).show();
     currentOptions.data('period', period.toLowerCase());
-    currentOptions.data('date', $(`.analyticsApplicationRowEvolutionDuration${period}`).val());
+    currentOptions.data('date', $(`.rowEvolutionPeriodLength${period}`).val());
   };
 
   /**
@@ -212,15 +213,15 @@ require(['jquery', 'chartjs'], ($) =&gt; {
 
   $(document).on('show.bs.modal', '.analyticsRowEvolutionModal', function (e) {
     let modal = $(e.target);
-    modal.find('[class^="analyticsApplicationRowEvolutionDuration"]').each(function () { $(this).prop('selectedIndex', 0) })
+    modal.find('[class^="rowEvolutionPeriodLength"]').each(function () { $(this).prop('selectedIndex', 0) })
     modal.find('.analyticsRowEvolutionOptions').data('date', 30);
     modal.find('.analyticsRowEvolutionOptions').data('period', 'day');
-    modal.find('.analyticsApplicationRowEvolutionField').prop('selectedIndex', 0);
-    modal.find('.analyticsApplicationModalPeriodSelect').prop('selectedIndex', 0);
-    modal.find('[class^="analyticsApplicationRowEvolutionDuration"]').not('.analyticsApplicationRowEvolutionDurationDay').hide();
-    modal.find('.analyticsApplicationRowEvolutionDurationDay').show();
+    modal.find('.rowEvolutionField').prop('selectedIndex', 0);
+    modal.find('.rowEvolutionPeriod').prop('selectedIndex', 0);
+    modal.find('[class^="rowEvolutionPeriodLength"]').not('.rowEvolutionPeriodLengthDay').hide();
+    modal.find('.rowEvolutionPeriodLengthDay').show();
   });
-  $(document).on('keyup change', '.analyticsRowEvolutionModal .analyticsApplicationRowEvolutionField', function () {
+  $(document).on('keyup change', '.analyticsRowEvolutionModal .rowEvolutionField', function () {
     renderChart(JSON.parse(window.sessionStorage.getItem('analyticsLastRequestCache')));
   });
   $(document).on('hide.bs.modal', '.analyticsRowEvolutionModal', function (e) {
@@ -244,7 +245,7 @@ require(['jquery', 'chartjs'], ($) =&gt; {
    * Handles the update of the chart when the time is changed.
    * 
    */
-  $(document).on('keyup change', '.analyticsRowEvolutionModal [class^="analyticsApplicationRowEvolutionDuration"]', function () {
+  $(document).on('keyup change', '.analyticsRowEvolutionModal [class^="rowEvolutionPeriodLength"]', function () {
     currentOptions.data('date', $(this).val());
     fetchChartData(currentOptions.data('parameter'));
   });
@@ -252,7 +253,7 @@ require(['jquery', 'chartjs'], ($) =&gt; {
   /**
    * Handles the update of the chart when the period is changed.
    */
-  $(document).on("keyup change", '.analyticsRowEvolutionModal .analyticsApplicationModalPeriodSelect', function () {
+  $(document).on("keyup change", '.analyticsRowEvolutionModal .rowEvolutionPeriod', function () {
     const period = $(this).val();
     displayPeriodDurations(period);
     fetchChartData(currentOptions.data('parameter'));

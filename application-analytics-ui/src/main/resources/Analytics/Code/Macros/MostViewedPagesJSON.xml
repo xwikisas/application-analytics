@@ -97,7 +97,7 @@
       'entryNbActions' : $currentEntry.get('entry_nb_actions').asText(),
       'bounceRate' : $currentEntry.get('bounce_rate').asText(),
       'exitRate' : $currentEntry.get('exit_rate').asText(),
-      'actions' : "#setParameterOnAction($url)"
+      'actions' : "#analyticsActions($url)"
     }))
   #end
   #jsonResponse($results)
