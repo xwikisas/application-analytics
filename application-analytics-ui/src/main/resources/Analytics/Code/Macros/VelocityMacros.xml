@@ -107,8 +107,8 @@
   &lt;/select&gt;
 #end
 
-#macro(modalRowEvolution $fields $requestPageName)
-#set ($requestPageURL = $xwiki.getURL($requestPageName))
+#macro(modalRowEvolution $fields $macroName)
+#set ($requestPageURL = $xwiki.getURL('Analytics.Code.Macros.RowEvolutionJson'))
 {{html clean=false}}
 &lt;div class="modal fade analyticsRowEvolutionModal" tabindex="-1" role="dialog" aria-labelledby="chartModalLabel"
      aria-hidden="true"&gt;
@@ -132,7 +132,7 @@
           #durationOption("Month")
           #durationOption("Year")
         &lt;/select&gt;
-        &lt;div class="analyticsRowEvolutionOptions" data-request-page=$requestPageURL data-period='day' data-date='30'&gt;
+        &lt;div class="analyticsRowEvolutionOptions" data-macro-name=$macroName data-request-page=$requestPageURL data-period='day' data-date='30'&gt;
           #durationSelectList("analyticsApplicationRowEvolutionDurationDay" [30, 8, 60, 90, 180, 365, 500])
           #durationSelectList("analyticsApplicationRowEvolutionDurationWeek" [4, 12, 26, 52, 104, 500])
           #durationSelectList("analyticsApplicationRowEvolutionDurationMonth" [3, 6, 12, 24, 36, 120])

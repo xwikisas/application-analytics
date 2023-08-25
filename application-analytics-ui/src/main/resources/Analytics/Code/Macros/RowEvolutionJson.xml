@@ -42,10 +42,11 @@
   'date' : $request.date,
   'module' : 'API',
   'method' : 'Actions.getPageUrl',
-  'format' : 'json',
-  'pageUrl' : $request.parameter
+  'format' : 'json'
 })
-
+#if ($request.macroName=='MostViewedMacro')
+  $parameters.put('pageUrl', $request.parameter)
+#end
 #set ($analyticsResult = $services.analytics.getMatomoRequestResult($parameters, 'RowEvolution'))
 #jsonResponse($analyticsResult)
 {{/velocity}}

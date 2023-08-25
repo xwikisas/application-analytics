@@ -136,7 +136,7 @@ require(['jquery', 'chartjs'], ($) =&gt; {
   let currentModal;
   let currentOptions;
   /**
-   * Creates the chart
+   * Creates the chart for displaying the data.
    *
    * @param data json with the dataset for the current page.
    */
@@ -174,14 +174,15 @@ require(['jquery', 'chartjs'], ($) =&gt; {
    * Fetches the data from Matomo using the XWiki server as a proxy through the RowEvolutionJSON page. It then saves the data in session 
    * storage for easy access. This allows the user to display a different field for the same time interval without making a new request and updates the chart.
    *
-   * @param parameter parameter need for the request
+   * @param  parameter that will identify the row in the matomo table
    */
   const fetchChartData = (parameter) =&gt; {
     currentOptions.data('parameter', parameter);
-    const period = currentOptions.data('period')
+    const period = currentOptions.data('period');
     const date = currentOptions.data('date');
-    const requestPage = currentOptions.data('requestPage')
-    $.getJSON(`${requestPage}?parameter=${parameter}&amp;period=${period}&amp;date=last${date}`)
+    const requestPage = currentOptions.data('requestPage');
+    const macroName=currentOptions.data('macroName');
+    $.getJSON(`${requestPage}?parameter=${parameter}&amp;period=${period}&amp;date=last${date}&amp;macroName=${macroName}`)
       .done((data) =&gt; {
         window.sessionStorage.setItem('analyticsLastRequestCache', JSON.stringify(data));
         renderChart(data);
@@ -193,9 +194,9 @@ require(['jquery', 'chartjs'], ($) =&gt; {
   };
 
   /**
-   * Will show only the time options available for the period given as a parameter and updates the options
+   * Would search for the element that matches the current period, display its time, and hide the other periods time.
    * 
-   * @param period Day/Week/Month/Year
+   * @param period period day/week/month/year
    */
   const displayPeriodDurations = (period) =&gt; {
     currentModal.find('[class^="analyticsApplicationRowEvolutionDuration"]').not(`.analyticsRowEvolutionModal .analyticsApplicationRowEvolutionDuration${period}`).hide();
@@ -205,54 +206,55 @@ require(['jquery', 'chartjs'], ($) =&gt; {
   };
 
   /**
-   * Resets to the default option for all the selectos when the modal is closed.
+   * Resets all the selectors for the current modal when opened.
    */
 
-  $(document).on('show.bs.modal', '.analyticsRowEvolutionModal', function (e)
-  {
-    let modal=$(e.target);
-    modal.find('[class^="analyticsApplicationRowEvolutionDuration"]').each(function(){$(this).prop('selectedIndex', 0)})
+  $(document).on('show.bs.modal', '.analyticsRowEvolutionModal', function (e) {
+    let modal = $(e.target);
+    modal.find('[class^="analyticsApplicationRowEvolutionDuration"]').each(function () { $(this).prop('selectedIndex', 0) })
     modal.find('.analyticsApplicationRowEvolutionField').prop('selectedIndex', 0);
     modal.find('[class^="analyticsApplicationRowEvolutionDuration"]').not('.analyticsApplicationRowEvolutionDurationDay').hide();
     modal.find('.analyticsApplicationRowEvolutionDurationDay').show();
     currentOptions.data('period', 'day');
     currentOptions.find('.analyticsRowEvolutionOptions').data('date', $('.analyticsApplicationRowEvolutionDurationDay').val());
   });
-  $(document).on('keyup change', '.analyticsRowEvolutionModal .analyticsApplicationRowEvolutionField', function()
-  {
+  $(document).on('keyup change', '.analyticsRowEvolutionModal .analyticsApplicationRowEvolutionField', function () {
     renderChart(JSON.parse(window.sessionStorage.getItem('analyticsLastRequestCache')));
   });
 
   /**
-   * Binds the event that will open the modal and display the data when the 'Row Evolution' button is clicked. 
+   * Handles the click event on the RowEvolution buttons. It will save the current modal and current options div for easy of use and 
+   * fetches the data for the default parameters.
    */
   $(document).on('click', '.analyticsActions .analyticsRowEvolution', function () {
     const parameter = $(this).data('parameter');
-    currentModal =  $(this).closest('.xwiki-livetable-container').next('.analyticsRowEvolutionModal');
+    currentModal = $(this).closest('.xwiki-livetable-container').next('.analyticsRowEvolutionModal');
     currentOptions = currentModal.find('.analyticsRowEvolutionOptions');
-    //setting the parameters for the first request to be period=day&amp;date=30
-    console.log(currentOptions);
     fetchChartData(parameter);
   });
-  
+
   /**
-   * Updates the chart when the time  
+   * Handles the update of the chart when the time is changed.
+   * 
    */
-  $(document).on('keyup change', '.analyticsRowEvolutionModal [class^="analyticsApplicationRowEvolutionDuration"]', function() {
-    //updates the time intervals to that period options
+  $(document).on('keyup change', '.analyticsRowEvolutionModal [class^="analyticsApplicationRowEvolutionDuration"]', function () {
     currentOptions.data('date', $(this).val());
-    fetchChartData(currentOptions.data('parameter'));  
+    fetchChartData(currentOptions.data('parameter'));
   });
-  $(document).on("keyup change", '.analyticsRowEvolutionModal .analyticsApplicationModalPeriodSelect',function() {
-      const period = $(this).val();
-      displayPeriodDurations(period);
-      fetchChartData(currentOptions.data('parameter'));
-    })
+
+  /**
+   * Handles the update of the chart when the period is changed.
+   */
+  $(document).on("keyup change", '.analyticsRowEvolutionModal .analyticsApplicationModalPeriodSelect', function () {
+    const period = $(this).val();
+    displayPeriodDurations(period);
+    fetchChartData(currentOptions.data('parameter'));
+  })
 
   $(document).ready(() =&gt; {
   });
 });
- </code>
+</code>
     </property>
     <property>
       <name/>

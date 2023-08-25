@@ -274,7 +274,7 @@
   'uniqueViews':'nb_visits',
   "avgTime":'avg_time_on_page'
 })
-#modalRowEvolution($parameters, 'Analytics.Code.Macros.RowEvolutionJson')
+#modalRowEvolution($parameters, 'MostViewedMacro')
 {{/velocity}}</code>
     </property>
     <property>
