@@ -87,7 +87,7 @@
       'searches' : $currentEntry.get('nb_visits').asText(),
       'nbOfResultPages' : $currentEntry.get('nb_pages_per_search').asText(),
       'exitRate' : $currentEntry.get('exit_rate').asText(),
-      'actions' : "#setParameterOnAction($parameter)"
+      'actions' : "#analyticsActions($parameter)"
     }))
   #end
   #jsonResponse($results)

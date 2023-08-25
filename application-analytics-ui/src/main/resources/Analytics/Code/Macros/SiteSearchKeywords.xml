@@ -265,8 +265,11 @@
   'extraParams': $parameters
 })
 #livetable('siteSearchKeywords' $columns $columnsProperties $options)
-#modalRowEvolution({'searches':'nb_visits','searchResultPages':'nb_pages_per_search'},
-        'Analytics.Code.Macros.RowEvolutionSiteSearchKeywordsJSON')
+#set ($parameters = {
+'searches':'nb_visits'
+,'searchResultPages':'nb_pages_per_search'
+})
+#modalRowEvolution( $parameters, 'SiteSearchKeyword')
 {{/velocity}}</code>
     </property>
     <property>
