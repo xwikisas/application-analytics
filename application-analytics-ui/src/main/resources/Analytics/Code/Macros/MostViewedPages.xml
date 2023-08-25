@@ -267,14 +267,14 @@
   'resultPage': 'Analytics.Code.Macros.MostViewedPagesJSON',
   'extraParams': $parameters
 })
-#getAnalyticsMacroId('mostViwedMacro')
+#getAnalyticsMacroId('mostViwedMacro', $macroId )
 #livetable($macroId $columns $columnsProperties $options)
 #set ($parameters = {
   'pageviews':'nb_hits',
   'uniqueViews':'nb_visits',
   "avgTime":'avg_time_on_page'
 })
-#modalRowEvolution($parameters, 'Analytics.Code.Macros.RowEvolutionJson')
+#modalRowEvolution($parameters, 'MostViewedMacro')
 {{/velocity}}</code>
     </property>
     <property>

@@ -67,6 +67,7 @@ analytics.rowEvolution.label=Row Evolution
 analytics.rowEvolution.close=Close
 analytics.rowEvolution.period=Period
 analytics.rowEvolution.field=Field
+analytics.rowEvolution.periodLength=Period length
 analytics.rowEvolution.modal.day.label=Day
 analytics.rowEvolution.modal.week.label=Week
 analytics.rowEvolution.modal.month.label=Month
