@@ -89,7 +89,7 @@ public class MatomoAnalyticsManager implements AnalyticsManager
         HttpGet request =  new HttpGet(buildURI(parameters));
         HttpResponse response = client.execute(request);
         String responseBody  = EntityUtils.toString(response.getEntity());
-        return jsonNormaliser.normaliseData(responseBody);
+        return jsonNormaliser.normaliseData(responseBody, parameters.get("filterField"), parameters.get("fieldValue"));
     }
 
     /**

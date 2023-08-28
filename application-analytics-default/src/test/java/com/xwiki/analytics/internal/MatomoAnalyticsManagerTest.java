@@ -36,6 +36,7 @@ import com.xwiki.analytics.configuration.AnalyticsConfiguration;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.isNull;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -67,7 +68,7 @@ public class MatomoAnalyticsManagerTest
         when(this.configuration.getRequestAddress()).thenReturn("http://130.61.233.19/matomo");
         when(this.configuration.getIdSite()).thenReturn("3");
         this.matomoAnalyticsManager.requestData(new HashMap<>(), MostViewedJsonNormaliser.HINT);
-        verify(this.jsonNormaliser).normaliseData(any(String.class));
+        verify(this.jsonNormaliser).normaliseData(any(String.class), isNull(), isNull());
     }
 
     @Test

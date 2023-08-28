@@ -29,10 +29,8 @@ import org.xwiki.stability.Unstable;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.xwiki.analytics.JsonNormaliser;
 
 /**
  * Normalizes the response needed by the RowEvolution feature.
@@ -44,32 +42,16 @@ import com.xwiki.analytics.JsonNormaliser;
 @Named("RowEvolution")
 @Unstable
 @Singleton
-public class RowEvolutionJsonNormaliser implements JsonNormaliser
+public class RowEvolutionJsonNormaliser extends AbstractJsonNormaliser
 {
     /**
      * Hint for the RowEvolution.
      */
     public static final String HINT = "RowEvolution";
 
-    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
-
-    private static final String DATE = "date";
-
     @Override
-    public JsonNode normaliseData(String jsonString) throws JsonProcessingException
-    {
-        JsonNode jsonNode = OBJECT_MAPPER.readTree(jsonString);
-        return processObjectNode(jsonNode);
-    }
-
-    /**
-     * Transforming the json object returned by Matomo into an array of jsons to make it easier to use in javascript.
-     *
-     * @param jsonNode the JSON node to be processed.
-     * @return the processed and transformed JSON node.
-     * @throws JsonProcessingException if any error occurs during JSON processing.
-     */
-    private ArrayNode processObjectNode(JsonNode jsonNode) throws JsonProcessingException
+    protected ArrayNode processObjectNode(JsonNode jsonNode, String filterField, String filterValue)
+        throws JsonProcessingException
     {
         ArrayNode arrayNode = OBJECT_MAPPER.createArrayNode();
         Iterator<String> fieldNames = jsonNode.fieldNames();
@@ -77,14 +59,19 @@ public class RowEvolutionJsonNormaliser implements JsonNormaliser
         while (fieldNames.hasNext()) {
             String date = fieldNames.next();
             JsonNode childNode = jsonNode.get(date);
-            JsonNode node = childNode.get(0);
 
-            if (node == null) {
-                node = OBJECT_MAPPER.readTree(String.format("{\"%s\"  : \"%s\"}", DATE, date));
-            } else {
-                ((ObjectNode) node).put(DATE, date);
+            if (childNode.get(0) == null) {
+                arrayNode.add(OBJECT_MAPPER.readTree(String.format("{\"%s\"  : \"%s\"}", DATE, date)));
             }
-            arrayNode.add(node);
+
+            for (JsonNode node : childNode) {
+                if (filterField == null || filterValue == null || node != null || filterValue.equals(
+                    node.get(filterField).asText()))
+                {
+                    ((ObjectNode) node).put(DATE, date);
+                    arrayNode.add(node);
+                }
+            }
         }
         return arrayNode;
     }

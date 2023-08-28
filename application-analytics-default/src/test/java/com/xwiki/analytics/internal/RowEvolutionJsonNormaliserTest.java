@@ -56,7 +56,7 @@ public class RowEvolutionJsonNormaliserTest
     {
         readJSONS();
         assertEquals(node.get("RowEvolutionTestObjectResponse"),
-            rowEvolutionJsonNormaliser.normaliseData(node.get("RowEvolutionTestObject").toString()));
+            rowEvolutionJsonNormaliser.normaliseData(node.get("RowEvolutionTestObject").toString(),null, null));
 
     }
 }
