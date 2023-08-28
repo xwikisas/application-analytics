@@ -61,6 +61,13 @@ analytics.mostViewedPages.header.year=Year
 analytics.mostViewedPages.parameter.label.startDate=Start time of the date interval used for this macro
 analytics.mostViewedPages.parameter.label.endDate=End time of the date interval used for this macro
 
+## Search Categories
+analytics.searchCategories.header.date=Date
+analytics.searchCategories.header.title=Search category
+analytics.searchCategories.header.searches=Searches
+analytics.searchCategories.header.searchResultsPages=Search Result Page
+analytics.searchCategories.header.actions=Actions
+
 ## Row Evolution
 analytics.action.label.rowEvolution=Row Evolution
 analytics.rowEvolution.label=Row Evolution
@@ -75,6 +82,8 @@ analytics.rowEvolution.modal.year.label=Year
 analytics.rowEvolution.field.pageviews=Pageviews
 analytics.rowEvolution.field.uniqueViews=Unique views
 analytics.rowEvolution.field.avgTime=Avg. Time on 
+analytics.rowEvolution.field.searches=Searches
+analytics.rowEvolution.field.searchResultsPages=Search result pages
 
 ## Admin section
 admin.analytics.application=Analytics
