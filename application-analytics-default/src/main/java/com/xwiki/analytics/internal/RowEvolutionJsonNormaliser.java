@@ -65,8 +65,8 @@ public class RowEvolutionJsonNormaliser extends AbstractJsonNormaliser
             }
 
             for (JsonNode node : childNode) {
-                if (filterField == null || filterValue == null || node != null || filterValue.equals(
-                    node.get(filterField).asText()))
+                if ((filterField == null || filterValue == null || filterValue.equals(
+                    node.get(filterField).asText())) &&  node != null)
                 {
                     ((ObjectNode) node).put(DATE, date);
                     arrayNode.add(node);

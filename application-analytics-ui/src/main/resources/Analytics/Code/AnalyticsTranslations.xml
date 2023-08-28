@@ -46,6 +46,14 @@ Analytics.Code.AnalyticsDashboardClass_DisplayedStatistics.hint=List of statisti
 Analytics.Code.AnalyticsDashboardClass_startDate=Start date
 Analytics.Code.AnalyticsDashboardClass_startDate.hint=Start time of the date interval used on all statistics of this dashboard.
 
+## Pages following a site search
+analytics.pagesFollowingaSiteSearchJSON.header.date=Date
+analytics.pagesFollowingaSiteSearchJSON.header.destinationPage=Destination page
+analytics.pagesFollowingaSiteSearchJSON.header.clicked=Clicked in search results
+analytics.pagesFollowingaSiteSearchJSON.header.pageViews=Pageviews
+analytics.pagesFollowingaSiteSearchJSON.header.loadTime=Avg.Page Load Time
+analytics.pagesFollowingaSiteSearchJSON.header.actions=Actions
+
 ## Most Viewed Pages Macro
 analytics.mostViewedPages.header.actions=Actions
 analytics.mostViewedPages.header.bounceRate=Bounce rate
@@ -75,6 +83,7 @@ analytics.rowEvolution.modal.year.label=Year
 analytics.rowEvolution.field.pageviews=Pageviews
 analytics.rowEvolution.field.uniqueViews=Unique views
 analytics.rowEvolution.field.avgTime=Avg. Time on 
+analytics.rowEvolution.field.clickedSearchResult=Clicked in search results
 
 ## Admin section
 admin.analytics.application=Analytics

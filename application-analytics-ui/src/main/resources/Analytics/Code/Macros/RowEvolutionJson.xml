@@ -41,11 +41,17 @@
   'period' : $request.period,
   'date' : $request.date,
   'module' : 'API',
-  'method' : 'Actions.getPageUrl',
   'format' : 'json'
 })
 #if ($request.macroName=='MostViewedMacro')
   $parameters.put('pageUrl', $request.parameter)
+  $parameters.put('method', 'Actions.getPageUrl')
+#elseif ($request.macroName=='PagesFollowingaSiteSearch')
+  $parameters.put('method', 'Actions.getPageUrlsFollowingSiteSearch')
+  $parameters.put('expanded', '1')
+  $parameters.put('flat', '1')
+  $parameters.put('fieldValue',$request.parameter)
+  $parameters.put('filterField','url')
 #end
 #set ($analyticsResult = $services.analytics.getMatomoRequestResult($parameters, 'RowEvolution'))
 #jsonResponse($analyticsResult)
