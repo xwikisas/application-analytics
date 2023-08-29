@@ -44,7 +44,7 @@
   'method' : 'Actions.getPageUrl',
   'format' : 'json'
 })
-#if ($request.macroName=='MostViewedMacro')
+#if ($request.macroName=='MostViewedPages')
   $parameters.put('pageUrl', $request.parameter)
 #end
 #set ($analyticsResult = $services.analytics.getMatomoRequestResult($parameters, 'RowEvolution'))

@@ -66,7 +66,7 @@
 &lt;div class="analyticsActions"&gt;
   &lt;div class="analyticsRowEvolution"  data-parameter=$escapetool.url($parameter)&gt;
     &lt;a class="action" title="$escapetool.xml($services.localization.render(
-      'analytics.mostViwedMacros.action.rowEvolution'))" href="#"&gt;
+      'analytics.mostViewedMacros.action.rowEvolution'))" href="#"&gt;
       &lt;span class="action-icon"&gt;$services.icon.renderHTML('eye')&lt;/span&gt;&lt;span class="action-label"&gt;
       $escapetool.xml($services.localization.render('analytics.action.label.rowEvolution'))&lt;/span&gt;
     &lt;/a&gt;
@@ -122,7 +122,7 @@
           $services.localization.render('analytics.rowEvolution.label')
         &lt;/h4&gt;
       &lt;/div&gt;
-      &lt;div class="analyticsRowEvolutionOptions" data-macro-name=$macroName data-request-page-url=$requestPageURL&gt;
+      &lt;div class="rowEvolutionOptions" data-macro-name=$macroName data-request-page-url=$requestPageURL&gt;
         &lt;div class="modal-body"&gt;
           &lt;div class=".container-fluid"&gt;
             &lt;div class="row"&gt;
