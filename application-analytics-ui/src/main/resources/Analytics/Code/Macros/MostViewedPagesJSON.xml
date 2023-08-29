@@ -20,8 +20,8 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc version="1.4" reference="Analytics.Code.Macros.MostViewedPagesMacro.MostViewedPagesJSON" locale="">
-  <web>Analytics.Code.Macros.MostViewedPagesMacro</web>
+<xwikidoc version="1.4" reference="Analytics.Code.Macros.MostViewedPagesJSON" locale="">
+  <web>Analytics.Code.Macros</web>
   <name>MostViewedPagesJSON</name>
   <language/>
   <defaultLanguage/>
@@ -89,7 +89,6 @@
   #foreach ($currentEntry in $analyticsResult)
     #set ($url = $currentEntry.get('url').asText())
     #set ($discard = $results.rows.add({
-      'date' : $currentEntry.get('date').asText(),
       'title' : $currentEntry.get('label').asText(),
       'visits' :  $currentEntry.get('nb_visits').asText(),
       'hits' : $currentEntry.get('nb_hits').asText(),
