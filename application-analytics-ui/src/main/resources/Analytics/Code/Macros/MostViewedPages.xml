@@ -252,8 +252,8 @@
   'limitEntries': '-1',
   'translationPrefix': 'analytics.mostViewedPages.header.'
 }))
-#set ($liveDataConfig={
-  'meta':{
+#set ($liveDataConfig= {
+  'meta': {
     'propertyDescriptors': [
       {'id': 'title', 'displayer': 'html'},
       {'id': 'visits', 'displayer': 'html'},
@@ -266,7 +266,7 @@
 })
 
 {{liveData
-  id="mostViwedMacro"
+  id="mostViewedMacro"
   properties="title, visits, hits, timeSpent, entryNbActions, bounceRate, exitRate"
   source='liveTable'
   sourceParameters="$parameters"
