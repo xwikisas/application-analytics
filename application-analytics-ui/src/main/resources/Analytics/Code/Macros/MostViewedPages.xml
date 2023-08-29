@@ -20,8 +20,8 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc version="1.4" reference="Analytics.Code.Macros.MostViewedPagesMacro.MostViewedPages" locale="">
-  <web>Analytics.Code.Macros.MostViewedPagesMacro</web>
+<xwikidoc version="1.4" reference="Analytics.Code.Macros.MostViewedPages" locale="">
+  <web>Analytics.Code.Macros</web>
   <name>MostViewedPages</name>
   <language/>
   <defaultLanguage/>
@@ -38,7 +38,7 @@
   <hidden>true</hidden>
   <content>{{mostViewedPage/}}</content>
   <object>
-    <name>Analytics.Code.Macros.MostViewedPagesMacro.MostViewedPages</name>
+    <name>Analytics.Code.Macros.MostViewedPages</name>
     <number>0</number>
     <className>XWiki.WikiMacroClass</className>
     <guid>dc943965-6af8-4905-8508-9b8c248c3930</guid>
@@ -241,31 +241,37 @@
     </property>
     <property>
       <code>{{include reference='Analytics.Code.Macros.VelocityMacros'/}}
+
 {{velocity}}
 #getDate()
 #set ($period = 'range')
 #set ($parameters = $escapetool.url({
+  'resultPage': 'Analytics.Code.Macros.MostViewedPagesJSON',
   'date': $date,
   'period': $period,
-  'limitEntries': '-1'
+  'limitEntries': '-1',
+  'translationPrefix': 'analytics.mostViewedPages.header.'
 }))
-#set ($columns = ['date', 'title', 'visits', 'hits', 'timeSpent', 'entryNbActions', 'bounceRate', 'exitRate'])
-#set ($columnsProperties = {
-  'date' : { 'type' : 'text', 'sortable' : true },
-  'title' : { 'type' : 'text', 'sortable' : true },
-  'visits' : { 'type' : 'text', 'sortable' : true },
-  'hits' : { 'type' : 'text', 'sortable' : true },
-  'timeSpent' : { 'type' : 'text', 'sortable' : true },
-  'entryNbActions' : { 'type' : 'text', 'sortable' : true },
-  'bounceRate' : { 'type' : 'text', 'sortable' : true },
-  'exitRate' : { 'type' : 'text', 'sortable' : true }
+#set ($liveDataConfig= {
+  'meta': {
+    'propertyDescriptors': [
+      {'id': 'title', 'displayer': 'html'},
+      {'id': 'visits', 'displayer': 'html'},
+      {'id': 'hits', 'displayer': 'html'},
+      {'id': 'timeSpent', 'displayer': 'html'},
+      {'id': 'entryNbActions', 'displayer': 'html'},
+      {'id': 'bounceRate', 'displayer': 'html'},
+      {'id': 'exitRate', 'displayer': 'html'}
+    ]}
 })
-#set($options = {
-  'translationPrefix': 'analytics.mostViewedPages.header.',
-  'resultPage': 'Analytics.Code.Macros.MostViewedPagesMacro.MostViewedPagesJSON',
-  'extraParams': $parameters
-})
-#livetable('mostViewedPages' $columns $columnsProperties $options)
+
+{{liveData
+  id="mostViewedMacro"
+  properties="title, visits, hits, timeSpent, entryNbActions, bounceRate, exitRate"
+  source='liveTable'
+  sourceParameters="$parameters"
+}}$jsontool.serialize($liveDataConfig){{/liveData}}
+
 {{/velocity}}</code>
     </property>
     <property>
@@ -300,7 +306,7 @@
     </property>
   </object>
   <object>
-    <name>Analytics.Code.Macros.MostViewedPagesMacro.MostViewedPages</name>
+    <name>Analytics.Code.Macros.MostViewedPages</name>
     <number>0</number>
     <className>XWiki.WikiMacroParameterClass</className>
     <guid>6e3cae3f-3127-4fb2-a590-5dce2f4be0d0</guid>
@@ -378,7 +384,7 @@
     </property>
   </object>
   <object>
-    <name>Analytics.Code.Macros.MostViewedPagesMacro.MostViewedPages</name>
+    <name>Analytics.Code.Macros.MostViewedPages</name>
     <number>1</number>
     <className>XWiki.WikiMacroParameterClass</className>
     <guid>8a9fb4a7-d7e2-4d7d-84b8-8afb71b4606d</guid>
