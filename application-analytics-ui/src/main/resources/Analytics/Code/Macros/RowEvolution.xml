@@ -126,11 +126,11 @@
     <property>
       <code>require.config({
   paths: {
-    'chartjs': 'https://cdn.jsdelivr.net/npm/chart.js/dist/Chart.min',
+    chart: "$services.webjars.url('org.webjars:chartjs', 'Chart.bundle.min.js')"
   }
 });
 
-require(['jquery', 'chartjs'], ($) =&gt; {
+require(['jquery', 'chart'], ($) =&gt; {
   const SELECTORS = {
     modal: '.analyticsRowEvolutionModal',
     field: '.rowEvolutionField',
@@ -138,7 +138,7 @@ require(['jquery', 'chartjs'], ($) =&gt; {
     startsWithPeriodLength: '[class^="rowEvolutionPeriodLength"]',
     options: '.rowEvolutionOptions',
     period: '.rowEvolutionPeriod',
-    loading: '.loading', 
+    loading: '.loading',
     chart: '.chartDisplay',
     button:'.analyticsActions .analyticsRowEvolution'
   };
@@ -156,7 +156,8 @@ require(['jquery', 'chartjs'], ($) =&gt; {
     const dates = data.map(item =&gt; item.date);
     const field = data.map(item =&gt; item[currentModal.find(SELECTORS.field).val()] || 0);
     const ctx = currentModal.find(SELECTORS.chart);
-    //You always
+    console.log(dates)
+    console.log(data)
     if (chart) {
       chart.destroy();
     }
@@ -247,7 +248,7 @@ require(['jquery', 'chartjs'], ($) =&gt; {
   $(document).on('click', SELECTORS.button, function () {
     //This parameter is used to identify a specific row in the matomo tables.
     const parameter = $(this).data('parameter');
-    currentModal = $(this).closest('.xwiki-livetable-container').next(SELECTORS.modal);
+    currentModal = $(this).closest('.xwiki-livedata').next(SELECTORS.modal);
     currentOptions = currentModal.find(SELECTORS.options);
     currentLoadingAnimation = currentModal.find(SELECTORS.loading);
     currentModal.modal('show');
@@ -278,7 +279,7 @@ require(['jquery', 'chartjs'], ($) =&gt; {
       <name/>
     </property>
     <property>
-      <parse>0</parse>
+      <parse>1</parse>
     </property>
     <property>
       <use>onDemand</use>

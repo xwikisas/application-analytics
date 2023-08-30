@@ -66,9 +66,8 @@
 &lt;div class="analyticsActions"&gt;
   &lt;div class="analyticsRowEvolution"  data-parameter=$escapetool.url($parameter)&gt;
     &lt;a class="action" title="$escapetool.xml($services.localization.render(
-      'analytics.mostViewedMacros.action.rowEvolution'))" href="#"&gt;
-      &lt;span class="action-icon"&gt;$services.icon.renderHTML('eye')&lt;/span&gt;&lt;span class="action-label"&gt;
-      $escapetool.xml($services.localization.render('analytics.action.label.rowEvolution'))&lt;/span&gt;
+      'analytics.action.hover.rowEvolution'))" href="#"&gt;
+      &lt;span class="action-icon"&gt;$services.icon.renderHTML('eye')&lt;/span&gt;&lt;span class="action-label"&gt;&lt;/span&gt;
     &lt;/a&gt;
   &lt;/div&gt;
 &lt;/div&gt;
@@ -110,7 +109,7 @@
 #macro(modalRowEvolution $matomoFields $macroName)
 #set ($requestPageURL = $xwiki.getURL('Analytics.Code.Macros.RowEvolutionJson'))
 {{html clean=false}}
-&lt;div class="modal fade analyticsRowEvolutionModal" tabindex="-1" role="dialog" aria-labelledby="chartModalLabel"
+&lt;div class="modal fade analyticsRowEvolutionModal" tabindex="-1" role="dialog" aria-label="chartModalLabel"
   aria-hidden="true"&gt;
   &lt;div class="modal-dialog modal-lg"&gt;
     &lt;div class="modal-content"&gt;
@@ -118,39 +117,33 @@
         &lt;button type="button" class="close" data-dismiss="modal" aria-label="Close"&gt;
           &lt;span aria-hidden="true"&gt;&amp;times;&lt;/span&gt;
         &lt;/button&gt;
-        &lt;h4 class="modal-title" class="chartModalLabel"&gt;
+        &lt;h4 class="modal-title chartModalLabel"&gt;
           $services.localization.render('analytics.rowEvolution.label')
         &lt;/h4&gt;
       &lt;/div&gt;
       &lt;div class="rowEvolutionOptions" data-macro-name=$macroName data-request-page-url=$requestPageURL&gt;
         &lt;div class="modal-body"&gt;
-          &lt;div class=".container-fluid"&gt;
+          &lt;div class="container-fluid"&gt;
             &lt;div class="row"&gt;
               &lt;div class="col-md-3"&gt;
-                &lt;label&gt;
-                  $services.localization.render('analytics.rowEvolution.period')
+                &lt;p&gt;$services.localization.render('analytics.rowEvolution.period')&lt;/p&gt;
                   &lt;select class="rowEvolutionPeriod form-control"&gt;
                     #durationOption("Day")
                     #durationOption("Week")
                     #durationOption("Month")
                     #durationOption("Year")
                   &lt;/select&gt;
-                &lt;/label&gt;
               &lt;/div&gt;
               &lt;div class="col-md-3"&gt;
-                &lt;label&gt;
-                  $services.localization.render('analytics.rowEvolution.periodLength')
+                &lt;p&gt;$services.localization.render('analytics.rowEvolution.periodLength')&lt;/p&gt;
                   #durationSelectList("rowEvolutionPeriodLengthDay" [30, 8, 60, 90, 180, 365, 500])
                   #durationSelectList("rowEvolutionPeriodLengthWeek" [4, 12, 26, 52, 104, 500])
                   #durationSelectList("rowEvolutionPeriodLengthMonth" [3, 6, 12, 24, 36, 120])
                   #durationSelectList("rowEvolutionPeriodLengthYear" [3, 5, 10])
-                &lt;/label&gt;
               &lt;/div&gt;
               &lt;div class="col-md-3"&gt;
-                &lt;label&gt;
-                  $services.localization.render('analytics.rowEvolution.field')
+                &lt;p&gt;$services.localization.render('analytics.rowEvolution.field')&lt;/p&gt;
                   #rowEvolutionFieldSelect($matomoFields)
-                &lt;/label&gt;
               &lt;/div&gt;
             &lt;/div&gt;
           &lt;/div&gt;
