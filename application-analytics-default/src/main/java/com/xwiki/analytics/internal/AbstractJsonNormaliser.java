@@ -91,7 +91,7 @@ public abstract class AbstractJsonNormaliser implements JsonNormaliser
         for (JsonNode objNode : jsonNode) {
             if (objNode.isObject()) {
                 // If all the filters match then the entry would be added to the final json.
-                if (matchesAllContainsFilters(objNode, filters)) {
+                if (matchesAllFilters(objNode, filters)) {
                     ((ObjectNode) objNode).put(DATE, "");
                     arrayNode.add(objNode);
                 }
@@ -119,7 +119,7 @@ public abstract class AbstractJsonNormaliser implements JsonNormaliser
             for (JsonNode objNode : childNode) {
                 if (objNode.isObject()) {
                     // If all the filters match then the entry would be added to the final json.
-                    if (matchesAllContainsFilters(objNode, filters)) {
+                    if (matchesAllFilters(objNode, filters)) {
                         ((ObjectNode) objNode).put(DATE, date);
                         arrayNode.add(objNode);
                     }
@@ -129,7 +129,7 @@ public abstract class AbstractJsonNormaliser implements JsonNormaliser
         return arrayNode;
     }
 
-    protected boolean matchesAllContainsFilters(JsonNode objNode, Map<String, String> filters)
+    protected boolean matchesAllFilters(JsonNode objNode, Map<String, String> filters)
     {
         if (filters == null) {
             return true;

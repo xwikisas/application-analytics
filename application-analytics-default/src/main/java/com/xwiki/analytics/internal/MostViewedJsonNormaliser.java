@@ -116,7 +116,7 @@ public class MostViewedJsonNormaliser extends AbstractJsonNormaliser
 
     private void handleNode(ArrayNode arrayNode, JsonNode objNode, Map<String, String> filters)
     {
-        if (matchesAllContainsFilters(objNode, filters)) {
+        if (matchesAllFilters(objNode, filters)) {
 
             if (objNode.isObject()) {
                 if (objNode.has(URL)) {
