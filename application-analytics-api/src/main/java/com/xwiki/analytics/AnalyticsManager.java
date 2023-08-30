@@ -39,9 +39,12 @@ public interface AnalyticsManager
 {
     /**
      * Request specific analytics data.
+     *
      * @param jsonNormaliserHint hint to select the json normaliser
      * @param parameters a list of key, value pairs that will represent the parameters for the request
+     * @param filters holds the criteria for filtering a dataset.
      * @return a jsonNode with the processed data
      */
-    JsonNode requestData(Map<String, String> parameters, String jsonNormaliserHint) throws IOException;
+    JsonNode requestData(Map<String, String> parameters, Map<String, String> filters, String jsonNormaliserHint)
+        throws IOException;
 }

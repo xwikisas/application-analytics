@@ -270,6 +270,7 @@
   properties="title, visits, hits, timeSpent, entryNbActions, bounceRate, exitRate"
   source='liveTable'
   sourceParameters="$parameters"
+  sort='hits:desc'
 }}$jsontool.serialize($liveDataConfig){{/liveData}}
 
 {{/velocity}}</code>

@@ -66,7 +66,7 @@ public class MostViewedJsonNormaliserTest
         setupURLs("http://localhost:8080/xwiki/bin/view/Analytics/",
             "http://localhost:8080/xwiki/bin/view/Analytics/Code/Macros/MostViewedPage");
         assertEquals(node.get("ResponseObjectJSON"),
-            mostViewedJsonNormaliser.normaliseData(node.get("ObjectJSON").toString()));
+            mostViewedJsonNormaliser.normaliseData(node.get("ObjectJSON").toString(), null));
     }
 
     @Test
@@ -76,7 +76,7 @@ public class MostViewedJsonNormaliserTest
         setupURLs("http://localhost:8080/xwiki/bin/view/Analytics/Code/MostViwedPages",
             "http://localhost:8081/xwiki/bin/view/Main/");
         assertEquals(node.get("ResponseArrayJSON"),
-            mostViewedJsonNormaliser.normaliseData(node.get("ArrayJSONS").toString()));
+            mostViewedJsonNormaliser.normaliseData(node.get("ArrayJSONS").toString(), null));
     }
 
     private void setupURLs(String url1, String url2) throws Exception
