@@ -267,15 +267,7 @@
     ],
     'entryDescriptor': {
       'idProperty': 'title'
-      },
-   "pagination": {
-      "maxShownPages": 10,
-      "pageSizes": [15, 25, 50, 100],
-      "showEntryRange": true,
-      "showNextPrevious": true,
-      "showFirstLast": false,
-      "showPageSizeDropdown": false
-    }
+      }
   }
 })
 #getAnalyticsMacroId('mostViwedMacro', $macroId)
@@ -285,7 +277,7 @@
   properties="title, visits, hits, timeSpent, entryNbActions, bounceRate, exitRate, actions"
   source='liveTable'
   sourceParameters="$parameters"
-  limit=15
+  sort='hits:desc'
 }}$jsontool.serialize($liveDataConfig){{/liveData}}
 
 #set ($parameters = {

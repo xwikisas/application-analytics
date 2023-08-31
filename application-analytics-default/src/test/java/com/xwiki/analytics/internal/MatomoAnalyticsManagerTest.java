@@ -36,6 +36,8 @@ import com.xwiki.analytics.configuration.AnalyticsConfiguration;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.isNull;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -66,8 +68,8 @@ public class MatomoAnalyticsManagerTest
         when(this.configuration.getAuthenticationToken()).thenReturn("token");
         when(this.configuration.getRequestAddress()).thenReturn("http://130.61.233.19/matomo");
         when(this.configuration.getIdSite()).thenReturn("3");
-        this.matomoAnalyticsManager.requestData(new HashMap<>(), MostViewedJsonNormaliser.HINT);
-        verify(this.jsonNormaliser).normaliseData(any(String.class));
+        this.matomoAnalyticsManager.requestData(new HashMap<>(), new HashMap<>(), MostViewedJsonNormaliser.HINT);
+        verify(this.jsonNormaliser).normaliseData(any(String.class), eq(new HashMap<>()));
     }
 
     @Test
@@ -78,7 +80,7 @@ public class MatomoAnalyticsManagerTest
         when(this.configuration.getRequestAddress()).thenReturn("http://130.61.233.19/matomo");
         when(this.configuration.getIdSite()).thenReturn("3");
         try {
-            when(this.matomoAnalyticsManager.requestData(new HashMap<>(), "RANDOM_NORMALISER")).thenThrow(
+            when(this.matomoAnalyticsManager.requestData(new HashMap<>(),new HashMap<>(), "RANDOM_NORMALISER")).thenThrow(
                 new RuntimeException());
             verify(this.logger).warn("There is no JSON normalizer associated with the [{}] hint you provided.",
                 "RANDOM_NORMALISER");

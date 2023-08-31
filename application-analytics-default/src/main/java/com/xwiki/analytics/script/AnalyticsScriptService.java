@@ -19,6 +19,8 @@
  */
 package com.xwiki.analytics.script;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -53,15 +55,34 @@ public class AnalyticsScriptService implements ScriptService
      *
      * @param jsonNormaliserHint hint specific to the component that will normalize the Matomo result response,
      *     since it's given / resulted format depends on the context were is used.
+     * @param filters holds the criteria for filtering a dataset.
      * @param parameters a map of the parameters needed for this request
      * @return response from Matomo API, in a normalized JSON format
      */
-    public JsonNode getMatomoRequestResult(Map<String, String> parameters, String jsonNormaliserHint)
+    public JsonNode getMatomoRequestResult(Map<String, String> parameters, Map<String, String> filters,
+        String jsonNormaliserHint)
     {
         try {
-            return analyticsManager.requestData(parameters, jsonNormaliserHint);
+            return analyticsManager.requestData(parameters, filters, jsonNormaliserHint);
         } catch (Exception e) {
             throw new RuntimeException(String.format("Failed to get data for [%s]", jsonNormaliserHint), e);
         }
+    }
+
+    /**
+     * Creates a subset from an array of jsons.
+     *
+     * @param jsonNode array of jsons
+     * @param start index of the first element
+     * @param end index+1 of the last element
+     * @return a subset of jsons
+     */
+    public List<JsonNode> subSetJSON(JsonNode jsonNode, int start, int end)
+    {
+        List<JsonNode> subSet = new ArrayList<>();
+        for (int i = start; i < end; i++) {
+            subSet.add(jsonNode.get(i));
+        }
+        return subSet;
     }
 }

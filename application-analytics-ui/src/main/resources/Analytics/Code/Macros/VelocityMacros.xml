@@ -62,6 +62,10 @@
   #set ($date = $startDate + ',' + $endDate)
 #end
 
+#macro (createLink $text $link)
+&lt;a href=$link&gt;$text&lt;/a&gt;
+#end
+
 #macro(analyticsActions $parameter)
 &lt;div class="analyticsActions"&gt;
   &lt;div class="analyticsRowEvolution"  data-parameter=$escapetool.url($parameter)&gt;

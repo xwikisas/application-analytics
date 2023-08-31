@@ -47,7 +47,7 @@
 #if ($request.macroName=='MostViewedPages')
   $parameters.put('pageUrl', $request.parameter)
 #end
-#set ($analyticsResult = $services.analytics.getMatomoRequestResult($parameters, 'RowEvolution'))
+#set ($analyticsResult = $services.analytics.getMatomoRequestResult($parameters, {}, 'RowEvolution'))
 #jsonResponse($analyticsResult)
 {{/velocity}}
 </content>

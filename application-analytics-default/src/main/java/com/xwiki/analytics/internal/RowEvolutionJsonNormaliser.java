@@ -20,6 +20,7 @@
 package com.xwiki.analytics.internal;
 
 import java.util.Iterator;
+import java.util.Map;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -32,7 +33,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.xwiki.analytics.JsonNormaliser;
 
 /**
  * Normalizes the response needed by the RowEvolution feature.
@@ -44,7 +44,7 @@ import com.xwiki.analytics.JsonNormaliser;
 @Named("RowEvolution")
 @Unstable
 @Singleton
-public class RowEvolutionJsonNormaliser implements JsonNormaliser
+public class RowEvolutionJsonNormaliser extends AbstractJsonNormaliser
 {
     /**
      * Hint for the RowEvolution.
@@ -56,7 +56,7 @@ public class RowEvolutionJsonNormaliser implements JsonNormaliser
     private static final String DATE = "date";
 
     @Override
-    public JsonNode normaliseData(String jsonString) throws JsonProcessingException
+    public JsonNode normaliseData(String jsonString, Map<String, String> filters) throws JsonProcessingException
     {
         JsonNode jsonNode = OBJECT_MAPPER.readTree(jsonString);
         return processObjectNode(jsonNode);
