@@ -70,7 +70,7 @@
   #set ($filters={})
   #foreach ($key in $keys.keySet())
     #set ($value = $request.get($key))
-    #if ($value &amp;&amp; $value!="")
+    #if ($value &amp;&amp; $value != '')
       $filters.put($keys.get($key), $request.get($key))
     #end
   #end
@@ -88,8 +88,8 @@
     'flat' : '1'
   })
 
-  ## Json from matomo
-  #set ($analyticsResult = $services.analytics.getMatomoRequestResult($parameters,$filters, 'MostViewedPages'))
+  ## Get the JSON response from Matomo.
+  #set ($analyticsResult = $services.analytics.getMatomoRequestResult($parameters, $filters, 'MostViewedPages'))
   #if ($offset &lt; $analyticsResult.size())
     #set ($toIndex =  $mathtool.min($mathtool.add($offset, $limit), $analyticsResult.size()))
     #set ($resultList = $services.analytics.subSetJSON($analyticsResult, $offset, $toIndex))
@@ -104,7 +104,7 @@
   #foreach ($currentEntry in $resultList)
     #set ($url = $currentEntry.get('url').asText())
     #set ($discard = $results.rows.add({
-      'title' : "#createLink($currentEntry.get('label').asText(), $url)",
+      'title' : "#createLinkElement($currentEntry.get('label').asText(), $url)",
       'visits' :  $currentEntry.get('nb_visits').asText(),
       'hits' : $currentEntry.get('nb_hits').asText(),
       'timeSpent' : $currentEntry.get('sum_time_spent').asText(),

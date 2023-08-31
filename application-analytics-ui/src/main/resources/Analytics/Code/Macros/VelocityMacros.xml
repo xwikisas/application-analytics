@@ -62,7 +62,7 @@
   #set ($date = $startDate + ',' + $endDate)
 #end
 
-#macro (createLink $text $link)
+#macro (createLinkElement $text $link)
 &lt;a href=$link&gt;$text&lt;/a&gt;
 #end
 {{/velocity}}</content>
