@@ -24,7 +24,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -74,47 +73,14 @@ public class MostViewedJsonNormaliser extends AbstractJsonNormaliser
     private ResourceTypeResolver<ExtendedURL> resourceTypeResolver;
 
     /**
-     * This method processes each entry to append an empty date to it and updates the label with the page name.
+     * Process the current node and add it to the final array of jsons.
      *
-     * @param jsonNode an array of jsons
-     * @param filters holds the criteria for filtering a dataset.
-     * @return
+     * @param arrayNode final array of jsons
+     * @param objNode the current json that has to be processed
+     * @param filters filters holds the criteria for filtering a dataset
      */
     @Override
-    protected ArrayNode processArrayNode(JsonNode jsonNode, Map<String, String> filters)
-    {
-        ArrayNode arrayNode = OBJECT_MAPPER.createArrayNode();
-        for (JsonNode objNode : jsonNode) {
-            handleNode(arrayNode, objNode, filters);
-        }
-        return arrayNode;
-    }
-
-    /**
-     * Handle the scenario where Matomo returns an object with dates as keys and arrays of JSON objects as values. This
-     * function extracts the date from the key and adds it to each page and updates the label with the name of the page.
-     * Ultimately, it returns an array of JSON objects instead of a single JSON object.
-     *
-     * @param jsonNode json object
-     * @param filters holds the criteria for filtering a dataset.
-     * @return
-     */
-    @Override
-    protected ArrayNode processObjectNode(JsonNode jsonNode, Map<String, String> filters)
-    {
-        ArrayNode arrayNode = OBJECT_MAPPER.createArrayNode();
-        Iterator<String> fieldNames = jsonNode.fieldNames();
-        while (fieldNames.hasNext()) {
-            String date = fieldNames.next();
-            JsonNode childNode = jsonNode.get(date);
-            for (JsonNode objNode : childNode) {
-                handleNode(arrayNode, objNode, filters);
-            }
-        }
-        return arrayNode;
-    }
-
-    private void handleNode(ArrayNode arrayNode, JsonNode objNode, Map<String, String> filters)
+    protected void processNode(ArrayNode arrayNode, JsonNode objNode, Map<String, String> filters)
     {
         if (matchesAllFilters(objNode, filters)) {
 

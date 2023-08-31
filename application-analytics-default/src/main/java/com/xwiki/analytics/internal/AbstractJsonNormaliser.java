@@ -30,7 +30,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.xwiki.analytics.JsonNormaliser;
 
 /**
@@ -43,7 +42,6 @@ public abstract class AbstractJsonNormaliser implements JsonNormaliser
 {
     protected static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
-    protected static final String DATE = "date";
 
     protected static final String LABEL = "label";
 
@@ -54,7 +52,7 @@ public abstract class AbstractJsonNormaliser implements JsonNormaliser
      * Normalize Matomo response for format consistency and add extra information needed by XWiki.
      *
      * @param jsonString a string that has the expected format
-     * @param filters holds the criteria for filtering a dataset.
+     * @param filters holds the criteria for filtering a dataset
      * @return the normalised json
      * @throws JsonProcessingException
      */
@@ -82,7 +80,7 @@ public abstract class AbstractJsonNormaliser implements JsonNormaliser
      * This method processes each entry to append an empty date to it.
      *
      * @param jsonNode an array of jsons
-     * @param filters holds the criteria for filtering a dataset.
+     * @param filters holds the criteria for filtering a dataset
      * @return array of jsons
      */
     protected ArrayNode processArrayNode(JsonNode jsonNode, Map<String, String> filters)
@@ -90,11 +88,7 @@ public abstract class AbstractJsonNormaliser implements JsonNormaliser
         ArrayNode arrayNode = OBJECT_MAPPER.createArrayNode();
         for (JsonNode objNode : jsonNode) {
             if (objNode.isObject()) {
-                // If all the filters match then the entry would be added to the final json.
-                if (matchesAllFilters(objNode, filters)) {
-                    ((ObjectNode) objNode).put(DATE, "");
-                    arrayNode.add(objNode);
-                }
+                processNode(arrayNode, objNode, filters);
             }
         }
         return arrayNode;
@@ -106,7 +100,7 @@ public abstract class AbstractJsonNormaliser implements JsonNormaliser
      * objects.
      *
      * @param jsonNode
-     * @param filters holds the criteria for filtering a dataset.
+     * @param filters holds the criteria for filtering a dataset
      * @return array of jsons
      */
     protected ArrayNode processObjectNode(JsonNode jsonNode, Map<String, String> filters) throws JsonProcessingException
@@ -118,11 +112,7 @@ public abstract class AbstractJsonNormaliser implements JsonNormaliser
             JsonNode childNode = jsonNode.get(date);
             for (JsonNode objNode : childNode) {
                 if (objNode.isObject()) {
-                    // If all the filters match then the entry would be added to the final json.
-                    if (matchesAllFilters(objNode, filters)) {
-                        ((ObjectNode) objNode).put(DATE, date);
-                        arrayNode.add(objNode);
-                    }
+                    processNode(arrayNode, objNode, filters);
                 }
             }
         }
@@ -137,11 +127,25 @@ public abstract class AbstractJsonNormaliser implements JsonNormaliser
         for (Map.Entry<String, String> entry : filters.entrySet()) {
             String filterField = entry.getKey();
             String filterValue = entry.getValue();
-            // Check if the field exists and its value matches the filter value
             if (!(objNode.has(filterField) && objNode.get(filterField).asText().contains(filterValue))) {
                 return false;
             }
         }
         return true;
+    }
+
+    /**
+     * Process the current node and add it to the final array of jsons.
+     *
+     * @param arrayNode final array of jsons
+     * @param currentNode the current json that has to be processed
+     * @param filters filters holds the criteria for filtering a dataset
+     */
+    protected void processNode(ArrayNode arrayNode, JsonNode currentNode, Map<String, String> filters)
+    {
+        // If all the filters match then the entry would be added to the final json.
+        if (matchesAllFilters(currentNode, filters)) {
+            arrayNode.add(currentNode);
+        }
     }
 }
