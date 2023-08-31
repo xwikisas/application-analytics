@@ -56,12 +56,21 @@
     'nbOfResultPages' : 'nb_pages_per_search',
     'exitRate' : 'exit_rate'
   })
-  #set ($sort = 'nb_visits')
+  #set ($sort = 'nb_hits')
   #set ($order = 'desc')
-  #if($request.sort &amp;&amp; $request.reqNo!='1')
+  #if ($request.sort)
     #set($sort = $keys.get($request.sort))
     #set($order = $request.dir)
   #end
+
+  #set ($filters={})
+  #foreach ($key in $keys.keySet())
+    #set ($value = $request.get($key))
+    #if ($value &amp;&amp; $value != '')
+      $filters.put($keys.get($key), $request.get($key))
+    #end
+  #end
+
   #set ($parameters = {
     'period' : $request.period,
     'date' : $request.date,
@@ -72,15 +81,21 @@
     'filter_sort_column' : $sort,
     'filter_sort_order' : $order
     })
-  #set ($analyticsResult = $services.analytics.getMatomoRequestResult($parameters, 'MostViewedPages'))
+
+  ## Get the JSON response from Matomo.
+  #set ($analyticsResult = $services.analytics.getMatomoRequestResult($parameters, $filters, 'MostViewedPages'))
+  #if ($offset &lt; $analyticsResult.size())
+    #set ($toIndex =  $mathtool.min($mathtool.add($offset, $limit), $analyticsResult.size()))
+    #set ($resultList = $services.analytics.subSetJSON($analyticsResult, $offset, $toIndex))
+  #end
   #set ($results = {
     "totalrows": $analyticsResult.size(),
-    "returnedrows": $analyticsResult.size(),
+    "returnedrows": $resultList.size(),
     "offset": $mathtool.add($offset, 1),
     "reqNo": $numbertool.toNumber($request.reqNo).intValue(),
     "rows": []
   })
-  #foreach($currentEntry  in $analyticsResult)
+  #foreach($currentEntry  in $resultList)
     #set ($parameter =  $currentEntry.get('segment').asText())
     #set ($discard = $results.rows.add({
       'keyword' : $currentEntry.get('label').asText(),

@@ -242,34 +242,48 @@
     </property>
     <property>
       <code>{{include reference='Analytics.Code.Macros.VelocityMacros'/}}
+
 {{velocity}}
 #getDate()
 #set ($discard =$xwiki.jsx.use('Analytics.Code.Macros.RowEvolution'))
 #set ($period = 'range')
 #set ($parameters = $escapetool.url({
-        'date': $date,
-        'period': $$period,
-        'limitEntries' : '-1'
-}))
-#set ($columns = ['keyword', 'searches', 'nbOfResultPages', 'exitRate' , 'actions'])
-#set ($columnsProperties = {
-  'keyword' : { 'type' : 'text', 'sortable' : true },
-  'searches' : { 'type' : 'text', 'sortable' : true },
-  'nbOfResultPages' : { 'type' : 'text', 'sortable' : true },
-  'exitRate' : { 'type' : 'text', 'sortable' : true },
-  'actions' : {'type': 'text', 'html':'true', 'sortable' : false, 'filterable' : false}
-})
-#set($options = {
+  'date': $date,
+  'period': $period,
+  'limitEntries' : '-1',
   'translationPrefix': 'analytics.siteSearchKeywords.header.',
-  'resultPage': 'Analytics.Code.Macros.SiteSearchKeywordsJSON',
-  'extraParams': $parameters
+  'resultPage': 'Analytics.Code.Macros.SiteSearchKeywordsJSON'
+}))
+#set ($columns = [])
+#set ($liveDataConfig = {
+  'meta': {
+    'propertyDescriptors': [
+      {'id': 'keyword', 'displayer': 'html'},
+      {'id': 'searches', 'displayer': 'html'},
+      {'id': 'nbOfResultPages', 'displayer': 'html'},
+      {'id': 'exitRate', 'displayer': 'html'},
+      {'id': 'actions', 'displayer': 'html'}
+    ],
+    'entryDescriptor': {
+      'idProperty': 'title'
+      }
+  }
 })
-#livetable('siteSearchKeywords' $columns $columnsProperties $options)
-#set ($parameters = {
+
+#getAnalyticsMacroId('mostViwedMacro', $macroId)
+
+{{liveData
+  id="$macroId"
+  properties="keyword, searches, nbOfResultPages, exitRate, actions"
+  source='liveTable'
+  sourceParameters="$parameters"
+}}$jsontool.serialize($liveDataConfig){{/liveData}}
+
+#set ($parameters = { 
 'searches':'nb_visits'
 ,'searchResultPages':'nb_pages_per_search'
 })
-#modalRowEvolution( $parameters, 'SiteSearchKeyword')
+#modalRowEvolution( $parameters, 'SiteSearchKeyword' $macroId)
 {{/velocity}}</code>
     </property>
     <property>
