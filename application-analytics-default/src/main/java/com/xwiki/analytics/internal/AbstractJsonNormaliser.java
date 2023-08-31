@@ -42,7 +42,6 @@ public abstract class AbstractJsonNormaliser implements JsonNormaliser
 {
     protected static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
-    protected static final String DATE = "date";
 
     protected static final String LABEL = "label";
 
