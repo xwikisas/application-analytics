@@ -72,7 +72,7 @@ analytics.rowEvolution.modal.day.label=Day
 analytics.rowEvolution.modal.week.label=Week
 analytics.rowEvolution.modal.month.label=Month
 analytics.rowEvolution.modal.year.label=Year
-analytics.rowEvolution.field.pageviews=Pageviews
+analytics.rowEvolution.field.pageViews=Pageviews
 analytics.rowEvolution.field.uniqueViews=Unique views
 analytics.rowEvolution.field.avgTime=Avg. Time on page
 analytics.rowEvolution.field.searches=Searches
@@ -84,6 +84,7 @@ analytics.siteSearchKeywords.header.exitRate=%Search Exists
 analytics.siteSearchKeywords.header.keyword=Keyword
 analytics.siteSearchKeywords.header.nbOfResultPages=Search Results Pages
 analytics.siteSearchKeywords.header.searches=Searches
+analytics.action.hover.rowEvolution=Row Evolution
 
 ## Admin section
 admin.analytics.application=Analytics

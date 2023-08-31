@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.Collections;
+import java.util.HashMap;
 
 import org.junit.jupiter.api.Test;
 import org.xwiki.resource.ResourceReferenceResolver;
@@ -62,21 +63,33 @@ public class MostViewedJsonNormaliserTest
     @Test
     public void testObjectJSONResponse() throws Exception
     {
-        readJSONS();
+        readJSONS("/testNormalizationWithoutFilterObject.json");
         setupURLs("http://localhost:8080/xwiki/bin/view/Analytics/",
             "http://localhost:8080/xwiki/bin/view/Analytics/Code/Macros/MostViewedPage");
         assertEquals(node.get("ResponseObjectJSON"),
-            mostViewedJsonNormaliser.normaliseData(node.get("ObjectJSON").toString()));
+            mostViewedJsonNormaliser.normaliseData(node.get("ObjectJSON").toString(), null));
     }
 
     @Test
     public void testArrayJSONResponse() throws Exception
     {
-        readJSONS();
+        readJSONS("/testNormalizationWithoutFilterArray.json");
         setupURLs("http://localhost:8080/xwiki/bin/view/Analytics/Code/MostViwedPages",
             "http://localhost:8081/xwiki/bin/view/Main/");
         assertEquals(node.get("ResponseArrayJSON"),
-            mostViewedJsonNormaliser.normaliseData(node.get("ArrayJSONS").toString()));
+            mostViewedJsonNormaliser.normaliseData(node.get("ArrayJSONS").toString(), null));
+    }
+
+    @Test
+    public void testFiltersJson() throws Exception
+    {
+        readJSONS("/testNormalizationWithFilter.json");
+        HashMap<String, String> filters= new HashMap<>();
+        filters.put("label", "/xwiki/bin/view/Analytics/Code/MostViwedPages");
+        setupURLs("http://localhost:8080/xwiki/bin/view/Analytics/Code/MostViwedPages",
+            "http://localhost:8081/xwiki/bin/view/Main/");
+        assertEquals(node.get("ResponseArrayJSONFilter"),
+            mostViewedJsonNormaliser.normaliseData(node.get("ArrayJSONSFilter").toString(), filters));
     }
 
     private void setupURLs(String url1, String url2) throws Exception
@@ -91,10 +104,11 @@ public class MostViewedJsonNormaliserTest
         when(resourceReferenceResolver.resolve(extendedURL2, resourceType2, Collections.emptyMap())).thenReturn(null);
     }
 
-    private void readJSONS() throws IOException
+    private void readJSONS(String file) throws IOException
     {
         ObjectMapper objectMapper = new ObjectMapper();
-        InputStream is = JsonReader.class.getResourceAsStream("/tests.json");
+        InputStream is = JsonReader.class.getResourceAsStream(file);
         node = objectMapper.readTree(is);
     }
+
 }

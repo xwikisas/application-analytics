@@ -76,7 +76,8 @@ public class MatomoAnalyticsManager implements AnalyticsManager
      * @return the altered Matomo request response, as JSON format
      */
     @Override
-    public JsonNode requestData(Map<String, String> parameters, String jsonNormaliserHint) throws IOException
+    public JsonNode requestData(Map<String, String> parameters, Map<String, String> filters, String jsonNormaliserHint)
+        throws IOException
     {
         parameters.put("idSite", configuration.getIdSite());
         parameters.put("token_auth", configuration.getAuthenticationToken());
@@ -86,10 +87,10 @@ public class MatomoAnalyticsManager implements AnalyticsManager
             throw new RuntimeException("Error occurred while retrieving Matomo statistic results.");
         }
         HttpClient client = HttpClients.createDefault();
-        HttpGet request =  new HttpGet(buildURI(parameters));
+        HttpGet request = new HttpGet(buildURI(parameters));
         HttpResponse response = client.execute(request);
-        String responseBody  = EntityUtils.toString(response.getEntity());
-        return jsonNormaliser.normaliseData(responseBody);
+        String responseBody = EntityUtils.toString(response.getEntity());
+        return jsonNormaliser.normaliseData(responseBody, filters);
     }
 
     /**

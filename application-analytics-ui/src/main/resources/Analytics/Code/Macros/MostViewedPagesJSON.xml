@@ -37,6 +37,7 @@
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>true</hidden>
   <content>{{include reference='Analytics.Code.Macros.VelocityMacros'/}}
+
 {{velocity}}
 #if ($xcontext.action == 'get')
   #set ($offset = $numbertool.toNumber($request.offset).intValue())
@@ -49,9 +50,8 @@
   #if (!$limit)
     #set ($limit = 15)
   #end
-  ##
+
   #set ($keys = {
-    'date' : 'date',
     'title' : 'label',
     'visits' : 'nb_visits',
     'hits' : 'nb_hits',
@@ -62,10 +62,19 @@
   })
   #set ($sort = 'nb_hits')
   #set ($order = 'desc')
-  #if ($request.sort &amp;&amp; $request.reqNo!='1')
+  #if ($request.sort)
     #set($sort = $keys.get($request.sort))
     #set($order = $request.dir)
   #end
+
+  #set ($filters={})
+  #foreach ($key in $keys.keySet())
+    #set ($value = $request.get($key))
+    #if ($value &amp;&amp; $value != '')
+      $filters.put($keys.get($key), $request.get($key))
+    #end
+  #end
+
   #set ($parameters = {
     'period' : $request.period,
     'date' : $request.date,
@@ -78,19 +87,24 @@
     'expanded' : '1',
     'flat' : '1'
   })
-  #set ($analyticsResult = $services.analytics.getMatomoRequestResult($parameters, 'MostViewedPages'))
+
+  ## Get the JSON response from Matomo.
+  #set ($analyticsResult = $services.analytics.getMatomoRequestResult($parameters, $filters, 'MostViewedPages'))
+  #if ($offset &lt; $analyticsResult.size())
+    #set ($toIndex =  $mathtool.min($mathtool.add($offset, $limit), $analyticsResult.size()))
+    #set ($resultList = $services.analytics.subSetJSON($analyticsResult, $offset, $toIndex))
+  #end
   #set ($results = {
     "totalrows": $analyticsResult.size(),
-    "returnedrows": $analyticsResult.size(),
+    "returnedrows": $resultList.size(),
     "offset": $mathtool.add($offset, 1),
     "reqNo": $numbertool.toNumber($request.reqNo).intValue(),
     "rows": []
   })
-  #foreach ($currentEntry in $analyticsResult)
+  #foreach ($currentEntry in $resultList)
     #set ($url = $currentEntry.get('url').asText())
     #set ($discard = $results.rows.add({
-      'date' : $currentEntry.get('date').asText(),
-      'title' : $currentEntry.get('label').asText(),
+      'title' : "#createLinkElement($currentEntry.get('label').asText(), $url)",
       'visits' :  $currentEntry.get('nb_visits').asText(),
       'hits' : $currentEntry.get('nb_hits').asText(),
       'timeSpent' : $currentEntry.get('sum_time_spent').asText(),
