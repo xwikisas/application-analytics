@@ -293,7 +293,7 @@
   'uniqueViews': 'nb_visits',
   "avgTime": 'avg_time_on_page'
 })
-#modalRowEvolution($parameters, 'MostViewedPages')
+#modalRowEvolution($parameters, 'MostViewedPages', $macroId)
 {{/velocity}}</code>
     </property>
     <property>

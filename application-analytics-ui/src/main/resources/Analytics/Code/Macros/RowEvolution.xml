@@ -156,8 +156,6 @@ require(['jquery', 'chart'], ($) =&gt; {
     const dates = data.map(item =&gt; item.date);
     const field = data.map(item =&gt; item[currentModal.find(SELECTORS.field).val()] || 0);
     const ctx = currentModal.find(SELECTORS.chart);
-    console.log(dates)
-    console.log(data)
     if (chart) {
       chart.destroy();
     }
@@ -168,8 +166,7 @@ require(['jquery', 'chart'], ($) =&gt; {
         datasets: [{
           label: '',
           data: field,
-          borderColor: 'rgba(75, 192, 192, 1)',
-          backgroundColor: 'rgba(75, 192, 192, 0.2)',
+          borderColor: currentOptions.data('color'),
           fill: false
         }]
       },
@@ -188,7 +185,7 @@ require(['jquery', 'chart'], ($) =&gt; {
    * Fetches the data from Matomo using the XWiki server as a proxy through the RowEvolutionJSON page. It then saves the data in session 
    * storage for easy access. This allows the user to display a different field for the same time interval without making a new request and updates the chart.
    *
-   * @param parameter parameter need for the request
+   * @param parameter will help identify a single row in the matomo tables
    */
   const fetchChartData = (parameter) =&gt; {
     currentOptions.data('parameter', parameter);
@@ -196,7 +193,15 @@ require(['jquery', 'chart'], ($) =&gt; {
     const date = currentOptions.data('date');
     const requestPageUrl = currentOptions.data('requestPageUrl');
     const macroName = currentOptions.data('macroName');
-    $.getJSON(`${requestPageUrl}?parameter=${parameter}&amp;period=${period}&amp;date=last${date}&amp;macroName=${macroName}`)
+    const params = {
+      period: period,
+      date: `last${date}`,
+      macroName: macroName
+    };
+    const queryString = $.param(params);
+    // I cannot use jQuery's $.params to add the parameter because it can represent multple things: url, segment pagename, etc. In some cases,
+    // the parameter is already encoded and using $.params would result in double encodingl.
+    $.getJSON(`${requestPageUrl}?${queryString}&amp;parameter=${parameter}`)
       .done((data) =&gt; {
         window.sessionStorage.setItem('analyticsLastRequestCache', JSON.stringify(data));
         renderChart(data);
