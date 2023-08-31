@@ -48,7 +48,7 @@ public class RowEvolutionJsonNormaliserTest
     private void readJSONS() throws IOException
     {
         ObjectMapper objectMapper = new ObjectMapper();
-        InputStream is = JsonReader.class.getResourceAsStream("/tests.json");
+        InputStream is = JsonReader.class.getResourceAsStream("/testNormalizationRowEvolutionArray.json");
         node = objectMapper.readTree(is);
     }
 
