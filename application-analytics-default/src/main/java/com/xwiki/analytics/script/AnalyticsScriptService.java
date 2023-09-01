@@ -53,13 +53,15 @@ public class AnalyticsScriptService implements ScriptService
      *
      * @param jsonNormaliserHint hint specific to the component that will normalize the Matomo result response,
      *     since it's given / resulted format depends on the context were is used.
+     * @param filters holds the criteria for filtering a dataset.
      * @param parameters a map of the parameters needed for this request
      * @return response from Matomo API, in a normalized JSON format
      */
-    public JsonNode getMatomoRequestResult(Map<String, String> parameters, String jsonNormaliserHint)
+    public JsonNode getMatomoRequestResult(Map<String, String> parameters, Map<String, String> filters,
+        String jsonNormaliserHint)
     {
         try {
-            return analyticsManager.requestData(parameters, jsonNormaliserHint);
+            return analyticsManager.requestData(parameters, filters, jsonNormaliserHint);
         } catch (Exception e) {
             throw new RuntimeException(String.format("Failed to get data for [%s]", jsonNormaliserHint), e);
         }

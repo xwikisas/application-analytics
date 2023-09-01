@@ -21,6 +21,7 @@ package com.xwiki.analytics.internal;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 
 import org.junit.jupiter.api.Test;
 import org.xwiki.test.junit5.mockito.ComponentTest;
@@ -47,7 +48,7 @@ public class RowEvolutionJsonNormaliserTest
     private void readJSONS() throws IOException
     {
         ObjectMapper objectMapper = new ObjectMapper();
-        InputStream is = JsonReader.class.getResourceAsStream("/tests.json");
+        InputStream is = JsonReader.class.getResourceAsStream("/testNormalizationRowEvolutionArray.json");
         node = objectMapper.readTree(is);
     }
 
@@ -56,7 +57,7 @@ public class RowEvolutionJsonNormaliserTest
     {
         readJSONS();
         assertEquals(node.get("RowEvolutionTestObjectResponse"),
-            rowEvolutionJsonNormaliser.normaliseData(node.get("RowEvolutionTestObject").toString()));
+            rowEvolutionJsonNormaliser.normaliseData(node.get("RowEvolutionTestObject").toString(), new HashMap<>()));
 
     }
 }

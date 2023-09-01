@@ -24,15 +24,12 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Collections;
-import java.util.Iterator;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
-import org.slf4j.Logger;
 import org.xwiki.component.annotation.Component;
-import org.xwiki.model.reference.EntityReferenceSerializer;
 import org.xwiki.resource.CreateResourceReferenceException;
 import org.xwiki.resource.CreateResourceTypeException;
 import org.xwiki.resource.ResourceReference;
@@ -43,10 +40,7 @@ import org.xwiki.resource.UnsupportedResourceReferenceException;
 import org.xwiki.resource.entity.EntityResourceReference;
 import org.xwiki.url.ExtendedURL;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.xwiki.analytics.JsonNormaliser;
 
@@ -61,103 +55,34 @@ import liquibase.repackaged.org.apache.commons.lang3.exception.ExceptionUtils;
 @Component
 @Named("MostViewedPages")
 @Singleton
-public class MostViewedJsonNormaliser implements JsonNormaliser
+public class MostViewedJsonNormaliser extends AbstractJsonNormaliser
 {
     /**
      * Hint for the MostViewedJsonNormaliser.
      */
     public static final String HINT = "MostViewedPages";
 
-    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
-
-    private static final String DATE = "date";
-
     private static final String URL = "url";
-
-    private static final String LABEL = "label";
 
     @Inject
     private ResourceReferenceResolver<ExtendedURL> resourceReferenceResolver;
 
     @Inject
-    private Logger logger;
-
-    @Inject
     private ResourceTypeResolver<ExtendedURL> resourceTypeResolver;
 
-    @Inject
-    @Named("compactwiki")
-    private EntityReferenceSerializer<String> serializer;
-
     /**
-     * Normalize Matomo response for format consistency and add extra information needed by XWiki.
+     * Process the current node and add it to the final array of jsons.
      *
-     * @param jsonString the Matomo JSON response, in {@code String} format
-     * @return the normalised json
+     * @param currentNode the current json that has to be processed
      */
-    public JsonNode normaliseData(String jsonString) throws JsonProcessingException
+    @Override
+    protected JsonNode processNode(JsonNode currentNode)
     {
-        // Convert the string returned by Matomo in a JSON format to easily handle the processing of the nodes.
-        JsonNode jsonRoot = OBJECT_MAPPER.readTree(jsonString);
-        // Matomo may return several variants of JSON formats. In one scenario, when the period is set to
-        // day/week/month/year, it returns a JSON object with keys representing dates. The corresponding value for
-        // each key is an array of JSON objects, each of which represents a page. However, if the user sets the
-        // period parameter to "range" Matomo returns an array of JSON objects, with each JSON object representing
-        // a page. Due to these variations, the result needs to be processed to create a single format.
-        // This normalized format is an array of JSON objects and each JSON object in this array will have a new
-        // field called 'date'. This 'date' field will be set to 'N/A' when Matomo returns an array instead of an
-        // object. For both type of formats, the label field is also altered in order to contain the full page name
-        if (jsonRoot.isArray()) {
-            processArrayNode(jsonRoot);
-        } else {
-            jsonRoot = processObjectNode(jsonRoot);
-        }
-        return jsonRoot;
-    }
 
-    /**
-     * This method processes each entry to append an empty date to it.
-     *
-     * @param jsonNode an array of jsons
-     */
-    private void processArrayNode(JsonNode jsonNode)
-    {
-        for (JsonNode objNode : jsonNode) {
-            if (objNode.isObject()) {
-                ((ObjectNode) objNode).put(DATE, "");
-                if (objNode.has(URL)) {
-                    this.handleURLNode((ObjectNode) objNode);
-                }
-            }
+        if (currentNode.has(URL)) {
+            this.handleURLNode((ObjectNode) currentNode);
         }
-    }
-
-    /**
-     * Handle the scenario where Matomo returns an object with dates as keys and arrays of JSON objects as values. This
-     * function extracts the date from the key and adds it to each page. Ultimately, it returns an array of JSON objects
-     * instead of a single JSON object.
-     *
-     * @param jsonNode json object
-     * @return array of jsons
-     */
-    private ArrayNode processObjectNode(JsonNode jsonNode)
-    {
-        ArrayNode arrayNode = OBJECT_MAPPER.createArrayNode();
-        Iterator<String> fieldNames = jsonNode.fieldNames();
-        while (fieldNames.hasNext()) {
-            String date = fieldNames.next();
-            JsonNode childNode = jsonNode.get(date);
-            for (JsonNode objNode : childNode) {
-                if (objNode.isObject()) {
-                    ((ObjectNode) objNode).put(DATE, date);
-                    if (objNode.has(URL)) {
-                        this.handleURLNode((ObjectNode) objNode);
-                    }
-                    arrayNode.add(objNode);
-                }
-            }
-        }
-        return arrayNode;
+        return currentNode;
     }
 
     /**
@@ -182,7 +107,7 @@ public class MostViewedJsonNormaliser implements JsonNormaliser
             return this.resourceReferenceResolver.resolve(extendedURL, resourceType, Collections.emptyMap());
         } catch (MalformedURLException | CreateResourceReferenceException | CreateResourceTypeException
                  | UnsupportedResourceReferenceException | URISyntaxException e) {
-            logger.warn("Failed to get resource reference from URL: [{}].", resourceReferenceURL,
+            this.logger.warn("Failed to get resource reference from URL: [{}]. Caused by [{}]", resourceReferenceURL,
                 ExceptionUtils.getRootCauseMessage(e));
             return null;
         }
@@ -198,7 +123,7 @@ public class MostViewedJsonNormaliser implements JsonNormaliser
         EntityResourceReference entityResourceReference =
             (EntityResourceReference) this.getResourceReferenceFromStringURL(objNode.get(URL).asText());
         if (entityResourceReference != null) {
-            objNode.put(LABEL, this.serializer.serialize(entityResourceReference.getEntityReference()));
+            objNode.put(LABEL, entityResourceReference.getEntityReference().getName());
         }
     }
 }
