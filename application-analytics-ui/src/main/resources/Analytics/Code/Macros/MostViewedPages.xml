@@ -263,7 +263,7 @@
       {'id': 'entryNbActions', 'displayer': 'html'},
       {'id': 'bounceRate', 'displayer': 'html'},
       {'id': 'exitRate', 'displayer': 'html'},
-      {'id': 'actions', 'displayer': 'html'}
+      {'id': 'actions',"filterable": false, "sortable": false, 'displayer': 'html'}
     ],
     'entryDescriptor': {
       'idProperty': 'title'
