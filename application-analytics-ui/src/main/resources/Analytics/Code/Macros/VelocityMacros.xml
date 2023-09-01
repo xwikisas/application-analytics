@@ -65,5 +65,13 @@
 #macro (createLinkElement $text $link)
 &lt;a href=$link&gt;$text&lt;/a&gt;
 #end
+
+#macro (subSet $object $start $end $resultList)
+  #set($resultList = [])
+  #foreach($i in [$start..$end])
+    #set($element = $object.get($i))
+    #set($dummy = $resultList.add($element))
+  #end
+#end
 {{/velocity}}</content>
 </xwikidoc>

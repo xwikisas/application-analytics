@@ -54,6 +54,8 @@ import com.xwiki.analytics.configuration.AnalyticsConfiguration;
 @Unstable
 public class MatomoAnalyticsManager implements AnalyticsManager
 {
+    private static final String FAIL_RETRIEVE = "Error occurred while retrieving Matomo statistic results.";
+
     @Inject
     private Logger logger;
 
@@ -75,18 +77,41 @@ public class MatomoAnalyticsManager implements AnalyticsManager
     public JsonNode requestData(Map<String, String> parameters, Map<String, String> filters, String jsonNormaliserHint)
         throws IOException
     {
+        validateParameters(parameters);
         parameters.put("idSite", configuration.getIdSite());
         parameters.put("token_auth", configuration.getAuthenticationToken());
-        JsonNormaliser jsonNormaliser = this.getNormaliser(jsonNormaliserHint);
-        if (jsonNormaliser == null) {
-            logger.warn("There is no JSON normalizer associated with the [{}] hint you provided.", jsonNormaliserHint);
-            throw new RuntimeException("Error occurred while retrieving Matomo statistic results.");
+        JsonNormaliser jsonNormaliser = this.selectNormaliser(jsonNormaliserHint);
+        getJsonNormaliser(jsonNormaliserHint);
+        return jsonNormaliser.normaliseData(executeHttpRequest(parameters), filters);
+    }
+
+    /**
+     * Validates that the request parameters are not null.
+     *
+     * @param parameters a list of key, value pairs
+     * @throws RuntimeException if parameters are null
+     */
+    private void validateParameters(Map<String, String> parameters)
+    {
+        if (parameters == null) {
+            logger.warn("Parameters must not be null.");
+            throw new RuntimeException(FAIL_RETRIEVE);
         }
+    }
+
+    /**
+     * Execute the HTTP request and returns the response body as a string.
+     *
+     * @param parameters the HTTP request parameters
+     * @return response body as string
+     * @throws IOException if there's a problem executing the HTTP request
+     */
+    private String executeHttpRequest(Map<String, String> parameters) throws IOException
+    {
         HttpClient client = HttpClients.createDefault();
         HttpGet request = new HttpGet(buildURI(parameters));
         HttpResponse response = client.execute(request);
-        String responseBody = EntityUtils.toString(response.getEntity());
-        return jsonNormaliser.normaliseData(responseBody, filters);
+        return EntityUtils.toString(response.getEntity());
     }
 
     /**
@@ -99,16 +124,30 @@ public class MatomoAnalyticsManager implements AnalyticsManager
     {
         UriBuilder uriBuilder = UriBuilder.fromUri(configuration.getRequestAddress()).path("index.php");
 
-        if (parameterList != null && !parameterList.isEmpty()) {
-            for (Map.Entry<String, String> entry : parameterList.entrySet()) {
-                uriBuilder.queryParam(entry.getKey(), entry.getValue());
-            }
+        for (Map.Entry<String, String> entry : parameterList.entrySet()) {
+            uriBuilder.queryParam(entry.getKey(), entry.getValue());
         }
-
         return uriBuilder.build();
     }
 
-    private JsonNormaliser getNormaliser(String hint)
+    /**
+     * Gets the JsonNormaliser based on the hint.
+     *
+     * @param jsonNormaliserHint the hint
+     * @return the JsonNormaliser instance
+     * @throws RuntimeException if JsonNormaliser is null
+     */
+    private JsonNormaliser getJsonNormaliser(String jsonNormaliserHint)
+    {
+        JsonNormaliser jsonNormaliser = this.selectNormaliser(jsonNormaliserHint);
+        if (jsonNormaliser == null) {
+            logger.warn("There is no JSON normalizer associated with the [{}] hint you provided.", jsonNormaliserHint);
+            throw new RuntimeException(FAIL_RETRIEVE);
+        }
+        return jsonNormaliser;
+    }
+
+    private JsonNormaliser selectNormaliser(String hint)
     {
         if (hint.equals(MostViewedJsonNormaliser.HINT)) {
             return this.mostViewedNormaliser;

@@ -24,7 +24,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Collections;
-import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -42,7 +41,6 @@ import org.xwiki.resource.entity.EntityResourceReference;
 import org.xwiki.url.ExtendedURL;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.xwiki.analytics.JsonNormaliser;
 
@@ -75,22 +73,16 @@ public class MostViewedJsonNormaliser extends AbstractJsonNormaliser
     /**
      * Process the current node and add it to the final array of jsons.
      *
-     * @param arrayNode final array of jsons
-     * @param objNode the current json that has to be processed
-     * @param filters filters holds the criteria for filtering a dataset
+     * @param currentNode the current json that has to be processed
      */
     @Override
-    protected void processNode(ArrayNode arrayNode, JsonNode objNode, Map<String, String> filters)
+    protected JsonNode processNode(JsonNode currentNode)
     {
-        if (matchesAllFilters(objNode, filters)) {
 
-            if (objNode.isObject()) {
-                if (objNode.has(URL)) {
-                    this.handleURLNode((ObjectNode) objNode);
-                }
-                arrayNode.add(objNode);
-            }
+        if (currentNode.has(URL)) {
+            this.handleURLNode((ObjectNode) currentNode);
         }
+        return currentNode;
     }
 
     /**
@@ -115,7 +107,7 @@ public class MostViewedJsonNormaliser extends AbstractJsonNormaliser
             return this.resourceReferenceResolver.resolve(extendedURL, resourceType, Collections.emptyMap());
         } catch (MalformedURLException | CreateResourceReferenceException | CreateResourceTypeException
                  | UnsupportedResourceReferenceException | URISyntaxException e) {
-            this.logger.warn("Failed to get resource reference from URL: [{}].", resourceReferenceURL,
+            this.logger.warn("Failed to get resource reference from URL: [{}]. Caused by [{}]", resourceReferenceURL,
                 ExceptionUtils.getRootCauseMessage(e));
             return null;
         }
