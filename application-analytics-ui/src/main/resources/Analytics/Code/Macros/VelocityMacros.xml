@@ -66,6 +66,14 @@
 &lt;a href=$link&gt;$text&lt;/a&gt;
 #end
 
+#macro (subSet $object $start $end $resultList)
+  #set($resultList = [])
+  #foreach($i in [$start..$end])
+    #set($element = $object.get($i))
+    #set($dummy = $resultList.add($element))
+  #end
+#end
+
 #macro(analyticsActions $parameter)
 &lt;div class="analyticsActions"&gt;
   &lt;div class="analyticsRowEvolution"  data-parameter=$escapetool.url($parameter)&gt;

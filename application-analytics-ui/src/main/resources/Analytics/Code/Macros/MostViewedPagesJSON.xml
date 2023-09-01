@@ -92,7 +92,7 @@
   #set ($analyticsResult = $services.analytics.getMatomoRequestResult($parameters, $filters, 'MostViewedPages'))
   #if ($offset &lt; $analyticsResult.size())
     #set ($toIndex =  $mathtool.min($mathtool.add($offset, $limit), $analyticsResult.size()))
-    #set ($resultList = $services.analytics.subSetJSON($analyticsResult, $offset, $toIndex))
+    #subSet( $analyticsResult, $offset, $toIndex, $resultList)
   #end
   #set ($results = {
     "totalrows": $analyticsResult.size(),
@@ -104,6 +104,7 @@
   #foreach ($currentEntry in $resultList)
     #set ($url = $currentEntry.get('url').asText())
     #set ($discard = $results.rows.add({
+      'test': $resultList,
       'title' : "#createLinkElement($currentEntry.get('label').asText(), $url)",
       'visits' :  $currentEntry.get('nb_visits').asText(),
       'hits' : $currentEntry.get('nb_hits').asText(),
