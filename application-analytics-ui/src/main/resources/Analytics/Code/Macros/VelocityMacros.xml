@@ -67,6 +67,7 @@
 #end
 
 #macro (subSet $object $start $end $resultList)
+  #set($resultList = [])
   #set ($resultList = [])
   #set ($end = $mathtool.sub($end,1))
   #foreach($i in [$start..$end])
