@@ -19,8 +19,6 @@
  */
 package com.xwiki.analytics.script;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -67,22 +65,5 @@ public class AnalyticsScriptService implements ScriptService
         } catch (Exception e) {
             throw new RuntimeException(String.format("Failed to get data for [%s]", jsonNormaliserHint), e);
         }
-    }
-
-    /**
-     * Creates a subset from an array of jsons.
-     *
-     * @param jsonNode array of jsons
-     * @param start index of the first element
-     * @param end index+1 of the last element
-     * @return a subset of jsons
-     */
-    public List<JsonNode> subSetJSON(JsonNode jsonNode, int start, int end)
-    {
-        List<JsonNode> subSet = new ArrayList<>();
-        for (int i = start; i < end; i++) {
-            subSet.add(jsonNode.get(i));
-        }
-        return subSet;
     }
 }

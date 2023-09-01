@@ -42,7 +42,6 @@ public abstract class AbstractJsonNormaliser implements JsonNormaliser
 {
     protected static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
-
     protected static final String LABEL = "label";
 
     @Inject
@@ -87,8 +86,8 @@ public abstract class AbstractJsonNormaliser implements JsonNormaliser
     {
         ArrayNode arrayNode = OBJECT_MAPPER.createArrayNode();
         for (JsonNode objNode : jsonNode) {
-            if (objNode.isObject()) {
-                processNode(arrayNode, objNode, filters);
+            if (objNode.isObject() && matchesAllFilters(objNode, filters)) {
+                arrayNode.add(processNode(objNode));
             }
         }
         return arrayNode;
@@ -111,8 +110,8 @@ public abstract class AbstractJsonNormaliser implements JsonNormaliser
             String date = fieldNames.next();
             JsonNode childNode = jsonNode.get(date);
             for (JsonNode objNode : childNode) {
-                if (objNode.isObject()) {
-                    processNode(arrayNode, objNode, filters);
+                if (objNode.isObject() && matchesAllFilters(objNode, filters)) {
+                    arrayNode.add(processNode(objNode));
                 }
             }
         }
@@ -137,15 +136,10 @@ public abstract class AbstractJsonNormaliser implements JsonNormaliser
     /**
      * Process the current node and add it to the final array of jsons.
      *
-     * @param arrayNode final array of jsons
      * @param currentNode the current json that has to be processed
-     * @param filters filters holds the criteria for filtering a dataset
      */
-    protected void processNode(ArrayNode arrayNode, JsonNode currentNode, Map<String, String> filters)
+    protected JsonNode processNode(JsonNode currentNode)
     {
-        // If all the filters match then the entry would be added to the final json.
-        if (matchesAllFilters(currentNode, filters)) {
-            arrayNode.add(currentNode);
-        }
+        return currentNode;
     }
 }
