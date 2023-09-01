@@ -67,7 +67,7 @@ analytics.searchCategories.header.title=Search category
 analytics.searchCategories.header.searches=Searches
 analytics.searchCategories.header.searchResultsPages=Search Result Page
 analytics.searchCategories.header.actions=Actions
-
+analytics.searchCategories.header.category=Category
 ## Row Evolution
 analytics.action.label.rowEvolution=Row Evolution
 analytics.rowEvolution.label=Row Evolution

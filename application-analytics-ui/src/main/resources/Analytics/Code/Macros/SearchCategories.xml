@@ -241,6 +241,7 @@
     </property>
     <property>
       <code>{{include reference='Analytics.Code.Macros.VelocityMacros'/}}
+
 {{velocity}}
 #getDate()
 #set ($discard =$xwiki.jsx.use('Analytics.Code.Macros.RowEvolution'))
@@ -248,28 +249,37 @@
 #set ($parameters = $escapetool.url({
   'date': $date,
   'period': $period,
-  'limitEntries': '-1'
-}))
-#set ($columns = ['date','title','searches', 'searchResultsPages','actions'])
-#set ($columnsProperties = {
-  'date' : { 'type' : 'text', 'sortable' : true },
-  'title' : { 'type' : 'text', 'sortable' : true },
-  'searches' : { 'type' : 'text', 'sortable' : true },
-  'searchResultsPages' : { 'type' : 'text', 'sortable' : true },
-  'actions' : {'type': 'text', 'html':'true', 'sortable' : false, 'filterable' : false}
-})
-#set($options = {
+  'limitEntries': '-1',
   'translationPrefix': 'analytics.searchCategories.header.',
-  'resultPage': 'Analytics.Code.Macros.SearchCategoriesJSON',
-  'extraParams': $parameters
+  'resultPage': 'Analytics.Code.Macros.SearchCategoriesJSON'
+}))
+#set ($liveDataConfig= {
+  'meta': {
+    'propertyDescriptors': [
+      {'id': 'category', 'displayer': 'html'},
+      {'id': 'searches', 'displayer': 'html'},
+      {'id': 'searchResultsPages', 'displayer': 'html'},
+      {'id': 'actions', "filterable": false, "sortable": false,'displayer': 'html'}
+    ],
+    'entryDescriptor': {
+      'idProperty': 'category'
+      }
+  }
 })
 #getAnalyticsMacroId('searchCategories', $macroId )
-#livetable($macroId $columns $columnsProperties $options)
+
+{{liveData
+  id="$macroId"
+  properties="category, searches, searchResultsPages, actions"
+  source='liveTable'
+  sourceParameters="$parameters"
+}}$jsontool.serialize($liveDataConfig){{/liveData}}
+
 #set ($parameters = {
   'searches':'nb_visits',
   'searchResultsPages':'nb_pages_per_search'
 })
-#modalRowEvolution($parameters, 'SearchCategories')
+#modalRowEvolution($parameters, 'SearchCategories', $macroId)
 {{/velocity}}</code>
     </property>
     <property>
