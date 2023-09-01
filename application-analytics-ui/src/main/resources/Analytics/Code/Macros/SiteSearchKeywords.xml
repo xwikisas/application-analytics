@@ -265,7 +265,7 @@
       {'id': 'actions', 'displayer': 'html'}
     ],
     'entryDescriptor': {
-      'idProperty': 'title'
+       'idProperty': 'keyword'
       }
   }
 })
