@@ -1,0 +1,22 @@
+{
+  "ArrayJSONS": [
+    {
+      "label": "/xwiki/bin/view/Analytics/Code/MostViwedPages",
+      "url": "http://localhost:8080/xwiki/bin/view/Analytics/Code/MostViwedPages"
+    },
+    {
+      "label": "/xwiki/bin/view/Main/",
+      "url": "http://localhost:8081/xwiki/bin/view/Main/"
+    }
+  ],
+  "ResponseArrayJSON": [
+    {
+      "label": "/xwiki/bin/view/Analytics/Code/MostViwedPages",
+      "url": "http://localhost:8080/xwiki/bin/view/Analytics/Code/MostViwedPages"
+    },
+    {
+      "label": "/xwiki/bin/view/Main/",
+      "url": "http://localhost:8081/xwiki/bin/view/Main/"
+    }
+  ]
+}

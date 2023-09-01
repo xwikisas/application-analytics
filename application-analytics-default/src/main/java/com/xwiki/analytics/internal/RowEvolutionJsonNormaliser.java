@@ -20,6 +20,7 @@
 package com.xwiki.analytics.internal;
 
 import java.util.Iterator;
+import java.util.Map;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -50,8 +51,20 @@ public class RowEvolutionJsonNormaliser extends AbstractJsonNormaliser
     public static final String HINT = "RowEvolution";
 
     @Override
-    protected ArrayNode processObjectNode(JsonNode jsonNode, String filterField, String filterValue)
-        throws JsonProcessingException
+    public JsonNode normaliseData(String jsonString, Map<String, String> filters) throws JsonProcessingException
+    {
+        JsonNode jsonNode = OBJECT_MAPPER.readTree(jsonString);
+        return processObjectNode(jsonNode);
+    }
+
+    /**
+     * Transforming the json object returned by Matomo into an array of jsons to make it easier to use in javascript.
+     *
+     * @param jsonNode the JSON node to be processed.
+     * @return the processed and transformed JSON node.
+     * @throws JsonProcessingException if any error occurs during JSON processing.
+     */
+    private ArrayNode processObjectNode(JsonNode jsonNode) throws JsonProcessingException
     {
         ArrayNode arrayNode = OBJECT_MAPPER.createArrayNode();
         Iterator<String> fieldNames = jsonNode.fieldNames();

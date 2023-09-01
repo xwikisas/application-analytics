@@ -80,9 +80,10 @@ analytics.rowEvolution.modal.day.label=Day
 analytics.rowEvolution.modal.week.label=Week
 analytics.rowEvolution.modal.month.label=Month
 analytics.rowEvolution.modal.year.label=Year
-analytics.rowEvolution.field.pageviews=Pageviews
+analytics.rowEvolution.field.pageViews=Pageviews
 analytics.rowEvolution.field.uniqueViews=Unique views
 analytics.rowEvolution.field.avgTime=Avg. Time on 
+analytics.action.hover.rowEvolution=Row Evolution
 analytics.rowEvolution.field.clickedSearchResult=Clicked in search results
 
 ## Admin section

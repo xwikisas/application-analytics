@@ -20,6 +20,7 @@
 package com.xwiki.analytics.internal;
 
 import java.util.Iterator;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -29,7 +30,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.xwiki.analytics.JsonNormaliser;
 
 /**
@@ -42,8 +42,6 @@ public abstract class AbstractJsonNormaliser implements JsonNormaliser
 {
     protected static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
-    protected static final String DATE = "date";
-
     protected static final String LABEL = "label";
 
     @Inject
@@ -53,14 +51,12 @@ public abstract class AbstractJsonNormaliser implements JsonNormaliser
      * Normalize Matomo response for format consistency and add extra information needed by XWiki.
      *
      * @param jsonString a string that has the expected format
-     * @param filterField The field by which the JSON will be sorted.
-     * @param filterValue The value by which the JSON will be sorted.
-     * @return
+     * @param filters holds the criteria for filtering a dataset
+     * @return the normalised json
      * @throws JsonProcessingException
      */
     @Override
-    public JsonNode normaliseData(String jsonString, String filterField, String filterValue)
-        throws JsonProcessingException
+    public JsonNode normaliseData(String jsonString, Map<String, String> filters) throws JsonProcessingException
     {
         // Convert the string returned by Matomo in a JSON format to easily handle the processing of the nodes.
         JsonNode jsonRoot = OBJECT_MAPPER.readTree(jsonString);
@@ -73,9 +69,9 @@ public abstract class AbstractJsonNormaliser implements JsonNormaliser
         // field called 'date'. This 'date' field will be set to 'N/A' when Matomo returns an array instead of an
         // object. For both type of formats, the label field is also altered in order to contain the full page name
         if (jsonRoot.isArray()) {
-            return processArrayNode(jsonRoot, filterField, filterValue);
+            return processArrayNode(jsonRoot, filters);
         } else {
-            return processObjectNode(jsonRoot, filterField, filterValue);
+            return processObjectNode(jsonRoot, filters);
         }
     }
 
@@ -83,21 +79,15 @@ public abstract class AbstractJsonNormaliser implements JsonNormaliser
      * This method processes each entry to append an empty date to it.
      *
      * @param jsonNode an array of jsons
-     * @param filterField The field by which the JSON will be sorted
-     * @param filterValue The value by which the JSON will be sorted
+     * @param filters holds the criteria for filtering a dataset
      * @return array of jsons
      */
-    protected ArrayNode processArrayNode(JsonNode jsonNode, String filterField, String filterValue)
+    protected ArrayNode processArrayNode(JsonNode jsonNode, Map<String, String> filters)
     {
         ArrayNode arrayNode = OBJECT_MAPPER.createArrayNode();
         for (JsonNode objNode : jsonNode) {
-            if (objNode.isObject()) {
-                ((ObjectNode) objNode).put(DATE, "");
-                if (filterField == null || filterValue == null || filterValue.equals(
-                    objNode.get(filterField).asText()))
-                {
-                    arrayNode.add(objNode);
-                }
+            if (objNode.isObject() && matchesAllFilters(objNode, filters)) {
+                arrayNode.add(processNode(objNode));
             }
         }
         return arrayNode;
@@ -109,12 +99,10 @@ public abstract class AbstractJsonNormaliser implements JsonNormaliser
      * objects.
      *
      * @param jsonNode
-     * @param filterField The field by which the JSON will be sorted
-     * @param filterValue The value by which the JSON will be sorted
+     * @param filters holds the criteria for filtering a dataset
      * @return array of jsons
      */
-    protected ArrayNode processObjectNode(JsonNode jsonNode, String filterField, String filterValue)
-        throws JsonProcessingException
+    protected ArrayNode processObjectNode(JsonNode jsonNode, Map<String, String> filters) throws JsonProcessingException
     {
         ArrayNode arrayNode = OBJECT_MAPPER.createArrayNode();
         Iterator<String> fieldNames = jsonNode.fieldNames();
@@ -122,16 +110,36 @@ public abstract class AbstractJsonNormaliser implements JsonNormaliser
             String date = fieldNames.next();
             JsonNode childNode = jsonNode.get(date);
             for (JsonNode objNode : childNode) {
-                if (objNode.isObject()) {
-                    ((ObjectNode) objNode).put(DATE, date);
-                    if (filterField == null || filterValue == null || filterValue.equals(
-                        objNode.get(filterField).asText()))
-                    {
-                        arrayNode.add(objNode);
-                    }
+                if (objNode.isObject() && matchesAllFilters(objNode, filters)) {
+                    arrayNode.add(processNode(objNode));
                 }
             }
         }
         return arrayNode;
+    }
+
+    protected boolean matchesAllFilters(JsonNode objNode, Map<String, String> filters)
+    {
+        if (filters == null) {
+            return true;
+        }
+        for (Map.Entry<String, String> entry : filters.entrySet()) {
+            String filterField = entry.getKey();
+            String filterValue = entry.getValue();
+            if (!(objNode.has(filterField) && objNode.get(filterField).asText().contains(filterValue))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Process the current node and add it to the final array of jsons.
+     *
+     * @param currentNode the current json that has to be processed
+     */
+    protected JsonNode processNode(JsonNode currentNode)
+    {
+        return currentNode;
     }
 }

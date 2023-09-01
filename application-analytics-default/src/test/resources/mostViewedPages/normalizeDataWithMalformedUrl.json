@@ -1,0 +1,14 @@
+{
+  "MalformedJSON": [
+    {
+      "label": "/xwiki/bin/view/Analytics/Code/MostViewedPages",
+      "url": "htttp://localhost:8080/xwiki/bin/view/Analytics/Code/MostViwedPages"
+    }
+  ],
+  "MalformedJSONResponse": [
+    {
+      "label": "/xwiki/bin/view/Analytics/Code/MostViewedPages",
+      "url": "htttp://localhost:8080/xwiki/bin/view/Analytics/Code/MostViwedPages"
+    }
+  ]
+}

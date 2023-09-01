@@ -19,6 +19,8 @@
  */
 package com.xwiki.analytics;
 
+import java.util.Map;
+
 import org.xwiki.component.annotation.Role;
 import org.xwiki.stability.Unstable;
 
@@ -39,11 +41,10 @@ public interface JsonNormaliser
     /**
      * Normalise the data returned to have the expected format.
      *
-     * @param filterValue The value by which the JSON will be sorted.
-     * @param filterField The field by which the JSON will be sorted.
+     * @param filters holds the criteria for filtering a dataset
      * @param jsonString a string that has the expected format
      * @return a {@link JsonNode} with the root of the normalized JSON
      * @throws JsonProcessingException Throws this error when the jsonString param is not a proper json
      */
-    JsonNode normaliseData(String jsonString, String filterField, String filterValue) throws JsonProcessingException;
+    JsonNode normaliseData(String jsonString, Map<String, String> filters) throws JsonProcessingException;
 }

@@ -43,7 +43,7 @@
   'module' : 'API',
   'format' : 'json'
 })
-#if ($request.macroName=='MostViewedMacro')
+#if ($request.macroName=='MostViewedPages')
   $parameters.put('pageUrl', $request.parameter)
   $parameters.put('method', 'Actions.getPageUrl')
 #elseif ($request.macroName=='PagesFollowingaSiteSearch')
@@ -53,7 +53,7 @@
   $parameters.put('fieldValue',$request.parameter)
   $parameters.put('filterField','url')
 #end
-#set ($analyticsResult = $services.analytics.getMatomoRequestResult($parameters, 'RowEvolution'))
+#set ($analyticsResult = $services.analytics.getMatomoRequestResult($parameters, {}, 'RowEvolution'))
 #jsonResponse($analyticsResult)
 {{/velocity}}
 </content>

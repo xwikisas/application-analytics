@@ -24,14 +24,12 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Collections;
-import java.util.Iterator;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
 import org.xwiki.component.annotation.Component;
-import org.xwiki.model.reference.EntityReferenceSerializer;
 import org.xwiki.resource.CreateResourceReferenceException;
 import org.xwiki.resource.CreateResourceTypeException;
 import org.xwiki.resource.ResourceReference;
@@ -43,7 +41,6 @@ import org.xwiki.resource.entity.EntityResourceReference;
 import org.xwiki.url.ExtendedURL;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.xwiki.analytics.JsonNormaliser;
 
@@ -73,60 +70,19 @@ public class MostViewedJsonNormaliser extends AbstractJsonNormaliser
     @Inject
     private ResourceTypeResolver<ExtendedURL> resourceTypeResolver;
 
-    @Inject
-    @Named("compactwiki")
-    private EntityReferenceSerializer<String> serializer;
-
     /**
-     * This method processes each entry to append an empty date to it and updates the label with the page name.
+     * Process the current node and add it to the final array of jsons.
      *
-     * @param jsonNode an array of jsons
+     * @param currentNode the current json that has to be processed
      */
     @Override
-    protected ArrayNode processArrayNode(JsonNode jsonNode, String filterField, String filterValue)
+    protected JsonNode processNode(JsonNode currentNode)
     {
-        ArrayNode arrayNode = OBJECT_MAPPER.createArrayNode();
-        for (JsonNode objNode : jsonNode) {
-            handleNode(arrayNode, objNode, filterField, filterValue, "");
-        }
-        return arrayNode;
-    }
 
-    /**
-     * Handle the scenario where Matomo returns an object with dates as keys and arrays of JSON objects as values. This
-     * function extracts the date from the key and adds it to each page and updates the label with the name of the page.
-     * Ultimately, it returns an array of JSON objects instead of a single JSON object.
-     *
-     * @param jsonNode json object
-     * @return
-     */
-    @Override
-    protected ArrayNode processObjectNode(JsonNode jsonNode, String filterField, String filterValue)
-    {
-        ArrayNode arrayNode = OBJECT_MAPPER.createArrayNode();
-        Iterator<String> fieldNames = jsonNode.fieldNames();
-        while (fieldNames.hasNext()) {
-            String date = fieldNames.next();
-            JsonNode childNode = jsonNode.get(date);
-            for (JsonNode objNode : childNode) {
-                handleNode(arrayNode, objNode, filterField, filterValue, date);
-            }
+        if (currentNode.has(URL)) {
+            this.handleURLNode((ObjectNode) currentNode);
         }
-        return arrayNode;
-    }
-
-    private void handleNode(ArrayNode arrayNode, JsonNode objNode, String filterField, String filterValue, String date)
-    {
-        if (filterField == null || filterValue == null || filterValue.equals(objNode.get(filterField).asText())) {
-
-            if (objNode.isObject()) {
-                ((ObjectNode) objNode).put(DATE, date);
-                if (objNode.has(URL)) {
-                    this.handleURLNode((ObjectNode) objNode);
-                }
-                arrayNode.add(objNode);
-            }
-        }
+        return currentNode;
     }
 
     /**
@@ -151,7 +107,7 @@ public class MostViewedJsonNormaliser extends AbstractJsonNormaliser
             return this.resourceReferenceResolver.resolve(extendedURL, resourceType, Collections.emptyMap());
         } catch (MalformedURLException | CreateResourceReferenceException | CreateResourceTypeException
                  | UnsupportedResourceReferenceException | URISyntaxException e) {
-            this.logger.warn("Failed to get resource reference from URL: [{}].", resourceReferenceURL,
+            this.logger.warn("Failed to get resource reference from URL: [{}]. Caused by [{}]", resourceReferenceURL,
                 ExceptionUtils.getRootCauseMessage(e));
             return null;
         }
@@ -167,7 +123,7 @@ public class MostViewedJsonNormaliser extends AbstractJsonNormaliser
         EntityResourceReference entityResourceReference =
             (EntityResourceReference) this.getResourceReferenceFromStringURL(objNode.get(URL).asText());
         if (entityResourceReference != null) {
-            objNode.put(LABEL, this.serializer.serialize(entityResourceReference.getEntityReference()));
+            objNode.put(LABEL, entityResourceReference.getEntityReference().getName());
         }
     }
 }
