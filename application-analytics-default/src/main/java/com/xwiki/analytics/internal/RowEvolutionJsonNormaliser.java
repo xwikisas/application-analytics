@@ -70,15 +70,17 @@ public class RowEvolutionJsonNormaliser extends AbstractJsonNormaliser
         while (fieldNames.hasNext()) {
             String date = fieldNames.next();
             JsonNode childNode = jsonNode.get(date);
-
-            if (childNode.get(0) == null) {
-                arrayNode.add(OBJECT_MAPPER.readTree(String.format("{\"%s\"  : \"%s\"}", DATE, date)));
-            }
-
+            boolean nodeFound = true;
             for (JsonNode node : childNode) {
                 if (matchesAllFilters(node, filters)) {
-                    arrayNode.add(processNode(node, date));
+                    arrayNode.add(this.processNode(node, date));
+                    nodeFound = false;
+                    break;
                 }
+            }
+            if (childNode.get(0) == null || nodeFound) {
+                arrayNode.add(OBJECT_MAPPER.readTree(String.format("{\"%s\"  : \"%s\"}", DATE, date)));
+                processNode(OBJECT_MAPPER.createObjectNode(), date);
             }
         }
         return arrayNode;
