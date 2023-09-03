@@ -242,6 +242,7 @@
     </property>
     <property>
       <code>{{include reference='Analytics.Code.Macros.VelocityMacros'/}}
+
 {{velocity}}
 #getDate()
 #set ($discard =$xwiki.jsx.use('Analytics.Code.Macros.RowEvolution'))
@@ -249,29 +250,38 @@
 #set ($parameters = $escapetool.url({
   'date': $date,
   'period': $period,
-  'limitEntries': '-1'
-}))
-#set ($columns = ['date', 'destinationPage', 'clicked', 'pageViews', 'loadTime', 'actions'])
-#set ($columnsProperties = {
-  'date' : { 'type' : 'text', 'sortable' : true },
-  'destinationPage' : { 'type' : 'text', 'sortable' : true },
-  'clicked' : { 'type' : 'text', 'sortable' : true },
-  'pageViews' : { 'type' : 'text', 'sortable' : true },
-  'loadTime' : { 'type' : 'text', 'sortable' : true },
-  'actions' : {'type': 'text', 'html':'true', 'sortable' : false, 'filterable' : false}
-})
-#set($options = {
+  'limitEntries': '-1',
   'translationPrefix': 'analytics.pagesFollowingaSiteSearchJSON.header.',
-  'resultPage': 'Analytics.Code.Macros.PagesFollowingaSiteSearchJSON',
-  'extraParams': $parameters
+  'resultPage': 'Analytics.Code.Macros.PagesFollowingaSiteSearchJSON'
+}))
+#set ($liveDataConfig= {
+  'meta': {
+    'propertyDescriptors': [
+      {'id': 'destinationPage', 'displayer': 'html'},
+      {'id': 'clicked', 'displayer': 'html'},
+      {'id': 'pageViews', 'displayer': 'html'},
+      {'id': 'loadTime', 'displayer': 'html'},
+      {'id': 'actions',"filterable": false, "sortable": false, 'displayer': 'html'}
+    ],
+    'entryDescriptor': {
+      'idProperty': 'destinationPage'
+      }
+  }
 })
-#getAnalyticsMacroId('pagesFollowingaSiteSearch', $macroId )
-#livetable($macroId $columns $columnsProperties $options)
+#getAnalyticsMacroId('pagesFollowingaSiteSearch', $macroId)
+
+{{liveData
+  id="$macroId"
+  properties="destinationPage, clicked, pageViews, loadTime, actions"
+  source='liveTable'
+  sourceParameters="$parameters"
+}}$jsontool.serialize($liveDataConfig){{/liveData}}
+
 #set ($parameters = {
-'pageviews':'nb_hits',
+'pageViews':'nb_hits',
 'clickedSearchResult':'nb_hits_following_search'
 })
-#modalRowEvolution($parameters, 'PagesFollowingaSiteSearch')
+#modalRowEvolution($parameters, 'PagesFollowingaSiteSearch', $macroId)
 {{/velocity}}</code>
     </property>
     <property>

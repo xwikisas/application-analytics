@@ -50,21 +50,16 @@ public class RowEvolutionJsonNormaliser extends AbstractJsonNormaliser
      */
     public static final String HINT = "RowEvolution";
 
-    @Override
-    public JsonNode normaliseData(String jsonString, Map<String, String> filters) throws JsonProcessingException
-    {
-        JsonNode jsonNode = OBJECT_MAPPER.readTree(jsonString);
-        return processObjectNode(jsonNode);
-    }
+    private static final String DATE = "date";
 
     /**
      * Transforming the json object returned by Matomo into an array of jsons to make it easier to use in javascript.
      *
-     * @param jsonNode the JSON node to be processed.
-     * @return the processed and transformed JSON node.
-     * @throws JsonProcessingException if any error occurs during JSON processing.
+     * @param jsonNode
+     * @param filters holds the criteria for filtering a dataset
+     * @return filtered array of jsons
      */
-    private ArrayNode processObjectNode(JsonNode jsonNode) throws JsonProcessingException
+    protected ArrayNode processObjectNode(JsonNode jsonNode, Map<String, String> filters) throws JsonProcessingException
     {
         ArrayNode arrayNode = OBJECT_MAPPER.createArrayNode();
         Iterator<String> fieldNames = jsonNode.fieldNames();
@@ -72,20 +67,41 @@ public class RowEvolutionJsonNormaliser extends AbstractJsonNormaliser
         while (fieldNames.hasNext()) {
             String date = fieldNames.next();
             JsonNode childNode = jsonNode.get(date);
-
-            if (childNode.get(0) == null) {
-                arrayNode.add(OBJECT_MAPPER.readTree(String.format("{\"%s\"  : \"%s\"}", DATE, date)));
-            }
-
+            boolean nodeFound = true;
             for (JsonNode node : childNode) {
-                if ((filterField == null || filterValue == null || filterValue.equals(
-                    node.get(filterField).asText())) &&  node != null)
-                {
-                    ((ObjectNode) node).put(DATE, date);
-                    arrayNode.add(node);
+                if (matchesAllFilters(node, filters)) {
+                    arrayNode.add(this.processNode(node, date));
+                    nodeFound = false;
+                    break;
                 }
+            }
+            if (childNode.get(0) == null || nodeFound) {
+                arrayNode.add(OBJECT_MAPPER.readTree(String.format("{\"%s\"  : \"%s\"}", DATE, date)));
+                processNode(OBJECT_MAPPER.createObjectNode(), date);
             }
         }
         return arrayNode;
+    }
+
+    protected JsonNode processNode(JsonNode currentNode, String date)
+    {
+        ((ObjectNode) currentNode).put(DATE, date);
+        return currentNode;
+    }
+
+    @Override
+    protected boolean matchesAllFilters(JsonNode objNode, Map<String, String> filters)
+    {
+        if (filters == null) {
+            return true;
+        }
+        for (Map.Entry<String, String> entry : filters.entrySet()) {
+            String filterField = entry.getKey();
+            String filterValue = entry.getValue();
+            if (!(objNode.has(filterField) && objNode.get(filterField).asText().equals(filterValue))) {
+                return false;
+            }
+        }
+        return true;
     }
 }

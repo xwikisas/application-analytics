@@ -50,8 +50,8 @@ Analytics.Code.AnalyticsDashboardClass_startDate.hint=Start time of the date int
 analytics.pagesFollowingaSiteSearchJSON.header.date=Date
 analytics.pagesFollowingaSiteSearchJSON.header.destinationPage=Destination page
 analytics.pagesFollowingaSiteSearchJSON.header.clicked=Clicked in search results
-analytics.pagesFollowingaSiteSearchJSON.header.pageViews=Pageviews
-analytics.pagesFollowingaSiteSearchJSON.header.loadTime=Avg.Page Load Time
+analytics.pagesFollowingaSiteSearchJSON.header.pageViews=Views
+analytics.pagesFollowingaSiteSearchJSON.header.loadTime=Avg. Load Time
 analytics.pagesFollowingaSiteSearchJSON.header.actions=Actions
 
 ## Most Viewed Pages Macro
