@@ -51,7 +51,6 @@ public class RowEvolutionJsonNormaliser extends AbstractJsonNormaliser
      */
     public static final String HINT = "RowEvolution";
 
-    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
     private static final String DATE = "date";
 
