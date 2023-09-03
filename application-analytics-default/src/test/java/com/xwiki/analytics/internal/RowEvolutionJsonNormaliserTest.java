@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 
+import org.apache.ecs.storage.Hash;
 import org.junit.jupiter.api.Test;
 import org.xwiki.test.junit5.mockito.ComponentTest;
 import org.xwiki.test.junit5.mockito.InjectMockComponents;
@@ -43,21 +44,41 @@ public class RowEvolutionJsonNormaliserTest
 {
     @InjectMockComponents
     private RowEvolutionJsonNormaliser rowEvolutionJsonNormaliser;
+
     private static JsonNode node;
 
-    private void readJSONS() throws IOException
+    private void readJSONS(String path) throws IOException
     {
         ObjectMapper objectMapper = new ObjectMapper();
-        InputStream is = JsonReader.class.getResourceAsStream("/testNormalizationRowEvolutionArray.json");
+        InputStream is = JsonReader.class.getResourceAsStream(path);
         node = objectMapper.readTree(is);
     }
 
     @Test
-    public void testNormalisation() throws IOException
+    public void normalizeDataWithoutFilters() throws IOException
     {
-        readJSONS();
-        assertEquals(node.get("RowEvolutionTestObjectResponse"),
-            rowEvolutionJsonNormaliser.normaliseData(node.get("RowEvolutionTestObject").toString(), new HashMap<>()));
+        readJSONS("/rowEvolution/normalizeDataWithoutFilters.json");
+        assertEquals(node.get("response"),
+            rowEvolutionJsonNormaliser.normaliseData(node.get("initialJson").toString(), new HashMap<>()));
+    }
 
+    @Test
+    public void normalizeDataWithNullFilters() throws IOException
+    {
+        readJSONS("/rowEvolution/normalizeDataWithoutFilters.json");
+        assertEquals(node.get("response"),
+            rowEvolutionJsonNormaliser.normaliseData(node.get("initialJson").toString(), new HashMap<>()));
+    }
+
+    @Test
+    public void normalizeDataWithFilters() throws IOException
+    {
+        readJSONS("/rowEvolution/normalizeDataWithFilters.json");
+        HashMap<String, String> filters =  new HashMap<>();
+        filters.put("label", "/MostViewedPage");
+        filters.put("sum_time_spent", "96");
+        filters.put("avg_time_on_page", "48");
+        assertEquals(node.get("response"),
+            rowEvolutionJsonNormaliser.normaliseData(node.get("initialJson").toString(), filters));
     }
 }
