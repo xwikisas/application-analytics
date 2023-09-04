@@ -76,7 +76,7 @@ public abstract class AbstractJsonNormaliser implements JsonNormaliser
     }
 
     /**
-     * This method processes each entry to append an empty date to it.
+     * Handles each entry that was returned by Matomo and processes it.
      *
      * @param jsonNode an array of jsons
      * @param filters holds the criteria for filtering a dataset
@@ -98,9 +98,9 @@ public abstract class AbstractJsonNormaliser implements JsonNormaliser
      * function extracts the date from the key and adds it to each page. Ultimately, it returns an array of JSON
      * objects.
      *
-     * @param jsonNode
+     * @param jsonNode the response from Matomo that is a json
      * @param filters holds the criteria for filtering a dataset
-     * @return array of jsons
+     * @return array of jsons that have been processed
      */
     protected ArrayNode processObjectNode(JsonNode jsonNode, Map<String, String> filters) throws JsonProcessingException
     {
@@ -138,8 +138,5 @@ public abstract class AbstractJsonNormaliser implements JsonNormaliser
      *
      * @param currentNode the current json that has to be processed
      */
-    protected JsonNode processNode(JsonNode currentNode)
-    {
-        return currentNode;
-    }
+    protected abstract JsonNode processNode(JsonNode currentNode);
 }

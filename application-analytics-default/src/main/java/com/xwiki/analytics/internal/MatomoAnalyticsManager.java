@@ -77,26 +77,15 @@ public class MatomoAnalyticsManager implements AnalyticsManager
     public JsonNode requestData(Map<String, String> parameters, Map<String, String> filters, String jsonNormaliserHint)
         throws IOException
     {
-        validateParameters(parameters);
+        if (parameters == null) {
+            logger.warn("Parameters must not be null.");
+            throw new RuntimeException(FAIL_RETRIEVE);
+        }
         parameters.put("idSite", configuration.getIdSite());
         parameters.put("token_auth", configuration.getAuthenticationToken());
         JsonNormaliser jsonNormaliser = this.selectNormaliser(jsonNormaliserHint);
         getJsonNormaliser(jsonNormaliserHint);
         return jsonNormaliser.normaliseData(executeHttpRequest(parameters), filters);
-    }
-
-    /**
-     * Validates that the request parameters are not null.
-     *
-     * @param parameters a list of key, value pairs
-     * @throws RuntimeException if parameters are null
-     */
-    private void validateParameters(Map<String, String> parameters)
-    {
-        if (parameters == null) {
-            logger.warn("Parameters must not be null.");
-            throw new RuntimeException(FAIL_RETRIEVE);
-        }
     }
 
     /**

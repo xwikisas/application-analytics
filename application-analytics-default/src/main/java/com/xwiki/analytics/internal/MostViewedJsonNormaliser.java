@@ -71,9 +71,10 @@ public class MostViewedJsonNormaliser extends AbstractJsonNormaliser
     private ResourceTypeResolver<ExtendedURL> resourceTypeResolver;
 
     /**
-     * Process the current node and add it to the final array of jsons.
+     * Process the current node by altering the label. The initial label is an url but the final JSON has the page
+     * title.
      *
-     * @param currentNode the current json that has to be processed
+     * @param currentNode the current JSON that has to be processed
      */
     @Override
     protected JsonNode processNode(JsonNode currentNode)
@@ -116,7 +117,7 @@ public class MostViewedJsonNormaliser extends AbstractJsonNormaliser
     /**
      * Change the label node to contain the actual page name instead of an URL.
      *
-     * @param objNode a json object
+     * @param objNode a JSON object
      */
     private void handleURLNode(ObjectNode objNode)
     {

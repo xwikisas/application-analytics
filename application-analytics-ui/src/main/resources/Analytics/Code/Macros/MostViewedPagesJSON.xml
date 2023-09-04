@@ -53,7 +53,7 @@
 
   #set ($keys = {
     'title' : 'label',
-    'visits' : 'nb_visits',
+    'visits': 'nb_visits',
     'hits' : 'nb_hits',
     'timeSpent' : 'sum_time_spent',
     'entryNbActions' : 'entry_nb_actions',
@@ -63,8 +63,8 @@
   #set ($sort = 'nb_hits')
   #set ($order = 'desc')
   #if ($request.sort)
-    #set($sort = $keys.get($request.sort))
-    #set($order = $request.dir)
+    #set ($sort = $keys.get($request.sort))
+    #set ($order = $request.dir)
   #end
 
   #set ($filters={})
@@ -91,8 +91,8 @@
   ## Get the JSON response from Matomo.
   #set ($analyticsResult = $services.analytics.getMatomoRequestResult($parameters, $filters, 'MostViewedPages'))
   #if ($offset &lt; $analyticsResult.size())
-    #set ($toIndex =  $mathtool.min($mathtool.add($offset, $limit), $analyticsResult.size()))
-    #subSet( $analyticsResult, $offset, $toIndex, $resultList)
+    #set ($toIndex = $mathtool.min($mathtool.add($offset, $limit), $analyticsResult.size()))
+    #subSet($analyticsResult, $offset, $toIndex, $resultList)
   #end
   #set ($results = {
     "totalrows": $analyticsResult.size(),
@@ -104,7 +104,6 @@
   #foreach ($currentEntry in $resultList)
     #set ($url = $currentEntry.get('url').asText())
     #set ($discard = $results.rows.add({
-      'test': $resultList,
       'title' : "#createLinkElement($currentEntry.get('label').asText(), $url)",
       'visits' :  $currentEntry.get('nb_visits').asText(),
       'hits' : $currentEntry.get('nb_hits').asText(),
