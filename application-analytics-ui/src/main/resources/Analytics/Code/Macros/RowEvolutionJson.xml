@@ -41,13 +41,39 @@
   'period' : $request.period,
   'date' : $request.date,
   'module' : 'API',
-  'method' : 'Actions.getPageUrl',
   'format' : 'json'
 })
-#if ($request.macroName=='MostViewedPages')
+#set ($filters = {})
+#if ($request.macroName == 'MostViewedPages')
   $parameters.put('pageUrl', $request.parameter)
+  $parameters.put('method', 'Actions.getPageUrl')
+#elseif ($request.macroName == 'BrowserEngines')
+  $parameters.put('method', 'DevicesDetection.getBrowserEngines')
+  $parameters.put('segment', $request.parameter)
+#elseif ($request.macroName == 'Browsers')
+  $parameters.put('method', 'DevicesDetection.getBrowsers')
+  $parameters.put('segment', $request.parameter)
+#elseif($request.macroName == 'Configurations')
+  $parameters.put('method', 'Resolution.getConfiguration')
+  $parameters.put('segment', $request.parameter)
+#elseif($request.macroName == 'DeviceBrand')
+  $parameters.put('method', 'DevicesDetection.getBrand')
+  $parameters.put('segment', $request.parameter)
+#elseif($request.macroName == 'DeviceModel')
+  $parameters.put('method', 'DevicesDetection.getModel')
+  $parameters.put('segment', $request.parameter)
+#elseif($request.macroName == 'DeviceType')
+  $parameters.put('method', 'DevicesDetection.getType')
+  $parameters.put('segment', $request.parameter)
+#elseif($request.macroName == 'ScreenResolution')
+  $parameters.put('method', 'Resolution.getResolution')
+  $parameters.put('segment', $request.parameter)
+#elseif($request.macroName == 'OperatingSystemVersions')
+  $parameters.put('method', 'DevicesDetection.getOsVersions')
+  $parameters.put('segment', $request.parameter)
 #end
-#set ($analyticsResult = $services.analytics.getMatomoRequestResult($parameters, {}, 'RowEvolution'))
+
+#set ($analyticsResult = $services.analytics.getMatomoRequestResult($parameters, $filters, 'RowEvolution'))
 #jsonResponse($analyticsResult)
 {{/velocity}}
 </content>

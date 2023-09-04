@@ -1,0 +1,134 @@
+<?xml version="1.1" encoding="UTF-8"?>
+
+<!--
+ * See the NOTICE file distributed with this work for additional
+ * information regarding copyright ownership.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+-->
+
+<xwikidoc version="1.4" reference="Analytics.Code.Macros.softwareDevicesJSON" locale="">
+  <web>Analytics.Code.Macros</web>
+  <name>softwareDevicesJSON</name>
+  <language/>
+  <defaultLanguage/>
+  <translation>0</translation>
+  <creator>xwiki:XWiki.Admin</creator>
+  <parent>WebHome</parent>
+  <author>xwiki:XWiki.Admin</author>
+  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+  <version>1.1</version>
+  <title>softwareDevicesJSON</title>
+  <comment/>
+  <minorEdit>false</minorEdit>
+  <syntaxId>xwiki/2.1</syntaxId>
+  <hidden>true</hidden>
+  <content>{{include reference='Analytics.Code.Macros.VelocityMacros'/}}
+
+{{velocity}}
+#if ($xcontext.action == 'get')
+  #set ($offset = $numbertool.toNumber($request.offset).intValue())
+  ## The offset sent by the live table starts at 1.
+  #set ($offset = $offset - 1)
+  #if (!$offset || $offset &lt; 0)
+    #set ($offset = 0)
+  #end
+  #set ($limit = $numbertool.toNumber($request.limit).intValue())
+  #if (!$limit)
+    #set ($limit = 15)
+  #end
+
+  #set ($keys = {
+    $request.label : 'label',
+    'visits': 'nb_visits',
+    'nbOfActions': 'nb_actions',
+    'timeSpent': 'sum_visit_length',
+    'bounceRate': 'bounce_count',
+    'conversionRate': 'nb_visits_converted'
+  })
+
+  #set ($sort = 'nb_visits')
+  #set ($order = 'desc')
+  #if ($request.sort)
+    #set($sort = $keys.get($request.sort))
+    #set($order = $request.dir)
+  #end
+
+  #set ($filters={})
+  #foreach ($key in $keys.keySet())
+    #set ($value = $request.get($key))
+    #if ($value &amp;&amp; $value != '')
+      $filters.put($keys.get($key), $request.get($key))
+    #end
+  #end
+
+  #set ($parameters = {
+    'period' : $request.period,
+    'date' : $request.date,
+    'module' : 'API',
+    'method' : $request.matomoMethod,
+    'format' : 'json',
+    'filter_limit' : $request.limitEntries,
+    'filter_sort_column' : $sort,
+    'filter_sort_order' : $order
+  })
+
+  ## Get the JSON response from Matomo.
+  #set ($analyticsResult = $services.analytics.getMatomoRequestResult($parameters, $filters, 'MostViewedPages'))
+  #if ($offset &lt; $analyticsResult.size())
+    #set ($toIndex =  $mathtool.min($mathtool.add($offset, $limit), $analyticsResult.size()))
+    #subSet( $analyticsResult, $offset, $toIndex, $resultList)
+  #end
+
+  #set ($results = {
+    "totalrows": $analyticsResult.size(),
+    "returnedrows": $resultList.size(),
+    "offset": $mathtool.add($offset, 1),
+    "reqNo": $numbertool.toNumber($request.reqNo).intValue(),
+    "rows": []
+  })
+  #foreach ($currentEntry in $resultList)
+    #if( $request.matomoMethod == 'Resolution.getConfiguration')
+    #set ($values= $currentEntry.get('label').asText().split(' / '))
+    #set ($segmentsName = ['operatingSystemName', 'browserName', 'resolution'])
+    #set ($finalSegment= '')
+    #foreach($i in [0..2])
+      #set($currentSegment = $segmentsName.get($i) + '==' + $values.get($i))
+      #if($foreach.last)
+        #set($segment= $finalSegment + $currentSegment)
+      #else
+        #set($segment= $finalSegment + $currentSegment + ';')
+      #end
+    #end
+    #else
+    #set ($segment = $currentEntry.get('segment').asText())
+    #end
+    #set ($conversionRate =  $currentEntry.get('nb_visits_converted').asText() + '%')
+    #set ($discard = $results.rows.add({
+      $request.label : $currentEntry.get('label').asText(),
+      'visits' :  $currentEntry.get('nb_visits').asText(),
+      'nbOfActions' : $currentEntry.get('nb_actions').asText(),
+      'timeSpent' : $currentEntry.get('sum_visit_length').asText(),
+      'bounceRate' : $currentEntry.get('bounce_count').asText(),
+      'conversionRate' :$conversionRate,
+      'actions' : "#analyticsActions($segment)"
+    }))
+  #end
+  #jsonResponse($results)
+#end
+{{/velocity}}
+</content>
+</xwikidoc>
