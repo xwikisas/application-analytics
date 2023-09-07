@@ -27,45 +27,191 @@
   <defaultLanguage>en</defaultLanguage>
   <translation>0</translation>
   <creator>xwiki:XWiki.Admin</creator>
-  <parent>Main.WebHome</parent>
+  <parent>xwiki:Main.WebHome</parent>
   <author>xwiki:XWiki.Admin</author>
   <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
   <version>1.1</version>
   <title>Analytics</title>
   <comment/>
   <minorEdit>false</minorEdit>
-  <syntaxId>xwiki/2.1</syntaxId>
+  <syntaxId>xwiki/2.0</syntaxId>
   <hidden>false</hidden>
-  <content>{{include reference="Licenses.Code.VelocityMacros"/}}
-{{velocity}}
-#macro(analyticsLiveTable)
-  #set ($columnsProperties = {
-    'doc.title': {"link":"view"},
-    'startDate': {"html":true},
-    'endDate': {"html":true}
-  })
-  #set ($options = {
-    'className': 'Analytics.Code.AnalyticsDashboardClass',
-    'translationPrefix': 'analytics.livetable.',
-    'tagCloud': true,
-    'rowCount': 15,
-    'maxPages': 10,
-    'selectedColumn': 'doc.title',
-    'defaultOrder': 'asc'
-  })
-  #set ($columns = ['doc.title', 'startDate', 'endDate'])
-  #livetable('analytics' $columns $columnsProperties $options)
-#end
-{{/velocity}}
+  <content>{{dashboard/}}
 
-{{velocity}}
-#if ($services.licensing.licensor.hasLicensureForEntity(
-    $services.model.createDocumentReference('', ['Analytics', 'Code'], 'AnalyticsDashboardClass')))
-  #analyticsLiveTable()
-#else
-  {{error}}#getMissingLicenseMessage('analytics.extension.name'){{/error}}
-#end
-{{/velocity}}</content>
+
+
+
+</content>
+  <object>
+    <name>Analytics.WebHome</name>
+    <number>0</number>
+    <className>XWiki.DocumentSheetBinding</className>
+    <guid>c9b959c5-3c33-4cf0-8598-1fb3e023213c</guid>
+    <class>
+      <name>XWiki.DocumentSheetBinding</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <sheet>
+        <cache>0</cache>
+        <classname/>
+        <customDisplay/>
+        <disabled>0</disabled>
+        <displayType>input</displayType>
+        <hint/>
+        <idField/>
+        <multiSelect>0</multiSelect>
+        <name>sheet</name>
+        <number>1</number>
+        <picker>1</picker>
+        <prettyName>Sheet</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators/>
+        <size>30</size>
+        <sort>none</sort>
+        <sql/>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <valueField/>
+        <classType>com.xpn.xwiki.objects.classes.PageClass</classType>
+      </sheet>
+    </class>
+    <property>
+      <sheet/>
+    </property>
+  </object>
+  <object>
+    <name>Analytics.WebHome</name>
+    <number>1</number>
+    <className>XWiki.GadgetClass</className>
+    <guid>c4a0d7d1-19ff-47f6-abc7-3025b74144ad</guid>
+    <class>
+      <name>XWiki.GadgetClass</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <content>
+        <disabled>0</disabled>
+        <editor>---</editor>
+        <name>content</name>
+        <number>2</number>
+        <picker>0</picker>
+        <prettyName>content</prettyName>
+        <rows>5</rows>
+        <size>40</size>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </content>
+      <position>
+        <disabled>0</disabled>
+        <name>position</name>
+        <number>3</number>
+        <picker>0</picker>
+        <prettyName>position</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </position>
+      <title>
+        <disabled>0</disabled>
+        <name>title</name>
+        <number>1</number>
+        <picker>0</picker>
+        <prettyName>title</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </title>
+    </class>
+    <property>
+      <content>{{mostViewedPage/}}</content>
+    </property>
+    <property>
+      <position>1, 2</position>
+    </property>
+    <property>
+      <title>$services.localization.render('rendering.macro.mostViewedPage.name')</title>
+    </property>
+  </object>
+  <object>
+    <name>Analytics.WebHome</name>
+    <number>3</number>
+    <className>XWiki.GadgetClass</className>
+    <guid>24120bfa-1fd7-4d4a-b1ab-639acf896b9e</guid>
+    <class>
+      <name>XWiki.GadgetClass</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <content>
+        <disabled>0</disabled>
+        <editor>---</editor>
+        <name>content</name>
+        <number>2</number>
+        <picker>0</picker>
+        <prettyName>content</prettyName>
+        <rows>5</rows>
+        <size>40</size>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </content>
+      <position>
+        <disabled>0</disabled>
+        <name>position</name>
+        <number>3</number>
+        <picker>0</picker>
+        <prettyName>position</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </position>
+      <title>
+        <disabled>0</disabled>
+        <name>title</name>
+        <number>1</number>
+        <picker>0</picker>
+        <prettyName>title</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </title>
+    </class>
+    <property>
+      <content>{{filter/}}</content>
+    </property>
+    <property>
+      <position>1, 1</position>
+    </property>
+    <property>
+      <title>$services.localization.render('rendering.macro.filter.name')</title>
+    </property>
+  </object>
   <object>
     <name>Analytics.WebHome</name>
     <number>0</number>
@@ -200,8 +346,8 @@
     </property>
     <property>
       <parameters>label=$services.localization.render('analytics.extension.title')
-target=Analytics.WebHome
-icon=icon:chart-bar</parameters>
+        target=Analytics.WebHome
+        icon=icon:chart-bar</parameters>
     </property>
     <property>
       <scope>wiki</scope>
