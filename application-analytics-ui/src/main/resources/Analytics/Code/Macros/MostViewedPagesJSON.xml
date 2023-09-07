@@ -51,7 +51,8 @@
     #set ($limit = 15)
   #end
 
-  #set ($keys = {
+  ## Mapping between the livedata columns and the Matomo fields.
+  #set ($matomoKeysMapping = {
     'title' : 'label',
     'visits': 'nb_visits',
     'hits' : 'nb_hits',
@@ -63,15 +64,15 @@
   #set ($sort = 'nb_hits')
   #set ($order = 'desc')
   #if ($request.sort)
-    #set ($sort = $keys.get($request.sort))
+    #set ($sort = $matomoKeysMapping.get($request.sort))
     #set ($order = $request.dir)
   #end
 
-  #set ($filters={})
-  #foreach ($key in $keys.keySet())
+  #set ($filters = {})
+  #foreach ($key in $matomoKeysMapping.keySet())
     #set ($value = $request.get($key))
     #if ($value &amp;&amp; $value != '')
-      $filters.put($keys.get($key), $request.get($key))
+      #set ($discard = $filters.put($matomoKeysMapping.get($key), $request.get($key)))
     #end
   #end
 

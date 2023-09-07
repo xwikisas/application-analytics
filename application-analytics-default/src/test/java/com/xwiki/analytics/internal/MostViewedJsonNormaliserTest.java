@@ -24,7 +24,6 @@ import java.io.InputStream;
 import java.util.Collections;
 import java.util.HashMap;
 
-
 import static org.mockito.Mockito.eq;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -67,7 +66,6 @@ public class MostViewedJsonNormaliserTest
     @MockComponent
     private Logger logger;
 
-
     /**
      * Will test if the normaliser works properly when the response from Matomo is an object.
      */
@@ -75,19 +73,19 @@ public class MostViewedJsonNormaliserTest
     public void normalizeDataWithObjectResponseWithoutFilters() throws Exception
     {
         JsonNode node = readJSONS("/mostViewedPages/normalizeDataWithObjectResponseWithoutFilters.json");
-        assertEquals(node.get("ResponseObjectJSON"),
-            mostViewedJsonNormaliser.normaliseData(node.get("ObjectJSON").toString(), null));
+        assertEquals(node.get("Response"),
+            mostViewedJsonNormaliser.normaliseData(node.get("JSON").toString(), null));
     }
 
     /**
-     * Will test if the normaliser works properly when the response from Matomo is an array of jsons.
+     * Will test if the normaliser works properly when the response from Matomo is an array of jsons and because there
+     * is no filters applied the json stays the same.
      */
     @Test
     public void normalizeDataWithArrayResponseWithoutFilters() throws Exception
     {
         JsonNode node = readJSONS("/mostViewedPages/normalizeDataWithArrayResponseWithoutFilters.json");
-        assertEquals(node.get("JSON"),
-            mostViewedJsonNormaliser.normaliseData(node.get("JSON").toString(), null));
+        assertEquals(node.get("JSON"), mostViewedJsonNormaliser.normaliseData(node.get("JSON").toString(), null));
     }
 
     /**
@@ -99,8 +97,8 @@ public class MostViewedJsonNormaliserTest
         JsonNode node = readJSONS("/mostViewedPages/normalizationWithOneFilter.json");
         HashMap<String, String> filters = new HashMap<>();
         filters.put("label", "/xwiki/bin/view/Analytics/Code/MostViewedPages");
-        assertEquals(node.get("ResponseArrayJSONFilter"),
-            mostViewedJsonNormaliser.normaliseData(node.get("ArrayJSONSFilter").toString(), filters));
+        assertEquals(node.get("Response"),
+            mostViewedJsonNormaliser.normaliseData(node.get("JSON").toString(), filters));
     }
 
     /**
@@ -113,8 +111,8 @@ public class MostViewedJsonNormaliserTest
         HashMap<String, String> filters = new HashMap<>();
         filters.put("nb_hits", "27");
         filters.put("label", "MostViewedPage?editor=wiki");
-        assertEquals(node.get("ResponseWithFilters"),
-            mostViewedJsonNormaliser.normaliseData(node.get("JsonFilters").toString(), filters));
+        assertEquals(node.get("Response"),
+            mostViewedJsonNormaliser.normaliseData(node.get("JSON").toString(), filters));
     }
 
     @Test
@@ -125,8 +123,8 @@ public class MostViewedJsonNormaliserTest
         filters.put("nb_hits", "27");
         filters.put("nb_hits", "27");
 
-        assertEquals(node.get("ResponseWithFilters"),
-            mostViewedJsonNormaliser.normaliseData(node.get("JsonFilters").toString(), filters));
+        assertEquals(node.get("Response"),
+            mostViewedJsonNormaliser.normaliseData(node.get("JSON").toString(), filters));
     }
 
     /**
@@ -138,19 +136,17 @@ public class MostViewedJsonNormaliserTest
         ReflectionUtils.setFieldValue(this.mostViewedJsonNormaliser, "logger", this.logger);
         JsonNode node = readJSONS("/mostViewedPages/normalizeDataWithMalformedUrl.json");
         HashMap<String, String> filters = new HashMap<>();
-        assertEquals(node.get("JSON"),
-            mostViewedJsonNormaliser.normaliseData(node.get("JSON").toString(), filters));
+        assertEquals(node.get("JSON"), mostViewedJsonNormaliser.normaliseData(node.get("JSON").toString(), filters));
         verify(logger).warn("Failed to get resource reference from URL: [{}]. Caused by [{}]",
             "htttp://localhost:8080/xwiki/bin/view/Analytics/Code/MostViwedPages",
             "MalformedURLException: unknown protocol: htttp");
     }
 
     @Test
-    public void jsonWithoutURL() throws IOException
+    public void normalizeDataJsonWithoutURL() throws IOException
     {
-        JsonNode node = readJSONS("/mostViewedPages/jsonWithoutURL.json");
-        assertEquals(node.get("JSON"),
-            mostViewedJsonNormaliser.normaliseData(node.get("JSON").toString(), null));
+        JsonNode node = readJSONS("/mostViewedPages/normalizeDataJsonWithoutURL.json");
+        assertEquals(node.get("JSON"), mostViewedJsonNormaliser.normaliseData(node.get("JSON").toString(), null));
     }
 
     @BeforeEach

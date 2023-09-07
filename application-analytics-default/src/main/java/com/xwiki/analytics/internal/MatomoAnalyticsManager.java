@@ -21,10 +21,12 @@ package com.xwiki.analytics.internal;
 
 import java.io.IOException;
 import java.net.URI;
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.inject.Provider;
 import javax.inject.Singleton;
 import javax.ws.rs.core.UriBuilder;
 
@@ -60,11 +62,10 @@ public class MatomoAnalyticsManager implements AnalyticsManager
     private Logger logger;
 
     @Inject
-    @Named(MostViewedJsonNormaliser.HINT)
-    private JsonNormaliser mostViewedNormaliser;
+    private AnalyticsConfiguration configuration;
 
     @Inject
-    private AnalyticsConfiguration configuration;
+    private Provider<List<JsonNormaliser>> jsonNormalizerProvider;
 
     /**
      * Request specific data from Matomo and return an enhanced response.
@@ -138,8 +139,10 @@ public class MatomoAnalyticsManager implements AnalyticsManager
 
     private JsonNormaliser selectNormaliser(String hint)
     {
-        if (hint.equals(MostViewedJsonNormaliser.HINT)) {
-            return this.mostViewedNormaliser;
+        for (JsonNormaliser jsonNormaliser : this.jsonNormalizerProvider.get()) {
+            if (hint.equals(jsonNormaliser.getIdentifier())) {
+                return jsonNormaliser;
+            }
         }
         return null;
     }

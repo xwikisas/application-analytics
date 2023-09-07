@@ -70,6 +70,12 @@ public class MostViewedJsonNormaliser extends AbstractJsonNormaliser
     @Inject
     private ResourceTypeResolver<ExtendedURL> resourceTypeResolver;
 
+    @Override
+    public String getIdentifier()
+    {
+        return MostViewedJsonNormaliser.HINT;
+    }
+
     /**
      * Process the current node by altering the label. The initial label is an url but the final JSON has the page
      * title.
