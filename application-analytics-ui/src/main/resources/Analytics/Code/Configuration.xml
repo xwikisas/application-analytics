@@ -61,12 +61,26 @@
         <picker>1</picker>
         <prettyName>Authentication Token </prettyName>
         <size>30</size>
-        <storageType>Hash</storageType>
+        <storageType>Clear</storageType>
         <unmodifiable>0</unmodifiable>
         <validationMessage/>
         <validationRegExp/>
         <classType>com.xpn.xwiki.objects.classes.PasswordClass</classType>
       </authToken>
+      <requestAddress>
+        <customDisplay/>
+        <disabled>0</disabled>
+        <hint/>
+        <name>requestAddress</name>
+        <number>4</number>
+        <picker>1</picker>
+        <prettyName>requestAddress</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </requestAddress>
       <siteId>
         <customDisplay/>
         <disabled>0</disabled>
@@ -90,7 +104,7 @@
         <name>trackingCode</name>
         <number>1</number>
         <picker>1</picker>
-        <prettyName>Matomo Tracking Code</prettyName>
+        <prettyName>Tracking Code</prettyName>
         <rows>20</rows>
         <size>40</size>
         <unmodifiable>0</unmodifiable>
@@ -98,33 +112,18 @@
         <validationRegExp/>
         <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
       </trackingCode>
-      <requestAddress>
-        <customDisplay/>
-        <disabled>0</disabled>
-        <hint/>
-        <name>requestAddress</name>
-        <number>4</number>
-        <picker>1</picker>
-        <prettyName>requestAddress</prettyName>
-        <size>30</size>
-        <unmodifiable>0</unmodifiable>
-        <validationMessage/>
-        <validationRegExp/>
-        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-      </requestAddress>
     </class>
     <property>
-      <authToken>
-      </authToken>
+      <authToken/>
+    </property>
+    <property>
+      <requestAddress/>
     </property>
     <property>
       <siteId/>
     </property>
     <property>
       <trackingCode/>
-    </property>
-    <property>
-      <requestAddress/>
     </property>
   </object>
   <object>
@@ -353,10 +352,14 @@
       <categoryIcon/>
     </property>
     <property>
-      <codeToExecute/>
+      <codeToExecute>{{display reference="Analytics.Code.Configuration"/}}
+
+{{velocity}}
+#set ($discard =$xwiki.jsx.use('Analytics.Code.Configuration'))
+{{/velocity}}</codeToExecute>
     </property>
     <property>
-      <configurationClass>Analytics.Code.ConfigurationClass</configurationClass>
+      <configurationClass/>
     </property>
     <property>
       <displayBeforeCategory/>
@@ -384,6 +387,134 @@
     </property>
     <property>
       <sectionOrder/>
+    </property>
+  </object>
+  <object>
+    <name>Analytics.Code.Configuration</name>
+    <number>0</number>
+    <className>XWiki.JavaScriptExtension</className>
+    <guid>3ac70a70-0269-4be0-843f-f0c30ac0d15c</guid>
+    <class>
+      <name>XWiki.JavaScriptExtension</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <cache>
+        <cache>0</cache>
+        <defaultValue>long</defaultValue>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <freeText>forbidden</freeText>
+        <largeStorage>0</largeStorage>
+        <multiSelect>0</multiSelect>
+        <name>cache</name>
+        <number>5</number>
+        <prettyName>Caching policy</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators>|, </separators>
+        <size>1</size>
+        <unmodifiable>0</unmodifiable>
+        <values>long|short|default|forbid</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </cache>
+      <code>
+        <contenttype>PureText</contenttype>
+        <disabled>0</disabled>
+        <editor>PureText</editor>
+        <name>code</name>
+        <number>2</number>
+        <prettyName>Code</prettyName>
+        <rows>20</rows>
+        <size>50</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </code>
+      <name>
+        <disabled>0</disabled>
+        <name>name</name>
+        <number>1</number>
+        <prettyName>Name</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </name>
+      <parse>
+        <disabled>0</disabled>
+        <displayFormType>select</displayFormType>
+        <displayType>yesno</displayType>
+        <name>parse</name>
+        <number>4</number>
+        <prettyName>Parse content</prettyName>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+      </parse>
+      <use>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <freeText>forbidden</freeText>
+        <largeStorage>0</largeStorage>
+        <multiSelect>0</multiSelect>
+        <name>use</name>
+        <number>3</number>
+        <prettyName>Use this extension</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators>|, </separators>
+        <size>1</size>
+        <unmodifiable>0</unmodifiable>
+        <values>currentPage|onDemand|always</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </use>
+    </class>
+    <property>
+      <cache>long</cache>
+    </property>
+    <property>
+      <code>define('analyticsConfigMessages', {
+  prefix: 'analytics.config.',
+  keys: [
+   'success',
+   'error'
+  ]
+});
+
+require(['jquery', 'xwiki-l10n!analyticsConfigMessages'], ($, l10n) =&gt; {
+  $(document).ready(function () {
+    console.log($('#checkCredentials'));
+  });
+
+  $(document).on('click', '#checkCredentials', function (e) {
+    e.preventDefault();
+
+    $.getJSON(`/xwiki/bin/view/Analytics/Code/checkCredentials/`)
+      .done((data) =&gt; {
+        if (data.apiStatusCode==200) {
+          new XWiki.widgets.Notification(l10n['success'], 'done');
+        } else {
+          new XWiki.widgets.Notification(l10n['error'], 'error');
+        }
+      })
+      .fail(() =&gt; {  // Add this fail branch
+          new XWiki.widgets.Notification(l10n['error'], 'error');
+      });
+  });
+});
+</code>
+    </property>
+    <property>
+      <name/>
+    </property>
+    <property>
+      <parse>0</parse>
+    </property>
+    <property>
+      <use>currentPage</use>
     </property>
   </object>
 </xwikidoc>

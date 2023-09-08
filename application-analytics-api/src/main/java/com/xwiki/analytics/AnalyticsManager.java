@@ -47,4 +47,11 @@ public interface AnalyticsManager
      */
     JsonNode requestData(Map<String, String> parameters, Map<String, String> filters, String jsonNormaliserHint)
         throws IOException;
+
+    /**
+     * Checks if the Matomo services are up.
+     *
+     * @return json with 2 fields that contain 2 fields apiStatusCode and trackerStatusCode
+     */
+    JsonNode checkMatomoServices() throws IOException;
 }
