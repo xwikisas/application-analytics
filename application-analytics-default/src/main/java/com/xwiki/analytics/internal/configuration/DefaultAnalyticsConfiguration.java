@@ -25,6 +25,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
+import org.slf4j.Logger;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.configuration.ConfigurationSource;
 import org.xwiki.stability.Unstable;
@@ -45,6 +46,9 @@ public class DefaultAnalyticsConfiguration implements AnalyticsConfiguration
     @Inject
     @Named("analytics")
     private ConfigurationSource configDocument;
+
+    @Inject
+    private Logger logger;
 
     @Override
     public String getRequestAddress()
@@ -67,8 +71,8 @@ public class DefaultAnalyticsConfiguration implements AnalyticsConfiguration
     private <T> T getProperty(String key, T defaultValue)
     {
         T value = this.configDocument.getProperty(key, defaultValue);
-        if (value.equals(defaultValue)) {
-            throw new RuntimeException(MessageFormat.format("The {0} is missing", key));
+        if (value == null || value.equals(defaultValue)) {
+            throw new RuntimeException(MessageFormat.format("The {0} is missing.", key));
         }
         return value;
     }

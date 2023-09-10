@@ -1,0 +1,87 @@
+{
+  "JSON": [
+    {
+      "label": "/xwiki/bin/view/Main/",
+      "nb_hits": 142,
+      "url": "http://localhost:8081/xwiki/bin/view/Main/"
+    },
+    {
+      "label": "/xwiki/bin/view/Analytics/",
+      "nb_hits": 79,
+      "url": "http://localhost:8080/xwiki/bin/view/Analytics/"
+    },
+    {
+      "label": "/xwiki/bin/admin/XWiki/XWikiPreferences",
+      "nb_hits": 38,
+      "url": "http://localhost:8080/xwiki/bin/admin/XWiki/XWikiPreferences"
+    },
+    {
+      "label": "/xwiki/bin/admin/XWiki/XWikiPreferences?editor=globaladmin&section=analytics.application",
+      "nb_hits": 16,
+      "url": "http://localhost:8080/xwiki/bin/admin/XWiki/XWikiPreferences?editor=globaladmin&section=analytics.application"
+    },
+    {
+      "label": "/xwiki/bin/admin/XWiki/XWikiPreferences?editor=globaladmin&section=XWiki.Extensions",
+      "nb_hits": 20,
+      "url": "http://localhost:8081/xwiki/bin/admin/XWiki/XWikiPreferences?editor=globaladmin&section=XWiki.Extensions"
+    },
+    {
+      "label": "/xwiki/bin/view/Analytics/Code/Macros/MostViewedPage",
+      "nb_hits": 278,
+      "url": "http://localhost:8080/xwiki/bin/view/Analytics/Code/Macros/MostViewedPage"
+    },
+    {
+      "label": "/xwiki/bin/view/Sandbox/TestPage1",
+      "nb_hits": 49,
+      "url": "http://localhost:8081/xwiki/bin/view/Sandbox/TestPage1"
+    },
+    {
+      "label": "/xwiki/bin/view/Analytics/Code/Macros/MostViewedPages",
+      "nb_hits": 115,
+      "url": "http://localhost:8080/xwiki/bin/view/Analytics/Code/Macros/MostViewedPages"
+    },
+    {
+      "label": "/xwiki/bin/get/Collabora/Code/Main?document=xwiki:Sandbox.TestPage1&filename=test.odt&action=edit&xpage=plain&minify=false",
+      "nb_hits": 25,
+      "url": "http://collabora:8080/xwiki/bin/get/Collabora/Code/Main?document=xwiki:Sandbox.TestPage1&filename=test.odt&action=edit&xpage=plain&minify=false"
+    },
+    {
+      "label": "/xwiki/bin/admin/XWiki/XWikiPreferences?editor=globaladmin&section=Import",
+      "nb_hits": 9,
+      "url": "http://localhost:8080/xwiki/bin/admin/XWiki/XWikiPreferences?editor=globaladmin&section=Import"
+    },
+    {
+      "label": "/xwiki/bin/edit/Analytics/Code/Macros/MostViewedPage?editor=wiki",
+      "nb_hits": 27,
+      "url": "http://localhost:8080/xwiki/bin/edit/Analytics/Code/Macros/MostViewedPage?editor=wiki"
+    },
+    {
+      "label": "/xwiki/bin/view/Analytics/Code/Macros/Macros",
+      "nb_hits": 14,
+      "url": "http://localhost:8080/xwiki/bin/view/Analytics/Code/Macros/Macros"
+    },
+    {
+      "label": "/xwiki/bin/view/Analytics/Code/Macros/MostViewedPageJSON",
+      "nb_hits": 27,
+      "url": "http://localhost:8080/xwiki/bin/view/Analytics/Code/Macros/MostViewedPageJSON"
+    }
+  ],
+  "Response": [
+
+    {
+      "label": "/xwiki/bin/view/Analytics/Code/Macros/MostViewedPage",
+      "nb_hits": 278,
+      "url": "http://localhost:8080/xwiki/bin/view/Analytics/Code/Macros/MostViewedPage"
+    },
+    {
+      "label": "/xwiki/bin/edit/Analytics/Code/Macros/MostViewedPage?editor=wiki",
+      "nb_hits": 27,
+      "url": "http://localhost:8080/xwiki/bin/edit/Analytics/Code/Macros/MostViewedPage?editor=wiki"
+    },
+    {
+      "label": "/xwiki/bin/view/Analytics/Code/Macros/MostViewedPageJSON",
+      "nb_hits": 27,
+      "url": "http://localhost:8080/xwiki/bin/view/Analytics/Code/Macros/MostViewedPageJSON"
+    }
+  ]
+}

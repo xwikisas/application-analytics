@@ -21,10 +21,12 @@ package com.xwiki.analytics.internal;
 
 import java.io.IOException;
 import java.net.URI;
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.inject.Provider;
 import javax.inject.Singleton;
 import javax.ws.rs.core.UriBuilder;
 
@@ -54,15 +56,16 @@ import com.xwiki.analytics.configuration.AnalyticsConfiguration;
 @Unstable
 public class MatomoAnalyticsManager implements AnalyticsManager
 {
+    private static final String FAIL_RETRIEVE = "Error occurred while retrieving Matomo statistic results.";
+
     @Inject
     private Logger logger;
 
     @Inject
-    @Named(MostViewedJsonNormaliser.HINT)
-    private JsonNormaliser mostViewedNormaliser;
+    private AnalyticsConfiguration configuration;
 
     @Inject
-    private AnalyticsConfiguration configuration;
+    private Provider<List<JsonNormaliser>> jsonNormalizerProvider;
 
     /**
      * Request specific data from Matomo and return an enhanced response.
@@ -72,20 +75,33 @@ public class MatomoAnalyticsManager implements AnalyticsManager
      * @return the altered Matomo request response, as JSON format
      */
     @Override
-    public JsonNode requestData(Map<String, String> parameters, String jsonNormaliserHint) throws IOException
+    public JsonNode requestData(Map<String, String> parameters, Map<String, String> filters, String jsonNormaliserHint)
+        throws IOException
     {
+        if (parameters == null) {
+            logger.warn("Parameters must not be null.");
+            throw new RuntimeException(FAIL_RETRIEVE);
+        }
         parameters.put("idSite", configuration.getIdSite());
         parameters.put("token_auth", configuration.getAuthenticationToken());
-        JsonNormaliser jsonNormaliser = this.getNormaliser(jsonNormaliserHint);
-        if (jsonNormaliser == null) {
-            logger.warn("There is no JSON normalizer associated with the [{}] hint you provided.", jsonNormaliserHint);
-            throw new RuntimeException("Error occurred while retrieving Matomo statistic results.");
-        }
+        JsonNormaliser jsonNormaliser = this.selectNormaliser(jsonNormaliserHint);
+        getJsonNormaliser(jsonNormaliserHint);
+        return jsonNormaliser.normaliseData(executeHttpRequest(parameters), filters);
+    }
+
+    /**
+     * Execute the HTTP request and returns the response body as a string.
+     *
+     * @param parameters the HTTP request parameters
+     * @return response body as string
+     * @throws IOException if there's a problem executing the HTTP request
+     */
+    private String executeHttpRequest(Map<String, String> parameters) throws IOException
+    {
         HttpClient client = HttpClients.createDefault();
-        HttpGet request =  new HttpGet(buildURI(parameters));
+        HttpGet request = new HttpGet(buildURI(parameters));
         HttpResponse response = client.execute(request);
-        String responseBody  = EntityUtils.toString(response.getEntity());
-        return jsonNormaliser.normaliseData(responseBody);
+        return EntityUtils.toString(response.getEntity());
     }
 
     /**
@@ -98,19 +114,35 @@ public class MatomoAnalyticsManager implements AnalyticsManager
     {
         UriBuilder uriBuilder = UriBuilder.fromUri(configuration.getRequestAddress()).path("index.php");
 
-        if (parameterList != null && !parameterList.isEmpty()) {
-            for (Map.Entry<String, String> entry : parameterList.entrySet()) {
-                uriBuilder.queryParam(entry.getKey(), entry.getValue());
-            }
+        for (Map.Entry<String, String> entry : parameterList.entrySet()) {
+            uriBuilder.queryParam(entry.getKey(), entry.getValue());
         }
-
         return uriBuilder.build();
     }
 
-    private JsonNormaliser getNormaliser(String hint)
+    /**
+     * Gets the JsonNormaliser based on the hint.
+     *
+     * @param jsonNormaliserHint the hint
+     * @return the JsonNormaliser instance
+     * @throws RuntimeException if JsonNormaliser is null
+     */
+    private JsonNormaliser getJsonNormaliser(String jsonNormaliserHint)
     {
-        if (hint.equals(MostViewedJsonNormaliser.HINT)) {
-            return this.mostViewedNormaliser;
+        JsonNormaliser jsonNormaliser = this.selectNormaliser(jsonNormaliserHint);
+        if (jsonNormaliser == null) {
+            logger.warn("There is no JSON normalizer associated with the [{}] hint you provided.", jsonNormaliserHint);
+            throw new RuntimeException(FAIL_RETRIEVE);
+        }
+        return jsonNormaliser;
+    }
+
+    private JsonNormaliser selectNormaliser(String hint)
+    {
+        for (JsonNormaliser jsonNormaliser : this.jsonNormalizerProvider.get()) {
+            if (hint.equals(jsonNormaliser.getIdentifier())) {
+                return jsonNormaliser;
+            }
         }
         return null;
     }

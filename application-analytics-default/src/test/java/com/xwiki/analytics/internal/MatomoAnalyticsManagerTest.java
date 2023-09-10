@@ -20,9 +20,12 @@
 package com.xwiki.analytics.internal;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.inject.Named;
+import javax.inject.Provider;
 
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -34,10 +37,12 @@ import org.xwiki.test.junit5.mockito.MockComponent;
 import com.xwiki.analytics.JsonNormaliser;
 import com.xwiki.analytics.configuration.AnalyticsConfiguration;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Unit test for {@link MatomoAnalyticsManager}
@@ -60,33 +65,59 @@ public class MatomoAnalyticsManagerTest
     @MockComponent
     private Logger logger;
 
+    @MockComponent
+    private Provider<List<JsonNormaliser>> jsonNormalizerProvider;
+
+    /**
+     * Will test the Manager with a valid hint.
+     */
     @Test
-    public void requestDataWithCorrectHintForNormaliser() throws IOException, InterruptedException
+    public void requestDataWithCorrectHintForNormaliser() throws IOException
     {
+        List<JsonNormaliser> normalisers = new ArrayList<>();
+        normalisers.add(this.jsonNormaliser);
         when(this.configuration.getAuthenticationToken()).thenReturn("token");
         when(this.configuration.getRequestAddress()).thenReturn("http://130.61.233.19/matomo");
         when(this.configuration.getIdSite()).thenReturn("3");
-        this.matomoAnalyticsManager.requestData(new HashMap<>(), MostViewedJsonNormaliser.HINT);
-        verify(this.jsonNormaliser).normaliseData(any(String.class));
+        when(this.jsonNormalizerProvider.get()).thenReturn(normalisers);
+        when(this.jsonNormaliser.getIdentifier()).thenReturn(MostViewedJsonNormaliser.HINT);
+        this.matomoAnalyticsManager.requestData(new HashMap<>(), new HashMap<>(), MostViewedJsonNormaliser.HINT);
+        verify(this.jsonNormaliser).normaliseData(any(String.class), eq(new HashMap<>()));
     }
 
+    /**
+     * Will test that an error happens if the user sets the parameters to be equal with null.
+     */
     @Test
-    public void requestDataWithInvalidNormaliser() throws IOException, InterruptedException
+    public void requestDataWithNullParameters()
+    {
+        ReflectionUtils.setFieldValue(this.matomoAnalyticsManager, "logger", this.logger);
+        when(configuration.getAuthenticationToken()).thenReturn("token");
+        when(configuration.getRequestAddress()).thenReturn("http://130.61.233.19/matomo");
+        when(configuration.getIdSite()).thenReturn("3");
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+            matomoAnalyticsManager.requestData(null, new HashMap<>(), MostViewedJsonNormaliser.HINT);
+        });
+        assertEquals("Error occurred while retrieving Matomo statistic results.", exception.getMessage());
+        verify(logger).warn("Parameters must not be null.");
+    }
+
+    /**
+     * Will test the Manager with an invalid hint
+     */
+    @Test
+    public void requestDataWithInvalidNormaliser()
     {
         ReflectionUtils.setFieldValue(this.matomoAnalyticsManager, "logger", this.logger);
         when(this.configuration.getAuthenticationToken()).thenReturn("token");
         when(this.configuration.getRequestAddress()).thenReturn("http://130.61.233.19/matomo");
         when(this.configuration.getIdSite()).thenReturn("3");
-        try {
-            when(this.matomoAnalyticsManager.requestData(new HashMap<>(), "RANDOM_NORMALISER")).thenThrow(
-                new RuntimeException());
-            verify(this.logger).warn("There is no JSON normalizer associated with the [{}] hint you provided.",
-                "RANDOM_NORMALISER");
-        }
-        catch (RuntimeException e)
-        {
-            assertEquals(e.getMessage(), "Error occurred while retrieving Matomo statistic results.");
-        }
-
+        when(this.jsonNormalizerProvider.get()).thenReturn(new ArrayList<>());
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+            matomoAnalyticsManager.requestData(new HashMap<>(), new HashMap<>(), "RANDOM_NORMALISER");
+        });
+        assertEquals("Error occurred while retrieving Matomo statistic results.", exception.getMessage());
+        verify(logger).warn("There is no JSON normalizer associated with the [{}] hint you provided.",
+            "RANDOM_NORMALISER");
     }
 }
