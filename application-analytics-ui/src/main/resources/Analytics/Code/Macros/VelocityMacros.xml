@@ -62,8 +62,17 @@
   #set ($date = $startDate + ',' + $endDate)
 #end
 
-#macro (createLinkElement $text $link)
-&lt;a href=$link&gt;$text&lt;/a&gt;
+#macro (createLinkElement $label $link)
+&lt;a href = $link&gt;$label&lt;/a&gt;
+#end
+
+#macro (subSet $object $start $end $resultList)
+  #set ($resultList = [])
+  #set ($end = $mathtool.sub($end,1))
+  #foreach ($i in [$start..$end])
+    #set ($element = $object.get($i))
+    #set ($discard = $resultList.add($element))
+  #end
 #end
 
 #macro (subSet $object $start $end $resultList)

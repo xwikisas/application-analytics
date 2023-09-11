@@ -30,7 +30,6 @@ import org.xwiki.stability.Unstable;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
@@ -53,6 +52,12 @@ public class RowEvolutionJsonNormaliser extends AbstractJsonNormaliser
 
 
     private static final String DATE = "date";
+
+    @Override
+    public String getIdentifier()
+    {
+        return RowEvolutionJsonNormaliser.HINT;
+    }
 
     /**
      * Transforming the json object returned by Matomo into an array of jsons to make it easier to use in javascript.
@@ -85,6 +90,7 @@ public class RowEvolutionJsonNormaliser extends AbstractJsonNormaliser
         return arrayNode;
     }
 
+    @Override
     protected JsonNode processNode(JsonNode currentNode, String date)
     {
         ((ObjectNode) currentNode).put(DATE, date);
@@ -106,4 +112,6 @@ public class RowEvolutionJsonNormaliser extends AbstractJsonNormaliser
         }
         return true;
     }
+
+
 }

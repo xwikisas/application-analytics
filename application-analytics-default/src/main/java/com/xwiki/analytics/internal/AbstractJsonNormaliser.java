@@ -66,7 +66,7 @@ public abstract class AbstractJsonNormaliser implements JsonNormaliser
         // period parameter to "range" Matomo returns an array of JSON objects, with each JSON object representing
         // a page. Due to these variations, the result needs to be processed to create a single format.
         // This normalized format is an array of JSON objects and each JSON object in this array will have a new
-        // field called 'date'. This 'date' field will be set to 'N/A' when Matomo returns an array instead of an
+        // field called 'date'. This 'date' field will be set to N/A when Matomo returns an array instead of an
         // object. For both type of formats, the label field is also altered in order to contain the full page name
         if (jsonRoot.isArray()) {
             return processArrayNode(jsonRoot, filters);
@@ -76,7 +76,7 @@ public abstract class AbstractJsonNormaliser implements JsonNormaliser
     }
 
     /**
-     * This method processes each entry to append an empty date to it.
+     * Handles each entry that was returned by Matomo and processes it.
      *
      * @param jsonNode an array of jsons
      * @param filters holds the criteria for filtering a dataset
@@ -87,7 +87,7 @@ public abstract class AbstractJsonNormaliser implements JsonNormaliser
         ArrayNode arrayNode = OBJECT_MAPPER.createArrayNode();
         for (JsonNode objNode : jsonNode) {
             if (objNode.isObject() && matchesAllFilters(objNode, filters)) {
-                arrayNode.add(processNode(objNode));
+                arrayNode.add(processNode(objNode, null));
             }
         }
         return arrayNode;
@@ -98,9 +98,9 @@ public abstract class AbstractJsonNormaliser implements JsonNormaliser
      * function extracts the date from the key and adds it to each page. Ultimately, it returns an array of JSON
      * objects.
      *
-     * @param jsonNode
+     * @param jsonNode the response from Matomo that is a json
      * @param filters holds the criteria for filtering a dataset
-     * @return array of jsons
+     * @return array of jsons that have been processed
      */
     protected ArrayNode processObjectNode(JsonNode jsonNode, Map<String, String> filters) throws JsonProcessingException
     {
@@ -111,7 +111,7 @@ public abstract class AbstractJsonNormaliser implements JsonNormaliser
             JsonNode childNode = jsonNode.get(date);
             for (JsonNode objNode : childNode) {
                 if (objNode.isObject() && matchesAllFilters(objNode, filters)) {
-                    arrayNode.add(processNode(objNode));
+                    arrayNode.add(processNode(objNode, null));
                 }
             }
         }
@@ -137,9 +137,7 @@ public abstract class AbstractJsonNormaliser implements JsonNormaliser
      * Process the current node and add it to the final array of jsons.
      *
      * @param currentNode the current json that has to be processed
+     * @param date the date for which the statistics were calculated
      */
-    protected JsonNode processNode(JsonNode currentNode)
-    {
-        return currentNode;
-    }
+    protected abstract JsonNode processNode(JsonNode currentNode, String date);
 }
