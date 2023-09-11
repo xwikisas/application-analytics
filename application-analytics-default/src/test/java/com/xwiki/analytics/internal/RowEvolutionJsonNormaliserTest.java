@@ -40,45 +40,36 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * @version $Id$
  */
 @ComponentTest
-public class RowEvolutionJsonNormaliserTest
+public class RowEvolutionJsonNormaliserTest extends NormaliserTest
 {
     @InjectMockComponents
     private RowEvolutionJsonNormaliser rowEvolutionJsonNormaliser;
 
-    private static JsonNode node;
-
-    private void readJSONS(String path) throws IOException
-    {
-        ObjectMapper objectMapper = new ObjectMapper();
-        InputStream is = JsonReader.class.getResourceAsStream(path);
-        node = objectMapper.readTree(is);
-    }
-
     @Test
     public void normalizeDataWithoutFilters() throws IOException
     {
-        readJSONS("/rowEvolution/normalizeDataWithoutFilters.json");
+        JsonNode node = readJSONS("/rowEvolution/normalizeDataWithoutFilters.json");
         assertEquals(node.get("response"),
-            rowEvolutionJsonNormaliser.normaliseData(node.get("initialJson").toString(), new HashMap<>()));
+            rowEvolutionJsonNormaliser.normaliseData(node.get("JSON").toString(), new HashMap<>()));
     }
 
     @Test
     public void normalizeDataWithNullFilters() throws IOException
     {
-        readJSONS("/rowEvolution/normalizeDataWithoutFilters.json");
+        JsonNode node = readJSONS("/rowEvolution/normalizeDataWithoutFilters.json");
         assertEquals(node.get("response"),
-            rowEvolutionJsonNormaliser.normaliseData(node.get("initialJson").toString(), new HashMap<>()));
+            rowEvolutionJsonNormaliser.normaliseData(node.get("JSON").toString(), new HashMap<>()));
     }
 
     @Test
     public void normalizeDataWithFilters() throws IOException
     {
-        readJSONS("/rowEvolution/normalizeDataWithFilters.json");
-        HashMap<String, String> filters =  new HashMap<>();
+        JsonNode node = readJSONS("/rowEvolution/normalizeDataWithFilters.json");
+        HashMap<String, String> filters = new HashMap<>();
         filters.put("label", "/MostViewedPage");
         filters.put("sum_time_spent", "96");
         filters.put("avg_time_on_page", "48");
         assertEquals(node.get("response"),
-            rowEvolutionJsonNormaliser.normaliseData(node.get("initialJson").toString(), filters));
+            rowEvolutionJsonNormaliser.normaliseData(node.get("JSON").toString(), filters));
     }
 }

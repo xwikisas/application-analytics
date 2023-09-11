@@ -24,6 +24,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Collections;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -83,7 +84,7 @@ public class MostViewedJsonNormaliser extends AbstractJsonNormaliser
      * @param currentNode the current JSON that has to be processed
      */
     @Override
-    protected JsonNode processNode(JsonNode currentNode, String date)
+    protected JsonNode processNode(JsonNode currentNode, Map<String, String> processingValues)
     {
 
         if (currentNode.has(URL)) {

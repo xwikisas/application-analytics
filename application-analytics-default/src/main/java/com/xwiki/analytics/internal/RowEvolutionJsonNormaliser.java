@@ -19,6 +19,7 @@
  */
 package com.xwiki.analytics.internal;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -32,6 +33,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.sun.star.xml.dom.XProcessingInstruction;
 
 /**
  * Normalizes the response needed by the RowEvolution feature.
@@ -70,30 +72,32 @@ public class RowEvolutionJsonNormaliser extends AbstractJsonNormaliser
     {
         ArrayNode arrayNode = OBJECT_MAPPER.createArrayNode();
         Iterator<String> fieldNames = jsonNode.fieldNames();
-
+        Map<String, String> processingValues = new HashMap<>();
         while (fieldNames.hasNext()) {
             String date = fieldNames.next();
+            processingValues.put(DATE, date);
             JsonNode childNode = jsonNode.get(date);
             boolean nodeFound = true;
             for (JsonNode node : childNode) {
                 if (matchesAllFilters(node, filters)) {
-                    arrayNode.add(this.processNode(node, date));
+
+                    arrayNode.add(this.processNode(node, processingValues));
                     nodeFound = false;
                     break;
                 }
             }
             if (childNode.get(0) == null || nodeFound) {
                 arrayNode.add(OBJECT_MAPPER.readTree(String.format("{\"%s\"  : \"%s\"}", DATE, date)));
-                processNode(OBJECT_MAPPER.createObjectNode(), date);
+                processNode(OBJECT_MAPPER.createObjectNode(), processingValues);
             }
         }
         return arrayNode;
     }
 
     @Override
-    protected JsonNode processNode(JsonNode currentNode, String date)
+    protected JsonNode processNode(JsonNode currentNode, Map<String, String> processingValues)
     {
-        ((ObjectNode) currentNode).put(DATE, date);
+        ((ObjectNode) currentNode).put(DATE, processingValues.get(DATE));
         return currentNode;
     }
 

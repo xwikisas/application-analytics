@@ -137,7 +137,7 @@ public abstract class AbstractJsonNormaliser implements JsonNormaliser
      * Process the current node and add it to the final array of jsons.
      *
      * @param currentNode the current json that has to be processed
-     * @param date the date for which the statistics were calculated
+     * @param processingValues map of values that can be used for processing  the node
      */
-    protected abstract JsonNode processNode(JsonNode currentNode, String date);
+    protected abstract JsonNode processNode(JsonNode currentNode, Map<String, String> processingValues);
 }

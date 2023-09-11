@@ -263,14 +263,14 @@
       {'id': 'entryNbActions', 'displayer': 'html'},
       {'id': 'bounceRate', 'displayer': 'html'},
       {'id': 'exitRate', 'displayer': 'html'},
-      {'id': 'actions',"filterable": false, "sortable": false, 'displayer': 'html'}
+      {'id': 'actions', 'filterable': false, 'sortable': false, 'displayer': 'html'}
     ],
     'entryDescriptor': {
       'idProperty': 'title'
-      }
+     }
   }
 })
-#getAnalyticsMacroId('mostViwedMacro', $macroId)
+#getAnalyticsMacroId('mostViewedMacro', $macroId)
 
 {{liveData
   id="$macroId"
@@ -280,12 +280,12 @@
   sort='hits:desc'
 }}$jsontool.serialize($liveDataConfig){{/liveData}}
 
-#set ($parameters = {
+#set ($rowEvolutionParams = {
   'pageViews': 'nb_hits',
   'uniqueViews': 'nb_visits',
   "avgTime": 'avg_time_on_page'
 })
-#modalRowEvolution($parameters, 'MostViewedPages', $macroId)
+#modalRowEvolution($rowEvolutionParams, 'MostViewedPages', $macroId)
 {{/velocity}}</code>
     </property>
     <property>

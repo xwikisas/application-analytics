@@ -52,7 +52,7 @@ import static org.mockito.Mockito.when;
  * @version $Id$
  */
 @ComponentTest
-public class MostViewedJsonNormaliserTest
+public class MostViewedJsonNormaliserTest extends NormaliserTest
 {
     @InjectMockComponents
     private MostViewedJsonNormaliser mostViewedJsonNormaliser;
@@ -159,13 +159,5 @@ public class MostViewedJsonNormaliserTest
     private void setupAnyURL() throws Exception
     {
         when(resourceTypeResolver.resolve(any(ExtendedURL.class), eq(Collections.emptyMap()))).thenReturn(null);
-    }
-
-    private JsonNode readJSONS(String file) throws IOException
-    {
-        ObjectMapper objectMapper = new ObjectMapper();
-        InputStream is = JsonReader.class.getResourceAsStream(file);
-        JsonNode node = objectMapper.readTree(is);
-        return node;
     }
 }
