@@ -20,27 +20,23 @@
 package com.xwiki.analytics.internal;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.HashMap;
 
-import org.apache.ecs.storage.Hash;
 import org.junit.jupiter.api.Test;
 import org.xwiki.test.junit5.mockito.ComponentTest;
 import org.xwiki.test.junit5.mockito.InjectMockComponents;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.stream.JsonReader;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
- * Unit test for {@link RowEvolutionJsonNormaliserTest}
+ * Unit test for {@link RowEvolutionJsonJsonNormalizerTest}
  *
  * @version $Id$
  */
 @ComponentTest
-public class RowEvolutionJsonNormaliserTest extends NormaliserTest
+public class RowEvolutionJsonJsonNormalizerTest extends JsonNormalizerTest
 {
     @InjectMockComponents
     private RowEvolutionJsonNormaliser rowEvolutionJsonNormaliser;
@@ -48,7 +44,7 @@ public class RowEvolutionJsonNormaliserTest extends NormaliserTest
     @Test
     public void normalizeDataWithoutFilters() throws IOException
     {
-        JsonNode node = readJSONS("/rowEvolution/normalizeDataWithoutFilters.json");
+        JsonNode node = getTestJSONS("/rowEvolution/normalizeDataWithoutFilters.json");
         assertEquals(node.get("response"),
             rowEvolutionJsonNormaliser.normaliseData(node.get("JSON").toString(), new HashMap<>()));
     }
@@ -56,7 +52,7 @@ public class RowEvolutionJsonNormaliserTest extends NormaliserTest
     @Test
     public void normalizeDataWithNullFilters() throws IOException
     {
-        JsonNode node = readJSONS("/rowEvolution/normalizeDataWithoutFilters.json");
+        JsonNode node = getTestJSONS("/rowEvolution/normalizeDataWithoutFilters.json");
         assertEquals(node.get("response"),
             rowEvolutionJsonNormaliser.normaliseData(node.get("JSON").toString(), new HashMap<>()));
     }
@@ -64,7 +60,7 @@ public class RowEvolutionJsonNormaliserTest extends NormaliserTest
     @Test
     public void normalizeDataWithFilters() throws IOException
     {
-        JsonNode node = readJSONS("/rowEvolution/normalizeDataWithFilters.json");
+        JsonNode node = getTestJSONS("/rowEvolution/normalizeDataWithFilters.json");
         HashMap<String, String> filters = new HashMap<>();
         filters.put("label", "/MostViewedPage");
         filters.put("sum_time_spent", "96");

@@ -20,7 +20,6 @@
 package com.xwiki.analytics.internal;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Collections;
 import java.util.HashMap;
 
@@ -38,8 +37,6 @@ import org.xwiki.test.junit5.mockito.MockComponent;
 import org.xwiki.url.ExtendedURL;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.stream.JsonReader;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -52,7 +49,7 @@ import static org.mockito.Mockito.when;
  * @version $Id$
  */
 @ComponentTest
-public class MostViewedJsonNormaliserTest extends NormaliserTest
+public class MostViewedJsonJsonNormalizerTest extends JsonNormalizerTest
 {
     @InjectMockComponents
     private MostViewedJsonNormaliser mostViewedJsonNormaliser;
@@ -72,7 +69,7 @@ public class MostViewedJsonNormaliserTest extends NormaliserTest
     @Test
     public void normalizeDataWithObjectResponseWithoutFilters() throws Exception
     {
-        JsonNode node = readJSONS("/mostViewedPages/normalizeDataWithObjectResponseWithoutFilters.json");
+        JsonNode node = getTestJSONS("/mostViewedPages/normalizeDataWithObjectResponseWithoutFilters.json");
         assertEquals(node.get("Response"),
             mostViewedJsonNormaliser.normaliseData(node.get("JSON").toString(), null));
     }
@@ -84,7 +81,7 @@ public class MostViewedJsonNormaliserTest extends NormaliserTest
     @Test
     public void normalizeDataWithArrayResponseWithoutFilters() throws Exception
     {
-        JsonNode node = readJSONS("/mostViewedPages/normalizeDataWithArrayResponseWithoutFilters.json");
+        JsonNode node = getTestJSONS("/mostViewedPages/normalizeDataWithArrayResponseWithoutFilters.json");
         assertEquals(node.get("JSON"), mostViewedJsonNormaliser.normaliseData(node.get("JSON").toString(), null));
     }
 
@@ -94,7 +91,7 @@ public class MostViewedJsonNormaliserTest extends NormaliserTest
     @Test
     public void normalizeDataWithExactMatchFilter() throws Exception
     {
-        JsonNode node = readJSONS("/mostViewedPages/normalizationWithOneFilter.json");
+        JsonNode node = getTestJSONS("/mostViewedPages/normalizationWithOneFilter.json");
         HashMap<String, String> filters = new HashMap<>();
         filters.put("label", "/xwiki/bin/view/Analytics/Code/MostViewedPages");
         assertEquals(node.get("Response"),
@@ -107,7 +104,7 @@ public class MostViewedJsonNormaliserTest extends NormaliserTest
     @Test
     public void normalizeDataWithPartialMatchFilter() throws Exception
     {
-        JsonNode node = readJSONS("/mostViewedPages/normalizeDataWithMultipleFilters.json");
+        JsonNode node = getTestJSONS("/mostViewedPages/normalizeDataWithMultipleFilters.json");
         HashMap<String, String> filters = new HashMap<>();
         filters.put("nb_hits", "27");
         filters.put("label", "MostViewedPage?editor=wiki");
@@ -121,7 +118,7 @@ public class MostViewedJsonNormaliserTest extends NormaliserTest
     @Test
     public void normalizeDataWithMultipleFilters() throws Exception
     {
-        JsonNode node = readJSONS("/mostViewedPages/normalizeDataWithPartialMatchFilter.json");
+        JsonNode node = getTestJSONS("/mostViewedPages/normalizeDataWithPartialMatchFilter.json");
         HashMap<String, String> filters = new HashMap<>();
         filters.put("nb_hits", "27");
         filters.put("nb_hits", "27");
@@ -137,7 +134,7 @@ public class MostViewedJsonNormaliserTest extends NormaliserTest
     public void normalizeDataWithMalformedUrl() throws Exception
     {
         ReflectionUtils.setFieldValue(this.mostViewedJsonNormaliser, "logger", this.logger);
-        JsonNode node = readJSONS("/mostViewedPages/normalizeDataWithMalformedUrl.json");
+        JsonNode node = getTestJSONS("/mostViewedPages/normalizeDataWithMalformedUrl.json");
         HashMap<String, String> filters = new HashMap<>();
         assertEquals(node.get("JSON"), mostViewedJsonNormaliser.normaliseData(node.get("JSON").toString(), filters));
         verify(logger).warn("Failed to get resource reference from URL: [{}]. Caused by [{}]",
@@ -151,7 +148,7 @@ public class MostViewedJsonNormaliserTest extends NormaliserTest
     @Test
     public void normalizeDataJsonWithoutURL() throws IOException
     {
-        JsonNode node = readJSONS("/mostViewedPages/normalizeDataJsonWithoutURL.json");
+        JsonNode node = getTestJSONS("/mostViewedPages/normalizeDataJsonWithoutURL.json");
         assertEquals(node.get("JSON"), mostViewedJsonNormaliser.normaliseData(node.get("JSON").toString(), null));
     }
 

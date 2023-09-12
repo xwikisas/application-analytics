@@ -267,7 +267,7 @@
     ],
     'entryDescriptor': {
       'idProperty': 'title'
-     }
+    }
   }
 })
 #getAnalyticsMacroId('mostViewedMacro', $macroId)

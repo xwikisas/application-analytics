@@ -45,7 +45,7 @@
   'format' : 'json'
 })
 #if ($request.macroName == 'MostViewedPages')
-  $parameters.put('pageUrl', $request.parameter)
+  #set ($discard = $parameters.put('pageUrl', $request.parameter))
 #end
 #set ($analyticsResult = $services.analytics.getMatomoRequestResult($parameters, {}, 'RowEvolution'))
 #jsonResponse($analyticsResult)

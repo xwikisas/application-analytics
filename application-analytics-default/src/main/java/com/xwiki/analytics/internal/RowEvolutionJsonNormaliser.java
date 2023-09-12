@@ -33,7 +33,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.sun.star.xml.dom.XProcessingInstruction;
 
 /**
  * Normalizes the response needed by the RowEvolution feature.
@@ -51,7 +50,6 @@ public class RowEvolutionJsonNormaliser extends AbstractJsonNormaliser
      * Hint for the RowEvolution.
      */
     public static final String HINT = "RowEvolution";
-
 
     private static final String DATE = "date";
 
@@ -80,7 +78,6 @@ public class RowEvolutionJsonNormaliser extends AbstractJsonNormaliser
             boolean nodeFound = true;
             for (JsonNode node : childNode) {
                 if (matchesAllFilters(node, filters)) {
-
                     arrayNode.add(this.processNode(node, processingValues));
                     nodeFound = false;
                     break;
@@ -116,6 +113,4 @@ public class RowEvolutionJsonNormaliser extends AbstractJsonNormaliser
         }
         return true;
     }
-
-
 }

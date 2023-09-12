@@ -86,7 +86,6 @@ public class MostViewedJsonNormaliser extends AbstractJsonNormaliser
     @Override
     protected JsonNode processNode(JsonNode currentNode, Map<String, String> processingValues)
     {
-
         if (currentNode.has(URL)) {
             this.handleURLNode((ObjectNode) currentNode);
         }

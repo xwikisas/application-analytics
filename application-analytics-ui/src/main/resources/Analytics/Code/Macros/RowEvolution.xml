@@ -188,24 +188,22 @@ require(['jquery', 'chart'], ($) =&gt; {
    *
    * @param parameter will help identify a single row in the matomo tables
    */
-  const fetchChartData = (parameter) =&gt; {
-    currentOptions.data('parameter', parameter);
-    const period = currentOptions.data('period');
-    const date = currentOptions.data('date');
+  const fetchChartData = (rowIdentifier) =&gt; {
+    currentOptions.data('parameter', rowIdentifier);
     const requestPageUrl = currentOptions.data('requestPageUrl');
-    const macroName = currentOptions.data('macroName');
     const params = {
-      period: period,
-      date: `last${date}`,
-      macroName: macroName,
-      parameter: parameter
+      period: currentOptions.data('period'),
+      date: `last${currentOptions.data('date')}`,
+      macroName: currentOptions.data('macroName'),
+      parameter: rowIdentifier
     };
     const queryString = $.param(params);
     $.getJSON(`${requestPageUrl}?${queryString}`)
       .done((data) =&gt; {
-        window.sessionStorage.setItem('analyticsLastRequestCache', JSON.stringify(data));
+        window.sessionStorage.setItem('analyticsRowEvolutionChartData', JSON.stringify(data));
         renderChart(data);
-      }).fail((jqxhr, textStatus, error) =&gt; {
+      })
+      .fail((jqxhr, textStatus, error) =&gt; {
         const err = `${textStatus}, ${error}`;
         console.error(`Request Failed: ${err}`);
       });
@@ -238,7 +236,7 @@ require(['jquery', 'chart'], ($) =&gt; {
   });
 
   $(document).on('keyup change', `${SELECTORS.modal} ${SELECTORS.field}`, function () {
-    renderChart(JSON.parse(window.sessionStorage.getItem('analyticsLastRequestCache')));
+    renderChart(JSON.parse(window.sessionStorage.getItem('analyticsRowEvolutionChartData')));
   });
 
   $(document).on('hide.bs.modal', SELECTORS.modal, function (e) {
@@ -251,13 +249,13 @@ require(['jquery', 'chart'], ($) =&gt; {
    * easy of use and fetches the data for the default parameters.
    */
   $(document).on('click', SELECTORS.button, function () {
-    // This parameter is used to identify a specific row in the matomo tables.
-    const parameter = $(this).data('parameter');
+    // This parameter is used by Matomo to identify the row for which you want to retrieve the data
+    const rowIdentifier = $(this).data('parameter');
     currentModal = $(this).closest('.xwiki-livedata').next(SELECTORS.modal);
     currentOptions = currentModal.find(SELECTORS.options);
     currentLoadingAnimation = currentModal.find(SELECTORS.loading);
     currentModal.modal('show');
-    fetchChartData(parameter);
+    fetchChartData(rowIdentifier);
   });
 
   /**
@@ -271,7 +269,7 @@ require(['jquery', 'chart'], ($) =&gt; {
   /**
    * Update chart when the period changes.
    */
-  $(document).on("keyup change", `${SELECTORS.modal} ${SELECTORS.period}`, function () {
+  $(document).on('keyup change', `${SELECTORS.modal} ${SELECTORS.period}`, function () {
     const period = $(this).val();
     displayPeriodDurations(period);
     fetchChartData(currentOptions.data('parameter'));
