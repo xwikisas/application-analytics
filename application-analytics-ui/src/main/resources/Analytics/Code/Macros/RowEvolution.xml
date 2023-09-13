@@ -156,6 +156,8 @@ require(['jquery', 'chart'], ($) =&gt; {
     const dates = data.map(item =&gt; item.date);
     const field = data.map(item =&gt; item[currentModal.find(SELECTORS.field).val()] || 0);
     const ctx = currentModal.find(SELECTORS.chart);
+    // I can't modify and exiting chart because chart.js caches data about the chart and it can display the old data in
+    // some cases.
     if (chart) {
       chart.destroy();
     }
@@ -273,7 +275,7 @@ require(['jquery', 'chart'], ($) =&gt; {
     const period = $(this).val();
     displayPeriodDurations(period);
     fetchChartData(currentOptions.data('rowIdentifier'));
-  })
+  });
 });
 </code>
     </property>

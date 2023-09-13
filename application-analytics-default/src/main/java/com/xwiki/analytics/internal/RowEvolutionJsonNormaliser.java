@@ -60,11 +60,12 @@ public class RowEvolutionJsonNormaliser extends AbstractJsonNormaliser
     }
 
     /**
-     * Transforming the json object returned by Matomo into an array of jsons to make it easier to use in javascript.
+     * Transforming the json object returned by Matomo into an array of jsons to make it easier to use in javascript and
+     * adding a date to each entry to be able to idenitfy for what period the statistics are.
      *
-     * @param jsonNode
+     * @param jsonNode the response from Matomo that is a json
      * @param filters holds the criteria for filtering a dataset
-     * @return filtered array of jsons
+     * @return filtered array of processed jsons with the date added to them
      */
     protected ArrayNode processObjectNode(JsonNode jsonNode, Map<String, String> filters) throws JsonProcessingException
     {
@@ -83,9 +84,11 @@ public class RowEvolutionJsonNormaliser extends AbstractJsonNormaliser
                     break;
                 }
             }
+            // When the node is empty or the entry wasn't found then we create a new node with the current date and
+            // add it to the array.
             if (childNode.get(0) == null || nodeFound) {
-                arrayNode.add(OBJECT_MAPPER.readTree(String.format("{\"%s\"  : \"%s\"}", DATE, date)));
-                processNode(OBJECT_MAPPER.createObjectNode(), processingValues);
+                arrayNode.add(processNode(OBJECT_MAPPER.createObjectNode(), processingValues));
+
             }
         }
         return arrayNode;
@@ -107,6 +110,7 @@ public class RowEvolutionJsonNormaliser extends AbstractJsonNormaliser
         for (Map.Entry<String, String> entry : filters.entrySet()) {
             String filterField = entry.getKey();
             String filterValue = entry.getValue();
+            // Exact match instead of partial match like in the original method.
             if (!(objNode.has(filterField) && objNode.get(filterField).asText().equals(filterValue))) {
                 return false;
             }
