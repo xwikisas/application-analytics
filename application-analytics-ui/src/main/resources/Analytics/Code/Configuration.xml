@@ -479,31 +479,52 @@
       <code>define('analyticsConfigMessages', {
   prefix: 'analytics.config.',
   keys: [
-   'success',
-   'error'
+    'successTracker',
+    'errorTracker',
+    'successServices',
+    'errorServices'
   ]
 });
 
-require(['jquery', 'xwiki-l10n!analyticsConfigMessages'], ($, l10n) =&gt; {
-  $(document).ready(function () {
-    console.log($('#checkCredentials'));
-  });
+require(['jquery', 'xwiki-l10n!analyticsConfigMessages', 'xwiki-meta'], ($, l10n, xm) =&gt; {
 
-  $(document).on('click', '#checkCredentials', function (e) {
+  $(document).on('click', '#checkTrackingCode', function (e) {
     e.preventDefault();
-
-    $.getJSON(`/xwiki/bin/view/Analytics/Code/checkCredentials/`)
+    // setting up a session storage variable to be abele to check the Matomo api after the refresh
+    window.sessionStorage.setItem('checkTracker', 1);
+    let currentURL = new URL(window.location.href);
+    // genereate an integer between 0 and 9007199254740992
+    let random = Math.floor(Math.random() * 9007199254740992);
+    currentURL.searchParams.set("analyticsCheckTrackingCode", `${xm.userReference}${random}`);
+    window.location.href = currentURL.toString();
+  });
+  function checkTracker() {
+    const params =
+    {
+      'type': 'tracker',
+      'pageUrl': window.location.href
+    }
+    const queryString = $.param(params);
+    $.getJSON(`/xwiki/bin/view/Analytics/Code/checkCredentials?${queryString}`)
       .done((data) =&gt; {
-        if (data.apiStatusCode==200) {
-          new XWiki.widgets.Notification(l10n['success'], 'done');
-        } else {
-          new XWiki.widgets.Notification(l10n['error'], 'error');
+        if (data.length) {
+          new XWiki.widgets.Notification(l10n['successTracker'], 'done');
+        }
+        else {
+          new XWiki.widgets.Notification(l10n['errorTracker'], 'error');
         }
       })
-      .fail(() =&gt; {  // Add this fail branch
-          new XWiki.widgets.Notification(l10n['error'], 'error');
+      .fail(() =&gt; {
+        new XWiki.widgets.Notification(l10n['errorServices'], 'error');
       });
-  });
+  }
+
+  $(document).ready(function () {
+    if (sessionStorage.getItem("checkTracker")) {
+    // Clear the flag
+    sessionStorage.removeItem("checkTracker");
+    checkTracker();
+  }});
 });
 </code>
     </property>

@@ -73,7 +73,7 @@ public class AnalyticsScriptService implements ScriptService
      *
      * @return json with the current version as a string.
      */
-    public JsonNode requestVersion()
+    public JsonNode checkServices()
     {
         try {
             return this.analyticsManager.checkMatomoServices();

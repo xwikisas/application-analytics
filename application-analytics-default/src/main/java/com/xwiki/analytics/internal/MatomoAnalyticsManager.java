@@ -108,11 +108,8 @@ public class MatomoAnalyticsManager implements AnalyticsManager
         apiParameters.put("module", "API");
         apiParameters.put("method", "API.getMatomoVersion");
         apiParameters.put("format", "JSON");
-        Map<String, String> trackerParameters = new HashMap<>();
-        trackerParameters.put(ID_SITE, configuration.getIdSite());
-        trackerParameters.put(TOKEN_AUTH, configuration.getAuthenticationToken());
         int apiStatusCode = httpRequestCode(apiParameters, INDEX_PHP);
-        int trackerStatusCode = httpRequestCode(trackerParameters, "matomo.php");
+        int trackerStatusCode = httpRequestCode(new HashMap<>(), "matomo.php");
         return objectMapper.readTree(String.format("{\"apiStatusCode\":\"%d\",  \"trackerStatusCode\" : \"%d\"}",
             apiStatusCode, trackerStatusCode));
     }
