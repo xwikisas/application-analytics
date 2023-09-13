@@ -186,10 +186,10 @@ require(['jquery', 'chart'], ($) =&gt; {
    * the  data in session storage for easy access. This allows the user to display a different field for the same time
    * interval without making a new request and updates the chart.
    *
-   * @param parameter will help identify a single row in the matomo tables
+   * @rowIdentifier will help identify a single row in the matomo tables
    */
   const fetchChartData = (rowIdentifier) =&gt; {
-    currentOptions.data('parameter', rowIdentifier);
+    currentOptions.data('rowIdentifier', rowIdentifier);
     const requestPageUrl = currentOptions.data('requestPageUrl');
     const params = {
       period: currentOptions.data('period'),
@@ -211,7 +211,7 @@ require(['jquery', 'chart'], ($) =&gt; {
 
   /**
    * Would search for the element that matches the current period, display its time, and hide the other periods time.
-   * 
+   *
    * @param period period day/week/month/year
    */
   const displayPeriodDurations = (period) =&gt; {
@@ -249,8 +249,8 @@ require(['jquery', 'chart'], ($) =&gt; {
    * easy of use and fetches the data for the default parameters.
    */
   $(document).on('click', SELECTORS.button, function () {
-    // This parameter is used by Matomo to identify the row for which you want to retrieve the data
-    const rowIdentifier = $(this).data('parameter');
+    // This rowIdentifier is used by Matomo to identify the row for which you want to retrieve the data.
+    const rowIdentifier = $(this).data('rowIdentifier');
     currentModal = $(this).closest('.xwiki-livedata').next(SELECTORS.modal);
     currentOptions = currentModal.find(SELECTORS.options);
     currentLoadingAnimation = currentModal.find(SELECTORS.loading);
@@ -263,7 +263,7 @@ require(['jquery', 'chart'], ($) =&gt; {
    */
   $(document).on('keyup change', `${SELECTORS.modal} ${SELECTORS.startsWithPeriodLength}`, function () {
     currentOptions.data('date', $(this).val());
-    fetchChartData(currentOptions.data('parameter'));
+    fetchChartData(currentOptions.data('rowIdentifier'));
   });
 
   /**
@@ -272,7 +272,7 @@ require(['jquery', 'chart'], ($) =&gt; {
   $(document).on('keyup change', `${SELECTORS.modal} ${SELECTORS.period}`, function () {
     const period = $(this).val();
     displayPeriodDurations(period);
-    fetchChartData(currentOptions.data('parameter'));
+    fetchChartData(currentOptions.data('rowIdentifier'));
   })
 });
 </code>

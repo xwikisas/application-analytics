@@ -31,12 +31,12 @@ import com.fasterxml.jackson.databind.JsonNode;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
- * Unit test for {@link RowEvolutionJsonJsonNormalizerTest}
+ * Unit test for {@link RowEvolutionJsonNormalizerTest}
  *
  * @version $Id$
  */
 @ComponentTest
-public class RowEvolutionJsonJsonNormalizerTest extends JsonNormalizerTest
+public class RowEvolutionJsonNormalizerTest extends JsonNormalizerTest
 {
     @InjectMockComponents
     private RowEvolutionJsonNormaliser rowEvolutionJsonNormaliser;

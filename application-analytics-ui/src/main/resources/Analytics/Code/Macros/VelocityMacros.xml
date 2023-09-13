@@ -52,7 +52,7 @@
   #set ($endDateObj = $datetool.toDate('yyyy/MM/dd HH:mm', $endDate))
   #set ($endDate = $datetool.format('yyyy-MM-dd', $endDateObj))
   ## Check if startDate or endDate are not defined and replace them with some default values, in order to match the end
-  ##  of the time interval. For startDate we use '2007-01-01' since it's the oldest one accepted by Matomo.
+  ## of the time interval. For startDate we use '2007-01-01' since it's the oldest one accepted by Matomo.
   #if (!$startDate)
     #set ($startDate = '2007-01-01')
   #end
@@ -77,9 +77,9 @@
 
 #macro(analyticsActions $parameter)
 &lt;div class="analyticsActions"&gt;
-  &lt;div class="analyticsRowEvolution"  data-parameter=$parameter&gt;
+  &lt;div class="analyticsRowEvolution"  data-row-identifier=$parameter&gt;
     &lt;a class="action" title="$escapetool.xml($services.localization.render(
-      'analytics.livedata.action.title.rowEvolution'))" href="#"&gt;
+      'analytics.livedata.action.rowEvolution.title'))" href="#"&gt;
       &lt;span class="action-icon"&gt;$services.icon.renderHTML('eye')&lt;/span&gt;
     &lt;/a&gt;
   &lt;/div&gt;
@@ -134,7 +134,7 @@
           &lt;/h4&gt;
         &lt;/div&gt;
         &lt;div class="rowEvolutionOptions" data-macro-name=$macroName data-request-page-url=$requestPageURL
-        data-color=$theme.notificationInfoColor&gt;
+          data-color=$theme.notificationInfoColor&gt;
           #rowEvolutionModalBody($matomoFields $id)
           &lt;div class='loading'&gt;
             &lt;canvas class="chartDisplay"&gt;&lt;/canvas&gt;
@@ -181,7 +181,6 @@
     &lt;/div&gt;
   &lt;/div&gt;
 #end
-
 
 #set ($analyticsId = -1)
 #macro (getAnalyticsMacroId $macro $macroId)

@@ -49,7 +49,7 @@ import static org.mockito.Mockito.when;
  * @version $Id$
  */
 @ComponentTest
-public class MostViewedJsonJsonNormalizerTest extends JsonNormalizerTest
+public class MostViewedJsonNormalizerTest extends JsonNormalizerTest
 {
     @InjectMockComponents
     private MostViewedJsonNormaliser mostViewedJsonNormaliser;
