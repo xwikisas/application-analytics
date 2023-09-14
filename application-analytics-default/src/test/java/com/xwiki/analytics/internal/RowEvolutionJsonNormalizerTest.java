@@ -42,7 +42,7 @@ public class RowEvolutionJsonNormalizerTest extends JsonNormalizerTest
     private RowEvolutionJsonNormaliser rowEvolutionJsonNormaliser;
 
     @Test
-    public void normalizeDataWithoutFilters() throws IOException
+    void normalizeDataWithoutFilters() throws IOException
     {
         JsonNode node = getTestJSONS("/rowEvolution/normalizeDataWithoutFilters.json");
         assertEquals(node.get("response"),
@@ -50,7 +50,7 @@ public class RowEvolutionJsonNormalizerTest extends JsonNormalizerTest
     }
 
     @Test
-    public void normalizeDataWithNullFilters() throws IOException
+    void normalizeDataWithNullFilters() throws IOException
     {
         JsonNode node = getTestJSONS("/rowEvolution/normalizeDataWithoutFilters.json");
         assertEquals(node.get("response"),
@@ -58,7 +58,7 @@ public class RowEvolutionJsonNormalizerTest extends JsonNormalizerTest
     }
 
     @Test
-    public void normalizeDataWithFilters() throws IOException
+    void normalizeDataWithFilters() throws IOException
     {
         JsonNode node = getTestJSONS("/rowEvolution/normalizeDataWithFilters.json");
         HashMap<String, String> filters = new HashMap<>();

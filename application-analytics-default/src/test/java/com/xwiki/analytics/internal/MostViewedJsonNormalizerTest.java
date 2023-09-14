@@ -67,7 +67,7 @@ public class MostViewedJsonNormalizerTest extends JsonNormalizerTest
      * Will test if the normaliser works properly when the response from Matomo is an object.
      */
     @Test
-    public void normalizeDataWithObjectResponseWithoutFilters() throws Exception
+    void normalizeDataWithObjectResponseWithoutFilters() throws Exception
     {
         JsonNode node = getTestJSONS("/mostViewedPages/normalizeDataWithObjectResponseWithoutFilters.json");
         assertEquals(node.get("Response"),
@@ -79,7 +79,7 @@ public class MostViewedJsonNormalizerTest extends JsonNormalizerTest
      * is no filters applied the json stays the same.
      */
     @Test
-    public void normalizeDataWithArrayResponseWithoutFilters() throws Exception
+    void normalizeDataWithArrayResponseWithoutFilters() throws Exception
     {
         JsonNode node = getTestJSONS("/mostViewedPages/normalizeDataWithArrayResponseWithoutFilters.json");
         assertEquals(node.get("JSON"), mostViewedJsonNormaliser.normaliseData(node.get("JSON").toString(), null));
@@ -89,7 +89,7 @@ public class MostViewedJsonNormalizerTest extends JsonNormalizerTest
      * Will test if the filtering works properly with an exact match.
      */
     @Test
-    public void normalizeDataWithExactMatchFilter() throws Exception
+    void normalizeDataWithExactMatchFilter() throws Exception
     {
         JsonNode node = getTestJSONS("/mostViewedPages/normalizationWithOneFilter.json");
         HashMap<String, String> filters = new HashMap<>();
@@ -102,7 +102,7 @@ public class MostViewedJsonNormalizerTest extends JsonNormalizerTest
      * Will test if the filtering works properly with partial matching.
      */
     @Test
-    public void normalizeDataWithPartialMatchFilter() throws Exception
+    void normalizeDataWithPartialMatchFilter() throws Exception
     {
         JsonNode node = getTestJSONS("/mostViewedPages/normalizeDataWithMultipleFilters.json");
         HashMap<String, String> filters = new HashMap<>();
@@ -116,7 +116,7 @@ public class MostViewedJsonNormalizerTest extends JsonNormalizerTest
      * Will test if the normaliser works properly when the response from Matomo is an object.
      */
     @Test
-    public void normalizeDataWithMultipleFilters() throws Exception
+    void normalizeDataWithMultipleFilters() throws Exception
     {
         JsonNode node = getTestJSONS("/mostViewedPages/normalizeDataWithPartialMatchFilter.json");
         HashMap<String, String> filters = new HashMap<>();
@@ -131,7 +131,7 @@ public class MostViewedJsonNormalizerTest extends JsonNormalizerTest
      * Will test the case when the url is invalid.
      */
     @Test
-    public void normalizeDataWithMalformedUrl() throws Exception
+    void normalizeDataWithMalformedUrl() throws Exception
     {
         ReflectionUtils.setFieldValue(this.mostViewedJsonNormaliser, "logger", this.logger);
         JsonNode node = getTestJSONS("/mostViewedPages/normalizeDataWithMalformedUrl.json");
@@ -146,14 +146,14 @@ public class MostViewedJsonNormalizerTest extends JsonNormalizerTest
      * Will test if the normaliser works properly when the response from Matomo is an array of jsons.
      */
     @Test
-    public void normalizeDataJsonWithoutURL() throws IOException
+    void normalizeDataJsonWithoutURL() throws IOException
     {
         JsonNode node = getTestJSONS("/mostViewedPages/normalizeDataJsonWithoutURL.json");
         assertEquals(node.get("JSON"), mostViewedJsonNormaliser.normaliseData(node.get("JSON").toString(), null));
     }
 
     @BeforeEach
-    private void setupAnyURL() throws Exception
+    void setupAnyURL() throws Exception
     {
         when(resourceTypeResolver.resolve(any(ExtendedURL.class), eq(Collections.emptyMap()))).thenReturn(null);
     }
