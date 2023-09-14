@@ -60,26 +60,27 @@ public class RowEvolutionJsonNormaliser extends AbstractJsonNormaliser
     }
 
     /**
-     * Transforming the json object returned by Matomo into an array of jsons to make it easier to use in javascript and
-     * adding a date to each entry to be able to idenitfy for what period the statistics are.
+     * Transform the Matomo JSON response into an array of JSONs to simplify usage. Add a date to each entry to be able
+     * to identify from what period the statistics are.
      *
-     * @param jsonNode the response from Matomo that is a json
+     * @param jsonNode JSON response from Matomo
      * @param filters holds the criteria for filtering a dataset
-     * @return filtered array of processed jsons with the date added to them
+     * @return filtered array of processed JSONs
      */
+    @Override
     protected ArrayNode processObjectNode(JsonNode jsonNode, Map<String, String> filters) throws JsonProcessingException
     {
         ArrayNode arrayNode = OBJECT_MAPPER.createArrayNode();
         Iterator<String> fieldNames = jsonNode.fieldNames();
-        Map<String, String> processingValues = new HashMap<>();
+        Map<String, String> extraValues = new HashMap<>();
         while (fieldNames.hasNext()) {
             String date = fieldNames.next();
-            processingValues.put(DATE, date);
+            extraValues.put(DATE, date);
             JsonNode childNode = jsonNode.get(date);
             boolean nodeFound = true;
             for (JsonNode node : childNode) {
                 if (matchesAllFilters(node, filters)) {
-                    arrayNode.add(this.processNode(node, processingValues));
+                    arrayNode.add(this.processNode(node, extraValues));
                     nodeFound = false;
                     break;
                 }
@@ -87,17 +88,16 @@ public class RowEvolutionJsonNormaliser extends AbstractJsonNormaliser
             // When the node is empty or the entry wasn't found then we create a new node with the current date and
             // add it to the array.
             if (childNode.get(0) == null || nodeFound) {
-                arrayNode.add(processNode(OBJECT_MAPPER.createObjectNode(), processingValues));
-
+                arrayNode.add(processNode(OBJECT_MAPPER.createObjectNode(), extraValues));
             }
         }
         return arrayNode;
     }
 
     @Override
-    protected JsonNode processNode(JsonNode currentNode, Map<String, String> processingValues)
+    protected JsonNode processNode(JsonNode currentNode, Map<String, String> extraValues)
     {
-        ((ObjectNode) currentNode).put(DATE, processingValues.get(DATE));
+        ((ObjectNode) currentNode).put(DATE, extraValues.get(DATE));
         return currentNode;
     }
 
@@ -110,7 +110,7 @@ public class RowEvolutionJsonNormaliser extends AbstractJsonNormaliser
         for (Map.Entry<String, String> entry : filters.entrySet()) {
             String filterField = entry.getKey();
             String filterValue = entry.getValue();
-            // Exact match instead of partial match like in the original method.
+            // An exact match is needed instead of the partial one, because row evolution is done on a specific entry.
             if (!(objNode.has(filterField) && objNode.get(filterField).asText().equals(filterValue))) {
                 return false;
             }

@@ -27,7 +27,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.stream.JsonReader;
 
 /**
- * Base class for writing unit tests for the json normalisers.
+ * Base class for writing unit tests for the JSON normalisers.
  */
 public abstract class JsonNormalizerTest
 {

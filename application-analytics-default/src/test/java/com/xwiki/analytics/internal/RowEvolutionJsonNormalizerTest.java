@@ -31,7 +31,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
- * Unit test for {@link RowEvolutionJsonNormalizerTest}
+ * Unit test for {@link RowEvolutionJsonNormaliser}
  *
  * @version $Id$
  */
