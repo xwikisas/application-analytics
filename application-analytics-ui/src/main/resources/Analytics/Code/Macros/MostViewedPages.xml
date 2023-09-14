@@ -244,6 +244,7 @@
 
 {{velocity}}
 #getDate()
+#set ($discard =$xwiki.jsx.use('Analytics.Code.Macros.RowEvolution'))
 #set ($period = 'range')
 #set ($parameters = $escapetool.url({
   'resultPage': 'Analytics.Code.Macros.MostViewedPagesJSON',
@@ -255,24 +256,36 @@
 #set ($liveDataConfig= {
   'meta': {
     'propertyDescriptors': [
-      {'id': 'title', 'displayer': 'html'},
+      {'id': 'pageTitle', 'displayer': 'html'},
       {'id': 'visits', 'displayer': 'html'},
       {'id': 'hits', 'displayer': 'html'},
       {'id': 'timeSpent', 'displayer': 'html'},
       {'id': 'entryNbActions', 'displayer': 'html'},
       {'id': 'bounceRate', 'displayer': 'html'},
-      {'id': 'exitRate', 'displayer': 'html'}
-    ]}
+      {'id': 'exitRate', 'displayer': 'html'},
+      {'id': 'actions', 'filterable': false, 'sortable': false, 'displayer': 'html'}
+    ],
+    'entryDescriptor': {
+      'idProperty': 'pageTitle'
+    }
+  }
 })
+#getAnalyticsMacroId('mostViewedMacro', $macroId)
 
 {{liveData
-  id="mostViewedMacro"
-  properties="title, visits, hits, timeSpent, entryNbActions, bounceRate, exitRate"
+  id="$macroId"
+  properties="pageTitle, visits, hits, timeSpent, entryNbActions, bounceRate, exitRate, actions"
   source='liveTable'
   sourceParameters="$parameters"
   sort='hits:desc'
 }}$jsontool.serialize($liveDataConfig){{/liveData}}
 
+#set ($rowEvolutionParams = {
+  'pageViews': 'nb_hits',
+  'uniqueViews': 'nb_visits',
+  "avgTime": 'avg_time_on_page'
+})
+#modalRowEvolution($rowEvolutionParams, 'MostViewedPages', $macroId)
 {{/velocity}}</code>
     </property>
     <property>

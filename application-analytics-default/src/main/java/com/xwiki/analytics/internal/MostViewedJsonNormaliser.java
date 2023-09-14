@@ -24,6 +24,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Collections;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -70,6 +71,12 @@ public class MostViewedJsonNormaliser extends AbstractJsonNormaliser
     @Inject
     private ResourceTypeResolver<ExtendedURL> resourceTypeResolver;
 
+    @Override
+    public String getIdentifier()
+    {
+        return MostViewedJsonNormaliser.HINT;
+    }
+
     /**
      * Process the current node by altering the label. The initial label is an url but the final JSON has the page
      * title.
@@ -77,9 +84,8 @@ public class MostViewedJsonNormaliser extends AbstractJsonNormaliser
      * @param currentNode the current JSON that has to be processed
      */
     @Override
-    protected JsonNode processNode(JsonNode currentNode)
+    protected JsonNode processNode(JsonNode currentNode, Map<String, String> extraValues)
     {
-
         if (currentNode.has(URL)) {
             this.handleURLNode((ObjectNode) currentNode);
         }

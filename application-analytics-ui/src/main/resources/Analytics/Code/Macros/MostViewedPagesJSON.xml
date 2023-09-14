@@ -51,8 +51,9 @@
     #set ($limit = 15)
   #end
 
-  #set ($keys = {
-    'title' : 'label',
+  ## Mapping between the livedata columns and the Matomo fields.
+  #set ($matomoKeysMapping = {
+    'pageTitle' : 'label',
     'visits': 'nb_visits',
     'hits' : 'nb_hits',
     'timeSpent' : 'sum_time_spent',
@@ -63,15 +64,15 @@
   #set ($sort = 'nb_hits')
   #set ($order = 'desc')
   #if ($request.sort)
-    #set ($sort = $keys.get($request.sort))
+    #set ($sort = $matomoKeysMapping.get($request.sort))
     #set ($order = $request.dir)
   #end
 
-  #set ($filters={})
-  #foreach ($key in $keys.keySet())
+  #set ($filters = {})
+  #foreach ($key in $matomoKeysMapping.keySet())
     #set ($value = $request.get($key))
     #if ($value &amp;&amp; $value != '')
-      $filters.put($keys.get($key), $request.get($key))
+      #set ($discard = $filters.put($matomoKeysMapping.get($key), $request.get($key)))
     #end
   #end
 
@@ -94,6 +95,7 @@
     #set ($toIndex = $mathtool.min($mathtool.add($offset, $limit), $analyticsResult.size()))
     #subSet($analyticsResult, $offset, $toIndex, $resultList)
   #end
+
   #set ($results = {
     "totalrows": $analyticsResult.size(),
     "returnedrows": $resultList.size(),
@@ -104,13 +106,14 @@
   #foreach ($currentEntry in $resultList)
     #set ($url = $currentEntry.get('url').asText())
     #set ($discard = $results.rows.add({
-      'title' : "#createLinkElement($currentEntry.get('label').asText(), $url)",
+      'pageTitle' : "#createLinkElement($currentEntry.get('label').asText(), $url)",
       'visits' :  $currentEntry.get('nb_visits').asText(),
       'hits' : $currentEntry.get('nb_hits').asText(),
       'timeSpent' : $currentEntry.get('sum_time_spent').asText(),
       'entryNbActions' : $currentEntry.get('entry_nb_actions').asText(),
       'bounceRate' : $currentEntry.get('bounce_rate').asText(),
-      'exitRate' : $currentEntry.get('exit_rate').asText()
+      'exitRate' : $currentEntry.get('exit_rate').asText(),
+      'actions' : "#analyticsActions($url)"
     }))
   #end
   #jsonResponse($results)
