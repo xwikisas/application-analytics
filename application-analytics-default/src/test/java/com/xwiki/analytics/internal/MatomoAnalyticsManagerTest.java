@@ -20,9 +20,12 @@
 package com.xwiki.analytics.internal;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.inject.Named;
+import javax.inject.Provider;
 
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -62,15 +65,22 @@ public class MatomoAnalyticsManagerTest
     @MockComponent
     private Logger logger;
 
+    @MockComponent
+    private Provider<List<JsonNormaliser>> jsonNormalizerProvider;
+
     /**
      * Will test the Manager with a valid hint.
      */
     @Test
-    public void requestDataWithCorrectHintForNormaliser() throws IOException
+    void requestDataWithCorrectHintForNormaliser() throws IOException
     {
+        List<JsonNormaliser> normalisers = new ArrayList<>();
+        normalisers.add(this.jsonNormaliser);
         when(this.configuration.getAuthenticationToken()).thenReturn("token");
         when(this.configuration.getRequestAddress()).thenReturn("http://130.61.233.19/matomo");
         when(this.configuration.getIdSite()).thenReturn("3");
+        when(this.jsonNormalizerProvider.get()).thenReturn(normalisers);
+        when(this.jsonNormaliser.getIdentifier()).thenReturn(MostViewedJsonNormaliser.HINT);
         this.matomoAnalyticsManager.requestData(new HashMap<>(), new HashMap<>(), MostViewedJsonNormaliser.HINT);
         verify(this.jsonNormaliser).normaliseData(any(String.class), eq(new HashMap<>()));
     }
@@ -79,7 +89,7 @@ public class MatomoAnalyticsManagerTest
      * Will test that an error happens if the user sets the parameters to be equal with null.
      */
     @Test
-    public void requestDataWithNullParameters()
+    void requestDataWithNullParameters()
     {
         ReflectionUtils.setFieldValue(this.matomoAnalyticsManager, "logger", this.logger);
         when(configuration.getAuthenticationToken()).thenReturn("token");
@@ -96,12 +106,13 @@ public class MatomoAnalyticsManagerTest
      * Will test the Manager with an invalid hint
      */
     @Test
-    public void requestDataWithInvalidNormaliser()
+    void requestDataWithInvalidNormaliser()
     {
         ReflectionUtils.setFieldValue(this.matomoAnalyticsManager, "logger", this.logger);
         when(this.configuration.getAuthenticationToken()).thenReturn("token");
         when(this.configuration.getRequestAddress()).thenReturn("http://130.61.233.19/matomo");
         when(this.configuration.getIdSite()).thenReturn("3");
+        when(this.jsonNormalizerProvider.get()).thenReturn(new ArrayList<>());
         RuntimeException exception = assertThrows(RuntimeException.class, () -> {
             matomoAnalyticsManager.requestData(new HashMap<>(), new HashMap<>(), "RANDOM_NORMALISER");
         });

@@ -51,9 +51,10 @@
     #set ($limit = 15)
   #end
 
-  #set ($keys = {
+  ## Mapping between the livedata columns and the Matomo fields.
+  #set ($matomoKeysMapping = {
     'title' : 'label',
-    'visits' : 'nb_visits',
+    'visits': 'nb_visits',
     'hits' : 'nb_hits',
     'timeSpent' : 'sum_time_spent',
     'entryNbActions' : 'entry_nb_actions',
@@ -63,15 +64,15 @@
   #set ($sort = 'nb_hits')
   #set ($order = 'desc')
   #if ($request.sort)
-    #set($sort = $keys.get($request.sort))
-    #set($order = $request.dir)
+    #set ($sort = $matomoKeysMapping.get($request.sort))
+    #set ($order = $request.dir)
   #end
 
-  #set ($filters={})
-  #foreach ($key in $keys.keySet())
+  #set ($filters = {})
+  #foreach ($key in $matomoKeysMapping.keySet())
     #set ($value = $request.get($key))
     #if ($value &amp;&amp; $value != '')
-      $filters.put($keys.get($key), $request.get($key))
+      #set ($discard = $filters.put($matomoKeysMapping.get($key), $request.get($key)))
     #end
   #end
 
@@ -91,9 +92,10 @@
   ## Get the JSON response from Matomo.
   #set ($analyticsResult = $services.analytics.getMatomoRequestResult($parameters, $filters, 'MostViewedPages'))
   #if ($offset &lt; $analyticsResult.size())
-    #set ($toIndex =  $mathtool.min($mathtool.add($offset, $limit), $analyticsResult.size()))
-    #subSet( $analyticsResult, $offset, $toIndex, $resultList)
+    #set ($toIndex = $mathtool.min($mathtool.add($offset, $limit), $analyticsResult.size()))
+    #subSet($analyticsResult, $offset, $toIndex, $resultList)
   #end
+
   #set ($results = {
     "totalrows": $analyticsResult.size(),
     "returnedrows": $resultList.size(),
@@ -104,7 +106,6 @@
   #foreach ($currentEntry in $resultList)
     #set ($url = $currentEntry.get('url').asText())
     #set ($discard = $results.rows.add({
-      'test': $resultList,
       'title' : "#createLinkElement($currentEntry.get('label').asText(), $url)",
       'visits' :  $currentEntry.get('nb_visits').asText(),
       'hits' : $currentEntry.get('nb_hits').asText(),

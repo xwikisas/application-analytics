@@ -156,6 +156,8 @@ require(['jquery', 'chart'], ($) =&gt; {
     const dates = data.map(item =&gt; item.date);
     const field = data.map(item =&gt; item[currentModal.find(SELECTORS.field).val()] || 0);
     const ctx = currentModal.find(SELECTORS.chart);
+    // I can't modify and exiting chart because chart.js caches data about the chart and it can display the old data in
+    // some cases.
     if (chart) {
       chart.destroy();
     }
@@ -182,30 +184,28 @@ require(['jquery', 'chart'], ($) =&gt; {
   };
 
   /**
-   * Fetches the data from Matomo using the XWiki server as a proxy through the RowEvolutionJSON page. It then saves the data in session 
-   * storage for easy access. This allows the user to display a different field for the same time interval without making a new request and updates the chart.
+   * Fetches the data from Matomo using the XWiki server as a proxy through the RowEvolutionJSON page. It then saves
+   * the  data in session storage for easy access. This allows the user to display a different field for the same time
+   * interval without making a new request and updates the chart.
    *
-   * @param parameter will help identify a single row in the matomo tables
+   * @rowIdentifier will help identify a single row in the matomo tables
    */
-  const fetchChartData = (parameter) =&gt; {
-    currentOptions.data('parameter', parameter);
-    const period = currentOptions.data('period');
-    const date = currentOptions.data('date');
+  const fetchChartData = (rowIdentifier) =&gt; {
+    currentOptions.data('rowIdentifier', rowIdentifier);
     const requestPageUrl = currentOptions.data('requestPageUrl');
-    const macroName = currentOptions.data('macroName');
     const params = {
-      period: period,
-      date: `last${date}`,
-      macroName: macroName
+      period: currentOptions.data('period'),
+      date: `last${currentOptions.data('date')}`,
+      macroName: currentOptions.data('macroName'),
+      parameter: rowIdentifier
     };
     const queryString = $.param(params);
-    // I cannot use jQuery's $.params to add the parameter because it can represent multple things: url, segment pagename, etc. In some cases,
-    // the parameter is already encoded and using $.params would result in double encodingl.
-    $.getJSON(`${requestPageUrl}?${queryString}&amp;parameter=${parameter}`)
+    $.getJSON(`${requestPageUrl}?${queryString}`)
       .done((data) =&gt; {
-        window.sessionStorage.setItem('analyticsLastRequestCache', JSON.stringify(data));
+        window.sessionStorage.setItem('analyticsRowEvolutionChartData', JSON.stringify(data));
         renderChart(data);
-      }).fail((jqxhr, textStatus, error) =&gt; {
+      })
+      .fail((jqxhr, textStatus, error) =&gt; {
         const err = `${textStatus}, ${error}`;
         console.error(`Request Failed: ${err}`);
       });
@@ -213,7 +213,7 @@ require(['jquery', 'chart'], ($) =&gt; {
 
   /**
    * Would search for the element that matches the current period, display its time, and hide the other periods time.
-   * 
+   *
    * @param period period day/week/month/year
    */
   const displayPeriodDurations = (period) =&gt; {
@@ -238,7 +238,7 @@ require(['jquery', 'chart'], ($) =&gt; {
   });
 
   $(document).on('keyup change', `${SELECTORS.modal} ${SELECTORS.field}`, function () {
-    renderChart(JSON.parse(window.sessionStorage.getItem('analyticsLastRequestCache')));
+    renderChart(JSON.parse(window.sessionStorage.getItem('analyticsRowEvolutionChartData')));
   });
 
   $(document).on('hide.bs.modal', SELECTORS.modal, function (e) {
@@ -247,36 +247,35 @@ require(['jquery', 'chart'], ($) =&gt; {
   });
 
   /**
-   * Handles the click event on the RowEvolution buttons. It will save the current modal and current options div for easy of use and 
-   * fetchs the data for the default parameters. 
+   * Handles the click event on the RowEvolution buttons. It will save the current modal and current options div for
+   * easy of use and fetches the data for the default parameters.
    */
   $(document).on('click', SELECTORS.button, function () {
-    //This parameter is used to identify a specific row in the matomo tables.
-    const parameter = $(this).data('parameter');
+    // This rowIdentifier is used by Matomo to identify the row for which you want to retrieve the data.
+    const rowIdentifier = $(this).data('rowIdentifier');
     currentModal = $(this).closest('.xwiki-livedata').next(SELECTORS.modal);
     currentOptions = currentModal.find(SELECTORS.options);
     currentLoadingAnimation = currentModal.find(SELECTORS.loading);
     currentModal.modal('show');
-    fetchChartData(parameter);
+    fetchChartData(rowIdentifier);
   });
 
   /**
-   * Handles the update of the chart when the time is changed.
-   * 
+   * Update chart when the period length changes.
    */
   $(document).on('keyup change', `${SELECTORS.modal} ${SELECTORS.startsWithPeriodLength}`, function () {
     currentOptions.data('date', $(this).val());
-    fetchChartData(currentOptions.data('parameter'));
+    fetchChartData(currentOptions.data('rowIdentifier'));
   });
 
   /**
-   * Handles the update of the chart when the period is changed.
+   * Update chart when the period changes.
    */
-  $(document).on("keyup change", `${SELECTORS.modal} ${SELECTORS.period}`, function () {
+  $(document).on('keyup change', `${SELECTORS.modal} ${SELECTORS.period}`, function () {
     const period = $(this).val();
     displayPeriodDurations(period);
-    fetchChartData(currentOptions.data('parameter'));
-  })
+    fetchChartData(currentOptions.data('rowIdentifier'));
+  });
 });
 </code>
     </property>

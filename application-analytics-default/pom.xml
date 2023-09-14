@@ -34,6 +34,7 @@
     productivity by using real-time statistics.
   </description>
   <properties>
+    <xwiki.jacoco.instructionRatio>0.85</xwiki.jacoco.instructionRatio>
   </properties>
   <dependencies>
     <dependency>

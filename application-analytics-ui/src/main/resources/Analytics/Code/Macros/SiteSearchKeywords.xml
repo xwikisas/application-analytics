@@ -250,7 +250,7 @@
 #set ($parameters = $escapetool.url({
   'date': $date,
   'period': $period,
-  'limitEntries' : '-1',
+  'limitEntries': '-1',
   'translationPrefix': 'analytics.siteSearchKeywords.header.',
   'resultPage': 'Analytics.Code.Macros.SiteSearchKeywordsJSON'
 }))
@@ -262,7 +262,7 @@
       {'id': 'searches', 'displayer': 'html'},
       {'id': 'nbOfResultPages', 'displayer': 'html'},
       {'id': 'exitRate', 'displayer': 'html'},
-      {'id': 'actions',"filterable": false, "sortable": false, 'displayer': 'html'}
+      {'id': 'actions','filterable': false, 'sortable': false, 'displayer': 'html'}
     ],
     'entryDescriptor': {
        'idProperty': 'keyword'
@@ -270,7 +270,7 @@
   }
 })
 
-#getAnalyticsMacroId('mostViwedMacro', $macroId)
+#getAnalyticsMacroId('siteSearchKeywords', $macroId)
 
 {{liveData
   id="$macroId"
@@ -280,8 +280,8 @@
 }}$jsontool.serialize($liveDataConfig){{/liveData}}
 
 #set ($parameters = { 
-'searches':'nb_visits'
-,'searchResultPages':'nb_pages_per_search'
+'searches': 'nb_visits'
+,'searchResultPages': 'nb_pages_per_search'
 })
 #modalRowEvolution( $parameters, 'SiteSearchKeyword' $macroId)
 {{/velocity}}</code>

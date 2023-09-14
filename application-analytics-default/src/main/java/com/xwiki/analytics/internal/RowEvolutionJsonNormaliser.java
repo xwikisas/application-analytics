@@ -19,6 +19,7 @@
  */
 package com.xwiki.analytics.internal;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -30,7 +31,6 @@ import org.xwiki.stability.Unstable;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
@@ -51,43 +51,53 @@ public class RowEvolutionJsonNormaliser extends AbstractJsonNormaliser
      */
     public static final String HINT = "RowEvolution";
 
-
     private static final String DATE = "date";
 
+    @Override
+    public String getIdentifier()
+    {
+        return RowEvolutionJsonNormaliser.HINT;
+    }
+
     /**
-     * Transforming the json object returned by Matomo into an array of jsons to make it easier to use in javascript.
+     * Transform the Matomo JSON response into an array of JSONs to simplify usage. Add a date to each entry to be able
+     * to identify from what period the statistics are.
      *
-     * @param jsonNode
+     * @param jsonNode JSON response from Matomo
      * @param filters holds the criteria for filtering a dataset
-     * @return filtered array of jsons
+     * @return filtered array of processed JSONs
      */
+    @Override
     protected ArrayNode processObjectNode(JsonNode jsonNode, Map<String, String> filters) throws JsonProcessingException
     {
         ArrayNode arrayNode = OBJECT_MAPPER.createArrayNode();
         Iterator<String> fieldNames = jsonNode.fieldNames();
-
+        Map<String, String> extraValues = new HashMap<>();
         while (fieldNames.hasNext()) {
             String date = fieldNames.next();
+            extraValues.put(DATE, date);
             JsonNode childNode = jsonNode.get(date);
             boolean nodeFound = true;
             for (JsonNode node : childNode) {
                 if (matchesAllFilters(node, filters)) {
-                    arrayNode.add(this.processNode(node, date));
+                    arrayNode.add(this.processNode(node, extraValues));
                     nodeFound = false;
                     break;
                 }
             }
+            // When the node is empty or the entry wasn't found then we create a new node with the current date and
+            // add it to the array.
             if (childNode.get(0) == null || nodeFound) {
-                arrayNode.add(OBJECT_MAPPER.readTree(String.format("{\"%s\"  : \"%s\"}", DATE, date)));
-                processNode(OBJECT_MAPPER.createObjectNode(), date);
+                arrayNode.add(processNode(OBJECT_MAPPER.createObjectNode(), extraValues));
             }
         }
         return arrayNode;
     }
 
-    protected JsonNode processNode(JsonNode currentNode, String date)
+    @Override
+    protected JsonNode processNode(JsonNode currentNode, Map<String, String> extraValues)
     {
-        ((ObjectNode) currentNode).put(DATE, date);
+        ((ObjectNode) currentNode).put(DATE, extraValues.get(DATE));
         return currentNode;
     }
 
@@ -100,6 +110,7 @@ public class RowEvolutionJsonNormaliser extends AbstractJsonNormaliser
         for (Map.Entry<String, String> entry : filters.entrySet()) {
             String filterField = entry.getKey();
             String filterValue = entry.getValue();
+            // An exact match is needed instead of the partial one, because row evolution is done on a specific entry.
             if (!(objNode.has(filterField) && objNode.get(filterField).asText().equals(filterValue))) {
                 return false;
             }
