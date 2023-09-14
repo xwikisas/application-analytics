@@ -43,10 +43,10 @@
   'module' : 'API',
   'format' : 'json'
 })
-#if ($request.macroName=='MostViewedPages')
+#if ($request.macroName == 'MostViewedPages')
   #set ($discard = $parameters.put('pageUrl', $request.parameter))
   #set ($discard = $parameters.put('method', 'Actions.getPageUrl'))
-#elseif ($request.macroName=='SiteSearchKeyword')
+#elseif ($request.macroName == 'SiteSearchKeyword')
   #set ($discard = $parameters.put('segment', $request.parameter))
   #set ($discard = $parameters.put('method', 'Actions.getSiteSearchKeywords'))
 #end
