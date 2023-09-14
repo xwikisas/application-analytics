@@ -20,16 +20,29 @@
 package xwiki.analytics.test.ui;
 
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.By;
+import org.xwiki.application.test.po.ApplicationIndexHomePage;
 import org.xwiki.test.docker.junit5.UITest;
+import org.xwiki.test.docker.junit5.servletengine.ServletEngine;
+import org.xwiki.test.ui.TestUtils;
+import org.xwiki.test.ui.XWikiWebDriver;
+import org.xwiki.administration.test.po.AdministrationPage;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import org.xwiki.test.ui.po.ViewPage;
 
 @UITest
 public class AnalyticsIT
 {
     @Test
-    void appEntryRedirectsToHomePage()
+    void appEntryRedirectsToHomePage(XWikiWebDriver driver, TestUtils setup)
     {
+
+        ApplicationIndexHomePage applicationIndexHomePage = ApplicationIndexHomePage.gotoPage();
+        System.out.println(applicationIndexHomePage.getPageURL());
         assertFalse(true);
+
+
     }
 }
