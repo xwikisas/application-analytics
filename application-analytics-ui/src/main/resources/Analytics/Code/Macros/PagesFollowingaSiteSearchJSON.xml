@@ -20,24 +20,23 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc version="1.4" reference="Analytics.Code.Macros.MostViewedPagesJSON" locale="">
+<xwikidoc version="1.4" reference="Analytics.Code.Macros.PagesFollowingaSiteSearchJSON" locale="">
   <web>Analytics.Code.Macros</web>
-  <name>MostViewedPagesJSON</name>
+  <name>PagesFollowingaSiteSearchJSON</name>
   <language/>
   <defaultLanguage/>
   <translation>0</translation>
   <creator>xwiki:XWiki.Admin</creator>
-  <parent>WebHome</parent>
+  <parent>xwiki:Analytics.Code.Macros.PagesFollowingaSiteSearch</parent>
   <author>xwiki:XWiki.Admin</author>
   <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
   <version>1.1</version>
-  <title>MostViewedPagesJSON</title>
+  <title>PagesFollowingaSiteSearchJSON</title>
   <comment/>
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>true</hidden>
   <content>{{include reference='Analytics.Code.Macros.VelocityMacros'/}}
-
 {{velocity}}
 #if ($xcontext.action == 'get')
   #set ($offset = $numbertool.toNumber($request.offset).intValue())
@@ -50,29 +49,25 @@
   #if (!$limit)
     #set ($limit = 15)
   #end
-
-  ## Mapping between the livedata columns and the Matomo fields.
-  #set ($matomoKeysMapping = {
-    'pageTitle' : 'label',
-    'visits': 'nb_visits',
-    'hits' : 'nb_hits',
-    'timeSpent' : 'sum_time_spent',
-    'entryNbActions' : 'entry_nb_actions',
-    'bounceRate' : 'bounce_rate',
-    'exitRate' : 'exit_rate'
+  ##
+  #set ($keys = {
+  'destinationPage' : 'label',
+  'clicked' : 'nb_hits_following_search',
+  'pageViews' : 'nb_hits',
+  'loadTime' : 'avg_page_load_time'
   })
-  #set ($sort = 'nb_hits')
-  #set ($order = 'desc')
+  #set ($sort = 'destinationPage')
+  #set ($order = 'asc')
   #if ($request.sort)
-    #set ($sort = $matomoKeysMapping.get($request.sort))
-    #set ($order = $request.dir)
+    #set($sort = $keys.get($request.sort))
+    #set($order = $request.dir)
   #end
 
-  #set ($filters = {})
-  #foreach ($key in $matomoKeysMapping.keySet())
+  #set ($filters={})
+  #foreach ($key in $keys.keySet())
     #set ($value = $request.get($key))
     #if ($value &amp;&amp; $value != '')
-      #set ($discard = $filters.put($matomoKeysMapping.get($key), $request.get($key)))
+      $filters.put($keys.get($key), $request.get($key))
     #end
   #end
 
@@ -80,7 +75,7 @@
     'period' : $request.period,
     'date' : $request.date,
     'module' : 'API',
-    'method' : 'Actions.getPageUrls',
+    'method' : 'Actions.getPageUrlsFollowingSiteSearch',
     'format' : 'json',
     'filter_limit' : $request.limitEntries,
     'filter_sort_column' : $sort,
@@ -92,10 +87,9 @@
   ## Get the JSON response from Matomo.
   #set ($analyticsResult = $services.analytics.getMatomoRequestResult($parameters, $filters, 'MostViewedPages'))
   #if ($offset &lt; $analyticsResult.size())
-    #set ($toIndex = $mathtool.min($mathtool.add($offset, $limit), $analyticsResult.size()))
-    #subSet($analyticsResult, $offset, $toIndex, $resultList)
+    #set ($toIndex =  $mathtool.min($mathtool.add($offset, $limit), $analyticsResult.size()))
+    #subSet( $analyticsResult, $offset, $toIndex, $resultList)
   #end
-
   #set ($results = {
     "totalrows": $analyticsResult.size(),
     "returnedrows": $resultList.size(),
@@ -104,20 +98,16 @@
     "rows": []
   })
   #foreach ($currentEntry in $resultList)
-    #set ($url = $currentEntry.get('url').asText())
+    #set ($parameter = $currentEntry.get('url').asText())
     #set ($discard = $results.rows.add({
-      'pageTitle' : "#createLinkElement($currentEntry.get('label').asText(), $url)",
-      'visits' :  $currentEntry.get('nb_visits').asText(),
-      'hits' : $currentEntry.get('nb_hits').asText(),
-      'timeSpent' : $currentEntry.get('sum_time_spent').asText(),
-      'entryNbActions' : $currentEntry.get('entry_nb_actions').asText(),
-      'bounceRate' : $currentEntry.get('bounce_rate').asText(),
-      'exitRate' : $currentEntry.get('exit_rate').asText(),
-      'actions' : "#analyticsActions($url)"
+      'destinationPage' : "#createLinkElement($currentEntry.get('label').asText(), $url)",
+      'clicked' : $currentEntry.get('nb_hits_following_search').asText(),
+      'pageViews' : $currentEntry.get('nb_hits').asText(),
+      'loadTime' : $mathtool.roundTo(2, $currentEntry.get('avg_page_load_time').asDouble()),
+      'actions' : "#analyticsActions($parameter)"
     }))
   #end
   #jsonResponse($results)
 #end
-{{/velocity}}
-</content>
+{{/velocity}}</content>
 </xwikidoc>

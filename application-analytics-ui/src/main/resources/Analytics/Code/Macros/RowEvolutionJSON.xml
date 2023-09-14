@@ -37,17 +37,23 @@
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>true</hidden>
   <content>{{velocity}}
-#set ($parameters ={
+#set ($parameters = {
   'period' : $request.period,
   'date' : $request.date,
   'module' : 'API',
-  'method' : 'Actions.getPageUrl',
   'format' : 'json'
 })
+#set ($filters = {})
 #if ($request.macroName == 'MostViewedPages')
-  #set ($discard = $parameters.put('pageUrl', $request.parameter))
+  $parameters.put('pageUrl', $request.parameter)
+  $parameters.put('method', 'Actions.getPageUrl')
+#elseif ($request.macroName == 'PagesFollowingaSiteSearch')
+  $parameters.put('method', 'Actions.getPageUrlsFollowingSiteSearch')
+  $parameters.put('expanded', '1')
+  $parameters.put('flat', '1')
+  $filters.put('url',$request.parameter)
 #end
-#set ($analyticsResult = $services.analytics.getMatomoRequestResult($parameters, {}, 'RowEvolution'))
+#set ($analyticsResult = $services.analytics.getMatomoRequestResult($parameters, $filters, 'RowEvolution'))
 #jsonResponse($analyticsResult)
 {{/velocity}}
 </content>
