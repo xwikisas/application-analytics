@@ -50,7 +50,6 @@
     #set ($endDateObj = $datetool.toDate('yyyy/MM/dd HH:mm', $endDate))
     #set ($endDate = $datetool.format('yyyy-MM-dd', $endDateObj))
   #end
-
   ## Check if startDate or endDate are not defined and replace them with some default values, in order to match the end of
   ## the time interval. For startDate we use '2007-01-01' since it's the oldest one accepted by Matomo.
   #if (!$startDate || $startDate == '')

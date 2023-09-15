@@ -37,11 +37,7 @@
   <syntaxId>xwiki/2.0</syntaxId>
   <hidden>false</hidden>
   <content>{{dashboard/}}
-
-
-
-
-</content>
+  </content>
   <object>
     <name>Analytics.WebHome</name>
     <number>0</number>

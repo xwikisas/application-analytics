@@ -285,7 +285,7 @@
     </property>
     <property>
       <code>{{velocity}}
-#set ($discard =  $xwiki.jsx.use('Analytics.Code.Macros.Filtering'))
+#set ($discard = $xwiki.jsx.use('Analytics.Code.Macros.Filtering'))
 #set ($placeholderStart = '2007-01-01')
 #set ($placeholderEnd = $datetool.get('yyyy-MM-dd'))
 #if($request.analyticsStartDate &amp;&amp; $request.analyticsStartDate != '')
@@ -296,11 +296,9 @@
 #end
 {{html clean="false"}}
 &lt;form id="analyticsFilter" class="form-horizontal"&gt;
-
   &lt;div class="form-group"&gt;
     &lt;!-- Start Date Label --&gt;
     &lt;label for="analyticsStartDate" class="col-sm-2 control-label"&gt;$services.localization.render('rendering.macro.filtering.startDate')&lt;/label&gt;
-    
     &lt;!-- Start Date Input --&gt;
     &lt;div class="col-sm-3"&gt;
       #set ($dateTimePickerParams = {
@@ -311,10 +309,8 @@
       })
       #dateTimePicker($dateTimePickerParams)
     &lt;/div&gt;
-    
     &lt;!-- End Date Label --&gt;
     &lt;label for="analyticsEndDate" class="col-sm-2 control-label"&gt;$services.localization.render('rendering.macro.filtering.endDate')&lt;/label&gt;
-    
     &lt;!-- End Date Input --&gt;
     &lt;div class="col-sm-3"&gt;
       #set ($dateTimePickerParams = {
@@ -331,7 +327,6 @@
     &lt;/div&gt;
   &lt;/div&gt;
 &lt;/form&gt;
-
 {{/html}}
 {{/velocity}}</code>
     </property>
