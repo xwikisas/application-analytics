@@ -42,6 +42,7 @@
   </properties>
        <modules>
         <module>application-analytics-test-docker</module>
+        <module>application-analytics-test-pageobjects</module>
       </modules>
     <profiles>
     <profile>
