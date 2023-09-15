@@ -61,12 +61,26 @@
         <picker>1</picker>
         <prettyName>Authentication Token </prettyName>
         <size>30</size>
-        <storageType>Hash</storageType>
+        <storageType>Clear</storageType>
         <unmodifiable>0</unmodifiable>
         <validationMessage/>
         <validationRegExp/>
         <classType>com.xpn.xwiki.objects.classes.PasswordClass</classType>
       </authToken>
+      <requestAddress>
+        <customDisplay/>
+        <disabled>0</disabled>
+        <hint/>
+        <name>requestAddress</name>
+        <number>4</number>
+        <picker>1</picker>
+        <prettyName>requestAddress</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </requestAddress>
       <siteId>
         <customDisplay/>
         <disabled>0</disabled>
@@ -90,7 +104,7 @@
         <name>trackingCode</name>
         <number>1</number>
         <picker>1</picker>
-        <prettyName>Matomo Tracking Code</prettyName>
+        <prettyName>Tracking Code</prettyName>
         <rows>20</rows>
         <size>40</size>
         <unmodifiable>0</unmodifiable>
@@ -114,8 +128,7 @@
       </requestAddress>
     </class>
     <property>
-      <authToken>
-      </authToken>
+      <authToken/>
     </property>
     <property>
       <siteId/>

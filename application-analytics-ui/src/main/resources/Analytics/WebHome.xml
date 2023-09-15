@@ -36,8 +36,7 @@
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.0</syntaxId>
   <hidden>false</hidden>
-  <content>{{dashboard/}}
-  </content>
+  <content>{{dashboard/}}</content>
   <object>
     <name>Analytics.WebHome</name>
     <number>0</number>
@@ -147,9 +146,9 @@
   </object>
   <object>
     <name>Analytics.WebHome</name>
-    <number>3</number>
+    <number>2</number>
     <className>XWiki.GadgetClass</className>
-    <guid>24120bfa-1fd7-4d4a-b1ab-639acf896b9e</guid>
+    <guid>b4b6d4d7-41ab-4f40-aa62-be56c8b2e3fd</guid>
     <class>
       <name>XWiki.GadgetClass</name>
       <customClass/>
@@ -199,13 +198,13 @@
       </title>
     </class>
     <property>
-      <content>{{filter/}}</content>
+      <content>{{analyticsFilter/}}</content>
     </property>
     <property>
       <position>1, 1</position>
     </property>
     <property>
-      <title>$services.localization.render('rendering.macro.filter.name')</title>
+      <title>$services.localization.render('rendering.macro.analyticsFilter.name')</title>
     </property>
   </object>
   <object>

@@ -241,8 +241,12 @@
     </property>
     <property>
       <code>{{include reference='Analytics.Code.Macros.VelocityMacros'/}}
+{{include reference="Licenses.Code.VelocityMacros"/}}
 
 {{velocity}}
+#if ($services.licensing.licensor.hasLicensureForEntity(
+    $services.model.createDocumentReference('', ['Analytics', 'Code'], 'ConfigurationClass')))
+
 #getDate()
 #set ($discard =$xwiki.jsx.use('Analytics.Code.Macros.RowEvolution'))
 #set ($period = 'range')
@@ -286,6 +290,9 @@
   "avgTime": 'avg_time_on_page'
 })
 #modalRowEvolution($rowEvolutionParams, 'MostViewedPages', $macroId)
+#else
+  {{error}}#getMissingLicenseMessage('analytics.extension.name'){{/error}}
+#end
 {{/velocity}}</code>
     </property>
     <property>

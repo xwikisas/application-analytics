@@ -20,9 +20,9 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc version="1.4" reference="Analytics.Code.Macros.Filtering" locale="">
+<xwikidoc version="1.4" reference="Analytics.Code.Macros.Filter" locale="">
   <web>Analytics.Code.Macros</web>
-  <name>Filtering</name>
+  <name>Filter</name>
   <language/>
   <defaultLanguage/>
   <translation>0</translation>
@@ -31,14 +31,14 @@
   <author>xwiki:XWiki.Admin</author>
   <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
   <version>1.1</version>
-  <title>Filtering</title>
+  <title>Filter</title>
   <comment/>
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>true</hidden>
   <content/>
   <class>
-    <name>Analytics.Code.Macros.Filtering</name>
+    <name>Analytics.Code.Macros.Filter</name>
     <customClass/>
     <customMapping/>
     <defaultViewSheet/>
@@ -80,7 +80,7 @@
     </startDate>
   </class>
   <object>
-    <name>Analytics.Code.Macros.Filtering</name>
+    <name>Analytics.Code.Macros.Filter</name>
     <number>0</number>
     <className>XWiki.WikiMacroClass</className>
     <guid>43ef580e-2257-4987-9b85-1517d0023b60</guid>
@@ -285,7 +285,8 @@
     </property>
     <property>
       <code>{{velocity}}
-#set ($discard = $xwiki.jsx.use('Analytics.Code.Macros.Filtering'))
+#if ($services.licensing.licensor.hasLicensureForEntity(
+    $services.model.createDocumentReference('', ['Analytics', 'Code'], 'ConfigurationClass')))
 #set ($placeholderStart = '2007-01-01')
 #set ($placeholderEnd = $datetool.get('yyyy-MM-dd'))
 #if($request.analyticsStartDate &amp;&amp; $request.analyticsStartDate != '')
@@ -298,7 +299,7 @@
 &lt;form id="analyticsFilter" class="form-horizontal"&gt;
   &lt;div class="form-group"&gt;
     &lt;!-- Start Date Label --&gt;
-    &lt;label for="analyticsStartDate" class="col-sm-2 control-label"&gt;$services.localization.render('rendering.macro.filtering.startDate')&lt;/label&gt;
+    &lt;label for="analyticsStartDate" class="col-sm-2 control-label"&gt;$services.localization.render('rendering.macro.analyticsFilter.startDate')&lt;/label&gt;
     &lt;!-- Start Date Input --&gt;
     &lt;div class="col-sm-3"&gt;
       #set ($dateTimePickerParams = {
@@ -310,7 +311,7 @@
       #dateTimePicker($dateTimePickerParams)
     &lt;/div&gt;
     &lt;!-- End Date Label --&gt;
-    &lt;label for="analyticsEndDate" class="col-sm-2 control-label"&gt;$services.localization.render('rendering.macro.filtering.endDate')&lt;/label&gt;
+    &lt;label for="analyticsEndDate" class="col-sm-2 control-label"&gt;$services.localization.render('rendering.macro.analyticsFilter.endDate')&lt;/label&gt;
     &lt;!-- End Date Input --&gt;
     &lt;div class="col-sm-3"&gt;
       #set ($dateTimePickerParams = {
@@ -323,11 +324,14 @@
     &lt;/div&gt;
     &lt;!-- Submit Button --&gt;
     &lt;div class="col-sm-2"&gt;
-      &lt;span class="buttonwrapper"&gt;&lt;input type="submit" value="$services.localization.render('rendering.macro.filtering.apply')" class="btn btn-default button"/&gt;&lt;/span&gt;
+      &lt;span class="buttonwrapper"&gt;&lt;input type="submit" value="$services.localization.render('rendering.macro.analyticsFilter.apply')" class="btn btn-default button"/&gt;&lt;/span&gt;
     &lt;/div&gt;
   &lt;/div&gt;
 &lt;/form&gt;
 {{/html}}
+#else
+  {{error}}#getMissingLicenseMessage('analytics.extension.name'){{/error}}
+#end
 {{/velocity}}</code>
     </property>
     <property>
@@ -346,10 +350,10 @@
       <description/>
     </property>
     <property>
-      <id>filter</id>
+      <id>analyticsFilter</id>
     </property>
     <property>
-      <name>Filter</name>
+      <name>Analytics Filter</name>
     </property>
     <property>
       <priority/>

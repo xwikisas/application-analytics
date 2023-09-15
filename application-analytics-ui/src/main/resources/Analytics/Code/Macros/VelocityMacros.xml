@@ -38,7 +38,7 @@
   <hidden>true</hidden>
   <content>{{velocity output='false'}}
 #macro (getDate)
-  ## A dashboard will have a date inside and that date will take precedence over the date set by the macro.
+  ## A dashboard will have the ability to add parameters to the url to filter all the macros in the page.
   #if ($request.analyticsStartDate || $request.analyticsEndDate)
     #set ($startDate = $request.analyticsStartDate )
     #set ($endDate = $request.analyticsEndDate)

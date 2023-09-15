@@ -100,11 +100,11 @@ analytics.livedata.action.rowEvolution.title=Row Evolution
 ## Others
 analytics.extension.name=Analytics Application (Pro)
 analytics.extension.title=Analytics
-rendering.macro.filtering.startDate=Start Date
-rendering.macro.filtering.endDate=End Date
-rendering.macro.filtering.apply=Apply
-rendering.macro.filter.name=Filter
-</content>
+rendering.macro.analyticsFilter.startDate=Start date
+rendering.macro.analyticsFilter.endDate=End date
+rendering.macro.analyticsFilter.apply=Apply
+rendering.macro.analyticsFilter.name=Analytics Filter
+rendering.macro.analyticsFilter.description=Updates all the analytics macros on the same page as this macro to the period set by the user.</content>
   <object>
     <name>Analytics.Code.AnalyticsTranslations</name>
     <number>0</number>
