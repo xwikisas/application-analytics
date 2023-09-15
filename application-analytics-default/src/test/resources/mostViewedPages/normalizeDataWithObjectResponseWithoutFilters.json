@@ -1,5 +1,5 @@
 {
-  "ObjectJSON": {
+  "JSON": {
     "2023-04": [
     ],
     "2023-05": [
@@ -19,7 +19,7 @@
       }
     ]
   },
-  "ResponseObjectJSON": [
+  "Response": [
     {
       "label": "/xwiki/bin/view/Analytics/Code/MostViwedPages",
       "url": "http://localhost:8080/xwiki/bin/view/Analytics/Code/MostViwedPages"

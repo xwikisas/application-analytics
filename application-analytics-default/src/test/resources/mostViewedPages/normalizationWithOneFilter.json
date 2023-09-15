@@ -1,5 +1,5 @@
 {
-  "ArrayJSONSFilter": [
+  "JSON": [
     {
       "label": "/xwiki/bin/view/Analytics/Code/MostViewedPages",
       "url": "http://localhost:8080/xwiki/bin/view/Analytics/Code/MostViwedPages"
@@ -9,7 +9,7 @@
       "url": "http://localhost:8081/xwiki/bin/view/Main/"
     }
   ],
-  "ResponseArrayJSONFilter": [
+  "Response": [
     {
       "label": "/xwiki/bin/view/Analytics/Code/MostViewedPages",
       "url": "http://localhost:8080/xwiki/bin/view/Analytics/Code/MostViwedPages"

@@ -1,5 +1,5 @@
 {
-  "JsonFilters": [
+  "JSON": [
     {
       "label": "/xwiki/bin/view/Main/",
       "nb_hits": 142,
@@ -66,7 +66,7 @@
       "url": "http://localhost:8080/xwiki/bin/view/Analytics/Code/Macros/MostViewedPageJSON"
     }
   ],
-  "ResponseWithFilters": [
+  "Response": [
     {
       "label": "/xwiki/bin/edit/Analytics/Code/Macros/MostViewedPage?editor=wiki",
       "nb_hits": 27,
