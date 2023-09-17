@@ -101,6 +101,12 @@
       <type>xar</type>
       <scope>runtime</scope>
     </dependency>
+    <dependency>
+      <groupId>com.xwiki.analytics</groupId>
+      <artifactId>application-analytics-test-pageobjects</artifactId>
+      <version>1.0-SNAPSHOT</version>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
   <build>
     <testSourceDirectory>src/test/it</testSourceDirectory>
