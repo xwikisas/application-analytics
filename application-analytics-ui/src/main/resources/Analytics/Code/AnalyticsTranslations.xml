@@ -47,19 +47,33 @@ Analytics.Code.AnalyticsDashboardClass_startDate=Start date
 Analytics.Code.AnalyticsDashboardClass_startDate.hint=Start time of the date interval used on all statistics of this dashboard.
 
 ## Most Viewed Pages Macro
+analytics.mostViewedPages.header.actions=Actions
 analytics.mostViewedPages.header.bounceRate=Bounce rate
 analytics.mostViewedPages.header.date=Date
-analytics.mostViewedPages.header.entryNbVisits=No. of views that started on this page
 analytics.mostViewedPages.header.entryNbActions= No. of actions
 analytics.mostViewedPages.header.emptyvalue=-
 analytics.mostViewedPages.header.exitRate=Exit rate
 analytics.mostViewedPages.header.hits=Page views
-analytics.mostViewedPages.header.timeSpent=Time spent
+analytics.mostViewedPages.header.timeSpent=Time spent(s)
 analytics.mostViewedPages.header.title=Page title
 analytics.mostViewedPages.header.visits=Unique visitors
 analytics.mostViewedPages.header.year=Year
 analytics.mostViewedPages.parameter.label.startDate=Start time of the date interval used for this macro
 analytics.mostViewedPages.parameter.label.endDate=End time of the date interval used for this macro
+
+## Row Evolution
+analytics.rowEvolution.modal.label=Row Evolution
+analytics.rowEvolution.modal.close=Close
+analytics.rowEvolution.modal.period=Period
+analytics.rowEvolution.modal.field=Field
+analytics.rowEvolution.modal.periodLength=Period length
+analytics.rowEvolution.modal.day.label=Day
+analytics.rowEvolution.modal.week.label=Week
+analytics.rowEvolution.modal.month.label=Month
+analytics.rowEvolution.modal.year.label=Year
+analytics.rowEvolution.modal.field.pageViews=Page views
+analytics.rowEvolution.modal.field.uniqueViews=Unique views
+analytics.rowEvolution.modal.field.avgTime=Avg. Time spent
 
 ## Admin section
 admin.analytics.application=Analytics
@@ -76,12 +90,15 @@ analytics.config.errorServices=Something went wrong! Check the configs again.
 analytics.config.successTracker=Your tracker code is working!
 analytics.config.errorTracker=Your tracker code doesn't work! Please check both the siteId and the address.
 
-## Live table keys
+## Livetable keys
 analytics.livetable.emptyvalue=Not Defined
 analytics.livetable.endDate=End Date
 analytics.livetable.doc.name=Page Name
 analytics.livetable.doc.title=Page Title
 analytics.livetable.startDate=Start Date
+
+## Livedata keys
+analytics.livedata.action.rowEvolution.title=Row Evolution
 
 ## Others
 analytics.extension.name=Analytics Application (Pro)

@@ -1,0 +1,292 @@
+<?xml version="1.1" encoding="UTF-8"?>
+
+<!--
+ * See the NOTICE file distributed with this work for additional
+ * information regarding copyright ownership.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+-->
+
+<xwikidoc version="1.4" reference="Analytics.Code.Macros.RowEvolution" locale="">
+  <web>Analytics.Code.Macros</web>
+  <name>RowEvolution</name>
+  <language/>
+  <defaultLanguage/>
+  <translation>0</translation>
+  <creator>xwiki:XWiki.Admin</creator>
+  <parent>WebHome</parent>
+  <author>xwiki:XWiki.Admin</author>
+  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+  <version>1.1</version>
+  <title/>
+  <comment/>
+  <minorEdit>false</minorEdit>
+  <syntaxId>xwiki/2.1</syntaxId>
+  <hidden>true</hidden>
+  <content/>
+  <object>
+    <name>Analytics.Code.Macros.RowEvolution</name>
+    <number>0</number>
+    <className>XWiki.JavaScriptExtension</className>
+    <guid>9fc4c61e-9ad5-4ca3-9cc7-41d424a82a3a</guid>
+    <class>
+      <name>XWiki.JavaScriptExtension</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <cache>
+        <cache>0</cache>
+        <defaultValue>long</defaultValue>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <freeText>forbidden</freeText>
+        <largeStorage>0</largeStorage>
+        <multiSelect>0</multiSelect>
+        <name>cache</name>
+        <number>5</number>
+        <prettyName>Caching policy</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators>|, </separators>
+        <size>1</size>
+        <unmodifiable>0</unmodifiable>
+        <values>long|short|default|forbid</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </cache>
+      <code>
+        <contenttype>PureText</contenttype>
+        <disabled>0</disabled>
+        <editor>PureText</editor>
+        <name>code</name>
+        <number>2</number>
+        <prettyName>Code</prettyName>
+        <rows>20</rows>
+        <size>50</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </code>
+      <name>
+        <disabled>0</disabled>
+        <name>name</name>
+        <number>1</number>
+        <prettyName>Name</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </name>
+      <parse>
+        <disabled>0</disabled>
+        <displayFormType>select</displayFormType>
+        <displayType>yesno</displayType>
+        <name>parse</name>
+        <number>4</number>
+        <prettyName>Parse content</prettyName>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+      </parse>
+      <use>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <freeText>forbidden</freeText>
+        <largeStorage>0</largeStorage>
+        <multiSelect>0</multiSelect>
+        <name>use</name>
+        <number>3</number>
+        <prettyName>Use this extension</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators>|, </separators>
+        <size>1</size>
+        <unmodifiable>0</unmodifiable>
+        <values>currentPage|onDemand|always</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </use>
+    </class>
+    <property>
+      <cache>long</cache>
+    </property>
+    <property>
+      <code>require.config({
+  paths: {
+    chart: "$services.webjars.url('org.webjars:chartjs', 'Chart.bundle.min.js')"
+  }
+});
+
+require(['jquery', 'chart'], ($) =&gt; {
+  const SELECTORS = {
+    modal: '.analyticsRowEvolutionModal',
+    field: '.rowEvolutionField',
+    periodLength: '.rowEvolutionPeriodLength',
+    startsWithPeriodLength: '[class^="rowEvolutionPeriodLength"]',
+    options: '.rowEvolutionOptions',
+    period: '.rowEvolutionPeriod',
+    loading: '.loading',
+    chart: '.chartDisplay',
+    button:'.analyticsActions .analyticsRowEvolution'
+  };
+  let chart;
+  let currentModal;
+  let currentOptions;
+  let currentLoadingAnimation;
+
+  /**
+   * Creates the chart for displaying the data.
+   *
+   * @param data json with the dataset for the current page.
+   */
+  const renderChart = (data) =&gt; {
+    const dates = data.map(item =&gt; item.date);
+    const field = data.map(item =&gt; item[currentModal.find(SELECTORS.field).val()] || 0);
+    const ctx = currentModal.find(SELECTORS.chart);
+    // I can't modify and exiting chart because chart.js caches data about the chart and it can display the old data in
+    // some cases.
+    if (chart) {
+      chart.destroy();
+    }
+    chart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: dates,
+        datasets: [{
+          label: '',
+          data: field,
+          borderColor: currentOptions.data('color'),
+          fill: false
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+    currentLoadingAnimation.removeClass('loading');
+  };
+
+  /**
+   * Fetches the data from Matomo using the XWiki server as a proxy through the RowEvolutionJSON page. It then saves
+   * the  data in session storage for easy access. This allows the user to display a different field for the same time
+   * interval without making a new request and updates the chart.
+   *
+   * @rowIdentifier will help identify a single row in the matomo tables
+   */
+  const fetchChartData = (rowIdentifier) =&gt; {
+    currentOptions.data('rowIdentifier', rowIdentifier);
+    const requestPageUrl = currentOptions.data('requestPageUrl');
+    const params = {
+      period: currentOptions.data('period'),
+      date: `last${currentOptions.data('date')}`,
+      macroName: currentOptions.data('macroName'),
+      parameter: rowIdentifier
+    };
+    const queryString = $.param(params);
+    $.getJSON(`${requestPageUrl}?${queryString}`)
+      .done((data) =&gt; {
+        window.sessionStorage.setItem('analyticsRowEvolutionChartData', JSON.stringify(data));
+        renderChart(data);
+      })
+      .fail((jqxhr, textStatus, error) =&gt; {
+        const err = `${textStatus}, ${error}`;
+        console.error(`Request Failed: ${err}`);
+      });
+  };
+
+  /**
+   * Would search for the element that matches the current period, display its time, and hide the other periods time.
+   *
+   * @param period period day/week/month/year
+   */
+  const displayPeriodDurations = (period) =&gt; {
+    currentModal.find(SELECTORS.startsWithPeriodLength).not(`${SELECTORS.periodLength}${period}`).hide();
+    currentModal.find(`${SELECTORS.periodLength}${period}`).show();
+    currentOptions.data('period', period.toLowerCase());
+    currentOptions.data('date', $(`${SELECTORS.periodLength}${period}`).val());
+  };
+
+  /**
+   * Resets all the selectors for the current modal when opened.
+   */
+  $(document).on('show.bs.modal', SELECTORS.modal, function (e) {
+    let modal = $(e.target);
+    modal.find(SELECTORS.startsWithPeriodLength).each(function () { $(this).prop('selectedIndex', 0) })
+    modal.find(SELECTORS.options).data('date', 30);
+    modal.find(SELECTORS.options).data('period', 'day');
+    modal.find(SELECTORS.field).prop('selectedIndex', 0);
+    modal.find(SELECTORS.period).prop('selectedIndex', 0);
+    modal.find(SELECTORS.startsWithPeriodLength).not(`${SELECTORS.periodLength}Day`).hide();
+    modal.find(`${SELECTORS.periodLength}Day`).show();
+  });
+
+  $(document).on('keyup change', `${SELECTORS.modal} ${SELECTORS.field}`, function () {
+    renderChart(JSON.parse(window.sessionStorage.getItem('analyticsRowEvolutionChartData')));
+  });
+
+  $(document).on('hide.bs.modal', SELECTORS.modal, function (e) {
+    chart.destroy();
+    currentLoadingAnimation.addClass('loading');
+  });
+
+  /**
+   * Handles the click event on the RowEvolution buttons. It will save the current modal and current options div for
+   * easy of use and fetches the data for the default parameters.
+   */
+  $(document).on('click', SELECTORS.button, function () {
+    // This rowIdentifier is used by Matomo to identify the row for which you want to retrieve the data.
+    const rowIdentifier = $(this).data('rowIdentifier');
+    currentModal = $(this).closest('.xwiki-livedata').next(SELECTORS.modal);
+    currentOptions = currentModal.find(SELECTORS.options);
+    currentLoadingAnimation = currentModal.find(SELECTORS.loading);
+    currentModal.modal('show');
+    fetchChartData(rowIdentifier);
+  });
+
+  /**
+   * Update chart when the period length changes.
+   */
+  $(document).on('keyup change', `${SELECTORS.modal} ${SELECTORS.startsWithPeriodLength}`, function () {
+    currentOptions.data('date', $(this).val());
+    fetchChartData(currentOptions.data('rowIdentifier'));
+  });
+
+  /**
+   * Update chart when the period changes.
+   */
+  $(document).on('keyup change', `${SELECTORS.modal} ${SELECTORS.period}`, function () {
+    const period = $(this).val();
+    displayPeriodDurations(period);
+    fetchChartData(currentOptions.data('rowIdentifier'));
+  });
+});
+</code>
+    </property>
+    <property>
+      <name/>
+    </property>
+    <property>
+      <parse>1</parse>
+    </property>
+    <property>
+      <use>onDemand</use>
+    </property>
+  </object>
+</xwikidoc>

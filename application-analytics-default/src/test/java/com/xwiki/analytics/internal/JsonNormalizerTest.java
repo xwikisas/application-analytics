@@ -17,34 +17,25 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package com.xwiki.analytics;
+package com.xwiki.analytics.internal;
 
 import java.io.IOException;
-import java.util.Map;
-
-import org.xwiki.component.annotation.Role;
-import org.xwiki.stability.Unstable;
+import java.io.InputStream;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.stream.JsonReader;
 
 /**
- * The interface for the AnalyticManger.
- *
- * @version $Id$
- * @since 1.0
+ * Base class for writing unit tests for the JSON normalisers.
  */
-@Role
-@Unstable
-public interface AnalyticsManager
+public abstract class JsonNormalizerTest
 {
-    /**
-     * Request specific analytics data.
-     *
-     * @param jsonNormaliserHint hint to select the json normaliser
-     * @param parameters a list of key, value pairs that will represent the parameters for the request
-     * @param filters holds the criteria for filtering a dataset
-     * @return a jsonNode with the processed data
-     */
-    JsonNode requestData(Map<String, String> parameters, Map<String, String> filters, String jsonNormaliserHint)
-        throws IOException;
+    protected JsonNode getTestJSONS(String file) throws IOException
+    {
+        ObjectMapper objectMapper = new ObjectMapper();
+        InputStream is = JsonReader.class.getResourceAsStream(file);
+        JsonNode node = objectMapper.readTree(is);
+        return node;
+    }
 }

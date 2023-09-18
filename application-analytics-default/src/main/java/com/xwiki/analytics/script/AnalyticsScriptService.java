@@ -19,7 +19,6 @@
  */
 package com.xwiki.analytics.script;
 
-import java.io.IOException;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -65,20 +64,6 @@ public class AnalyticsScriptService implements ScriptService
             return analyticsManager.requestData(parameters, filters, jsonNormaliserHint);
         } catch (Exception e) {
             throw new RuntimeException(String.format("Failed to get data for [%s]", jsonNormaliserHint), e);
-        }
-    }
-
-    /**
-     * Will return a json as a string with the current version of Matomo.
-     *
-     * @return json with the current version as a string.
-     */
-    public JsonNode checkServices()
-    {
-        try {
-            return this.analyticsManager.checkMatomoServices();
-        } catch (IOException e) {
-            throw new RuntimeException("Failed to get the version", e);
         }
     }
 }

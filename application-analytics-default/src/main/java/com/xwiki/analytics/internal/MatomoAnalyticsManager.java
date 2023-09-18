@@ -21,7 +21,6 @@ package com.xwiki.analytics.internal;
 
 import java.io.IOException;
 import java.net.URI;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -41,7 +40,6 @@ import org.xwiki.component.annotation.Component;
 import org.xwiki.stability.Unstable;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xwiki.analytics.AnalyticsManager;
 import com.xwiki.analytics.JsonNormaliser;
 import com.xwiki.analytics.configuration.AnalyticsConfiguration;
@@ -58,13 +56,7 @@ import com.xwiki.analytics.configuration.AnalyticsConfiguration;
 @Unstable
 public class MatomoAnalyticsManager implements AnalyticsManager
 {
-    private static final String INDEX_PHP = "index.php";
-
-    private static final String TOKEN_AUTH = "token_auth";
-
     private static final String FAIL_RETRIEVE = "Error occurred while retrieving Matomo statistic results.";
-
-    private static final String ID_SITE = "idSite";
 
     @Inject
     private Logger logger;
@@ -90,43 +82,11 @@ public class MatomoAnalyticsManager implements AnalyticsManager
             logger.warn("Parameters must not be null.");
             throw new RuntimeException(FAIL_RETRIEVE);
         }
-        parameters.put(ID_SITE, configuration.getIdSite());
-        parameters.put(TOKEN_AUTH, configuration.getAuthenticationToken());
+        parameters.put("idSite", configuration.getIdSite());
+        parameters.put("token_auth", configuration.getAuthenticationToken());
         JsonNormaliser jsonNormaliser = this.selectNormaliser(jsonNormaliserHint);
         getJsonNormaliser(jsonNormaliserHint);
         return jsonNormaliser.normaliseData(executeHttpRequest(parameters), filters);
-    }
-
-    @Override
-    public JsonNode checkMatomoServices() throws IOException
-    {
-        ObjectMapper objectMapper = new ObjectMapper();
-        HttpClient client = HttpClients.createDefault();
-        Map<String, String> apiParameters = new HashMap<>();
-        apiParameters.put(ID_SITE, configuration.getIdSite());
-        apiParameters.put(TOKEN_AUTH, configuration.getAuthenticationToken());
-        apiParameters.put("module", "API");
-        apiParameters.put("method", "API.getMatomoVersion");
-        apiParameters.put("format", "JSON");
-        int apiStatusCode = httpRequestCode(apiParameters, INDEX_PHP);
-        int trackerStatusCode = httpRequestCode(new HashMap<>(), "matomo.php");
-        return objectMapper.readTree(String.format("{\"apiStatusCode\":\"%d\",  \"trackerStatusCode\" : \"%d\"}",
-            apiStatusCode, trackerStatusCode));
-    }
-
-    /**
-     * Returns the status code of a request.
-     *
-     * @param parameters a map with the query parameters
-     * @param path path to the resource
-     * @return status code of the request
-     */
-    private int httpRequestCode(Map<String, String> parameters, String path) throws IOException
-    {
-        HttpClient client = HttpClients.createDefault();
-        HttpGet request = new HttpGet(buildURI(parameters, path));
-        HttpResponse response = client.execute(request);
-        return response.getStatusLine().getStatusCode();
     }
 
     /**
@@ -139,7 +99,7 @@ public class MatomoAnalyticsManager implements AnalyticsManager
     private String executeHttpRequest(Map<String, String> parameters) throws IOException
     {
         HttpClient client = HttpClients.createDefault();
-        HttpGet request = new HttpGet(buildURI(parameters, INDEX_PHP));
+        HttpGet request = new HttpGet(buildURI(parameters));
         HttpResponse response = client.execute(request);
         return EntityUtils.toString(response.getEntity());
     }
@@ -150,9 +110,9 @@ public class MatomoAnalyticsManager implements AnalyticsManager
      * @param parameterList List of the url parameters
      * @return The final URI in string format
      */
-    private URI buildURI(Map<String, String> parameterList, String path)
+    private URI buildURI(Map<String, String> parameterList)
     {
-        UriBuilder uriBuilder = UriBuilder.fromUri(configuration.getRequestAddress()).path(path);
+        UriBuilder uriBuilder = UriBuilder.fromUri(configuration.getRequestAddress()).path("index.php");
 
         for (Map.Entry<String, String> entry : parameterList.entrySet()) {
             uriBuilder.queryParam(entry.getKey(), entry.getValue());

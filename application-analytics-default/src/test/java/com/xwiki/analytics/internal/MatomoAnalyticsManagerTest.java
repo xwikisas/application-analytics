@@ -72,7 +72,7 @@ public class MatomoAnalyticsManagerTest
      * Will test the Manager with a valid hint.
      */
     @Test
-    public void requestDataWithCorrectHintForNormaliser() throws IOException
+    void requestDataWithCorrectHintForNormaliser() throws IOException
     {
         List<JsonNormaliser> normalisers = new ArrayList<>();
         normalisers.add(this.jsonNormaliser);
@@ -89,7 +89,7 @@ public class MatomoAnalyticsManagerTest
      * Will test that an error happens if the user sets the parameters to be equal with null.
      */
     @Test
-    public void requestDataWithNullParameters()
+    void requestDataWithNullParameters()
     {
         ReflectionUtils.setFieldValue(this.matomoAnalyticsManager, "logger", this.logger);
         when(configuration.getAuthenticationToken()).thenReturn("token");
@@ -106,7 +106,7 @@ public class MatomoAnalyticsManagerTest
      * Will test the Manager with an invalid hint
      */
     @Test
-    public void requestDataWithInvalidNormaliser()
+    void requestDataWithInvalidNormaliser()
     {
         ReflectionUtils.setFieldValue(this.matomoAnalyticsManager, "logger", this.logger);
         when(this.configuration.getAuthenticationToken()).thenReturn("token");

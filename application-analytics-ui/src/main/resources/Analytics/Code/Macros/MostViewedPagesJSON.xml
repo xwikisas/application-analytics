@@ -95,6 +95,7 @@
     #set ($toIndex = $mathtool.min($mathtool.add($offset, $limit), $analyticsResult.size()))
     #subSet($analyticsResult, $offset, $toIndex, $resultList)
   #end
+
   #set ($results = {
     "totalrows": $analyticsResult.size(),
     "returnedrows": $resultList.size(),
@@ -111,7 +112,8 @@
       'timeSpent' : $currentEntry.get('sum_time_spent').asText(),
       'entryNbActions' : $currentEntry.get('entry_nb_actions').asText(),
       'bounceRate' : $currentEntry.get('bounce_rate').asText(),
-      'exitRate' : $currentEntry.get('exit_rate').asText()
+      'exitRate' : $currentEntry.get('exit_rate').asText(),
+      'actions' : "#analyticsActions($url)"
     }))
   #end
   #jsonResponse($results)
