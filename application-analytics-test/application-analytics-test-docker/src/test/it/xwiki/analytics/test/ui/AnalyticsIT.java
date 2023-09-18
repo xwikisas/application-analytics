@@ -19,34 +19,22 @@
  */
 package xwiki.analytics.test.ui;
 
-import javax.inject.Inject;
+import java.util.Collections;
 
-import org.hibernate.validator.constraints.ru.INN;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
-import org.slf4j.Logger;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testcontainers.containers.GenericContainer;
-import org.testcontainers.containers.wait.strategy.Wait;
+import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.utility.DockerImageName;
-import org.xwiki.application.test.po.ApplicationIndexHomePage;
 import org.xwiki.test.docker.internal.junit5.DockerTestUtils;
 import org.xwiki.test.docker.junit5.TestConfiguration;
 import org.xwiki.test.docker.junit5.UITest;
-import org.xwiki.test.docker.junit5.servletengine.ServletEngine;
 import org.xwiki.test.ui.TestUtils;
 import org.xwiki.test.ui.XWikiWebDriver;
-import org.xwiki.administration.test.po.AdministrationPage;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-
-import org.xwiki.test.ui.po.ViewPage;
 
 import com.xwiki.analytics.test.po.HomePageViewPage;
-
-import java.util.Collections;
-import java.util.List;
 
 @UITest
 public class AnalyticsIT
@@ -55,38 +43,41 @@ public class AnalyticsIT
     void congig(TestConfiguration testConfiguration)
     {
 
-        GenericContainer<?> mariadb =
-            new GenericContainer<>(DockerImageName.parse("mariadb")).withEnv("MYSQL_ROOT_PASSWORD",
-                    "exampleRootPassword").withEnv("MYSQL_DATABASE", "matomo").withEnv("MYSQL_USER", "matomo")
-                .withEnv("MYSQL_PASSWORD", "examplePassword").withExposedPorts(3306)
-                .waitingFor(Wait.forListeningPort());
-
-        // Define the Matomo container
-        GenericContainer<?> matomo =
-            new GenericContainer<>(DockerImageName.parse("matomo")).withEnv("MATOMO_DATABASE_HOST", mariadb.getHost())
-                .withEnv("MATOMO_DATABASE_USERNAME", "matomo").withEnv("MATOMO_DATABASE_PASSWORD", "examplePassword")
-                .withEnv("MATOMO_DATABASE_DBNAME", "matomo").withExposedPorts(80).dependsOn(mariadb)
-                .waitingFor(Wait.forHttp("/"));
-
-/*        GenericContainer genericContainer = new GenericContainer("matomo");
-        genericContainer.setPortBindings(Collections.singletonList("9999:80"));*/
-                   mariadb.setPortBindings(Collections.singletonList("9999:3306")); // Map host port 9999 to container port 3306
-            matomo.setPortBindings(Collections.singletonList("9998:80"));    // Map host port 9998 to container port 80
+        MySQLContainer<?> mysqlContainer = new MySQLContainer<>(DockerImageName.parse("mysql:5.7"))
+            .withDatabaseName("matomo")
+            .withUsername("matomo")
+            .withPassword("secret")
+            .withExposedPorts(3306);
+        mysqlContainer.setPortBindings(Collections.singletonList("9034:3306"));
         try {
-            DockerTestUtils.startContainer(mariadb, testConfiguration);
-            DockerTestUtils.startContainer(matomo, testConfiguration);
+            //172.17.0.1
+            DockerTestUtils.startContainer(mysqlContainer, testConfiguration);
+            GenericContainer<?> matomoContainer = new GenericContainer<>("matomo:latest")
+                .withExposedPorts(80)
+                .withEnv("MATOMO_DATABASE_HOST",
+                    "172.17.0.1" + ":" + mysqlContainer.getMappedPort(3306))
+                .withEnv("MATOMO_DATABASE_USERNAME", "matomo")
+                .withEnv("MATOMO_DATABASE_PASSWORD", "secret")
+                .withEnv("MATOMO_DATABASE_DBNAME", "matomo");
+                //.withFileSystemBind("src/main/resources/config.ini.php","/var/www/html/config/config.ini.php");
+            matomoContainer.setPortBindings(
+                // !After the container has been opened and the selenium register a user I have to overwrite the
+                // config.ini.php to make Matomo work
+                Collections.singletonList("9999:80"));    // Map host port 9999 to container port 80
+            DockerTestUtils.startContainer(matomoContainer, testConfiguration);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
     @Test
-    void appEntryRedirectsToHomePage(XWikiWebDriver driver, TestUtils setup)
+    void appEntryRedirectsToHomePage(XWikiWebDriver driver, TestUtils setup) throws InterruptedException
     {
 
         HomePageViewPage.gotoPage();
         while (true) {
-            System.out.print("1");
+            Thread.sleep(10 * 1000);
+            System.out.println("Test");
         }
     }
 }
