@@ -408,15 +408,13 @@
     </property>
     <property>
       <code>{{velocity}}
-#set ($discard =  $xwiki.ssx.use('Analytics.Code.Macros.Filter'))
-#if ($services.licensing.licensor.hasLicensureForEntity(
-    $services.model.createDocumentReference('', ['Analytics', 'Code'], 'ConfigurationClass')))
+#macro(executeMacro)
 #set ($placeholderStart = '2007-01-01')
 #set ($placeholderEnd = $datetool.get('yyyy-MM-dd'))
-#if($request.analyticsStartDate &amp;&amp; $request.analyticsStartDate != '')
+#if ($request.analyticsStartDate &amp;&amp; $request.analyticsStartDate != '')
   #set ($placeholderStart = $request.analyticsStartDate)
 #end
-#if($request.analyticsEndDate &amp;&amp; $request.analyticsEndDate != '')
+#if ($request.analyticsEndDate &amp;&amp; $request.analyticsEndDate != '')
   #set ($placeholderEnd = $request.analyticsEndDate)
 #end
 {{html clean="false"}}
@@ -426,12 +424,12 @@
       &lt;!-- Start Date Label &amp; Input Group --&gt;
       &lt;div&gt;
         &lt;label for="analyticsStartDate"&gt;$services.localization.render('rendering.macro.analyticsFilter.startDate')&lt;/label&gt;
-        #set ($dateTimePickerParams = {
-        'id': 'analyticsStartDate',
-        'name': 'analyticsStartDate',
-        'data-format': 'yyyy-MM-dd',
-        'placeholder': $placeholderStart
-        })
+          #set ($dateTimePickerParams = {
+          'id': 'analyticsStartDate',
+          'name': 'analyticsStartDate',
+          'data-format': 'yyyy-MM-dd',
+          'placeholder': $placeholderStart
+          })
         #dateTimePicker($dateTimePickerParams)
       &lt;/div&gt;
     &lt;/div&gt;
@@ -439,12 +437,12 @@
       &lt;!-- End Date Label &amp; Input Group --&gt;
       &lt;div&gt;
         &lt;label for="analyticsEndDate"&gt;$services.localization.render('rendering.macro.analyticsFilter.endDate')&lt;/label&gt;
-        #set ($dateTimePickerParams = {
-        'id': 'analyticsEndDate',
-        'name': 'analyticsEndDate',
-        'data-format': 'yyyy-MM-dd',
-        'placeholder': $placeholderEnd
-        })
+          #set ($dateTimePickerParams = {
+          'id': 'analyticsEndDate',
+          'name': 'analyticsEndDate',
+          'data-format': 'yyyy-MM-dd',
+          'placeholder': $placeholderEnd
+          })
         #dateTimePicker($dateTimePickerParams)
       &lt;/div&gt;
     &lt;/div&gt;
@@ -455,13 +453,18 @@
           &amp;nbsp;
         &lt;/div&gt;
           &lt;span class="buttonwrapper b-1"&gt;&lt;input type="submit"
-              value="$services.localization.render('rendering.macro.analyticsFilter.apply')"
-              class="btn btn-default button" /&gt;&lt;/span&gt;
+            value="$services.localization.render('rendering.macro.analyticsFilter.apply')"
+            class="btn btn-default button" /&gt;&lt;/span&gt;
       &lt;/div&gt;
     &lt;/div&gt;
   &lt;/div&gt;
 &lt;/form&gt;
 {{/html}}
+#end
+#set ($discard =  $xwiki.ssx.use('Analytics.Code.Macros.Filter'))
+#if ($services.licensing.licensor.hasLicensureForEntity(
+  $services.model.createDocumentReference('', ['Analytics', 'Code'], 'ConfigurationClass')))
+#executeMacro()
 #else
   {{error}}#getMissingLicenseMessage('analytics.extension.name'){{/error}}
 #end
