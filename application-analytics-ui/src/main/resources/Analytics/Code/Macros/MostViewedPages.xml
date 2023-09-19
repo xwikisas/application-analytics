@@ -248,11 +248,10 @@
 #macro(executeMacro)
   #getDate()
   #set ($discard =$xwiki.jsx.use('Analytics.Code.Macros.RowEvolution'))
-  #set ($period = 'range')
   #set ($parameters = $escapetool.url({
     'resultPage': 'Analytics.Code.Macros.MostViewedPagesJSON',
     'date': $date,
-    'period': $period,
+    'period': 'range',
     'limitEntries': '-1',
     'translationPrefix': 'analytics.mostViewedPages.header.'
   }))

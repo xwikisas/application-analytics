@@ -254,10 +254,11 @@ require(['jquery', 'chart'], ($) =&gt; {
     // This rowIdentifier is used by Matomo to identify the row for which you want to retrieve the data.
     const rowIdentifier = $(this).data('rowIdentifier');
     currentModal = $(this).closest('.xwiki-livedata').next(SELECTORS.modal);
-    // On XWiki 14+ the structure of the dom was changed and I have to check if an element was found.
+    // The livedata structure has changed starting with XWiki 14+ and so the modal will be undefined on these
+    // version. Remove this check after upgrading to the 14.10 XWiki parent.
     if(!currentModal.length) {
-    // Selector for XWiki 14+
-    currentModal=$(this).closest('.liveData').next(SELECTORS.modal);
+      // Selector for XWiki 14+
+      currentModal=$(this).closest('.liveData').next(SELECTORS.modal);
     }
     currentOptions = currentModal.find(SELECTORS.options);
     currentLoadingAnimation = currentModal.find(SELECTORS.loading);
