@@ -74,8 +74,8 @@ analytics.rowEvolution.modal.year.label=Year
 analytics.rowEvolution.modal.field.pageViews=Page views
 analytics.rowEvolution.modal.field.uniqueViews=Unique views
 analytics.rowEvolution.modal.field.avgTime=Avg. Time spent
-analytics.rowEvolution.field.searches=Searches
-analytics.rowEvolution.field.searchResultsPages=Search result pages
+analytics.rowEvolution.modal.field.searches=Searches
+analytics.rowEvolution.modal.field.searchResultsPages=Search result pages
 
 ## Search Categories
 analytics.searchCategories.header.date=Date
