@@ -185,19 +185,18 @@
     </property>
     <property>
       <code>.form-flex {
-	display: flex;
-	flex-wrap: wrap;
+  display: flex;
+  flex-wrap: wrap;
 }
 .form-item {
-	display: flex;
-	flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
-
 .flex-item {
-	flex: 2 1 5rem;
-	margin: 0 .4rem;
-	margin-top: auto;
-	margin-bottom: 1rem;
+  flex: 2 1 5rem;
+  margin: 0 .4rem;
+  margin-top: auto;
+  margin-bottom: 1rem;
 }</code>
     </property>
     <property>
@@ -431,37 +430,38 @@
 #end
 {{html clean="false"}}
 &lt;div class="xform half"&gt;
-&lt;form id="analyticsFilter" class="form-flex"&gt;
-        &lt;div class="form-item flex-item"&gt;
-            &lt;!-- Start Date Label &amp; Input Group --&gt;
-            &lt;label for="analyticsStartDate"&gt;$services.localization.render('rendering.macro.analyticsFilter.startDate')&lt;/label&gt;
-            #set ($dateTimePickerParams = {
-            'id': 'analyticsStartDate',
-            'name': 'analyticsStartDate',
-            'data-format': 'yyyy-MM-dd',
-            'placeholder': $placeholderStart
-            })
-            #dateTimePicker($dateTimePickerParams)
-        &lt;/div&gt;
-        &lt;div class="form-item flex-item"&gt;
-            &lt;!-- End Date Label &amp; Input Group --&gt;
-            &lt;label for="analyticsEndDate"&gt;$services.localization.render('rendering.macro.analyticsFilter.endDate')&lt;/label&gt;
-            #set ($dateTimePickerParams = {
-            'id': 'analyticsEndDate',
-            'name': 'analyticsEndDate',
-            'data-format': 'yyyy-MM-dd',
-            'placeholder': $placeholderEnd
-            })
-            #dateTimePicker($dateTimePickerParams)
-        &lt;/div&gt;
-        &lt;!-- Submit Button --&gt;
-        &lt;div class="form-item flex-item"&gt;
-            &lt;span class="buttonwrapper b-1"&gt;&lt;input type="submit"
-                    value="$services.localization.render('rendering.macro.analyticsFilter.apply')"
-                    class="btn btn-default button" /&gt;&lt;/span&gt;
-        &lt;/div&gt;
-&lt;/form&gt;
+	&lt;form id="analyticsFilter" class="form-flex"&gt;
+		&lt;div class="form-item flex-item"&gt;
+			&lt;!-- Start Date Label &amp; Input Group --&gt;
+			&lt;label for="analyticsStartDate"&gt;$services.localization.render('rendering.macro.analyticsFilter.startDate')&lt;/label&gt;
+			#set ($dateTimePickerParams = {
+			'id': 'analyticsStartDate',
+			'name': 'analyticsStartDate',
+			'data-format': 'yyyy-MM-dd',
+			'placeholder': $placeholderStart
+			})
+			#dateTimePicker($dateTimePickerParams)
+		&lt;/div&gt;
+		&lt;div class="form-item flex-item"&gt;
+			&lt;!-- End Date Label &amp; Input Group --&gt;
+			&lt;label for="analyticsEndDate"&gt;$services.localization.render('rendering.macro.analyticsFilter.endDate')&lt;/label&gt;
+			#set ($dateTimePickerParams = {
+			'id': 'analyticsEndDate',
+			'name': 'analyticsEndDate',
+			'data-format': 'yyyy-MM-dd',
+			'placeholder': $placeholderEnd
+			})
+			#dateTimePicker($dateTimePickerParams)
+		&lt;/div&gt;
+		&lt;!-- Submit Button --&gt;
+		&lt;div class="form-item flex-item"&gt;
+			&lt;span class="buttonwrapper b-1"&gt;
+			  &lt;input type="submit" value="$services.localization.render('rendering.macro.analyticsFilter.apply')" class="btn btn-default button"/&gt;
+            &lt;/span&gt;
+		&lt;/div&gt;
+	&lt;/form&gt;
 &lt;/div&gt;
+
 {{/html}}
 #end
 
