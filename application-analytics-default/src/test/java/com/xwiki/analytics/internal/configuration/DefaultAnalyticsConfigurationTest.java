@@ -21,6 +21,7 @@ package com.xwiki.analytics.internal.configuration;
 
 import javax.inject.Named;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.xwiki.component.util.ReflectionUtils;
@@ -31,7 +32,6 @@ import org.xwiki.test.junit5.mockito.MockComponent;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 /**
@@ -53,21 +53,21 @@ public class DefaultAnalyticsConfigurationTest
     private Logger logger;
 
     @Test
-    public void getAuthenticationToken()
+    void getAuthenticationToken()
     {
         when(this.analyticsConfigurationSource.getProperty("authToken", "")).thenReturn("token");
         assertEquals("token", this.defaultAnalyticsConfiguration.getAuthenticationToken());
     }
 
     @Test
-    public void getSiteID()
+    void getSiteID()
     {
         when(this.analyticsConfigurationSource.getProperty("siteId", "")).thenReturn("3");
         assertEquals("3", this.defaultAnalyticsConfiguration.getIdSite());
     }
 
     @Test
-    public void getAddress()
+    void getAddress()
     {
         when(this.analyticsConfigurationSource.getProperty("requestAddress", "")).thenReturn("13.192.200.19");
         assertEquals("13.192.200.19", this.defaultAnalyticsConfiguration.getRequestAddress());
@@ -77,9 +77,8 @@ public class DefaultAnalyticsConfigurationTest
      * Will test to see if the function will throw an error when the request address is null
      */
     @Test
-    public void missingRequestAddress()
+    void getAddressWithMissingValue()
     {
-        ReflectionUtils.setFieldValue(this.defaultAnalyticsConfiguration, "logger", this.logger);
         RuntimeException exception = assertThrows(RuntimeException.class, () -> {
             this.defaultAnalyticsConfiguration.getRequestAddress();
         });
@@ -90,9 +89,8 @@ public class DefaultAnalyticsConfigurationTest
      * Will test to see if the function will throw an error when the id site is null
      */
     @Test
-    public void missingIdSite()
+    void getIdSiteMissingValue()
     {
-        ReflectionUtils.setFieldValue(this.defaultAnalyticsConfiguration, "logger", this.logger);
         RuntimeException exception = assertThrows(RuntimeException.class, () -> {
             this.defaultAnalyticsConfiguration.getIdSite();
         });
@@ -103,9 +101,8 @@ public class DefaultAnalyticsConfigurationTest
      * Will test to see if the function will throw an error when the auth token is null
      */
     @Test
-    public void missingAuthToken()
+    void getAuthTokenMissingValue()
     {
-        ReflectionUtils.setFieldValue(this.defaultAnalyticsConfiguration, "logger", this.logger);
         RuntimeException exception = assertThrows(RuntimeException.class, () -> {
             this.defaultAnalyticsConfiguration.getAuthenticationToken();
         });
@@ -116,10 +113,9 @@ public class DefaultAnalyticsConfigurationTest
      * Will test to see if the function will throw an error when the request address is empty
      */
     @Test
-    public void returnDefaultValueRequestAddress()
+    void getAddressWithDefaultValue()
     {
         when(this.analyticsConfigurationSource.getProperty("requestAddress", "")).thenReturn("");
-        ReflectionUtils.setFieldValue(this.defaultAnalyticsConfiguration, "logger", this.logger);
         RuntimeException exception = assertThrows(RuntimeException.class, () -> {
             this.defaultAnalyticsConfiguration.getRequestAddress();
         });
@@ -130,10 +126,9 @@ public class DefaultAnalyticsConfigurationTest
      * Will test to see if the function will throw an error when the id site is empty
      */
     @Test
-    public void returnDefaultIdSite()
+    void getIdSiteWithDefaultValue()
     {
         when(this.analyticsConfigurationSource.getProperty("siteId", "")).thenReturn("");
-        ReflectionUtils.setFieldValue(this.defaultAnalyticsConfiguration, "logger", this.logger);
         RuntimeException exception = assertThrows(RuntimeException.class, () -> {
             this.defaultAnalyticsConfiguration.getIdSite();
         });
@@ -144,13 +139,18 @@ public class DefaultAnalyticsConfigurationTest
      * Will test to see if the function will throw an error when the auth token is empty
      */
     @Test
-    public void returnDefaultAuthToken()
+    void getAuthTokenWithDefaultValue()
     {
         when(this.analyticsConfigurationSource.getProperty("authToken", "")).thenReturn("");
-        ReflectionUtils.setFieldValue(this.defaultAnalyticsConfiguration, "logger", this.logger);
         RuntimeException exception = assertThrows(RuntimeException.class, () -> {
             this.defaultAnalyticsConfiguration.getAuthenticationToken();
         });
         assertEquals("The authToken is missing.", exception.getMessage());
+    }
+
+    @BeforeEach
+    private void setLogger()
+    {
+        ReflectionUtils.setFieldValue(this.defaultAnalyticsConfiguration, "logger", this.logger);
     }
 }

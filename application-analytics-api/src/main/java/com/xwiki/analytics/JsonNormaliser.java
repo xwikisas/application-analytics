@@ -47,4 +47,11 @@ public interface JsonNormaliser
      * @throws JsonProcessingException Throws this error when the jsonString param is not a proper json
      */
     JsonNode normaliseData(String jsonString, Map<String, String> filters) throws JsonProcessingException;
+
+    /**
+     * Retrieve the hint of a component.
+     *
+     * @return hint of the component
+     */
+    String getIdentifier();
 }

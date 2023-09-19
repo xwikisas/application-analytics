@@ -21,10 +21,12 @@ package com.xwiki.analytics.internal;
 
 import java.io.IOException;
 import java.net.URI;
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.inject.Provider;
 import javax.inject.Singleton;
 import javax.ws.rs.core.UriBuilder;
 
@@ -60,15 +62,10 @@ public class MatomoAnalyticsManager implements AnalyticsManager
     private Logger logger;
 
     @Inject
-    @Named(MostViewedJsonNormaliser.HINT)
-    private JsonNormaliser mostViewedNormaliser;
-
-    @Inject
-    @Named(RowEvolutionJsonNormaliser.HINT)
-    private JsonNormaliser rowEvolution;
-
-    @Inject
     private AnalyticsConfiguration configuration;
+
+    @Inject
+    private Provider<List<JsonNormaliser>> jsonNormalizerProvider;
 
     /**
      * Request specific data from Matomo and return an enhanced response.
@@ -81,26 +78,15 @@ public class MatomoAnalyticsManager implements AnalyticsManager
     public JsonNode requestData(Map<String, String> parameters, Map<String, String> filters, String jsonNormaliserHint)
         throws IOException
     {
-        validateParameters(parameters);
+        if (parameters == null) {
+            logger.warn("Parameters must not be null.");
+            throw new RuntimeException(FAIL_RETRIEVE);
+        }
         parameters.put("idSite", configuration.getIdSite());
         parameters.put("token_auth", configuration.getAuthenticationToken());
         JsonNormaliser jsonNormaliser = this.selectNormaliser(jsonNormaliserHint);
         getJsonNormaliser(jsonNormaliserHint);
         return jsonNormaliser.normaliseData(executeHttpRequest(parameters), filters);
-    }
-
-    /**
-     * Validates that the request parameters are not null.
-     *
-     * @param parameters a list of key, value pairs
-     * @throws RuntimeException if parameters are null
-     */
-    private void validateParameters(Map<String, String> parameters)
-    {
-        if (parameters == null) {
-            logger.warn("Parameters must not be null.");
-            throw new RuntimeException(FAIL_RETRIEVE);
-        }
     }
 
     /**
@@ -153,13 +139,10 @@ public class MatomoAnalyticsManager implements AnalyticsManager
 
     private JsonNormaliser selectNormaliser(String hint)
     {
-        switch (hint) {
-            case MostViewedJsonNormaliser.HINT:
-                return this.mostViewedNormaliser;
-            case RowEvolutionJsonNormaliser.HINT:
-                return this.rowEvolution;
-            default:
-                return null;
+        for (JsonNormaliser jsonNormaliser : this.jsonNormalizerProvider.get()) {
+            if (hint.equals(jsonNormaliser.getIdentifier())) {
+                return jsonNormaliser;
+            }
         }
     }
 }
