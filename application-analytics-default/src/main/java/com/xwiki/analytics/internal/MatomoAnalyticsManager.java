@@ -144,5 +144,6 @@ public class MatomoAnalyticsManager implements AnalyticsManager
                 return jsonNormaliser;
             }
         }
+        return null;
     }
 }

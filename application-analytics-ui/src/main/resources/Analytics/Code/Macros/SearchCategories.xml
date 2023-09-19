@@ -253,17 +253,17 @@
   'translationPrefix': 'analytics.searchCategories.header.',
   'resultPage': 'Analytics.Code.Macros.SearchCategoriesJSON'
 }))
-#set ($liveDataConfig= {
+#set ( $liveDataConfig= {
   'meta': {
     'propertyDescriptors': [
       {'id': 'category', 'displayer': 'html'},
       {'id': 'searches', 'displayer': 'html'},
       {'id': 'searchResultsPages', 'displayer': 'html'},
-      {'id': 'actions', "filterable": false, "sortable": false,'displayer': 'html'}
+      {'id': 'actions', 'filterable': false, 'sortable': false, 'displayer': 'html'}
     ],
     'entryDescriptor': {
       'idProperty': 'category'
-      }
+    }
   }
 })
 #getAnalyticsMacroId('searchCategories', $macroId )
@@ -275,11 +275,11 @@
   sourceParameters="$parameters"
 }}$jsontool.serialize($liveDataConfig){{/liveData}}
 
-#set ($parameters = {
-  'searches':'nb_visits',
-  'searchResultsPages':'nb_pages_per_search'
+#set ($rowEvolutionParams = {
+  'searches': 'nb_visits',
+  'searchResultsPages': 'nb_pages_per_search'
 })
-#modalRowEvolution($parameters, 'SearchCategories', $macroId)
+#modalRowEvolution($rowEvolutionParams, 'SearchCategories', $macroId)
 {{/velocity}}</code>
     </property>
     <property>

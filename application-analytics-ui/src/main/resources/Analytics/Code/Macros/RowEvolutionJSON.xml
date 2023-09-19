@@ -41,11 +41,14 @@
   'period' : $request.period,
   'date' : $request.date,
   'module' : 'API',
-  'method' : 'Actions.getPageUrl',
   'format' : 'json'
 })
 #if ($request.macroName == 'MostViewedPages')
-  #set ($discard = $parameters.put('pageUrl', $request.parameter))
+  #set ($discard = $parameters.put('pageUrl', $request.rowIdentifier))
+  #set ($discard = $parameters.put('method', 'Actions.getPageUrl'))
+#elseif ($request.macroName == 'SearchCategories')
+  #set ($discard = $parameters.put('segment', $request.rowIdentifier))
+  #set ($discard = $parameters.put('method', 'Actions.getSiteSearchCategories'))
 #end
 #set ($analyticsResult = $services.analytics.getMatomoRequestResult($parameters, {}, 'RowEvolution'))
 #jsonResponse($analyticsResult)
