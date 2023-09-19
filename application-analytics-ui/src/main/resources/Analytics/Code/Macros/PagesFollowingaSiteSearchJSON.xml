@@ -50,7 +50,7 @@
     #set ($limit = 15)
   #end
   ##
-  #set ($keys = {
+  #set ($matomoKeysMapping = {
   'destinationPage' : 'label',
   'clicked' : 'nb_hits_following_search',
   'pageViews' : 'nb_hits',
@@ -59,29 +59,29 @@
   #set ($sort = 'destinationPage')
   #set ($order = 'asc')
   #if ($request.sort)
-    #set($sort = $keys.get($request.sort))
+    #set($sort = $matomoKeysMapping.get($request.sort))
     #set($order = $request.dir)
   #end
 
   #set ($filters={})
-  #foreach ($key in $keys.keySet())
+  #foreach ($key in $matomoKeysMapping.keySet())
     #set ($value = $request.get($key))
     #if ($value &amp;&amp; $value != '')
-      $filters.put($keys.get($key), $request.get($key))
+      $filters.put($matomoKeysMapping.get($key), $request.get($key))
     #end
   #end
 
   #set ($parameters = {
-    'period' : $request.period,
-    'date' : $request.date,
-    'module' : 'API',
-    'method' : 'Actions.getPageUrlsFollowingSiteSearch',
-    'format' : 'json',
+    'period': $request.period,
+    'date': $request.date,
+    'module': 'API',
+    'method': 'Actions.getPageUrlsFollowingSiteSearch',
+    'format': 'json',
     'filter_limit' : $request.limitEntries,
-    'filter_sort_column' : $sort,
-    'filter_sort_order' : $order,
-    'expanded' : '1',
-    'flat' : '1'
+    'filter_sort_column': $sort,
+    'filter_sort_order': $order,
+    'expanded': '1',
+    'flat': '1'
   })
 
   ## Get the JSON response from Matomo.
@@ -98,13 +98,13 @@
     "rows": []
   })
   #foreach ($currentEntry in $resultList)
-    #set ($parameter = $currentEntry.get('url').asText())
+    #set ($rowIdentifier = $currentEntry.get('url').asText())
     #set ($discard = $results.rows.add({
-      'destinationPage' : "#createLinkElement($currentEntry.get('label').asText(), $url)",
-      'clicked' : $currentEntry.get('nb_hits_following_search').asText(),
-      'pageViews' : $currentEntry.get('nb_hits').asText(),
-      'loadTime' : $mathtool.roundTo(2, $currentEntry.get('avg_page_load_time').asDouble()),
-      'actions' : "#analyticsActions($parameter)"
+      'destinationPage': "#createLinkElement($currentEntry.get('label').asText(), $url)",
+      'clicked': $currentEntry.get('nb_hits_following_search').asText(),
+      'pageViews': $currentEntry.get('nb_hits').asText(),
+      'loadTime': $mathtool.roundTo(2, $currentEntry.get('avg_page_load_time').asDouble()),
+      'actions': "#analyticsActions($rowIdentifier)"
     }))
   #end
   #jsonResponse($results)

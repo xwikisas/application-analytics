@@ -69,7 +69,6 @@ analytics.pagesFollowingaSiteSearchJSON.header.pageViews=Views
 analytics.pagesFollowingaSiteSearchJSON.header.loadTime=Avg. Load Time
 analytics.pagesFollowingaSiteSearchJSON.header.actions=Actions
 
-
 ## Row Evolution
 analytics.rowEvolution.modal.label=Row Evolution
 analytics.rowEvolution.modal.close=Close

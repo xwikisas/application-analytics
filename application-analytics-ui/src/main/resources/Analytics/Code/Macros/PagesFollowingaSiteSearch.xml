@@ -261,7 +261,7 @@
       {'id': 'clicked', 'displayer': 'html'},
       {'id': 'pageViews', 'displayer': 'html'},
       {'id': 'loadTime', 'displayer': 'html'},
-      {'id': 'actions',"filterable": false, "sortable": false, 'displayer': 'html'}
+      {'id': 'actions', 'filterable': false, 'sortable': false, 'displayer': 'html'}
     ],
     'entryDescriptor': {
       'idProperty': 'destinationPage'
@@ -277,11 +277,11 @@
   sourceParameters="$parameters"
 }}$jsontool.serialize($liveDataConfig){{/liveData}}
 
-#set ($parameters = {
+#set ($rowEvolutionParams = {
 'pageViews':'nb_hits',
 'clickedSearchResult':'nb_hits_following_search'
 })
-#modalRowEvolution($parameters, 'PagesFollowingaSiteSearch', $macroId)
+#modalRowEvolution($rowEvolutionParams, 'PagesFollowingaSiteSearch', $macroId)
 {{/velocity}}</code>
     </property>
     <property>
