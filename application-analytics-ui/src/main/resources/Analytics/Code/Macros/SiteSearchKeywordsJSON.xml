@@ -50,7 +50,7 @@
     #set ($limit = 15)
   #end
   ##
-  #set ($keys = {
+  #set ($matomoKeysMapping = {
     'keyword': 'label',
     'searches': 'nb_visits',
     'nbOfResultPages': 'nb_pages_per_search',
@@ -59,15 +59,15 @@
   #set ($sort = 'nb_hits')
   #set ($order = 'desc')
   #if ($request.sort)
-    #set ($sort = $keys.get($request.sort))
+    #set ($sort = $matomoKeysMapping.get($request.sort))
     #set ($order = $request.dir)
   #end
 
   #set ($filters={})
-  #foreach ($key in $keys.keySet())
+  #foreach ($key in $matomoKeysMapping.keySet())
     #set ($value = $request.get($key))
     #if ($value &amp;&amp; $value != '')
-      $filters.put($keys.get($key), $request.get($key))
+      $filters.put($matomoKeysMapping.get($key), $request.get($key))
     #end
   #end
 
