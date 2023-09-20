@@ -244,8 +244,7 @@
 
 {{velocity}}
 #getDate()
-#set ($discard =$xwiki.jsx.use('Analytics.Code.Macros.RowEvolution'))
-#set ($parameters = $escapetool.url({
+#set ($discard = $xwiki.jsx.use('Analytics.Code.Macros.RowEvolution'))#set ($parameters = $escapetool.url({
   'resultPage': 'Analytics.Code.Macros.MostViewedPagesJSON',
   'date': $date,
   'period': 'range',
@@ -273,7 +272,7 @@
 
 {{liveData
   id="$macroId"
-  properties="title, visits, hits, timeSpent, entryNbActions, bounceRate, exitRate, actions"
+  properties='title, visits, hits, timeSpent, entryNbActions, bounceRate, exitRate, actions'
   source='liveTable'
   sourceParameters="$parameters"
   sort='hits:desc'

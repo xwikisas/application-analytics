@@ -20,9 +20,9 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc version="1.4" reference="Analytics.Code.Macros.softwareDevicesJSON" locale="">
+<xwikidoc version="1.4" reference="Analytics.Code.Macros.SoftwareDevicesJSON" locale="">
   <web>Analytics.Code.Macros</web>
-  <name>softwareDevicesJSON</name>
+  <name>SoftwareDevicesJSON</name>
   <language/>
   <defaultLanguage/>
   <translation>0</translation>
@@ -31,7 +31,7 @@
   <author>xwiki:XWiki.Admin</author>
   <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
   <version>1.1</version>
-  <title>softwareDevicesJSON</title>
+  <title>SoftwareDevicesJSON</title>
   <comment/>
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
@@ -52,7 +52,7 @@
   #end
 
   #set ($keys = {
-    $request.label : 'label',
+    $request.label: 'label',
     'visits': 'nb_visits',
     'nbOfActions': 'nb_actions',
     'timeSpent': 'sum_visit_length',
@@ -101,30 +101,32 @@
     'rows': []
   })
   #foreach ($currentEntry in $resultList)
-    #if( $request.matomoMethod == 'Resolution.getConfiguration')
+    ## The Resolution.getConfiguration method from matomo doesn't return a segment for each row and to get segment I
+    ## must split the label into it's components and construct the segment myself.
+    #if ($request.matomoMethod == 'Resolution.getConfiguration')
     #set ($values= $currentEntry.get('label').asText().split(' / '))
     #set ($segmentsName = ['operatingSystemName', 'browserName', 'resolution'])
-    #set ($finalSegment= '')
-    #foreach($i in [0..2])
-      #set($currentSegment = $segmentsName.get($i) + '==' + $values.get($i))
-      #if($foreach.last)
-        #set($segment= $finalSegment + $currentSegment)
+    #set ($finalSegment = '')
+    #foreach ($i in [0..2])
+      #set ($currentSegment = $segmentsName.get($i) + '==' + $values.get($i))
+      #if ($foreach.last)
+        #set ($segment = $finalSegment + $currentSegment)
       #else
-        #set($segment= $finalSegment + $currentSegment + ';')
+        #set ($segment = $finalSegment + $currentSegment + ';')
       #end
     #end
     #else
-    #set ($segment = $currentEntry.get('segment').asText())
+      #set ($segment = $currentEntry.get('segment').asText())
     #end
     #set ($conversionRate =  $currentEntry.get('nb_visits_converted').asText() + '%')
     #set ($discard = $results.rows.add({
-      $request.label : $currentEntry.get('label').asText(),
-      'visits' :  $currentEntry.get('nb_visits').asText(),
-      'nbOfActions' : $currentEntry.get('nb_actions').asText(),
-      'timeSpent' : $currentEntry.get('sum_visit_length').asText(),
-      'bounceRate' : $currentEntry.get('bounce_count').asText(),
-      'conversionRate' :$conversionRate,
-      'actions' : "#analyticsActions($segment)"
+      $request.label: $currentEntry.get('label').asText(),
+      'visits':  $currentEntry.get('nb_visits').asText(),
+      'nbOfActions': $currentEntry.get('nb_actions').asText(),
+      'timeSpent': $currentEntry.get('sum_visit_length').asText(),
+      'bounceRate': $currentEntry.get('bounce_count').asText(),
+      'conversionRate': $conversionRate,
+      'actions': "#analyticsActions($segment)"
     }))
   #end
   #jsonResponse($results)
