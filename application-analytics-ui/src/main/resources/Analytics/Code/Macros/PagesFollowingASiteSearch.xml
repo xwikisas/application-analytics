@@ -20,9 +20,9 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc version="1.4" reference="Analytics.Code.Macros.PagesFollowingaSiteSearch" locale="">
+<xwikidoc version="1.4" reference="Analytics.Code.Macros.PagesFollowingASiteSearch" locale="">
   <web>Analytics.Code.Macros</web>
-  <name>PagesFollowingaSiteSearch</name>
+  <name>PagesFollowingASiteSearch</name>
   <language/>
   <defaultLanguage/>
   <translation>0</translation>
@@ -31,15 +31,15 @@
   <author>xwiki:XWiki.Admin</author>
   <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
   <version>1.1</version>
-  <title>PagesFollowingaSiteSearch</title>
+  <title>PagesFollowingASiteSearch</title>
   <comment/>
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>true</hidden>
-  <content>{{pagesFollowingaSiteSearch/}}
+  <content>{{PagesFollowingASiteSearch/}}
 </content>
   <object>
-    <name>Analytics.Code.Macros.PagesFollowingaSiteSearch</name>
+    <name>Analytics.Code.Macros.PagesFollowingASiteSearch</name>
     <number>0</number>
     <className>XWiki.WikiMacroClass</className>
     <guid>cdb9dc4f-0473-4b28-afc2-e10167cefbf6</guid>
@@ -245,14 +245,13 @@
 
 {{velocity}}
 #getDate()
-#set ($discard =$xwiki.jsx.use('Analytics.Code.Macros.RowEvolution'))
-#set ($period = 'range')
+#set ($discard = $xwiki.jsx.use('Analytics.Code.Macros.RowEvolution'))
 #set ($parameters = $escapetool.url({
   'date': $date,
-  'period': $period,
+  'period': 'range',
   'limitEntries': '-1',
-  'translationPrefix': 'analytics.pagesFollowingaSiteSearchJSON.header.',
-  'resultPage': 'Analytics.Code.Macros.PagesFollowingaSiteSearchJSON'
+  'translationPrefix': 'analytics.PagesFollowingASiteSearchJSON.header.',
+  'resultPage': 'Analytics.Code.Macros.PagesFollowingASiteSearchJSON'
 }))
 #set ($liveDataConfig= {
   'meta': {
@@ -268,20 +267,20 @@
     }
   }
 })
-#getAnalyticsMacroId('pagesFollowingaSiteSearch', $macroId)
+#getAnalyticsMacroId('PagesFollowingASiteSearch', $macroId)
 
 {{liveData
   id="$macroId"
-  properties="destinationPage, clicked, pageViews, loadTime, actions"
+  properties='destinationPage, clicked, pageViews, loadTime, actions'
   source='liveTable'
   sourceParameters="$parameters"
 }}$jsontool.serialize($liveDataConfig){{/liveData}}
 
 #set ($rowEvolutionParams = {
-'pageViews':'nb_hits',
-'clickedSearchResult':'nb_hits_following_search'
+  'pageViews': 'nb_hits',
+  'clickedSearchResult': 'nb_hits_following_search'
 })
-#modalRowEvolution($rowEvolutionParams, 'PagesFollowingaSiteSearch', $macroId)
+#modalRowEvolution($rowEvolutionParams, 'PagesFollowingASiteSearch', $macroId)
 {{/velocity}}</code>
     </property>
     <property>
@@ -300,7 +299,7 @@
       <description/>
     </property>
     <property>
-      <id>pagesFollowingaSiteSearch</id>
+      <id>PagesFollowingASiteSearch</id>
     </property>
     <property>
       <name>Pages Following a Site Search</name>
@@ -316,7 +315,7 @@
     </property>
   </object>
   <object>
-    <name>Analytics.Code.Macros.PagesFollowingaSiteSearch</name>
+    <name>Analytics.Code.Macros.PagesFollowingASiteSearch</name>
     <number>0</number>
     <className>XWiki.WikiMacroParameterClass</className>
     <guid>194358fc-caef-47b5-8eb1-b5af6e520659</guid>
@@ -394,7 +393,7 @@
     </property>
   </object>
   <object>
-    <name>Analytics.Code.Macros.PagesFollowingaSiteSearch</name>
+    <name>Analytics.Code.Macros.PagesFollowingASiteSearch</name>
     <number>1</number>
     <className>XWiki.WikiMacroParameterClass</className>
     <guid>e54e2343-6cfc-4dba-9891-e1639171d88b</guid>

@@ -20,18 +20,18 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc version="1.4" reference="Analytics.Code.Macros.PagesFollowingaSiteSearchJSON" locale="">
+<xwikidoc version="1.4" reference="Analytics.Code.Macros.PagesFollowingASiteSearchJSON" locale="">
   <web>Analytics.Code.Macros</web>
-  <name>PagesFollowingaSiteSearchJSON</name>
+  <name>PagesFollowingASiteSearchJSON</name>
   <language/>
   <defaultLanguage/>
   <translation>0</translation>
   <creator>xwiki:XWiki.Admin</creator>
-  <parent>xwiki:Analytics.Code.Macros.PagesFollowingaSiteSearch</parent>
+  <parent>xwiki:Analytics.Code.Macros.PagesFollowingASiteSearch</parent>
   <author>xwiki:XWiki.Admin</author>
   <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
   <version>1.1</version>
-  <title>PagesFollowingaSiteSearchJSON</title>
+  <title>PagesFollowingASiteSearchJSON</title>
   <comment/>
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
@@ -51,19 +51,19 @@
   #end
   ##
   #set ($matomoKeysMapping = {
-  'destinationPage' : 'label',
-  'clicked' : 'nb_hits_following_search',
-  'pageViews' : 'nb_hits',
-  'loadTime' : 'avg_page_load_time'
+    'destinationPage': 'label',
+    'clicked': 'nb_hits_following_search',
+    'pageViews': 'nb_hits',
+    'loadTime': 'avg_page_load_time'
   })
   #set ($sort = 'destinationPage')
   #set ($order = 'asc')
   #if ($request.sort)
-    #set($sort = $matomoKeysMapping.get($request.sort))
-    #set($order = $request.dir)
+    #set ($sort = $matomoKeysMapping.get($request.sort))
+    #set ($order = $request.dir)
   #end
 
-  #set ($filters={})
+  #set ($filters = {})
   #foreach ($key in $matomoKeysMapping.keySet())
     #set ($value = $request.get($key))
     #if ($value &amp;&amp; $value != '')
@@ -91,11 +91,11 @@
     #subSet( $analyticsResult, $offset, $toIndex, $resultList)
   #end
   #set ($results = {
-    "totalrows": $analyticsResult.size(),
-    "returnedrows": $resultList.size(),
-    "offset": $mathtool.add($offset, 1),
-    "reqNo": $numbertool.toNumber($request.reqNo).intValue(),
-    "rows": []
+    'totalrows': $analyticsResult.size(),
+    'returnedrows': $resultList.size(),
+    'offset': $mathtool.add($offset, 1),
+    'reqNo': $numbertool.toNumber($request.reqNo).intValue(),
+    'rows': []
   })
   #foreach ($currentEntry in $resultList)
     #set ($rowIdentifier = $currentEntry.get('url').asText())

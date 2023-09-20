@@ -47,7 +47,7 @@
 #if ($request.macroName == 'MostViewedPages')
   #set ($discard = $parameters.put('pageUrl', $request.rowIdentifier))
   #set ($discard = $parameters.put('method', 'Actions.getPageUrl'))
-#elseif ($request.macroName == 'PagesFollowingaSiteSearch')
+#elseif ($request.macroName == 'PagesFollowingASiteSearch')
   #set ($discard = $parameters.put('method', 'Actions.getPageUrlsFollowingSiteSearch'))
   #set ($discard = $parameters.put('expanded', '1'))
   #set ($discard = $parameters.put('flat', '1'))
