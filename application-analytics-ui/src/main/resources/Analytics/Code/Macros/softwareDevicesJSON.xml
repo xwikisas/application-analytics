@@ -63,8 +63,8 @@
   #set ($sort = 'nb_visits')
   #set ($order = 'desc')
   #if ($request.sort)
-    #set($sort = $keys.get($request.sort))
-    #set($order = $request.dir)
+    #set ($sort = $keys.get($request.sort))
+    #set ($order = $request.dir)
   #end
 
   #set ($filters={})
@@ -76,14 +76,14 @@
   #end
 
   #set ($parameters = {
-    'period' : $request.period,
-    'date' : $request.date,
-    'module' : 'API',
-    'method' : $request.matomoMethod,
-    'format' : 'json',
-    'filter_limit' : $request.limitEntries,
-    'filter_sort_column' : $sort,
-    'filter_sort_order' : $order
+    'period': $request.period,
+    'date': $request.date,
+    'module': 'API',
+    'method': $request.matomoMethod,
+    'format': 'json',
+    'filter_limit': $request.limitEntries,
+    'filter_sort_column': $sort,
+    'filter_sort_order': $order
   })
 
   ## Get the JSON response from Matomo.
@@ -94,11 +94,11 @@
   #end
 
   #set ($results = {
-    "totalrows": $analyticsResult.size(),
-    "returnedrows": $resultList.size(),
-    "offset": $mathtool.add($offset, 1),
-    "reqNo": $numbertool.toNumber($request.reqNo).intValue(),
-    "rows": []
+    'totalrows': $analyticsResult.size(),
+    'returnedrows': $resultList.size(),
+    'offset': $mathtool.add($offset, 1),
+    'reqNo': $numbertool.toNumber($request.reqNo).intValue(),
+    'rows': []
   })
   #foreach ($currentEntry in $resultList)
     #if( $request.matomoMethod == 'Resolution.getConfiguration')

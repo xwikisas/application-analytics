@@ -245,11 +245,10 @@
 {{velocity}}
 #getDate()
 #set ($discard =$xwiki.jsx.use('Analytics.Code.Macros.RowEvolution'))
-#set ($period = 'range')
 #set ($parameters = $escapetool.url({
   'resultPage': 'Analytics.Code.Macros.softwareDevicesJSON',
   'date': $date,
-  'period': $period,
+  'period': 'range',
   'limitEntries': '-1',
   'translationPrefix': 'analytics.softwareDevices.header.',
   'matomoMethod': ' DevicesDetection.getBrand',
@@ -263,11 +262,11 @@
       {'id': 'nbOfActions', 'displayer': 'html'},
       {'id': 'timeSpent', 'displayer': 'html'},
       {'id': 'bounceRate', 'displayer': 'html'},
-      {'id': 'actions',"filterable": false, "sortable": false, 'displayer': 'html'}
+      {'id': 'actions','filterable': false, 'sortable': false, 'displayer': 'html'}
     ],
     'entryDescriptor': {
-      'idProperty': 'deviceBrand'
-      }
+      'idProperty': 'deviceBrand' 
+    }
   }
 })
 #getAnalyticsMacroId('deviceBrandMacro', $macroId)
@@ -280,13 +279,13 @@
   sort='visits:desc'
 }}$jsontool.serialize($liveDataConfig){{/liveData}}
 
-#set ($parameters = {
-  "visits": "nb_visits",
-  "actions": "nb_actions",
-  "timeSpent": "sum_visit_length",
-  "bounceRate": "bounce_count"
+#set ($rowEvolutionParams = {
+  'visits': 'nb_visits',
+  'actions': 'nb_actions',
+  'timeSpent': 'sum_visit_length',
+  'bounceRate': 'bounce_count'
 })
-#modalRowEvolution($parameters, 'DeviceBrand', $macroId)
+#modalRowEvolution($rowEvolutionParams, 'DeviceBrand', $macroId)
 {{/velocity}}</code>
     </property>
     <property>

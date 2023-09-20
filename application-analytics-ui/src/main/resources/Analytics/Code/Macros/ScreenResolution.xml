@@ -249,7 +249,7 @@
 #set ($parameters = $escapetool.url({
   'resultPage': 'Analytics.Code.Macros.softwareDevicesJSON',
   'date': $date,
-  'period': $period,
+  'period': 'range',
   'limitEntries': '-1',
   'translationPrefix': 'analytics.softwareDevices.header.',
   'matomoMethod': 'Resolution.getResolution',
@@ -263,11 +263,11 @@
       {'id': 'nbOfActions', 'displayer': 'html'},
       {'id': 'timeSpent', 'displayer': 'html'},
       {'id': 'bounceRate', 'displayer': 'html'},
-      {'id': 'actions',"filterable": false, "sortable": false, 'displayer': 'html'}
+      {'id': 'actions','filterable': false, 'sortable': false, 'displayer': 'html'}
     ],
     'entryDescriptor': {
       'idProperty': 'resolution'
-      }
+    }
   }
 })
 #getAnalyticsMacroId('screenResolutionMacro', $macroId)
@@ -280,13 +280,13 @@
   sort='visits:desc'
 }}$jsontool.serialize($liveDataConfig){{/liveData}}
 
-#set ($parameters = {
-  "visits": "nb_visits",
-  "actions": "nb_actions",
-  "timeSpent": "sum_visit_length",
-  "bounceRate": "bounce_count"
+#set ($rowEvolutionParams = {
+  'visits': 'nb_visits',
+  'actions': 'nb_actions',
+  'timeSpent': 'sum_visit_length',
+  'bounceRate': 'bounce_count'
 })
-#modalRowEvolution($parameters, 'ScreenResolution', $macroId)
+#modalRowEvolution($rowEvolutionParams, 'ScreenResolution', $macroId)
 {{/velocity}}</code>
     </property>
     <property>
