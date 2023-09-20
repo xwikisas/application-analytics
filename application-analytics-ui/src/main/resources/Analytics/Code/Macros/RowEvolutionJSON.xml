@@ -44,11 +44,11 @@
   'format' : 'json'
 })
 #if ($request.macroName == 'MostViewedPages')
-  $parameters.put('pageUrl', $request.parameter)
-  $parameters.put('method', 'Actions.getPageUrl')
+  #set ($discard = $parameters.put('pageUrl', $request.rowIdentifier))
+  #set ($discard $parameters.put('method', 'Actions.getPageUrl'))
 #elseif ($request.macroName == 'SearchCategories')
-  $parameters.put('segment', $request.parameter)
-  $parameters.put('method', 'Actions.getSiteSearchCategories')
+  #set ($discard = $parameters.put('segment', $request.rowIdentifier))
+  #set ($discard $parameters.put('method', 'Actions.getSiteSearchCategories'))
 #end
 #set ($analyticsResult = $services.analytics.getMatomoRequestResult($parameters, {}, 'RowEvolution'))
 #jsonResponse($analyticsResult)

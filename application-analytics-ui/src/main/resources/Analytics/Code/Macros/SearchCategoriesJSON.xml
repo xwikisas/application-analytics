@@ -50,60 +50,62 @@
     #set ($limit = 15)
   #end
   ##
-  #set ($keys = {
-  'category' : 'label',
-  'searches' : 'nb_visits',
-  'searchResultsPages' : 'nb_pages_per_search'
+  #set ($matomoKeysMapping = {
+    'category': 'label',
+    'searches': 'nb_visits',
+    'searchResultsPages': 'nb_pages_per_search'
   })
   #set ($sort = 'nb_visits')
   #set ($order = 'desc')
   #if ($request.sort)
-    #set($sort = $keys.get($request.sort))
-    #set($order = $request.dir)
+    #set ($sort = $matomoKeysMapping.get($request.sort))
+    #set ($order = $request.dir)
   #end
 
   #set ($filters={})
-  #foreach ($key in $keys.keySet())
+  #foreach ($key in $matomoKeysMapping.keySet())
     #set ($value = $request.get($key))
     #if ($value &amp;&amp; $value != '')
-      $filters.put($keys.get($key), $request.get($key))
+      $filters.put($matomoKeysMapping.get($key), $request.get($key))
     #end
   #end
 
   #set ($parameters = {
-    'period' : $request.period,
-    'date' : $request.date,
-    'module' : 'API',
-    'method' : 'Actions.getSiteSearchCategories',
-    'format' : 'json',
-    'filter_limit' : $request.limitEntries,
+    'period': $request.period,
+    'date': $request.date,
+    'module': 'API',
+    'method': 'Actions.getSiteSearchCategories',
+    'format': 'json',
+    'filter_limit': $request.limitEntries,
     'filter_sort_column' : $sort,
-    'filter_sort_order' : $order,
-    'expanded' : '1',
-    'flat' : '1'
+    'filter_sort_order': $order,
+    'expanded': '1',
+    'flat': '1'
   })
 
   ## Get the JSON response from Matomo.
   #set ($analyticsResult = $services.analytics.getMatomoRequestResult($parameters, $filters, 'MostViewedPages'))
   #if ($offset &lt; $analyticsResult.size())
     #set ($toIndex =  $mathtool.min($mathtool.add($offset, $limit), $analyticsResult.size()))
-    #subSet( $analyticsResult, $offset, $toIndex, $resultList)
+    #subSet ($analyticsResult, $offset, $toIndex, $resultList)
   #end
 
   #set ($results = {
-    "totalrows": $analyticsResult.size(),
-    "returnedrows": $resultList.size(),
-    "offset": $mathtool.add($offset, 1),
-    "reqNo": $numbertool.toNumber($request.reqNo).intValue(),
-    "rows": []
+    'totalrows': $analyticsResult.size(),
+    'returnedrows': $resultList.size(),
+    'offset': $mathtool.add($offset, 1),
+    'reqNo': $numbertool.toNumber($request.reqNo).intValue(),
+    'rows': []
   })
   #foreach ($currentEntry in $resultList)
+    ## The segment can assist in identifying a row within the Matomo tables; in this instance, the segment represents
+    ## the category itself.
     #set ($parameter = $currentEntry.get('segment').asText())
     #set ($discard = $results.rows.add({
-      'category' : $currentEntry.get('label').asText(),
-      'searches' : $currentEntry.get('nb_visits').asText(),
-      'searchResultsPages' : $currentEntry.get('nb_pages_per_search').asText(),
-      'actions' : "#analyticsActions($parameter)"
+      'category': $currentEntry.get('label').asText(),
+      'searches': $currentEntry.get('nb_visits').asText(),
+      'searchResultsPages': $currentEntry.get('nb_pages_per_search').asText(),
+      'actions': "#analyticsActions($parameter)"
     }))
   #end
   #jsonResponse($results)
