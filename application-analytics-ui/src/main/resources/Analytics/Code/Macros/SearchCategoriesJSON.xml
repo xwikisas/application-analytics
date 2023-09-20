@@ -96,16 +96,21 @@
     'offset': $mathtool.add($offset, 1),
     'reqNo': $numbertool.toNumber($request.reqNo).intValue(),
     'rows': []
+    'totalrows': $analyticsResult.size(),
+    'returnedrows': $resultList.size(),
+    'offset': $mathtool.add($offset, 1),
+    'reqNo': $numbertool.toNumber($request.reqNo).intValue(),
+    'rows': []
   })
   #foreach ($currentEntry in $resultList)
     ## The segment can assist in identifying a row within the Matomo tables; in this instance, the segment represents
     ## the category itself.
-    #set ($parameter = $currentEntry.get('segment').asText())
+    #set ($rowIdentifier = $currentEntry.get('segment').asText())
     #set ($discard = $results.rows.add({
       'category': $currentEntry.get('label').asText(),
       'searches': $currentEntry.get('nb_visits').asText(),
       'searchResultsPages': $currentEntry.get('nb_pages_per_search').asText(),
-      'actions': "#analyticsActions($parameter)"
+      'actions': "#analyticsActions($rowIdentifier)"
     }))
   #end
   #jsonResponse($results)
