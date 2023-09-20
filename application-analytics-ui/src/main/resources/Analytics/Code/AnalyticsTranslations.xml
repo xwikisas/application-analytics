@@ -73,15 +73,15 @@ analytics.rowEvolution.modal.month.label=Month
 analytics.rowEvolution.modal.year.label=Year
 analytics.rowEvolution.modal.field.pageViews=Page views
 analytics.rowEvolution.modal.field.uniqueViews=Unique views
-analytics.rowEvolution.modal.field.avgTime=Time spent  on page
+analytics.rowEvolution.modal.field.avgTime=Time spent on page
 analytics.rowEvolution.modal.field.searches=Searches
 analytics.rowEvolution.modal.field.searchResultPages=Search result pages
 
 ## Site Search Keywords Macro
 analytics.siteSearchKeywords.header.actions=Actions
-analytics.siteSearchKeywords.header.exitRate=%Search Exists
+analytics.siteSearchKeywords.header.exitRate=Search Exists(%)
 analytics.siteSearchKeywords.header.keyword=Keyword
-analytics.siteSearchKeywords.header.nbOfResultPages=Search Results Pages
+analytics.siteSearchKeywords.header.nbOfResultPages=Search results pages
 analytics.siteSearchKeywords.header.searches=Searches
 analytics.action.hover.rowEvolution=Row Evolution
 

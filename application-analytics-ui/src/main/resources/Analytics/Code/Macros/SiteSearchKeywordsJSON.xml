@@ -51,16 +51,16 @@
   #end
   ##
   #set ($keys = {
-    'keyword' : 'label',
-    'searches' : 'nb_visits',
-    'nbOfResultPages' : 'nb_pages_per_search',
-    'exitRate' : 'exit_rate'
+    'keyword': 'label',
+    'searches': 'nb_visits',
+    'nbOfResultPages': 'nb_pages_per_search',
+    'exitRate': 'exit_rate'
   })
   #set ($sort = 'nb_hits')
   #set ($order = 'desc')
   #if ($request.sort)
-    #set($sort = $keys.get($request.sort))
-    #set($order = $request.dir)
+    #set ($sort = $keys.get($request.sort))
+    #set ($order = $request.dir)
   #end
 
   #set ($filters={})
@@ -72,15 +72,15 @@
   #end
 
   #set ($parameters = {
-    'period' : $request.period,
-    'date' : $request.date,
-    'module' : 'API',
-    'method' : 'Actions.getSiteSearchKeywords',
-    'format' : 'json',
-    'filter_limit' : $request.limitEntries,
-    'filter_sort_column' : $sort,
-    'filter_sort_order' : $order
-    })
+    'period': $request.period,
+    'date': $request.date,
+    'module': 'API',
+    'method': 'Actions.getSiteSearchKeywords',
+    'format': 'json',
+    'filter_limit': $request.limitEntries,
+    'filter_sort_column': $sort,Mereu
+    'filter_sort_order': $order
+  })
 
   ## Get the JSON response from Matomo.
   #set ($analyticsResult = $services.analytics.getMatomoRequestResult($parameters, $filters, 'MostViewedPages'))
@@ -89,20 +89,20 @@
     #subSet($analyticsResult, $offset, $toIndex, $resultList)
   #end
   #set ($results = {
-    "totalrows": $analyticsResult.size(),
-    "returnedrows": $resultList.size(),
-    "offset": $mathtool.add($offset, 1),
-    "reqNo": $numbertool.toNumber($request.reqNo).intValue(),
-    "rows": []
+    'totalrows': $analyticsResult.size(),
+    'returnedrows': $resultList.size(),
+    'offset': $mathtool.add($offset, 1),
+    'reqNo': $numbertool.toNumber($request.reqNo).intValue(),
+    'rows': []
   })
   #foreach($currentEntry  in $resultList)
     #set ($parameter =  $currentEntry.get('segment').asText())
     #set ($discard = $results.rows.add({
-      'keyword' : $currentEntry.get('label').asText(),
-      'searches' : $currentEntry.get('nb_visits').asText(),
-      'nbOfResultPages' : $currentEntry.get('nb_pages_per_search').asText(),
-      'exitRate' : $currentEntry.get('exit_rate').asText(),
-      'actions' : "#analyticsActions($parameter)"
+      'keyword': $currentEntry.get('label').asText(),
+      'searches': $currentEntry.get('nb_visits').asText(),
+      'nbOfResultPages': $currentEntry.get('nb_pages_per_search').asText(),
+      'exitRate': $currentEntry.get('exit_rate').asText(),
+      'actions': "#analyticsActions($parameter)"
     }))
   #end
   #jsonResponse($results)

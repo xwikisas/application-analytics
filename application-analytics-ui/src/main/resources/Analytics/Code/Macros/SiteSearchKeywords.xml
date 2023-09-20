@@ -279,11 +279,11 @@
   sourceParameters="$parameters"
 }}$jsontool.serialize($liveDataConfig){{/liveData}}
 
-#set ($parameters = { 
+#set ($rowEvolutionParams = {
 'searches': 'nb_visits'
 ,'searchResultPages': 'nb_pages_per_search'
 })
-#modalRowEvolution( $parameters, 'SiteSearchKeyword' $macroId)
+#modalRowEvolution($rowEvolutionParams, 'SiteSearchKeyword' $macroId)
 {{/velocity}}</code>
     </property>
     <property>
