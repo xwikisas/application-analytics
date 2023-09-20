@@ -245,10 +245,9 @@
 {{velocity}}
 #getDate()
 #set ($discard =$xwiki.jsx.use('Analytics.Code.Macros.RowEvolution'))
-#set ($period = 'range')
 #set ($parameters = $escapetool.url({
   'date': $date,
-  'period': $period,
+  'period': 'range',
   'limitEntries': '-1',
   'translationPrefix': 'analytics.searchCategories.header.',
   'resultPage': 'Analytics.Code.Macros.SearchCategoriesJSON'
