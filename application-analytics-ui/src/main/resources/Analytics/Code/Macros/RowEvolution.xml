@@ -255,10 +255,10 @@ require(['jquery', 'chart'], ($) =&gt; {
     const rowIdentifier = $(this).data('rowIdentifier');
     currentModal = $(this).closest('.xwiki-livedata').next(SELECTORS.modal);
     // The livedata structure has changed starting with XWiki 14+ and so the modal will be undefined on these
-    // version. Remove this check after upgrading to the 14.10 XWiki parent.
+    // versions. Remove this check after upgrading to the 14.10 XWiki parent.
     if(!currentModal.length) {
-      // Selector for XWiki 14+
-      currentModal=$(this).closest('.liveData').next(SELECTORS.modal);
+      // Selector for XWiki 14+.
+      currentModal = $(this).closest('.liveData').next(SELECTORS.modal);
     }
     currentOptions = currentModal.find(SELECTORS.options);
     currentLoadingAnimation = currentModal.find(SELECTORS.loading);
