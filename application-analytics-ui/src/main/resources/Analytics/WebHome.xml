@@ -340,7 +340,7 @@
       <name>platform.panels.AnalyticsApplication</name>
     </property>
     <property>
-      <parameters>label=$escapetool.xml($services.localization.render('analytics.extension.title'))
+      <parameters>label=$services.localization.render('analytics.extension.title')
         target=Analytics.WebHome
         icon=icon:chart-bar</parameters>
     </property>

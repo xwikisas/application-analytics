@@ -432,8 +432,8 @@
 &lt;div class="xform half"&gt;
   &lt;form id="analyticsFilter" class="analytics-form-flex"&gt;
 	&lt;div class="analytics-form-item analytics-flex-item"&gt;
-	  &lt;!-- Start Date Label &amp; Input Group --&gt;
-      &lt;label for="analyticsStartDate"&gt;$escapetool.xml($services.localization.render('rendering.macro.analyticsFilter.startDate'))&lt;/label&gt;
+	  &lt;!-- Start date label and input --&gt;
+    &lt;label for="analyticsStartDate"&gt;$escapetool.xml($services.localization.render('rendering.macro.analyticsFilter.startDate'))&lt;/label&gt;
 		#set ($dateTimePickerParams = {
 		  'id': 'analyticsStartDate',
 		  'name': 'analyticsStartDate',
@@ -443,20 +443,22 @@
 		#dateTimePicker($dateTimePickerParams)
 	&lt;/div&gt;
 	  &lt;div class="analytics-form-item analytics-flex-item"&gt;
-		&lt;!-- End Date Label &amp; Input Group --&gt;
-		&lt;label for="analyticsEndDate"&gt;$escapetool.xml($services.localization.render('rendering.macro.analyticsFilter.endDate'))&lt;/label&gt;
+		&lt;!-- End date label and input --&gt;
+		&lt;label for="analyticsEndDate"&gt;$escapetool.xml($services.localization.render(
+    'rendering.macro.analyticsFilter.endDate'))&lt;/label&gt;
 		#set ($dateTimePickerParams = {
-          'id': 'analyticsEndDate',
-          'name': 'analyticsEndDate',
-          'data-format': 'yyyy-MM-dd',
-          'placeholder': $placeholderEnd
+      'id': 'analyticsEndDate',
+      'name': 'analyticsEndDate',
+      'data-format': 'yyyy-MM-dd',
+      'placeholder': $placeholderEnd
 		})
 		#dateTimePicker($dateTimePickerParams)
 	&lt;/div&gt;
 	&lt;!-- Submit Button --&gt;
 	&lt;div class="analytics-form-item analytics-flex-item"&gt;
 	  &lt;span class="buttonwrapper b-1"&gt;
-	    &lt;input type="submit" value="$escapetool.xml($services.localization.render('rendering.macro.analyticsFilter.apply'))" class="btn btn-default button"/&gt;
+	    &lt;input type="submit" value="$escapetool.xml($services.localization.render('rendering.macro.analyticsFilter.apply'
+      ))" class="btn btn-default button"/&gt;
       &lt;/span&gt;
 	&lt;/div&gt;
 	&lt;/form&gt;
