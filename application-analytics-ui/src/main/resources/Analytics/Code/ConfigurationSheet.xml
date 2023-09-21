@@ -83,8 +83,7 @@
   &lt;p&gt;
     &lt;input type="submit" class="btn btn-primary" name="action_saveandcontinue"
       value="$escapetool.xml($services.localization.render('save'))"/&gt;
-   &lt;input id='checkTrackingCode' type="submit" class="btn btn-primary" name="action_checktrackingcode"
-      value="$escapetool.xml($services.localization.render('analytics.config.checkTrackingCode'))"/&gt;
+      &lt;iframe id="checkTrackingCodeIframe" class="hide" src=""&gt;&lt;/iframe&gt;
   &lt;/p&gt;
 &lt;/form&gt;
 #else
