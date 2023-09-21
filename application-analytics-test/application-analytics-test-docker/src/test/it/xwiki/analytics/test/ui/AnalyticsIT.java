@@ -61,15 +61,14 @@ public class AnalyticsIT
                 .withEnv("MATOMO_DATABASE_DBNAME", "matomo")
                 .withEnv("MATOMO_FIRST_USER_NAME", "ADMIN1")
                 .withEnv("MATOMO_FIRST_USER_EMAIL", "ADMIN1@xwiki.com")
-                .withEnv("MATOMO_FIRST_USER_PASSWORD", "ADMIN1");
-                //.withFileSystemBind("src/main/resources/config.ini.php","/var/www/html/config/config.ini.php");
+                .withEnv("MATOMO_FIRST_USER_PASSWORD", "ADMIN1")
+                .withFileSystemBind("src/main/resources/config.ini.php","/var/www/html/config/config.ini.php");
             matomoContainer.setPortBindings(
                 // !After the container has been opened and the selenium register a user I have to overwrite the
                 // config.ini.php to make Matomo work
                 Collections.singletonList("9999:80"));    // Map host port 9999 to container port 80
             DockerTestUtils.startContainer(matomoContainer, testConfiguration);
-            matomoContainer.execInContainer("apt-get -y update");
-            matomoContainer.execInContainer("apt install git");
+            matomoContainer.execInContainer("apt-get -y update", "apt-get -y install git");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
