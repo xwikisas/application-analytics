@@ -141,7 +141,7 @@
       <position>1, 2</position>
     </property>
     <property>
-      <title>$services.localization.render('rendering.macro.mostViewedPage.name')</title>
+      <title>$escapetool.xml($services.localization.render('rendering.macro.mostViewedPage.name'))</title>
     </property>
   </object>
   <object>
@@ -204,7 +204,7 @@
       <position>1, 1</position>
     </property>
     <property>
-      <title>$services.localization.render('rendering.macro.analyticsFilter.name')</title>
+      <title>$escapetool.xml($services.localization.render('rendering.macro.analyticsFilter.name'))</title>
     </property>
   </object>
   <object>
@@ -340,7 +340,7 @@
       <name>platform.panels.AnalyticsApplication</name>
     </property>
     <property>
-      <parameters>label=$services.localization.render('analytics.extension.title')
+      <parameters>label=$escapetool.xml($services.localization.render('analytics.extension.title'))
         target=Analytics.WebHome
         icon=icon:chart-bar</parameters>
     </property>
