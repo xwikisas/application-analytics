@@ -104,19 +104,16 @@
     ## The Resolution.getConfiguration method from matomo doesn't return a segment for each row and to get segment I
     ## must split the label into it's components and construct the segment myself.
     #if ($request.matomoMethod == 'Resolution.getConfiguration')
-    #set ($values= $currentEntry.get('label').asText().split(' / '))
-    #set ($segmentsName = ['operatingSystemName', 'browserName', 'resolution'])
-    #set ($finalSegment = '')
-    #foreach ($i in [0..2])
-      #set ($currentSegment = $segmentsName.get($i) + '==' + $values.get($i))
-      #if ($foreach.last)
-        #set ($segment = $finalSegment + $currentSegment)
-      #else
-        #set ($segment = $finalSegment + $currentSegment + ';')
+      #set ($values= $currentEntry.get('label').asText().split(' / '))
+      #set ($segmentsName = ['operatingSystemName', 'browserName', 'resolution'])
+      #set ($segmentParts = [])
+      #foreach ($i in [0..2])
+        #set ($currentSegment = $segmentsName.get($i) + '==' + $values.get($i))
+        #set ($discard = $segmentParts.add($currentSegment))
       #end
-    #end
-    #else
-      #set ($segment = $currentEntry.get('segment').asText())
+      #set ($segment = $stringtool.join($segmentParts, ';'))
+      #else
+        #set ($segment = $currentEntry.get('segment').asText())
     #end
     #set ($conversionRate =  $currentEntry.get('nb_visits_converted').asText() + '%')
     #set ($discard = $results.rows.add({

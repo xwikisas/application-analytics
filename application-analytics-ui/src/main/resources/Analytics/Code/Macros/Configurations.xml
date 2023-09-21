@@ -280,7 +280,7 @@
 }}$jsontool.serialize($liveDataConfig){{/liveData}}
 
 #set ($rowEvolutionParams = {
-  $'visits': 'nb_visits',
+  'visits': 'nb_visits',
   'actions': 'nb$parameters_actions',
   'timeSpent': 'sum_visit_length',
   'bounceRate': 'bounce_count',
