@@ -244,43 +244,51 @@
       <code>{{include reference='Analytics.Code.Macros.VelocityMacros'/}}
 
 {{velocity}}
-#getDate()
-#set ($discard = $xwiki.jsx.use('Analytics.Code.Macros.RowEvolution'))
-#set ($parameters = $escapetool.url({
-  'date': $date,
-  'period': 'range',
-  'limitEntries': '-1',
-  'translationPrefix': 'analytics.PagesFollowingASiteSearchJSON.header.',
-  'resultPage': 'Analytics.Code.Macros.PagesFollowingASiteSearchJSON'
-}))
-#set ($liveDataConfig= {
-  'meta': {
-    'propertyDescriptors': [
-      {'id': 'destinationPage', 'displayer': 'html'},
-      {'id': 'clicked', 'displayer': 'html'},
-      {'id': 'pageViews', 'displayer': 'html'},
-      {'id': 'loadTime', 'displayer': 'html'},
-      {'id': 'actions', 'filterable': false, 'sortable': false, 'displayer': 'html'}
-    ],
-    'entryDescriptor': {
-      'idProperty': 'destinationPage'
+#macro(executeMacro)
+  #getDate()
+  #set ($discard = $xwiki.jsx.use('Analytics.Code.Macros.RowEvolution'))
+  #set ($parameters = $escapetool.url({
+    'date': $date,
+    'period': 'range',
+    'limitEntries': '-1',
+    'translationPrefix': 'analytics.PagesFollowingASiteSearchJSON.header.',
+    'resultPage': 'Analytics.Code.Macros.PagesFollowingASiteSearchJSON'
+  }))
+  #set ($liveDataConfig= {
+    'meta': {
+      'propertyDescriptors': [
+        {'id': 'destinationPage', 'displayer': 'html'},
+        {'id': 'clicked', 'displayer': 'html'},
+        {'id': 'pageViews', 'displayer': 'html'},
+        {'id': 'loadTime', 'displayer': 'html'},
+        {'id': 'actions', 'filterable': false, 'sortable': false, 'displayer': 'html'}
+      ],
+      'entryDescriptor': {
+        'idProperty': 'destinationPage'
+      }
     }
-  }
-})
-#getAnalyticsMacroId('PagesFollowingASiteSearch', $macroId)
+  })
+  #getAnalyticsMacroId('PagesFollowingASiteSearch', $macroId)
 
-{{liveData
-  id="$macroId"
-  properties='destinationPage, clicked, pageViews, loadTime, actions'
-  source='liveTable'
-  sourceParameters="$parameters"
-}}$jsontool.serialize($liveDataConfig){{/liveData}}
+  {{liveData
+    id="$macroId"
+    properties='destinationPage, clicked, pageViews, loadTime, actions'
+    source='liveTable'
+    sourceParameters="$parameters"
+  }}$jsontool.serialize($liveDataConfig){{/liveData}}
 
-#set ($rowEvolutionParams = {
-  'pageViews': 'nb_hits',
-  'clickedSearchResult': 'nb_hits_following_search'
-})
-#modalRowEvolution($rowEvolutionParams, 'PagesFollowingASiteSearch', $macroId)
+  #set ($rowEvolutionParams = {
+    'pageViews': 'nb_hits',
+    'clickedSearchResult': 'nb_hits_following_search'
+  })
+  #modalRowEvolution($rowEvolutionParams, 'PagesFollowingASiteSearch', $macroId)
+#end
+#if ($services.licensing.licensor.hasLicensureForEntity(
+  $services.model.createDocumentReference('', ['Analytics', 'Code'], 'ConfigurationClass')))
+  #executeMacro()
+#else
+  {{error}}#getMissingLicenseMessage('analytics.extension.name'){{/error}}
+#end
 {{/velocity}}</code>
     </property>
     <property>

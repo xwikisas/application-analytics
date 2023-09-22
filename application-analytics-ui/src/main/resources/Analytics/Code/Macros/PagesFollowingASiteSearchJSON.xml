@@ -40,7 +40,7 @@
 {{velocity}}
 #if ($xcontext.action == 'get')
   #set ($offset = $numbertool.toNumber($request.offset).intValue())
-  ## The offset sent by the live table starts at 1.
+  ## The offset sent by the livedata starts at 1.
   #set ($offset = $offset - 1)
   #if (!$offset || $offset &lt; 0)
     #set ($offset = 0)
@@ -67,7 +67,7 @@
   #foreach ($key in $matomoKeysMapping.keySet())
     #set ($value = $request.get($key))
     #if ($value &amp;&amp; $value != '')
-      $filters.put($matomoKeysMapping.get($key), $request.get($key))
+      #set ($discard = $filters.put($matomoKeysMapping.get($key), $request.get($key)))
     #end
   #end
 
