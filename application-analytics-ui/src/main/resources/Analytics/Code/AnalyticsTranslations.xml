@@ -79,11 +79,11 @@ analytics.rowEvolution.modal.field.searchResultPages=Search result pages
 
 ## Site Search Keywords Macro
 analytics.siteSearchKeywords.header.actions=Actions
-analytics.siteSearchKeywords.header.exitRate=Search Exists(%)
+analytics.siteSearchKeywords.header.exitRate=Search exists(%)
 analytics.siteSearchKeywords.header.keyword=Keyword
 analytics.siteSearchKeywords.header.nbOfResultPages=Search results pages
 analytics.siteSearchKeywords.header.searches=Searches
-analytics.action.hover.rowEvolution=Row Evolution
+analytics.action.hover.rowEvolution=Row evolution
 
 ## Admin section
 admin.analytics.application=Analytics

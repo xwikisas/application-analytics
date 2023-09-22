@@ -244,45 +244,53 @@
       <code>{{include reference='Analytics.Code.Macros.VelocityMacros'/}}
 
 {{velocity}}
-#getDate()
-#set ($discard =$xwiki.jsx.use('Analytics.Code.Macros.RowEvolution'))
-#set ($parameters = $escapetool.url({
-  'date': $date,
-  'period': 'range',
-  'limitEntries': '-1',
-  'translationPrefix': 'analytics.siteSearchKeywords.header.',
-  'resultPage': 'Analytics.Code.Macros.SiteSearchKeywordsJSON'
-}))
-#set ($columns = [])
-#set ($liveDataConfig = {
-  'meta': {
-    'propertyDescriptors': [
-      {'id': 'keyword', 'displayer': 'html'},
-      {'id': 'searches', 'displayer': 'html'},
-      {'id': 'nbOfResultPages', 'displayer': 'html'},
-      {'id': 'exitRate', 'displayer': 'html'},
-      {'id': 'actions','filterable': false, 'sortable': false, 'displayer': 'html'}
-    ],
-    'entryDescriptor': {
-       'idProperty': 'keyword'
-      }
-  }
-})
+#macro(executeMacro)
+  #getDate()
+  #set ($discard =$xwiki.jsx.use('Analytics.Code.Macros.RowEvolution'))
+  #set ($parameters = $escapetool.url({
+    'date': $date,
+    'period': 'range',
+    'limitEntries': '-1',
+    'translationPrefix': 'analytics.siteSearchKeywords.header.',
+    'resultPage': 'Analytics.Code.Macros.SiteSearchKeywordsJSON'
+  }))
+  #set ($columns = [])
+  #set ($liveDataConfig = {
+    'meta': {
+      'propertyDescriptors': [
+        {'id': 'keyword', 'displayer': 'html'},
+        {'id': 'searches', 'displayer': 'html'},
+        {'id': 'nbOfResultPages', 'displayer': 'html'},
+        {'id': 'exitRate', 'displayer': 'html'},
+        {'id': 'actions','filterable': false, 'sortable': false, 'displayer': 'html'}
+      ],
+      'entryDescriptor': {
+         'idProperty': 'keyword'
+        }
+    }
+  })
 
-#getAnalyticsMacroId('siteSearchKeywords', $macroId)
+  #getAnalyticsMacroId('siteSearchKeywords', $macroId)
 
-{{liveData
-  id="$macroId"
-  properties="keyword, searches, nbOfResultPages, exitRate, actions"
-  source='liveTable'
-  sourceParameters="$parameters"
-}}$jsontool.serialize($liveDataConfig){{/liveData}}
+  {{liveData
+    id="$macroId"
+    properties="keyword, searches, nbOfResultPages, exitRate, actions"
+    source='liveTable'
+    sourceParameters="$parameters"
+  }}$jsontool.serialize($liveDataConfig){{/liveData}}
 
-#set ($rowEvolutionParams = {
-  'searches': 'nb_visits',
-  'searchResultPages': 'nb_pages_per_search'
-})
-#modalRowEvolution($rowEvolutionParams, 'SiteSearchKeyword' $macroId)
+  #set ($rowEvolutionParams = {
+    'searches': 'nb_visits',
+    'searchResultPages': 'nb_pages_per_search'
+  })
+  #modalRowEvolution($rowEvolutionParams, 'SiteSearchKeyword' $macroId)
+#end
+#if ($services.licensing.licensor.hasLicensureForEntity(
+  $services.model.createDocumentReference('', ['Analytics', 'Code'], 'ConfigurationClass')))
+  #executeMacro()
+#else
+  {{error}}#getMissingLicenseMessage('analytics.extension.name'){{/error}}
+#end
 {{/velocity}}</code>
     </property>
     <property>

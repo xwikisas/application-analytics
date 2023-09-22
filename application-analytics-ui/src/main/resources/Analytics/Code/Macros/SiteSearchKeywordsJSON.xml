@@ -67,7 +67,7 @@
   #foreach ($key in $matomoKeysMapping.keySet())
     #set ($value = $request.get($key))
     #if ($value &amp;&amp; $value != '')
-      $filters.put($matomoKeysMapping.get($key), $request.get($key))
+      #set($discard = $filters.put($matomoKeysMapping.get($key), $request.get($key)))
     #end
   #end
 
@@ -78,7 +78,7 @@
     'method': 'Actions.getSiteSearchKeywords',
     'format': 'json',
     'filter_limit': $request.limitEntries,
-    'filter_sort_column': $sort,Mereu
+    'filter_sort_column': $sort,
     'filter_sort_order': $order
   })
 
