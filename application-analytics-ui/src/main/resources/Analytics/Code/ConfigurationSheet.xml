@@ -82,8 +82,8 @@
 #if ($xcontext.action == 'admin')
   &lt;p&gt;
     &lt;input type="submit" class="btn btn-primary" name="action_saveandcontinue"
-      value="$escapetool.xml($services.localization.render('save'))"/&gt;
-      &lt;iframe id="checkTrackingCodeIframe" class="hide" src=""&gt;&lt;/iframe&gt;
+    value="$escapetool.xml($services.localization.render('save'))"/&gt;
+    &lt;iframe id="checkMatomoConnection" class="hidden" src=""&gt;&lt;/iframe&gt;
   &lt;/p&gt;
 &lt;/form&gt;
 #else

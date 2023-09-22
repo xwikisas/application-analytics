@@ -61,26 +61,12 @@
         <picker>1</picker>
         <prettyName>Authentication Token </prettyName>
         <size>30</size>
-        <storageType>Clear</storageType>
+        <storageType>Hash</storageType>
         <unmodifiable>0</unmodifiable>
         <validationMessage/>
         <validationRegExp/>
         <classType>com.xpn.xwiki.objects.classes.PasswordClass</classType>
       </authToken>
-      <requestAddress>
-        <customDisplay/>
-        <disabled>0</disabled>
-        <hint/>
-        <name>requestAddress</name>
-        <number>4</number>
-        <picker>1</picker>
-        <prettyName>requestAddress</prettyName>
-        <size>30</size>
-        <unmodifiable>0</unmodifiable>
-        <validationMessage/>
-        <validationRegExp/>
-        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-      </requestAddress>
       <siteId>
         <customDisplay/>
         <disabled>0</disabled>
@@ -104,7 +90,7 @@
         <name>trackingCode</name>
         <number>1</number>
         <picker>1</picker>
-        <prettyName>Tracking Code</prettyName>
+        <prettyName>Matomo Tracking Code</prettyName>
         <rows>20</rows>
         <size>40</size>
         <unmodifiable>0</unmodifiable>
@@ -112,6 +98,20 @@
         <validationRegExp/>
         <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
       </trackingCode>
+      <requestAddress>
+        <customDisplay/>
+        <disabled>0</disabled>
+        <hint/>
+        <name>requestAddress</name>
+        <number>4</number>
+        <picker>1</picker>
+        <prettyName>requestAddress</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </requestAddress>
     </class>
     <property>
       <authToken/>
@@ -477,61 +477,53 @@
     </property>
     <property>
       <code>define('analyticsConfigMessages', {
-  prefix: 'analytics.config.',
+  prefix: 'analytics.config.checkConnection.',
   keys: [
-    'successTracker',
-    'errorTracker',
-    'successServices',
-    'errorServices',
-    'checkTracker'
+    'error',
+    'loading',
+    'success'
   ]
 });
 
 require(['jquery', 'xwiki-l10n!analyticsConfigMessages', 'xwiki-meta'], ($, l10n, xm) =&gt; {
 
-  // Listen to the iframe load event separately
-  $('#checkTrackingCodeIframe').on('load', function () {
+  let notification;
+  $('#checkMatomoConnection').on('load', function () {
     // I need this timeout to make sure that matomo has time to register&amp;process the request.
-    new XWiki.widgets.Notification(l10n['checkTracker'], 'inprogress', {timeout: 2});
+    notification = new XWiki.widgets.Notification(l10n['loading'], 'inprogress');
     setTimeout(() =&gt; {
-      if (sessionStorage.getItem("checkTracker")) {
         // Clear the flag.
-        sessionStorage.removeItem("checkTracker");
-        checkTracker();
-      }
+        checkConnection();
     }, 2000);
   });
 
   $(document).on('xwiki:document:saved', function (e) {
-    // setting up a session storage variable to be able to check the Matomo api after the refresh
-    window.sessionStorage.setItem('checkTracker', 1);
     let currentURL = new URL(window.location.href);
-    // generate an integer between 0 and 9007199254740992
-    let random = Math.floor(Math.random() * 9007199254740992);
+    let random = Math.random().toString().substring(2, 15);
     currentURL.searchParams.set("analyticsCheckTrackingCode", `${xm.userReference}${random}`);
-    
-    // Refresh the iframe
-    $('#checkTrackingCodeIframe').attr('src', currentURL.toString());
+    // Refresh the iframe.
+    $('#checkMatomoConnection').attr('src', currentURL.toString());
   });
 
-  function checkTracker() {
-    const params =
-    {
+  function checkConnection() {
+    const params = {
       'type': 'tracker',
       'pageUrl': window.location.href
     }
     const queryString = $.param(params);
-    $.getJSON(`/xwiki/bin/view/Analytics/Code/checkCredentials?${queryString}`)
+    let getLastVisitsDetailsJSONRef = XWiki.Model.resolve('Analytics.Code.GetLastVisitsDetailsJSON', XWiki.EntityType.DOCUMENT);
+    let url = new XWiki.Document(getLastVisitsDetailsJSONRef).getURL('get');
+    $.getJSON(`${url}?${queryString}`)
       .done((data) =&gt; {
         if (data.length) {
-          new XWiki.widgets.Notification(l10n['successTracker'], 'done');
+          notification.replace(new XWiki.widgets.Notification(l10n['success'], 'done'));
         }
         else {
-          new XWiki.widgets.Notification(l10n['errorTracker'], 'error');
+          notification.replace(new XWiki.widgets.Notification(l10n['error'], 'error'));
         }
       })
       .fail(() =&gt; {
-        new XWiki.widgets.Notification(l10n['errorServices'], 'error');
+        notification.replace(new XWiki.widgets.Notification(l10n['error'], 'error'));
       });
   }
 });
