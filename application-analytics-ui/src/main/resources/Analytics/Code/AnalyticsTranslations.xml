@@ -55,11 +55,12 @@ analytics.mostViewedPages.header.emptyvalue=-
 analytics.mostViewedPages.header.exitRate=Exit rate
 analytics.mostViewedPages.header.hits=Page views
 analytics.mostViewedPages.header.timeSpent=Time spent(s)
-analytics.mostViewedPages.header.title=Page title
+analytics.mostViewedPages.header.pageTitle=Page title
 analytics.mostViewedPages.header.visits=Unique visitors
 analytics.mostViewedPages.header.year=Year
 analytics.mostViewedPages.parameter.label.startDate=Start time of the date interval used for this macro
 analytics.mostViewedPages.parameter.label.endDate=End time of the date interval used for this macro
+rendering.macro.mostViewedPage.name=Most viewed pages
 
 ## Row Evolution
 analytics.rowEvolution.modal.label=Row Evolution
@@ -99,7 +100,11 @@ analytics.livedata.action.rowEvolution.title=Row Evolution
 ## Others
 analytics.extension.name=Analytics Application (Pro)
 analytics.extension.title=Analytics
-</content>
+rendering.macro.analyticsFilter.startDate=Start date
+rendering.macro.analyticsFilter.endDate=End date
+rendering.macro.analyticsFilter.apply=Apply
+rendering.macro.analyticsFilter.name=Analytics filter
+rendering.macro.analyticsFilter.description=Add filtering options for the analytics macros of the current page. The filtering criteria will be saved in the current URL, to have a reproducible state, and will also override eventual filter set at macro level.</content>
   <object>
     <name>Analytics.Code.AnalyticsTranslations</name>
     <number>0</number>
