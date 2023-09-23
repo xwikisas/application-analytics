@@ -38,25 +38,25 @@
   <hidden>true</hidden>
   <content>{{velocity output='false'}}
 #macro (getDate)
-  #set ($dashbord = $doc.getObject('Analytics.Code.AnalyticsDashboardClass'))
-  ## A dashboard will have a date inside and that date will take precedence over the date set by the macro.
-  #if ($dashbord)
-    #set ($startDate = $dashbord.getProperty('startDate'))
-    #set ($endDate = $dashbord.getProperty('endDate'))
+  ## If the analytics filter is used on a dashboard page, this could add filter parameters in the URL and these  have
+  ## priority over what is set at the macro level.
+  #if ($request.analyticsStartDate || $request.analyticsEndDate)
+    #set ($startDate = $request.analyticsStartDate )
+    #set ($endDate = $request.analyticsEndDate)
   #else
     #set ($startDate = $xcontext.macro.params.startDate.toString())
     #set ($endDate = $xcontext.macro.params.endDate.toString())
+    #set ($startDateObj = $datetool.toDate('yyyy/MM/dd HH:mm', $startDate))
+    #set ($startDate = $datetool.format('yyyy-MM-dd', $startDateObj))
+    #set ($endDateObj = $datetool.toDate('yyyy/MM/dd HH:mm', $endDate))
+    #set ($endDate = $datetool.format('yyyy-MM-dd', $endDateObj))
   #end
-  #set ($startDateObj = $datetool.toDate('yyyy/MM/dd HH:mm', $startDate))
-  #set ($startDate = $datetool.format('yyyy-MM-dd', $startDateObj))
-  #set ($endDateObj = $datetool.toDate('yyyy/MM/dd HH:mm', $endDate))
-  #set ($endDate = $datetool.format('yyyy-MM-dd', $endDateObj))
   ## Check if startDate or endDate are not defined and replace them with some default values, in order to match the end
   ## of the time interval. For startDate we use '2007-01-01' since it's the oldest one accepted by Matomo.
-  #if (!$startDate)
+  #if (!$startDate || $startDate == '')
     #set ($startDate = '2007-01-01')
   #end
-  #if (!$endDate)
+  #if (!$endDate || $endDate == '')
     #set ($endDate = $datetool.get('yyyy-MM-dd'))
   #end
   #set ($date = $startDate + ',' + $endDate)
@@ -96,7 +96,7 @@
 
 #macro(durationOption $value)
   &lt;option value="$value"&gt;
-    $services.localization.render('analytics.rowEvolution.modal.' + $value.toLowerCase() + '.label')
+    $escapetool.xml($services.localization.render('analytics.rowEvolution.modal.' + $value.toLowerCase() + '.label'))
   &lt;/option&gt;
 #end
 
@@ -112,7 +112,7 @@
   &lt;select id="rowEvolutionPeriod$id"  class="form-control rowEvolutionField"&gt;
     #foreach($key in $matomoFields.keySet())
       &lt;option value="$matomoFields.get($key)"&gt;
-        $services.localization.render('analytics.rowEvolution.modal.field.' + $key)
+        $escapetool.xml($services.localization.render('analytics.rowEvolution.modal.field.' + $key))
       &lt;/option&gt;
     #end
   &lt;/select&gt;
@@ -130,7 +130,7 @@
             &lt;span aria-hidden="true"&gt;&amp;times;&lt;/span&gt;
           &lt;/button&gt;
           &lt;h4 class="modal-title chartModalLabel"&gt;
-            $services.localization.render('analytics.rowEvolution.modal.label')
+            $escapetool.xml($services.localization.render('analytics.rowEvolution.modal.label'))
           &lt;/h4&gt;
         &lt;/div&gt;
         &lt;div class="rowEvolutionOptions" data-macro-name=$macroName data-request-page-url=$requestPageURL
@@ -142,7 +142,7 @@
         &lt;/div&gt;
         &lt;div class="modal-footer"&gt;
           &lt;button type="button" class="btn btn-default" data-dismiss="modal"&gt;
-            $services.localization.render('analytics.rowEvolution.modal.close')
+            $escapetool.xml($services.localization.render('analytics.rowEvolution.modal.close'))
           &lt;/button&gt;
         &lt;/div&gt;
       &lt;/div&gt;
@@ -156,7 +156,8 @@
     &lt;div class="container-fluid"&gt;
       &lt;div class="row"&gt;
         &lt;div class="col-md-3"&gt;
-          &lt;label for="rowEvolutionPeriod$id"&gt;$services.localization.render('analytics.rowEvolution.modal.period')
+          &lt;label for="rowEvolutionPeriod$id"&gt;$escapetool.xml($services.localization.render
+          ('analytics.rowEvolution.modal.period'))
           &lt;/label&gt;
           &lt;select id="rowEvolutionPeriod$id" class="rowEvolutionPeriod form-control"&gt;
             #durationOption("Day")
@@ -166,14 +167,15 @@
           &lt;/select&gt;
         &lt;/div&gt;
         &lt;div class="col-md-3"&gt;
-          &lt;label id=$id&gt;$services.localization.render('analytics.rowEvolution.modal.periodLength'):&lt;/label&gt;
+          &lt;label id=$id&gt;$escapetool.xml($services.localization.render('analytics.rowEvolution.modal.periodLength')):
+          &lt;/label&gt;
           #durationSelectList("rowEvolutionPeriodLengthDay" [30, 8, 60, 90, 180, 365, 500] $id)
           #durationSelectList("rowEvolutionPeriodLengthWeek" [4, 12, 26, 52, 104, 500] $id)
           #durationSelectList("rowEvolutionPeriodLengthMonth" [3, 6, 12, 24, 36, 120] $id)
           #durationSelectList("rowEvolutionPeriodLengthYear" [3, 5, 10] $id)
         &lt;/div&gt;
         &lt;div class="col-md-3"&gt;
-          &lt;label for="rowEvolutionPeriod$id"&gt;$services.localization.render('analytics.rowEvolution.modal.field')
+          &lt;label for="rowEvolutionPeriod$id"&gt;$escapetool.xml($services.localization.render('analytics.rowEvolution.modal.field'))
           &lt;/label&gt;
           #rowEvolutionFieldSelect($matomoFields $id)
         &lt;/div&gt;

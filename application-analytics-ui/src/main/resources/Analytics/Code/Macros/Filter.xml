@@ -20,9 +20,9 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc version="1.4" reference="Analytics.Code.Macros.MostViewedPages" locale="">
+<xwikidoc version="1.4" reference="Analytics.Code.Macros.Filter" locale="">
   <web>Analytics.Code.Macros</web>
-  <name>MostViewedPages</name>
+  <name>Filter</name>
   <language/>
   <defaultLanguage/>
   <translation>0</translation>
@@ -31,17 +31,192 @@
   <author>xwiki:XWiki.Admin</author>
   <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
   <version>1.1</version>
-  <title>MostViewedPages</title>
+  <title>Filter</title>
   <comment/>
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>true</hidden>
-  <content>{{mostViewedPage/}}</content>
+  <content/>
+  <class>
+    <name>Analytics.Code.Macros.Filter</name>
+    <customClass/>
+    <customMapping/>
+    <defaultViewSheet/>
+    <defaultEditSheet/>
+    <defaultWeb/>
+    <nameField/>
+    <validationScript/>
+    <endDate>
+      <customDisplay/>
+      <dateFormat>dd/MM/yyyy HH:mm:ss</dateFormat>
+      <disabled>0</disabled>
+      <emptyIsToday>1</emptyIsToday>
+      <hint/>
+      <name>endDate</name>
+      <number>2</number>
+      <picker>1</picker>
+      <prettyName>endDate</prettyName>
+      <size>20</size>
+      <unmodifiable>0</unmodifiable>
+      <validationMessage/>
+      <validationRegExp/>
+      <classType>com.xpn.xwiki.objects.classes.DateClass</classType>
+    </endDate>
+    <startDate>
+      <customDisplay/>
+      <dateFormat>dd/MM/yyyy HH:mm:ss</dateFormat>
+      <disabled>0</disabled>
+      <emptyIsToday>1</emptyIsToday>
+      <hint/>
+      <name>startDate</name>
+      <number>1</number>
+      <picker>1</picker>
+      <prettyName>startDate</prettyName>
+      <size>20</size>
+      <unmodifiable>0</unmodifiable>
+      <validationMessage/>
+      <validationRegExp/>
+      <classType>com.xpn.xwiki.objects.classes.DateClass</classType>
+    </startDate>
+  </class>
   <object>
-    <name>Analytics.Code.Macros.MostViewedPages</name>
+    <name>Analytics.Code.Macros.Filter</name>
+    <number>0</number>
+    <className>XWiki.StyleSheetExtension</className>
+    <guid>4327bfb3-0410-4bb2-9647-808b411ff0ac</guid>
+    <class>
+      <name>XWiki.StyleSheetExtension</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <cache>
+        <cache>0</cache>
+        <defaultValue>long</defaultValue>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <freeText>forbidden</freeText>
+        <largeStorage>0</largeStorage>
+        <multiSelect>0</multiSelect>
+        <name>cache</name>
+        <number>5</number>
+        <prettyName>Caching policy</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators>|, </separators>
+        <size>1</size>
+        <unmodifiable>0</unmodifiable>
+        <values>long|short|default|forbid</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </cache>
+      <code>
+        <contenttype>PureText</contenttype>
+        <disabled>0</disabled>
+        <editor>PureText</editor>
+        <name>code</name>
+        <number>2</number>
+        <prettyName>Code</prettyName>
+        <rows>20</rows>
+        <size>50</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </code>
+      <contentType>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <freeText>forbidden</freeText>
+        <largeStorage>0</largeStorage>
+        <multiSelect>0</multiSelect>
+        <name>contentType</name>
+        <number>6</number>
+        <prettyName>Content Type</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators>|, </separators>
+        <size>1</size>
+        <unmodifiable>0</unmodifiable>
+        <values>CSS|LESS</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </contentType>
+      <name>
+        <disabled>0</disabled>
+        <name>name</name>
+        <number>1</number>
+        <prettyName>Name</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </name>
+      <parse>
+        <disabled>0</disabled>
+        <displayFormType>select</displayFormType>
+        <displayType>yesno</displayType>
+        <name>parse</name>
+        <number>4</number>
+        <prettyName>Parse content</prettyName>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+      </parse>
+      <use>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <freeText>forbidden</freeText>
+        <largeStorage>0</largeStorage>
+        <multiSelect>0</multiSelect>
+        <name>use</name>
+        <number>3</number>
+        <prettyName>Use this extension</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators>|, </separators>
+        <size>1</size>
+        <unmodifiable>0</unmodifiable>
+        <values>currentPage|onDemand|always</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </use>
+    </class>
+    <property>
+      <cache>long</cache>
+    </property>
+    <property>
+      <code>.analytics-form-flex {
+  display: flex;
+  flex-wrap: wrap;
+}
+.analytics-form-item {
+  display: flex;
+  flex-direction: column;
+}
+.analytics-flex-item {
+  flex: 2 1 5rem;
+  margin: 0 .4rem;
+  margin-top: auto;
+  margin-bottom: 1rem;
+}</code>
+    </property>
+    <property>
+      <contentType>CSS</contentType>
+    </property>
+    <property>
+      <name/>
+    </property>
+    <property>
+      <parse>0</parse>
+    </property>
+    <property>
+      <use>currentPage</use>
+    </property>
+  </object>
+  <object>
+    <name>Analytics.Code.Macros.Filter</name>
     <number>0</number>
     <className>XWiki.WikiMacroClass</className>
-    <guid>dc943965-6af8-4905-8508-9b8c248c3930</guid>
+    <guid>43ef580e-2257-4987-9b85-1517d0023b60</guid>
     <class>
       <name>XWiki.WikiMacroClass</name>
       <customClass/>
@@ -234,61 +409,64 @@
       <async_cached>0</async_cached>
     </property>
     <property>
-      <async_context/>
+      <async_context>
+        <value>wiki</value>
+      </async_context>
     </property>
     <property>
       <async_enabled>0</async_enabled>
     </property>
     <property>
-      <code>{{include reference='Analytics.Code.Macros.VelocityMacros'/}}
-
-{{include reference="Licenses.Code.VelocityMacros"/}}
-
-{{velocity}}
+      <code>{{velocity}}
 #macro(executeMacro)
-  #getDate()
-  #set ($discard =$xwiki.jsx.use('Analytics.Code.Macros.RowEvolution'))
-  #set ($parameters = $escapetool.url({
-    'resultPage': 'Analytics.Code.Macros.MostViewedPagesJSON',
-    'date': $date,
-    'period': 'range',
-    'limitEntries': '-1',
-    'translationPrefix': 'analytics.mostViewedPages.header.'
-  }))
-  #set ($liveDataConfig= {
-    'meta': {
-      'propertyDescriptors': [
-        {'id': 'pageTitle', 'displayer': 'html'},
-        {'id': 'visits', 'displayer': 'html'},
-        {'id': 'hits', 'displayer': 'html'},
-        {'id': 'timeSpent', 'displayer': 'html'},
-        {'id': 'entryNbActions', 'displayer': 'html'},
-        {'id': 'bounceRate', 'displayer': 'html'},
-        {'id': 'exitRate', 'displayer': 'html'},
-        {'id': 'actions', 'filterable': false, 'sortable': false, 'displayer': 'html'}
-      ],
-      'entryDescriptor': {
-        'idProperty': 'pageTitle'
-      }
-    }
-  })
-  #getAnalyticsMacroId('mostViewedMacro', $macroId)
-
-  {{liveData
-    id="$macroId"
-    properties="pageTitle, visits, hits, timeSpent, entryNbActions, bounceRate, exitRate, actions"
-    source='liveTable'
-    sourceParameters="$parameters"
-    sort='hits:desc'
-  }}$jsontool.serialize($liveDataConfig){{/liveData}}
-
-  #set ($rowEvolutionParams = {
-    'pageViews': 'nb_hits',
-    'uniqueViews': 'nb_visits',
-    "avgTime": 'avg_time_on_page'
-  })
-  #modalRowEvolution($rowEvolutionParams, 'MostViewedPages', $macroId)
+#set ($discard =  $xwiki.ssx.use('Analytics.Code.Macros.Filter'))
+#set ($placeholderStart = '2007-01-01')
+#set ($placeholderEnd = $datetool.get('yyyy-MM-dd'))
+#if ($request.analyticsStartDate &amp;&amp; $request.analyticsStartDate != '')
+  #set ($placeholderStart = $request.analyticsStartDate)
 #end
+#if ($request.analyticsEndDate &amp;&amp; $request.analyticsEndDate != '')
+  #set ($placeholderEnd = $request.analyticsEndDate)
+#end
+{{html clean="false"}}
+&lt;div class="xform half"&gt;
+  &lt;form id="analyticsFilter" class="analytics-form-flex"&gt;
+	&lt;div class="analytics-form-item analytics-flex-item"&gt;
+	  &lt;!-- Start date label and input --&gt;
+    &lt;label for="analyticsStartDate"&gt;$escapetool.xml($services.localization.render('rendering.macro.analyticsFilter.startDate'))&lt;/label&gt;
+		#set ($dateTimePickerParams = {
+		  'id': 'analyticsStartDate',
+		  'name': 'analyticsStartDate',
+		  'data-format': 'yyyy-MM-dd',
+		  'placeholder': $placeholderStart
+		})
+		#dateTimePicker($dateTimePickerParams)
+	&lt;/div&gt;
+	  &lt;div class="analytics-form-item analytics-flex-item"&gt;
+		&lt;!-- End date label and input --&gt;
+		&lt;label for="analyticsEndDate"&gt;$escapetool.xml($services.localization.render(
+    'rendering.macro.analyticsFilter.endDate'))&lt;/label&gt;
+		#set ($dateTimePickerParams = {
+      'id': 'analyticsEndDate',
+      'name': 'analyticsEndDate',
+      'data-format': 'yyyy-MM-dd',
+      'placeholder': $placeholderEnd
+		})
+		#dateTimePicker($dateTimePickerParams)
+	&lt;/div&gt;
+	&lt;!-- Submit Button --&gt;
+	&lt;div class="analytics-form-item analytics-flex-item"&gt;
+	  &lt;span class="buttonwrapper b-1"&gt;
+	    &lt;input type="submit" value="$escapetool.xml($services.localization.render('rendering.macro.analyticsFilter.apply'
+      ))" class="btn btn-default button"/&gt;
+      &lt;/span&gt;
+	&lt;/div&gt;
+	&lt;/form&gt;
+&lt;/div&gt;
+
+{{/html}}
+#end
+
 #if ($services.licensing.licensor.hasLicensureForEntity(
   $services.model.createDocumentReference('', ['Analytics', 'Code'], 'ConfigurationClass')))
   #executeMacro()
@@ -307,181 +485,25 @@
       <contentType>No content</contentType>
     </property>
     <property>
-      <defaultCategory/>
+      <defaultCategory>Analytics</defaultCategory>
     </property>
     <property>
       <description/>
     </property>
     <property>
-      <id>mostViewedPage</id>
+      <id>analyticsFilter</id>
     </property>
     <property>
-      <name>Most Viewed Page</name>
+      <name>Analytics Filter</name>
     </property>
     <property>
       <priority/>
     </property>
     <property>
-      <supportsInlineMode>1</supportsInlineMode>
+      <supportsInlineMode>0</supportsInlineMode>
     </property>
     <property>
       <visibility>Current Wiki</visibility>
-    </property>
-  </object>
-  <object>
-    <name>Analytics.Code.Macros.MostViewedPages</name>
-    <number>0</number>
-    <className>XWiki.WikiMacroParameterClass</className>
-    <guid>6e3cae3f-3127-4fb2-a590-5dce2f4be0d0</guid>
-    <class>
-      <name>XWiki.WikiMacroParameterClass</name>
-      <customClass/>
-      <customMapping/>
-      <defaultViewSheet/>
-      <defaultEditSheet/>
-      <defaultWeb/>
-      <nameField/>
-      <validationScript/>
-      <defaultValue>
-        <disabled>0</disabled>
-        <name>defaultValue</name>
-        <number>4</number>
-        <prettyName>Parameter default value</prettyName>
-        <size>30</size>
-        <unmodifiable>0</unmodifiable>
-        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-      </defaultValue>
-      <description>
-        <disabled>0</disabled>
-        <name>description</name>
-        <number>2</number>
-        <prettyName>Parameter description</prettyName>
-        <rows>5</rows>
-        <size>40</size>
-        <unmodifiable>0</unmodifiable>
-        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
-      </description>
-      <mandatory>
-        <disabled>0</disabled>
-        <displayFormType>select</displayFormType>
-        <displayType>yesno</displayType>
-        <name>mandatory</name>
-        <number>3</number>
-        <prettyName>Parameter mandatory</prettyName>
-        <unmodifiable>0</unmodifiable>
-        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
-      </mandatory>
-      <name>
-        <disabled>0</disabled>
-        <name>name</name>
-        <number>1</number>
-        <prettyName>Parameter name</prettyName>
-        <size>30</size>
-        <unmodifiable>0</unmodifiable>
-        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-      </name>
-      <type>
-        <disabled>0</disabled>
-        <name>type</name>
-        <number>5</number>
-        <prettyName>Parameter type</prettyName>
-        <size>60</size>
-        <unmodifiable>0</unmodifiable>
-        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-      </type>
-    </class>
-    <property>
-      <defaultValue/>
-    </property>
-    <property>
-      <description/>
-    </property>
-    <property>
-      <mandatory>0</mandatory>
-    </property>
-    <property>
-      <name>startDate</name>
-    </property>
-    <property>
-      <type>java.util.Date</type>
-    </property>
-  </object>
-  <object>
-    <name>Analytics.Code.Macros.MostViewedPages</name>
-    <number>1</number>
-    <className>XWiki.WikiMacroParameterClass</className>
-    <guid>8a9fb4a7-d7e2-4d7d-84b8-8afb71b4606d</guid>
-    <class>
-      <name>XWiki.WikiMacroParameterClass</name>
-      <customClass/>
-      <customMapping/>
-      <defaultViewSheet/>
-      <defaultEditSheet/>
-      <defaultWeb/>
-      <nameField/>
-      <validationScript/>
-      <defaultValue>
-        <disabled>0</disabled>
-        <name>defaultValue</name>
-        <number>4</number>
-        <prettyName>Parameter default value</prettyName>
-        <size>30</size>
-        <unmodifiable>0</unmodifiable>
-        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-      </defaultValue>
-      <description>
-        <disabled>0</disabled>
-        <name>description</name>
-        <number>2</number>
-        <prettyName>Parameter description</prettyName>
-        <rows>5</rows>
-        <size>40</size>
-        <unmodifiable>0</unmodifiable>
-        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
-      </description>
-      <mandatory>
-        <disabled>0</disabled>
-        <displayFormType>select</displayFormType>
-        <displayType>yesno</displayType>
-        <name>mandatory</name>
-        <number>3</number>
-        <prettyName>Parameter mandatory</prettyName>
-        <unmodifiable>0</unmodifiable>
-        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
-      </mandatory>
-      <name>
-        <disabled>0</disabled>
-        <name>name</name>
-        <number>1</number>
-        <prettyName>Parameter name</prettyName>
-        <size>30</size>
-        <unmodifiable>0</unmodifiable>
-        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-      </name>
-      <type>
-        <disabled>0</disabled>
-        <name>type</name>
-        <number>5</number>
-        <prettyName>Parameter type</prettyName>
-        <size>60</size>
-        <unmodifiable>0</unmodifiable>
-        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-      </type>
-    </class>
-    <property>
-      <defaultValue/>
-    </property>
-    <property>
-      <description/>
-    </property>
-    <property>
-      <mandatory>0</mandatory>
-    </property>
-    <property>
-      <name>endDate</name>
-    </property>
-    <property>
-      <type>java.util.Date</type>
     </property>
   </object>
 </xwikidoc>
