@@ -41,6 +41,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.stream.JsonReader;
 import com.xwiki.analytics.test.po.HomePageViewPage;
 
+import static org.junit.jupiter.api.Assertions.fail;
+
 @UITest
 public class AnalyticsIT
 {
@@ -82,6 +84,7 @@ public class AnalyticsIT
     {
 
         HomePageViewPage.gotoPage();
+        fail();
         while (true) {
             Thread.sleep(10 * 1000);
             System.out.println("Test");

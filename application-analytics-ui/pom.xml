@@ -70,6 +70,13 @@
       <version>${project.version}</version>
     </dependency>
     <dependency>
+      <groupId>org.xwiki.platform</groupId>
+      <artifactId>xwiki-platform-dashboard-ui</artifactId>
+      <version>${platform.version}</version>
+      <type>xar</type>
+    </dependency>
+
+    <dependency>
       <groupId>org.xwiki.contrib</groupId>
       <artifactId>application-chartjs-webjar</artifactId>
       <version>1.6.3</version>
