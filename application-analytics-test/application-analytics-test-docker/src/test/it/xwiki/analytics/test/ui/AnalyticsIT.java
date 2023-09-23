@@ -19,6 +19,8 @@
  */
 package xwiki.analytics.test.ui;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Collections;
 
 import org.junit.jupiter.api.BeforeAll;
@@ -27,6 +29,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.MySQLContainer;
+import org.testcontainers.shaded.com.fasterxml.jackson.databind.JsonNode;
 import org.testcontainers.utility.DockerImageName;
 import org.xwiki.test.docker.internal.junit5.DockerTestUtils;
 import org.xwiki.test.docker.junit5.TestConfiguration;
@@ -34,41 +37,41 @@ import org.xwiki.test.docker.junit5.UITest;
 import org.xwiki.test.ui.TestUtils;
 import org.xwiki.test.ui.XWikiWebDriver;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.stream.JsonReader;
 import com.xwiki.analytics.test.po.HomePageViewPage;
 
 @UITest
 public class AnalyticsIT
 {
+
+
     @BeforeAll
-    void congig(TestConfiguration testConfiguration)
+    void config(TestConfiguration testConfiguration)
     {
 
-        MySQLContainer<?> mysqlContainer = new MySQLContainer<>(DockerImageName.parse("mysql:5.7"))
+        // Since the MySQL container is derived from the official MySQL image I have to mark the image as compatible
+        // with MySQLContainers.
+        DockerImageName sqlContainer = DockerImageName.parse("farcasut/custom-mysql:latest").asCompatibleSubstituteFor("mysql");
+        // I create a new db and a new user.
+        MySQLContainer<?> mysqlContainer = new MySQLContainer<>(sqlContainer)
             .withDatabaseName("matomo")
             .withUsername("matomo")
             .withPassword("secret")
             .withExposedPorts(3306);
         mysqlContainer.setPortBindings(Collections.singletonList("9034:3306"));
         try {
-            //172.17.0.1
+            // These are some credentials all of them will be moved to a separate file to make it easier to handle.
+            //172.17.0.1 ADMIN1 91be1bca1315c35abd605ad8a544eece
             DockerTestUtils.startContainer(mysqlContainer, testConfiguration);
             GenericContainer<?> matomoContainer = new GenericContainer<>("matomo:latest")
                 .withExposedPorts(80)
                 .withEnv("MATOMO_DATABASE_HOST",
                     "172.17.0.1" + ":" + mysqlContainer.getMappedPort(3306))
-                .withEnv("MATOMO_DATABASE_USERNAME", "matomo")
-                .withEnv("MATOMO_DATABASE_PASSWORD", "secret")
-                .withEnv("MATOMO_DATABASE_DBNAME", "matomo")
-                .withEnv("MATOMO_FIRST_USER_NAME", "ADMIN1")
-                .withEnv("MATOMO_FIRST_USER_EMAIL", "ADMIN1@xwiki.com")
-                .withEnv("MATOMO_FIRST_USER_PASSWORD", "ADMIN1")
                 .withFileSystemBind("src/main/resources/config.ini.php","/var/www/html/config/config.ini.php");
             matomoContainer.setPortBindings(
-                // !After the container has been opened and the selenium register a user I have to overwrite the
-                // config.ini.php to make Matomo work
-                Collections.singletonList("9999:80"));    // Map host port 9999 to container port 80
+            Collections.singletonList("9999:80"));    // Map host port 9999 to be able to access the matomo instance
             DockerTestUtils.startContainer(matomoContainer, testConfiguration);
-            matomoContainer.execInContainer("apt-get -y update", "apt-get -y install git");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
