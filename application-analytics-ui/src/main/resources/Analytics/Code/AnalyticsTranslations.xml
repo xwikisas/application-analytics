@@ -62,6 +62,14 @@ analytics.mostViewedPages.parameter.label.startDate=Start time of the date inter
 analytics.mostViewedPages.parameter.label.endDate=End time of the date interval used for this macro
 rendering.macro.mostViewedPage.name=Most viewed pages
 
+## Pages following a site search
+analytics.PagesFollowingASiteSearchJSON.header.date=Date
+analytics.PagesFollowingASiteSearchJSON.header.destinationPage=Destination page
+analytics.PagesFollowingASiteSearchJSON.header.clicked=Clicked in search results
+analytics.PagesFollowingASiteSearchJSON.header.pageViews=Views
+analytics.PagesFollowingASiteSearchJSON.header.loadTime=Avg. load time
+analytics.PagesFollowingASiteSearchJSON.header.actions=Actions
+
 ## Row Evolution
 analytics.rowEvolution.modal.label=Row Evolution
 analytics.rowEvolution.modal.close=Close
@@ -75,6 +83,7 @@ analytics.rowEvolution.modal.year.label=Year
 analytics.rowEvolution.modal.field.pageViews=Page views
 analytics.rowEvolution.modal.field.uniqueViews=Unique views
 analytics.rowEvolution.modal.field.avgTime=Avg. Time spent
+analytics.rowEvolution.modal.field.clickedSearchResult=Clicked in search results
 
 ## Admin section
 admin.analytics.application=Analytics
