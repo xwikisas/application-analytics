@@ -96,11 +96,6 @@
     'offset': $mathtool.add($offset, 1),
     'reqNo': $numbertool.toNumber($request.reqNo).intValue(),
     'rows': []
-    'totalrows': $analyticsResult.size(),
-    'returnedrows': $resultList.size(),
-    'offset': $mathtool.add($offset, 1),
-    'reqNo': $numbertool.toNumber($request.reqNo).intValue(),
-    'rows': []
   })
   #foreach ($currentEntry in $resultList)
     ## The segment can assist in identifying a row within the Matomo tables; in this instance, the segment represents
