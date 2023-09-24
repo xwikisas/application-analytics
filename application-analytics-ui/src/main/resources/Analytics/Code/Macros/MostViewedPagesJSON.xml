@@ -53,7 +53,7 @@
 
   ## Mapping between the livedata columns and the Matomo fields.
   #set ($matomoKeysMapping = {
-    'title' : 'label',
+    'pageTitle' : 'label',
     'visits': 'nb_visits',
     'hits' : 'nb_hits',
     'timeSpent' : 'sum_time_spent',
@@ -106,7 +106,7 @@
   #foreach ($currentEntry in $resultList)
     #set ($url = $currentEntry.get('url').asText())
     #set ($discard = $results.rows.add({
-      'title' : "#createLinkElement($currentEntry.get('label').asText(), $url)",
+      'pageTitle' : "#createLinkElement($currentEntry.get('label').asText(), $url)",
       'visits' :  $currentEntry.get('nb_visits').asText(),
       'hits' : $currentEntry.get('nb_hits').asText(),
       'timeSpent' : $currentEntry.get('sum_time_spent').asText(),
