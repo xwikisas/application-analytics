@@ -243,51 +243,59 @@
       <code>{{include reference='Analytics.Code.Macros.VelocityMacros'/}}
 
 {{velocity}}
-#getDate()
-#set ($discard = $xwiki.jsx.use('Analytics.Code.Macros.RowEvolution'))
-#set ($parameters = $escapetool.url({
-  'resultPage': 'Analytics.Code.Macros.SoftwareDevicesJSON',
-  'date': $date,
-  'period': 'range',
-  'limitEntries': '-1',
-  'translationPrefix': 'analytics.softwareDevices.header.',
-  'matomoMethod': 'DevicesDetection.getBrowserEngines',
-  'label': 'engines'
-}))
-#set ($liveDataConfig= {
-  'meta': {
-    'propertyDescriptors': [
-      {'id': 'engines', 'displayer': 'html'},
-      {'id': 'visits', 'displayer': 'html'},
-      {'id': 'nbOfActions', 'displayer': 'html'},
-      {'id': 'timeSpent', 'displayer': 'html'},
-      {'id': 'bounceRate', 'displayer': 'html'},
-      {'id': 'conversionRate', 'displayer': 'html'},
-      {'id': 'actions','filterable': false, 'sortable': false, 'displayer': 'html'}
-    ],
-    'entryDescriptor': {
-      'idProperty': 'engines'
+#macro(executeMacro)
+  #getDate()
+  #set ($discard = $xwiki.jsx.use('Analytics.Code.Macros.RowEvolution'))
+  #set ($parameters = $escapetool.url({
+    'resultPage': 'Analytics.Code.Macros.SoftwareDevicesJSON',
+    'date': $date,
+    'period': 'range',
+    'limitEntries': '-1',
+    'translationPrefix': 'analytics.softwareDevices.header.',
+    'matomoMethod': 'DevicesDetection.getBrowserEngines',
+    'label': 'engines'
+  }))
+  #set ($liveDataConfig= {
+    'meta': {
+      'propertyDescriptors': [
+        {'id': 'engines', 'displayer': 'html'},
+        {'id': 'visits', 'displayer': 'html'},
+        {'id': 'nbOfActions', 'displayer': 'html'},
+        {'id': 'timeSpent', 'displayer': 'html'},
+        {'id': 'bounceRate', 'displayer': 'html'},
+        {'id': 'conversionRate', 'displayer': 'html'},
+        {'id': 'actions','filterable': false, 'sortable': false, 'displayer': 'html'}
+      ],
+      'entryDescriptor': {
+        'idProperty': 'engines'
+      }
     }
-  }
-})
-#getAnalyticsMacroId('browserEnginesMacro', $macroId)
+  })
+  #getAnalyticsMacroId('browserEnginesMacro', $macroId)
 
-{{liveData
-  id="$macroId"
-  properties='engines, visits, nbOfActions, timeSpent, bounceRate, conversionRate, actions'
-  source='liveTable'
-  sourceParameters="$parameters"
-  sort='visits:desc'
-}}$jsontool.serialize($liveDataConfig){{/liveData}}
+  {{liveData
+    id="$macroId"
+    properties='engines, visits, nbOfActions, timeSpent, bounceRate, conversionRate, actions'
+    source='liveTable'
+    sourceParameters="$parameters"
+    sort='visits:desc'
+  }}$jsontool.serialize($liveDataConfig){{/liveData}}
 
-#set ($rowEvolutionParams = {
-  'visits': 'nb_visits',
-  'actions': 'nb_actions',
-  'timeSpent': 'sum_visit_length',
-  'bounceRate': 'bounce_count',
-  'conversionRate': 'nb_visits_converted'
-})
-#modalRowEvolution($rowEvolutionParams, 'BrowserEngines', $macroId)
+  #set ($rowEvolutionParams = {
+    'visits': 'nb_visits',
+    'actions': 'nb_actions',
+    'timeSpent': 'sum_visit_length',
+    'bounceRate': 'bounce_count',
+    'conversionRate': 'nb_visits_converted'
+  })
+  #modalRowEvolution($rowEvolutionParams, 'BrowserEngines', $macroId)
+#end
+#if ($services.licensing.licensor.hasLicensureForEntity(
+  $services.model.createDocumentReference('', ['Analytics', 'Code'], 'ConfigurationClass')))
+  #executeMacro()
+#else
+  {{error}}#getMissingLicenseMessage('analytics.extension.name'){{/error}}
+#end
 {{/velocity}}</code>
     </property>
     <property>

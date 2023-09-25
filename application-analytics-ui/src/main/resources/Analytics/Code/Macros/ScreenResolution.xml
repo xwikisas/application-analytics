@@ -243,49 +243,57 @@
       <code>{{include reference='Analytics.Code.Macros.VelocityMacros'/}}
 
 {{velocity}}
-#getDate()
-#set ($discard = $xwiki.jsx.use('Analytics.Code.Macros.RowEvolution'))#set ($period = 'range')
-#set ($parameters = $escapetool.url({
-  'resultPage': 'Analytics.Code.Macros.SoftwareDevicesJSON',
-  'date': $date,
-  'period': 'range',
-  'limitEntries': '-1',
-  'translationPrefix': 'analytics.softwareDevices.header.',
-  'matomoMethod': 'Resolution.getResolution',
-  'label': 'resolution'
-}))
-#set ($liveDataConfig= {
-  'meta': {
-    'propertyDescriptors': [
-      {'id': 'resolution', 'displayer': 'html'},
-      {'id': 'visits', 'displayer': 'html'},
-      {'id': 'nbOfActions', 'displayer': 'html'},
-      {'id': 'timeSpent', 'displayer': 'html'},
-      {'id': 'bounceRate', 'displayer': 'html'},
-      {'id': 'actions','filterable': false, 'sortable': false, 'displayer': 'html'}
-    ],
-    'entryDescriptor': {
-      'idProperty': 'resolution'
+#macro(executeMacro)
+  #getDate()
+  #set ($discard = $xwiki.jsx.use('Analytics.Code.Macros.RowEvolution'))#set ($period = 'range')
+  #set ($parameters = $escapetool.url({
+    'resultPage': 'Analytics.Code.Macros.SoftwareDevicesJSON',
+    'date': $date,
+    'period': 'range',
+    'limitEntries': '-1',
+    'translationPrefix': 'analytics.softwareDevices.header.',
+    'matomoMethod': 'Resolution.getResolution',
+    'label': 'resolution'
+  }))
+  #set ($liveDataConfig= {
+    'meta': {
+      'propertyDescriptors': [
+        {'id': 'resolution', 'displayer': 'html'},
+        {'id': 'visits', 'displayer': 'html'},
+        {'id': 'nbOfActions', 'displayer': 'html'},
+        {'id': 'timeSpent', 'displayer': 'html'},
+        {'id': 'bounceRate', 'displayer': 'html'},
+        {'id': 'actions','filterable': false, 'sortable': false, 'displayer': 'html'}
+      ],
+      'entryDescriptor': {
+        'idProperty': 'resolution'
+      }
     }
-  }
-})
-#getAnalyticsMacroId('screenResolutionMacro', $macroId)
+  })
+  #getAnalyticsMacroId('screenResolutionMacro', $macroId)
 
-{{liveData
-  id="$macroId"
-  properties='resolution, visits, nbOfActions, timeSpent, bounceRate, actions'
-  source='liveTable'
-  sourceParameters="$parameters"
-  sort='visits:desc'
-}}$jsontool.serialize($liveDataConfig){{/liveData}}
+  {{liveData
+    id="$macroId"
+    properties='resolution, visits, nbOfActions, timeSpent, bounceRate, actions'
+    source='liveTable'
+    sourceParameters="$parameters"
+    sort='visits:desc'
+  }}$jsontool.serialize($liveDataConfig){{/liveData}}
 
-#set ($rowEvolutionParams = {
-  'visits': 'nb_visits',
-  'actions': 'nb_actions',
-  'timeSpent': 'sum_visit_length',
-  'bounceRate': 'bounce_count'
-})
-#modalRowEvolution($rowEvolutionParams, 'ScreenResolution', $macroId)
+  #set ($rowEvolutionParams = {
+    'visits': 'nb_visits',
+    'actions': 'nb_actions',
+    'timeSpent': 'sum_visit_length',
+    'bounceRate': 'bounce_count'
+  })
+  #modalRowEvolution($rowEvolutionParams, 'ScreenResolution', $macroId)
+#end
+#if ($services.licensing.licensor.hasLicensureForEntity(
+  $services.model.createDocumentReference('', ['Analytics', 'Code'], 'ConfigurationClass')))
+  #executeMacro()
+#else
+  {{error}}#getMissingLicenseMessage('analytics.extension.name'){{/error}}
+#end
 {{/velocity}}</code>
     </property>
     <property>

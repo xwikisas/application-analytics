@@ -243,48 +243,56 @@
       <code>{{include reference='Analytics.Code.Macros.VelocityMacros'/}}
 
 {{velocity}}
-#getDate()
-#set ($discard = $xwiki.jsx.use('Analytics.Code.Macros.RowEvolution'))#set ($parameters = $escapetool.url({
-  'resultPage': 'Analytics.Code.Macros.SoftwareDevicesJSON',
-  'date': $date,
-  'period': 'range',
-  'limitEntries': '-1',
-  'translationPrefix': 'analytics.softwareDevices.header.',
-  'matomoMethod': 'DevicesDetection.getType ',
-  'label': 'deviceType'
-}))
-#set ($liveDataConfig= {
-  'meta': {
-    'propertyDescriptors': [
-      {'id': 'deviceType', 'displayer': 'html'},
-      {'id': 'visits', 'displayer': 'html'},
-      {'id': 'nbOfActions', 'displayer': 'html'},
-      {'id': 'timeSpent', 'displayer': 'html'},
-      {'id': 'bounceRate', 'displayer': 'html'},
-      {'id': 'actions','filterable': false, 'sortable': false, 'displayer': 'html'}
-    ],
-    'entryDescriptor': {
-      'idProperty': 'deviceType'
+#macro(executeMacro)
+  #getDate()
+  #set ($discard = $xwiki.jsx.use('Analytics.Code.Macros.RowEvolution'))#set ($parameters = $escapetool.url({
+    'resultPage': 'Analytics.Code.Macros.SoftwareDevicesJSON',
+    'date': $date,
+    'period': 'range',
+    'limitEntries': '-1',
+    'translationPrefix': 'analytics.softwareDevices.header.',
+    'matomoMethod': 'DevicesDetection.getType ',
+    'label': 'deviceType'
+  }))
+  #set ($liveDataConfig= {
+    'meta': {
+      'propertyDescriptors': [
+        {'id': 'deviceType', 'displayer': 'html'},
+        {'id': 'visits', 'displayer': 'html'},
+        {'id': 'nbOfActions', 'displayer': 'html'},
+        {'id': 'timeSpent', 'displayer': 'html'},
+        {'id': 'bounceRate', 'displayer': 'html'},
+        {'id': 'actions','filterable': false, 'sortable': false, 'displayer': 'html'}
+      ],
+      'entryDescriptor': {
+        'idProperty': 'deviceType'
+      }
     }
-  }
-})
-#getAnalyticsMacroId('deviceTypeMacro', $macroId)
+  })
+  #getAnalyticsMacroId('deviceTypeMacro', $macroId)
 
-{{liveData
-  id="$macroId"
-  properties='deviceType, visits, nbOfActions, timeSpent, bounceRate, actions'
-  source='liveTable'
-  sourceParameters="$parameters"
-  sort='visits:desc'
-}}$jsontool.serialize($liveDataConfig){{/liveData}}
+  {{liveData
+    id="$macroId"
+    properties='deviceType, visits, nbOfActions, timeSpent, bounceRate, actions'
+    source='liveTable'
+    sourceParameters="$parameters"
+    sort='visits:desc'
+  }}$jsontool.serialize($liveDataConfig){{/liveData}}
 
-#set ($rowEvolutionParams = {
-  'visits': 'nb_visits',
-  'actions': 'nb_actions',
-  'timeSpent': 'sum_visit_length',
-  'bounceRate': 'bounce_count'
-})
-#modalRowEvolution($rowEvolutionParams, 'DeviceType', $macroId)
+  #set ($rowEvolutionParams = {
+    'visits': 'nb_visits',
+    'actions': 'nb_actions',
+    'timeSpent': 'sum_visit_length',
+    'bounceRate': 'bounce_count'
+  })
+  #modalRowEvolution($rowEvolutionParams, 'DeviceType', $macroId)
+#end
+#if ($services.licensing.licensor.hasLicensureForEntity(
+  $services.model.createDocumentReference('', ['Analytics', 'Code'], 'ConfigurationClass')))
+  #executeMacro()
+#else
+  {{error}}#getMissingLicenseMessage('analytics.extension.name'){{/error}}
+#end
 {{/velocity}}</code>
     </property>
     <property>
