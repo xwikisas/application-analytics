@@ -496,13 +496,13 @@ require(['jquery', 'xwiki-l10n!analyticsConfigMessages', 'xwiki-meta'], ($, l10n
     }, 2000);
   });
 
+  // On save, check that the added configurations are correct. For this, a hidden iframe is used to load a page with
+  // these configuration and then it's checked if the request was registered by Matomo.
   $(document).on('xwiki:document:saved', function (e) {
     let currentURL = new URL(window.location.href);
     let random = Math.random().toString().substring(2, 15);
-    // `${xm.userReference}${random}` creates a token and is used to identify the request on the Matomo side.
+    // Add a token to the current URL in order to identify the request on the Matomo side.
     currentURL.searchParams.set("checkMatomoConnection", `${xm.userReference}${random}`);
-    // Refresh the iframe.
-    // The iframe is hidden and is used to check that the Matomo configs are good and everything works properly.
     $('#checkMatomoConnection').attr('src', currentURL.toString());
   });
 
