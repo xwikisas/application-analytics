@@ -20,9 +20,9 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc version="1.4" reference="Analytics.Code.Macros.MostViewedPages" locale="">
+<xwikidoc version="1.4" reference="Analytics.Code.Macros.SiteSearchKeywords" locale="">
   <web>Analytics.Code.Macros</web>
-  <name>MostViewedPages</name>
+  <name>SiteSearchKeywords</name>
   <language/>
   <defaultLanguage/>
   <translation>0</translation>
@@ -31,17 +31,18 @@
   <author>xwiki:XWiki.Admin</author>
   <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
   <version>1.1</version>
-  <title>MostViewedPages</title>
+  <title>SiteSearchKeywords</title>
   <comment/>
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>true</hidden>
-  <content>{{mostViewedPage/}}</content>
+  <content>{{siteSearchKeywords /}}
+  </content>
   <object>
-    <name>Analytics.Code.Macros.MostViewedPages</name>
+    <name>Analytics.Code.Macros.SiteSearchKeywords</name>
     <number>0</number>
     <className>XWiki.WikiMacroClass</className>
-    <guid>dc943965-6af8-4905-8508-9b8c248c3930</guid>
+    <guid>2e2429a1-3904-4a6a-89d3-d6d79c2a3ed5</guid>
     <class>
       <name>XWiki.WikiMacroClass</name>
       <customClass/>
@@ -242,52 +243,47 @@
     <property>
       <code>{{include reference='Analytics.Code.Macros.VelocityMacros'/}}
 
-{{include reference="Licenses.Code.VelocityMacros"/}}
-
 {{velocity}}
 #macro(executeMacro)
   #getDate()
   #set ($discard =$xwiki.jsx.use('Analytics.Code.Macros.RowEvolution'))
   #set ($parameters = $escapetool.url({
-    'resultPage': 'Analytics.Code.Macros.MostViewedPagesJSON',
     'date': $date,
     'period': 'range',
     'limitEntries': '-1',
-    'translationPrefix': 'analytics.mostViewedPages.header.'
+    'translationPrefix': 'analytics.siteSearchKeywords.header.',
+    'resultPage': 'Analytics.Code.Macros.SiteSearchKeywordsJSON'
   }))
-  #set ($liveDataConfig= {
+  #set ($columns = [])
+  #set ($liveDataConfig = {
     'meta': {
       'propertyDescriptors': [
-        {'id': 'pageTitle', 'displayer': 'html'},
-        {'id': 'visits', 'displayer': 'html'},
-        {'id': 'hits', 'displayer': 'html'},
-        {'id': 'timeSpent', 'displayer': 'html'},
-        {'id': 'entryNbActions', 'displayer': 'html'},
-        {'id': 'bounceRate', 'displayer': 'html'},
+        {'id': 'keyword', 'displayer': 'html'},
+        {'id': 'searches', 'displayer': 'html'},
+        {'id': 'nbOfResultPages', 'displayer': 'html'},
         {'id': 'exitRate', 'displayer': 'html'},
-        {'id': 'actions', 'filterable': false, 'sortable': false, 'displayer': 'html'}
+        {'id': 'actions','filterable': false, 'sortable': false, 'displayer': 'html'}
       ],
       'entryDescriptor': {
-        'idProperty': 'pageTitle'
-      }
+         'idProperty': 'keyword'
+        }
     }
   })
-  #getAnalyticsMacroId('mostViewedMacro', $macroId)
+
+  #getAnalyticsMacroId('siteSearchKeywords', $macroId)
 
   {{liveData
     id="$macroId"
-    properties="pageTitle, visits, hits, timeSpent, entryNbActions, bounceRate, exitRate, actions"
+    properties="keyword, searches, nbOfResultPages, exitRate, actions"
     source='liveTable'
     sourceParameters="$parameters"
-    sort='hits:desc'
   }}$jsontool.serialize($liveDataConfig){{/liveData}}
 
   #set ($rowEvolutionParams = {
-    'pageViews': 'nb_hits',
-    'uniqueViews': 'nb_visits',
-    "avgTime": 'avg_time_on_page'
+    'searches': 'nb_visits',
+    'searchResultPages': 'nb_pages_per_search'
   })
-  #modalRowEvolution($rowEvolutionParams, 'MostViewedPages', $macroId)
+  #modalRowEvolution($rowEvolutionParams, 'SiteSearchKeyword' $macroId)
 #end
 #if ($services.licensing.licensor.hasLicensureForEntity(
   $services.model.createDocumentReference('', ['Analytics', 'Code'], 'ConfigurationClass')))
@@ -313,10 +309,10 @@
       <description/>
     </property>
     <property>
-      <id>mostViewedPage</id>
+      <id>siteSearchKeywords</id>
     </property>
     <property>
-      <name>Most Viewed Page</name>
+      <name>Site Search Keywords</name>
     </property>
     <property>
       <priority/>
@@ -329,10 +325,10 @@
     </property>
   </object>
   <object>
-    <name>Analytics.Code.Macros.MostViewedPages</name>
+    <name>Analytics.Code.Macros.SiteSearchKeywords</name>
     <number>0</number>
     <className>XWiki.WikiMacroParameterClass</className>
-    <guid>6e3cae3f-3127-4fb2-a590-5dce2f4be0d0</guid>
+    <guid>108903f8-e7f9-4405-84ee-4c9ecdc806c7</guid>
     <class>
       <name>XWiki.WikiMacroParameterClass</name>
       <customClass/>
@@ -407,10 +403,10 @@
     </property>
   </object>
   <object>
-    <name>Analytics.Code.Macros.MostViewedPages</name>
+    <name>Analytics.Code.Macros.SiteSearchKeywords</name>
     <number>1</number>
     <className>XWiki.WikiMacroParameterClass</className>
-    <guid>8a9fb4a7-d7e2-4d7d-84b8-8afb71b4606d</guid>
+    <guid>51bf8ca3-6ffb-4525-a553-7a7e033407a5</guid>
     <class>
       <name>XWiki.WikiMacroParameterClass</name>
       <customClass/>

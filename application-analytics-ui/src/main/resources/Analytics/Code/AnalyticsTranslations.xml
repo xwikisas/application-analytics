@@ -55,11 +55,20 @@ analytics.mostViewedPages.header.emptyvalue=-
 analytics.mostViewedPages.header.exitRate=Exit rate
 analytics.mostViewedPages.header.hits=Page views
 analytics.mostViewedPages.header.timeSpent=Time spent(s)
-analytics.mostViewedPages.header.title=Page title
+analytics.mostViewedPages.header.pageTitle=Page title
 analytics.mostViewedPages.header.visits=Unique visitors
 analytics.mostViewedPages.header.year=Year
 analytics.mostViewedPages.parameter.label.startDate=Start time of the date interval used for this macro
 analytics.mostViewedPages.parameter.label.endDate=End time of the date interval used for this macro
+rendering.macro.mostViewedPage.name=Most viewed pages
+
+## Pages following a site search
+analytics.PagesFollowingASiteSearchJSON.header.date=Date
+analytics.PagesFollowingASiteSearchJSON.header.destinationPage=Destination page
+analytics.PagesFollowingASiteSearchJSON.header.clicked=Clicked in search results
+analytics.PagesFollowingASiteSearchJSON.header.pageViews=Views
+analytics.PagesFollowingASiteSearchJSON.header.loadTime=Avg. load time
+analytics.PagesFollowingASiteSearchJSON.header.actions=Actions
 
 ## Row Evolution
 analytics.rowEvolution.modal.label=Row Evolution
@@ -73,7 +82,27 @@ analytics.rowEvolution.modal.month.label=Month
 analytics.rowEvolution.modal.year.label=Year
 analytics.rowEvolution.modal.field.pageViews=Page views
 analytics.rowEvolution.modal.field.uniqueViews=Unique views
-analytics.rowEvolution.modal.field.avgTime=Avg. Time spent
+analytics.rowEvolution.modal.field.avgTime=Time spent on page
+analytics.rowEvolution.modal.field.searches=Searches
+analytics.rowEvolution.modal.field.searchResultPages=Search result pages
+
+## Site Search Keywords Macro
+analytics.siteSearchKeywords.header.actions=Actions
+analytics.siteSearchKeywords.header.exitRate=Search exists(%)
+analytics.siteSearchKeywords.header.keyword=Keyword
+analytics.siteSearchKeywords.header.nbOfResultPages=Search results pages
+analytics.siteSearchKeywords.header.searches=Searches
+analytics.action.hover.rowEvolution=Row evolution
+analytics.rowEvolution.modal.field.clickedSearchResult=Clicked in search results
+analytics.rowEvolution.modal.field.searches=Searches
+analytics.rowEvolution.modal.field.searchResultsPages=Search result pages
+
+## Search Categories
+analytics.searchCategories.header.title=Search category
+analytics.searchCategories.header.searches=Searches
+analytics.searchCategories.header.searchResultsPages=Search result pages
+analytics.searchCategories.header.actions=Actions
+analytics.searchCategories.header.category=Category
 
 ## Admin section
 admin.analytics.application=Analytics
@@ -102,8 +131,11 @@ analytics.livedata.action.rowEvolution.title=Row Evolution
 ## Others
 analytics.extension.name=Analytics Application (Pro)
 analytics.extension.title=Analytics
-
-</content>
+rendering.macro.analyticsFilter.startDate=Start date
+rendering.macro.analyticsFilter.endDate=End date
+rendering.macro.analyticsFilter.apply=Apply
+rendering.macro.analyticsFilter.name=Analytics filter
+rendering.macro.analyticsFilter.description=Add filtering options for the analytics macros of the current page. The filtering criteria will be saved in the current URL, to have a reproducible state, and will also override eventual filter set at macro level.</content>
   <object>
     <name>Analytics.Code.AnalyticsTranslations</name>
     <number>0</number>
