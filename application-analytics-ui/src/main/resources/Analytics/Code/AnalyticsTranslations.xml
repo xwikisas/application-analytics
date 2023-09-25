@@ -94,6 +94,15 @@ analytics.siteSearchKeywords.header.nbOfResultPages=Search results pages
 analytics.siteSearchKeywords.header.searches=Searches
 analytics.action.hover.rowEvolution=Row evolution
 analytics.rowEvolution.modal.field.clickedSearchResult=Clicked in search results
+analytics.rowEvolution.modal.field.searches=Searches
+analytics.rowEvolution.modal.field.searchResultsPages=Search result pages
+
+## Search Categories
+analytics.searchCategories.header.title=Search category
+analytics.searchCategories.header.searches=Searches
+analytics.searchCategories.header.searchResultsPages=Search result pages
+analytics.searchCategories.header.actions=Actions
+analytics.searchCategories.header.category=Category
 
 ## Admin section
 admin.analytics.application=Analytics
