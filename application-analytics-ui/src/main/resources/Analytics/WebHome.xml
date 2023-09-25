@@ -135,13 +135,13 @@
       </title>
     </class>
     <property>
-      <content>{{mostViewedPage/}}</content>
+      <content>{{MostViewedPages/}}</content>
     </property>
     <property>
       <position>1, 2</position>
     </property>
     <property>
-      <title>$escapetool.xml($services.localization.render('rendering.macro.mostViewedPage.name'))</title>
+      <title>$escapetool.xml($services.localization.render('rendering.macro.MostViewedPages.name'))</title>
     </property>
   </object>
   <object>
