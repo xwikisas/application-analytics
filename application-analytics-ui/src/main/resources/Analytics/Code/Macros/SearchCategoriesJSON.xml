@@ -20,9 +20,9 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc version="1.4" reference="Analytics.Code.Macros.MostViewedPagesJSON" locale="">
+<xwikidoc version="1.4" reference="Analytics.Code.Macros.SearchCategoriesJSON" locale="">
   <web>Analytics.Code.Macros</web>
-  <name>MostViewedPagesJSON</name>
+  <name>SearchCategoriesJSON</name>
   <language/>
   <defaultLanguage/>
   <translation>0</translation>
@@ -31,17 +31,16 @@
   <author>xwiki:XWiki.Admin</author>
   <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
   <version>1.1</version>
-  <title>MostViewedPagesJSON</title>
+  <title>SearchCategoriesJSON</title>
   <comment/>
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>true</hidden>
   <content>{{include reference='Analytics.Code.Macros.VelocityMacros'/}}
-
 {{velocity}}
 #if ($xcontext.action == 'get')
   #set ($offset = $numbertool.toNumber($request.offset).intValue())
-  ## The offset sent by the live table starts at 1.
+  ## The offset sent by the livedata starts at 1.
   #set ($offset = $offset - 1)
   #if (!$offset || $offset &lt; 0)
     #set ($offset = 0)
@@ -50,74 +49,66 @@
   #if (!$limit)
     #set ($limit = 15)
   #end
-
-  ## Mapping between the livedata columns and the Matomo fields.
+  ##
   #set ($matomoKeysMapping = {
-    'pageTitle' : 'label',
-    'visits': 'nb_visits',
-    'hits' : 'nb_hits',
-    'timeSpent' : 'sum_time_spent',
-    'entryNbActions' : 'entry_nb_actions',
-    'bounceRate' : 'bounce_rate',
-    'exitRate' : 'exit_rate'
+    'category': 'label',
+    'searches': 'nb_visits',
+    'searchResultsPages': 'nb_pages_per_search'
   })
-  #set ($sort = 'nb_hits')
+  #set ($sort = 'nb_visits')
   #set ($order = 'desc')
   #if ($request.sort)
     #set ($sort = $matomoKeysMapping.get($request.sort))
     #set ($order = $request.dir)
   #end
 
-  #set ($filters = {})
+  #set ($filters={})
   #foreach ($key in $matomoKeysMapping.keySet())
     #set ($value = $request.get($key))
     #if ($value &amp;&amp; $value != '')
-      #set ($discard = $filters.put($matomoKeysMapping.get($key), $request.get($key)))
+     #set($discard = $filters.put($matomoKeysMapping.get($key), $request.get($key)))
     #end
   #end
 
   #set ($parameters = {
-    'period' : $request.period,
-    'date' : $request.date,
-    'module' : 'API',
-    'method' : 'Actions.getPageUrls',
-    'format' : 'json',
-    'filter_limit' : $request.limitEntries,
+    'period': $request.period,
+    'date': $request.date,
+    'module': 'API',
+    'method': 'Actions.getSiteSearchCategories',
+    'format': 'json',
+    'filter_limit': $request.limitEntries,
     'filter_sort_column' : $sort,
-    'filter_sort_order' : $order,
-    'expanded' : '1',
-    'flat' : '1'
+    'filter_sort_order': $order,
+    'expanded': '1',
+    'flat': '1'
   })
 
   ## Get the JSON response from Matomo.
   #set ($analyticsResult = $services.analytics.getMatomoRequestResult($parameters, $filters, 'MostViewedPages'))
   #if ($offset &lt; $analyticsResult.size())
-    #set ($toIndex = $mathtool.min($mathtool.add($offset, $limit), $analyticsResult.size()))
-    #subSet($analyticsResult, $offset, $toIndex, $resultList)
+    #set ($toIndex =  $mathtool.min($mathtool.add($offset, $limit), $analyticsResult.size()))
+    #subSet ($analyticsResult, $offset, $toIndex, $resultList)
   #end
 
   #set ($results = {
-    "totalrows": $analyticsResult.size(),
-    "returnedrows": $resultList.size(),
-    "offset": $mathtool.add($offset, 1),
-    "reqNo": $numbertool.toNumber($request.reqNo).intValue(),
-    "rows": []
+    'totalrows': $analyticsResult.size(),
+    'returnedrows': $resultList.size(),
+    'offset': $mathtool.add($offset, 1),
+    'reqNo': $numbertool.toNumber($request.reqNo).intValue(),
+    'rows': []
   })
   #foreach ($currentEntry in $resultList)
-    #set ($url = $currentEntry.get('url').asText())
+    ## The segment can assist in identifying a row within the Matomo tables; in this instance, the segment represents
+    ## the category itself.
+    #set ($rowIdentifier = $currentEntry.get('segment').asText())
     #set ($discard = $results.rows.add({
-      'pageTitle' : "#createLinkElement($currentEntry.get('label').asText(), $url)",
-      'visits' :  $currentEntry.get('nb_visits').asText(),
-      'hits' : $currentEntry.get('nb_hits').asText(),
-      'timeSpent' : $currentEntry.get('sum_time_spent').asText(),
-      'entryNbActions' : $currentEntry.get('entry_nb_actions').asText(),
-      'bounceRate' : $currentEntry.get('bounce_rate').asText(),
-      'exitRate' : $currentEntry.get('exit_rate').asText(),
-      'actions' : "#analyticsActions($url)"
+      'category': $currentEntry.get('label').asText(),
+      'searches': $currentEntry.get('nb_visits').asText(),
+      'searchResultsPages': $currentEntry.get('nb_pages_per_search').asText(),
+      'actions': "#analyticsActions($rowIdentifier)"
     }))
   #end
   #jsonResponse($results)
 #end
-{{/velocity}}
-</content>
+{{/velocity}}</content>
 </xwikidoc>

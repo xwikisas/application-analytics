@@ -37,7 +37,7 @@
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>true</hidden>
   <content>{{velocity}}
-#set ($parameters ={
+#set ($parameters = {
   'period' : $request.period,
   'date' : $request.date,
   'module' : 'API',
@@ -47,6 +47,17 @@
 #if ($request.macroName == 'MostViewedPages')
   #set ($discard = $parameters.put('pageUrl', $request.rowIdentifier))
   #set ($discard = $parameters.put('method', 'Actions.getPageUrl'))
+#elseif ($request.macroName == 'PagesFollowingASiteSearch')
+  #set ($discard = $parameters.put('method', 'Actions.getPageUrlsFollowingSiteSearch'))
+  #set ($discard = $parameters.put('expanded', '1'))
+  #set ($discard = $parameters.put('flat', '1'))
+  #set ($discard = $filters.put('url',$request.rowIdentifier))
+#elseif ($request.macroName == 'SearchCategories')
+  #set ($discard = $parameters.put('segment', $request.rowIdentifier))
+  #set ($discard = $parameters.put('method', 'Actions.getSiteSearchCategories'))
+#elseif ($request.macroName == 'SiteSearchKeyword')
+  #set ($discard = $parameters.put('segment', $request.rowIdentifier))
+  #set ($discard = $parameters.put('method', 'Actions.getSiteSearchKeywords'))
 #elseif ($request.macroName == 'BrowserEngines')
   #set ($discard = $parameters.put('method', 'DevicesDetection.getBrowserEngines'))
   #set ($discard = $parameters.put('segment', $request.rowIdentifier))
@@ -71,8 +82,8 @@
 #elseif($request.macroName == 'OperatingSystemVersions')
   #set ($discard = $parameters.put('method', 'DevicesDetection.getOsVersions'))
   #set ($discard =  $parameters.put('segment', $request.rowIdentifier))
-#end
 
+#end
 #set ($analyticsResult = $services.analytics.getMatomoRequestResult($parameters, $filters, 'RowEvolution'))
 #jsonResponse($analyticsResult)
 {{/velocity}}
