@@ -189,5 +189,35 @@
   #set ($analyticsId = $analyticsId + 1)
   #set ($macroId = $macro + '_' + $analyticsId)
 #end
+
+#macro (getTime, $totalSeconds)
+  #if ($totalSeconds)
+    #set ($days = $totalSeconds / 86400)
+    #set ($hours = ($totalSeconds % 86400) / 3600)
+    #set ($minutes = (($totalSeconds % 86400) % 3600) / 60)
+    #set ($seconds = (($totalSeconds % 86400) % 3600) % 60)
+    #set ($paddedHours = "")
+    #set ($paddedMinutes = "")
+    #set ($paddedSeconds = "")
+    #if ($hours &lt; 10)
+      #set ($paddedHours = "0${hours}")
+    #else
+      #set ($paddedHours = "${hours}")
+    #end
+    #if ($minutes &lt; 10)
+      #set ($paddedMinutes = "0${minutes}")
+    #else
+      #set ($paddedMinutes = "${minutes}")
+    #end
+    #if ($seconds &lt; 10)
+      #set ($paddedSeconds = "0${seconds}")
+    #else
+      #set ($paddedSeconds = "${seconds}")
+    #end
+    #set( $time = $days + ":" + $paddedHours + ":" + $paddedMinutes + ":" +$paddedSeconds)
+  #else
+    #set ($time = "00:00:00:00")
+  #end
+#end
 {{/velocity}}</content>
 </xwikidoc>

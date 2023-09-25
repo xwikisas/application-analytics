@@ -105,11 +105,12 @@
   })
   #foreach ($currentEntry in $resultList)
     #set ($url = $currentEntry.get('url').asText())
+    #getTime($currentEntry.get('sum_time_spent').asInt())
     #set ($discard = $results.rows.add({
       'pageTitle' : "#createLinkElement($currentEntry.get('label').asText(), $url)",
       'visits' :  $currentEntry.get('nb_visits').asText(),
       'hits' : $currentEntry.get('nb_hits').asText(),
-      'timeSpent' : $currentEntry.get('sum_time_spent').asText(),
+      'timeSpent' : $time,
       'entryNbActions' : $currentEntry.get('entry_nb_actions').asText(),
       'bounceRate' : $currentEntry.get('bounce_rate').asText(),
       'exitRate' : $currentEntry.get('exit_rate').asText(),

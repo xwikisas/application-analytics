@@ -49,42 +49,39 @@ Analytics.Code.AnalyticsDashboardClass_startDate.hint=Start time of the date int
 ## Most Viewed Pages Macro
 analytics.mostViewedPages.header.actions=Actions
 analytics.mostViewedPages.header.bounceRate=Bounce rate
-analytics.mostViewedPages.header.date=Date
-analytics.mostViewedPages.header.entryNbActions= No. of actions
-analytics.mostViewedPages.header.emptyvalue=-
 analytics.mostViewedPages.header.exitRate=Exit rate
-analytics.mostViewedPages.header.hits=Page views
-analytics.mostViewedPages.header.timeSpent=Time spent(s)
-analytics.mostViewedPages.header.pageTitle=Page title
+analytics.mostViewedPages.header.hits=Views
+analytics.mostViewedPages.header.entryNbActions= No. of actions
+analytics.mostViewedPages.header.pageTitle=Title
+analytics.mostViewedPages.header.timeSpent=Time spent
 analytics.mostViewedPages.header.visits=Unique visitors
 analytics.mostViewedPages.header.year=Year
+analytics.mostViewedPages.parameter.label.endDate=End time of the date interval used for this macroanalytics.mostViewedPages.header.entryNbActions=No. of actions
 analytics.mostViewedPages.parameter.label.startDate=Start time of the date interval used for this macro
-analytics.mostViewedPages.parameter.label.endDate=End time of the date interval used for this macro
 rendering.macro.mostViewedPage.name=Most viewed pages
 
 ## Pages following a site search
-analytics.PagesFollowingASiteSearchJSON.header.date=Date
-analytics.PagesFollowingASiteSearchJSON.header.destinationPage=Destination page
-analytics.PagesFollowingASiteSearchJSON.header.clicked=Clicked in search results
-analytics.PagesFollowingASiteSearchJSON.header.pageViews=Views
-analytics.PagesFollowingASiteSearchJSON.header.loadTime=Avg. load time
 analytics.PagesFollowingASiteSearchJSON.header.actions=Actions
+analytics.PagesFollowingASiteSearchJSON.header.loadTime=Avg. load time
+analytics.PagesFollowingASiteSearchJSON.header.clicked=Clicked in search results
+analytics.PagesFollowingASiteSearchJSON.header.destinationPage=Destination page
+analytics.PagesFollowingASiteSearchJSON.header.pageViews=Views
 
 ## Row Evolution
-analytics.rowEvolution.modal.label=Row Evolution
 analytics.rowEvolution.modal.close=Close
-analytics.rowEvolution.modal.period=Period
-analytics.rowEvolution.modal.field=Field
-analytics.rowEvolution.modal.periodLength=Period length
 analytics.rowEvolution.modal.day.label=Day
-analytics.rowEvolution.modal.week.label=Week
+analytics.rowEvolution.modal.field=Field
 analytics.rowEvolution.modal.month.label=Month
+analytics.rowEvolution.modal.period=Period
+analytics.rowEvolution.modal.periodLength=Period length
+analytics.rowEvolution.modal.label=Row Evolution
+analytics.rowEvolution.modal.week.label=Week
 analytics.rowEvolution.modal.year.label=Year
 analytics.rowEvolution.modal.field.pageViews=Page views
-analytics.rowEvolution.modal.field.uniqueViews=Unique views
-analytics.rowEvolution.modal.field.avgTime=Time spent on page
 analytics.rowEvolution.modal.field.searches=Searches
 analytics.rowEvolution.modal.field.searchResultPages=Search result pages
+analytics.rowEvolution.modal.field.avgTime=Time spent on page
+analytics.rowEvolution.modal.field.uniqueViews=Unique views
 
 ## Site Search Keywords Macro
 analytics.siteSearchKeywords.header.actions=Actions
@@ -92,24 +89,9 @@ analytics.siteSearchKeywords.header.exitRate=Search exists(%)
 analytics.siteSearchKeywords.header.keyword=Keyword
 analytics.siteSearchKeywords.header.nbOfResultPages=Search results pages
 analytics.siteSearchKeywords.header.searches=Searches
-analytics.action.hover.rowEvolution=Row evolution
 analytics.rowEvolution.modal.field.clickedSearchResult=Clicked in search results
 analytics.rowEvolution.modal.field.searches=Searches
 analytics.rowEvolution.modal.field.searchResultsPages=Search result pages
-
-## Search Categories
-analytics.searchCategories.header.title=Search category
-analytics.searchCategories.header.searches=Searches
-analytics.searchCategories.header.searchResultsPages=Search result pages
-analytics.searchCategories.header.actions=Actions
-analytics.searchCategories.header.category=Category
-analytics.rowEvolution.modal.field.avgTime=Avg. time spent
-analytics.rowEvolution.modal.field.clickedSearchResult=Clicked in search results
-analytics.rowEvolution.modal.field.visits=Visits
-analytics.rowEvolution.modal.field.actions=Actions
-analytics.rowEvolution.modal.field.timeSpent=Time spent
-analytics.rowEvolution.modal.field.bounceRate=Bounce rate
-analytics.rowEvolution.modal.field.conversionRate=Conversion rate
 
 ## Software/Devices Macros
 analytics.softwareDevices.header.actions=Actions
@@ -122,13 +104,19 @@ analytics.softwareDevices.header.configurations=Configuration
 analytics.softwareDevices.header.deviceModel=Device model
 analytics.softwareDevices.header.deviceType=Device type
 analytics.softwareDevices.header.osVersion=OS version
-analytics.softwareDevices.header.resolution=Resolution 
-analytics.softwareDevices.header.timeSpent=Time spent 
-analytics.softwareDevices.header.nbOfActions=User actions
+analytics.softwareDevices.header.resolution=Resolution
+analytics.softwareDevices.header.timeSpent=Time spent
+analytics.softwareDevices.header.nbOfActions=Actions
 analytics.softwareDevices.header.visits=Visits
 
+## Search Categories
+analytics.searchCategories.header.actions=Actions
+analytics.searchCategories.header.category=Category
+analytics.searchCategories.header.title=Search category
+analytics.searchCategories.header.searches=Searches
+analytics.searchCategories.header.searchResultsPages=Search result pages
+
 ## Admin section
-admin.analytics.application=Analytics
 Analytics.Code.ConfigurationClass_authToken=Authentication token
 Analytics.Code.ConfigurationClass_authToken.hint=Token generated by Matomo to be capable of using the API to view the data. This token can be generated from Settings -&gt; Personal -&gt; Security -&gt; Create New Token
 Analytics.Code.ConfigurationClass_siteId=Site ID
@@ -137,13 +125,7 @@ Analytics.Code.ConfigurationClass_requestAddress=Request address
 Analytics.Code.ConfigurationClass_requestAddress.hint=The Matomo URL. This can be taken from Matomo server integration tab.
 Analytics.Code.ConfigurationClass_trackingCode=Tracking code
 Analytics.Code.ConfigurationClass_trackingCode.hint=Tracking Code received from Matomo. The 'u' variable might be different than the one that is initially generated by Matomo if the server you want to track is on another machine. To fix this, go to the integration tab, copy the Matomo URL, and replace the value of 'u' with the Matomo URL.
-
-## Livetable keys
-analytics.livetable.emptyvalue=Not Defined
-analytics.livetable.endDate=End Date
-analytics.livetable.doc.name=Page Name
-analytics.livetable.doc.title=Page Title
-analytics.livetable.startDate=Start Date
+admin.analytics.application=Analytics
 
 ## Livedata keys
 analytics.livedata.action.rowEvolution.title=Row Evolution
@@ -151,11 +133,12 @@ analytics.livedata.action.rowEvolution.title=Row Evolution
 ## Others
 analytics.extension.name=Analytics Application (Pro)
 analytics.extension.title=Analytics
-rendering.macro.analyticsFilter.startDate=Start date
-rendering.macro.analyticsFilter.endDate=End date
 rendering.macro.analyticsFilter.apply=Apply
 rendering.macro.analyticsFilter.name=Analytics filter
-rendering.macro.analyticsFilter.description=Add filtering options for the analytics macros of the current page. The filtering criteria will be saved in the current URL, to have a reproducible state, and will also override eventual filter set at macro level.</content>
+rendering.macro.analyticsFilter.description=Add filtering options for the analytics macros of the current page. The filtering criteria will be saved in the current URL, to have a reproducible state, and wil also override eventual filter set at macro level.
+rendering.macro.analyticsFilter.endDate=End date
+rendering.macro.analyticsFilter.startDate=Start date
+</content>
   <object>
     <name>Analytics.Code.AnalyticsTranslations</name>
     <number>0</number>
