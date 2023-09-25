@@ -24,6 +24,7 @@ import java.io.InputStream;
 import java.util.Collections;
 
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -51,7 +52,6 @@ public class AnalyticsIT
     @BeforeAll
     void config(TestConfiguration testConfiguration)
     {
-
         // Since the MySQL container is derived from the official MySQL image I have to mark the image as compatible
         // with MySQLContainers.
         DockerImageName sqlContainer = DockerImageName.parse("farcasut/custom-mysql:latest").asCompatibleSubstituteFor("mysql");
@@ -78,16 +78,21 @@ public class AnalyticsIT
             throw new RuntimeException(e);
         }
     }
-
+    @BeforeEach
+    void login(TestUtils setup)
+    {
+        setup.getURLToLoginAsAdmin();
+    }
     @Test
     void appEntryRedirectsToHomePage(XWikiWebDriver driver, TestUtils setup) throws InterruptedException
     {
 
-        HomePageViewPage.gotoPage();
-        fail();
+        HomePageViewPage.gotoAndEdit().addNewMacro(driver, "searchCategories");
         while (true) {
             Thread.sleep(10 * 1000);
             System.out.println("Test");
+            fail();
+
         }
     }
 }
