@@ -100,7 +100,7 @@
   #foreach ($currentEntry in $resultList)
     #set ($rowIdentifier = $currentEntry.get('url').asText())
     #set ($discard = $results.rows.add({
-      'destinationPage': "#createLinkElement($currentEntry.get('label').asText(), $url)",
+      'destinationPage': "#createLinkElement($currentEntry.get('label').asText(), $rowIdentifier)",
       'clicked': $currentEntry.get('nb_hits_following_search').asText(),
       'pageViews': $currentEntry.get('nb_hits').asText(),
       'loadTime': $mathtool.roundTo(2, $currentEntry.get('avg_page_load_time').asDouble()),
