@@ -149,6 +149,9 @@ analytics.livetable.startDate=Start Date
 analytics.livedata.action.rowEvolution.title=Row Evolution
 
 ## Others
+
+
+rendering.macro.accessDenied=You do not have access to view this macro. If you believe this is an error, please speak with your XWiki administrator.
 analytics.extension.name=Analytics Application (Pro)
 analytics.extension.title=Analytics
 rendering.macro.analyticsFilter.startDate=Start date

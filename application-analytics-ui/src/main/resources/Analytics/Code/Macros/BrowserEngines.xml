@@ -292,7 +292,11 @@
 #end
 #if ($services.licensing.licensor.hasLicensureForEntity(
   $services.model.createDocumentReference('', ['Analytics', 'Code'], 'ConfigurationClass')))
-  #executeMacro()
+  #if ($xwiki.getDocument('Analytics.WebHome'))
+    #executeMacro()
+  #else
+    {{error}}$escapetool.xml($services.localization.render('rendering.macro.accessDenied')){{/error}}
+  #end
 #else
   {{error}}#getMissingLicenseMessage('analytics.extension.name'){{/error}}
 #end
