@@ -313,7 +313,7 @@
       <description/>
     </property>
     <property>
-      <id>MostViewedPages</id>
+      <id>mostViewedPages</id>
     </property>
     <property>
       <name>Most Viewed Page</name>
