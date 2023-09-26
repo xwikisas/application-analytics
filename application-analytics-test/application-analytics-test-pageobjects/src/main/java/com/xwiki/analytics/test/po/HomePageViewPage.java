@@ -24,6 +24,7 @@ import java.sql.SQLOutput;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.swing.*;
 import javax.swing.text.View;
 
 import org.openqa.selenium.By;
@@ -63,27 +64,27 @@ public class HomePageViewPage extends ViewPage
         return new HomePageViewPage();
     }
 
-    private static void selectMacro(XWikiWebDriver driver, String macroID) {
+    private static void selectMacro(XWikiWebDriver driver, String macroID, String macroName) {
 
+        // Will bring into view the macro that I want to use
+        driver.findElement(By.cssSelector(".macro-textFilter")).sendKeys(macroName);
         WebElement element = driver.findElement(By.cssSelector(String.format("li[data-macroid=\"%s\"]", macroID)));
-
-        // Double-click using JavaScript
-        JavascriptExecutor executor = (JavascriptExecutor) driver;
-        executor.executeScript("var event = new MouseEvent('dblclick', { 'bubbles': true }); arguments[0].dispatchEvent(event);", element);
-
+        System.out.println(element);
+        Actions actions = new Actions(driver);
+        actions.doubleClick(element).perform();
         // Wait for the button to become present in the DOM
-        WebDriverWait wait = new WebDriverWait(driver, 10); // waits up to 10 seconds
-        WebElement button = wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".modal.macro-editor-modal.in.gadget-editor-modal .modal-footer .btn-primary'")));
-
+        WebElement button = driver.findElement(By.cssSelector(".modal.macro-editor-modal.in.gadget-editor-modal "
+            + ".modal-footer .btn-primary'"));
+        driver.waitUntilElementIsEnabled(button);
         button.click();
     }
 
 
 
 
-    public static HomePageViewPage addNewMacro(XWikiWebDriver driver, String macroID)
+    public static HomePageViewPage addNewMacro(XWikiWebDriver driver, String macroID, String macroName)
     {
-        clickAddGadget(driver).selectMacro(driver, macroID);
+        clickAddGadget(driver).selectMacro(driver, macroID, macroName);
         return new HomePageViewPage();
     }
 

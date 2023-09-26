@@ -87,7 +87,7 @@ public class AnalyticsIT
     void appEntryRedirectsToHomePage(XWikiWebDriver driver, TestUtils setup) throws InterruptedException
     {
 
-        HomePageViewPage.gotoAndEdit().addNewMacro(driver, "searchCategories");
+        HomePageViewPage.gotoAndEdit().addNewMacro(driver, "searchCategories", "Search Categories");
         while (true) {
             Thread.sleep(10 * 1000);
             System.out.println("Test");
