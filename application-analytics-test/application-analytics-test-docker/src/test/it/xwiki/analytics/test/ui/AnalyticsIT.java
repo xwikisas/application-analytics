@@ -19,18 +19,12 @@
  */
 package xwiki.analytics.test.ui;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Collections;
 
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.MySQLContainer;
-import org.testcontainers.shaded.com.fasterxml.jackson.databind.JsonNode;
 import org.testcontainers.utility.DockerImageName;
 import org.xwiki.test.docker.internal.junit5.DockerTestUtils;
 import org.xwiki.test.docker.junit5.TestConfiguration;
@@ -38,61 +32,84 @@ import org.xwiki.test.docker.junit5.UITest;
 import org.xwiki.test.ui.TestUtils;
 import org.xwiki.test.ui.XWikiWebDriver;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.stream.JsonReader;
 import com.xwiki.analytics.test.po.HomePageViewPage;
 
-import static org.junit.jupiter.api.Assertions.fail;
+import xwiki.analytics.test.ui.config.Config;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @UITest
 public class AnalyticsIT
 {
-
-
     @BeforeAll
-    void config(TestConfiguration testConfiguration)
+    void setup(TestConfiguration testConfiguration, TestUtils testUtils) throws Exception
+    {
+        GenericContainer<?> sqlContainer = startDb(testConfiguration);
+        GenericContainer<?> matomoContainer = startMatomo(testConfiguration, sqlContainer);
+        testUtils.getURLToLoginAsAdmin();
+    }
+
+    /**
+     * Checks if an admin can add/remove macros to the main dashboard.
+     *
+     * @param driver
+     */
+    @Test
+    void appEntryRedirectsToHomePage(XWikiWebDriver driver) throws InterruptedException
+    {
+        // Add a gadget to the dashboard.
+        HomePageViewPage.gotoAndEdit().addNewMacro(driver, "searchCategories", "Search Categories")
+            .saveDashboard(driver);
+        assertEquals(HomePageViewPage.noOfGadgets(driver), 3);
+        // Remove a gadget from the dashboard.
+        HomePageViewPage.gotoAndEdit().removeLastMacro(driver).saveDashboard(driver);
+        assertEquals(HomePageViewPage.noOfGadgets(driver), 2);
+        while (true) {
+            Thread.sleep(10000);
+            System.out.println("test");
+        }
+    }
+
+    /**
+     * Create and start a container with the database.
+     *
+     * @param testConfiguration configuration for the test container
+     * @return reference to the container
+     */
+    private MySQLContainer startDb(TestConfiguration testConfiguration) throws Exception
     {
         // Since the MySQL container is derived from the official MySQL image I have to mark the image as compatible
         // with MySQLContainers.
-        DockerImageName sqlContainer = DockerImageName.parse("farcasut/custom-mysql:latest").asCompatibleSubstituteFor("mysql");
-        // I create a new db and a new user.
+        DockerImageName sqlContainer =
+            DockerImageName.parse(Config.DB_CONTAINER_NAME).asCompatibleSubstituteFor("mysql");
         MySQLContainer<?> mysqlContainer = new MySQLContainer<>(sqlContainer)
-            .withDatabaseName("matomo")
-            .withUsername("matomo")
-            .withPassword("secret")
+            .withDatabaseName(Config.DB_NAME)
+            .withUsername(Config.DB_USERNAME)
+            .withPassword(Config.DB_PASSWORD)
             .withExposedPorts(3306);
-        mysqlContainer.setPortBindings(Collections.singletonList("9034:3306"));
-        try {
-            // These are some credentials all of them will be moved to a separate file to make it easier to handle.
-            //172.17.0.1 ADMIN1 91be1bca1315c35abd605ad8a544eece
-            DockerTestUtils.startContainer(mysqlContainer, testConfiguration);
-            GenericContainer<?> matomoContainer = new GenericContainer<>("matomo:latest")
-                .withExposedPorts(80)
-                .withEnv("MATOMO_DATABASE_HOST",
-                    "172.17.0.1" + ":" + mysqlContainer.getMappedPort(3306))
-                .withFileSystemBind("src/main/resources/config.ini.php","/var/www/html/config/config.ini.php");
-            matomoContainer.setPortBindings(
-            Collections.singletonList("9999:80"));    // Map host port 9999 to be able to access the matomo instance
-            DockerTestUtils.startContainer(matomoContainer, testConfiguration);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        mysqlContainer.setPortBindings(Collections.singletonList(String.format("%d:%d", Config.DB_BRIDGE_PORT,
+            Config.DB_CONTAINER_EXPOSED_PORT)));
+        DockerTestUtils.startContainer(mysqlContainer, testConfiguration);
+        return mysqlContainer;
     }
-    @BeforeEach
-    void login(TestUtils setup)
-    {
-        setup.getURLToLoginAsAdmin();
-    }
-    @Test
-    void appEntryRedirectsToHomePage(XWikiWebDriver driver, TestUtils setup) throws InterruptedException
-    {
 
-        HomePageViewPage.gotoAndEdit().addNewMacro(driver, "searchCategories", "Search Categories");
-        while (true) {
-            Thread.sleep(10 * 1000);
-            System.out.println("Test");
-            fail();
-
-        }
+    /**
+     * Creates&starts the Matomo container.
+     *
+     * @param testConfiguration test configuration
+     * @param dbContainer reference to the db container
+     * @return reference to the container
+     */
+    private GenericContainer startMatomo(TestConfiguration testConfiguration, GenericContainer dbContainer)
+        throws Exception
+    {
+        GenericContainer<?> matomoContainer = new GenericContainer<>(Config.MATOMO_CONTAINER_NAME)
+            .withExposedPorts(80)
+            .withEnv("MATOMO_DATABASE_HOST",
+                Config.ADDRESS + ":" + dbContainer.getMappedPort(Config.DB_CONTAINER_EXPOSED_PORT))
+            .withFileSystemBind("src/main/resources/config.ini.php", Config.MATOMO_CONFIG_FILE_PATH);
+        matomoContainer.setPortBindings(Collections.singletonList(String.format("%d:80", Config.MATOMO_BRIDGE_PORT)));
+        DockerTestUtils.startContainer(matomoContainer, testConfiguration);
+        return matomoContainer;
     }
 }
