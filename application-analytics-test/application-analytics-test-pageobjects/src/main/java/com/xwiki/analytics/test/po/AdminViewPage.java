@@ -19,14 +19,78 @@
  */
 package com.xwiki.analytics.test.po;
 
-import org.xwiki.administration.test.po.AdministrablePage;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.xwiki.administration.test.po.AdministrationPage;
+import org.xwiki.test.ui.XWikiWebDriver;
 
 public class AdminViewPage
 {
-    public void gotoAdminPage()
+    public AdminViewPage()
+    {
+
+    }
+
+    private static final String trackingCodeId = "Analytics.Code.ConfigurationClass_0_trackingCode";
+
+    private static final String authTokenId = "Analytics.Code.ConfigurationClass_0_authToken";
+
+    private static final String idSiteId = "Analytics.Code.ConfigurationClass_0_siteId";
+
+    private static final String requestAddressId = "Analytics.Code.ConfigurationClass_0_requestAddress";
+
+    public static AdminViewPage gotoAdminPage()
     {
         AdministrationPage administrationPage = AdministrationPage.gotoPage();
-        administrationPage.clickSection("Other", "analytics.application");
+        administrationPage.clickSection("Other", "Analytics");
+        return new AdminViewPage();
+    }
+
+    public static AdminViewPage setTrackingCode(XWikiWebDriver driver, String value)
+    {
+        driver.findElement(By.id(trackingCodeId)).sendKeys(value);
+        return new AdminViewPage();
+    }
+
+    public static AdminViewPage setAuthTokenId(XWikiWebDriver driver, String value)
+    {
+        driver.findElement(By.id(authTokenId)).sendKeys(value);
+        return new AdminViewPage();
+    }
+
+    public static AdminViewPage setIdSiteId(XWikiWebDriver driver, String value)
+    {
+        driver.findElement(By.id(idSiteId)).sendKeys(value);
+        return new AdminViewPage();
+    }
+
+    public static AdminViewPage setRequestAddressId(XWikiWebDriver driver, String value)
+    {
+        driver.findElement(By.id(requestAddressId)).sendKeys(value);
+        return new AdminViewPage();
+    }
+
+    public static AdminViewPage bringSaveButtonIntoView(XWikiWebDriver driver)
+    {
+        WebElement saveButton = driver.findElement(By.cssSelector(".btn.btn-primary"));
+        Actions actions = driver.createActions();
+        actions.moveToElement(saveButton).click().perform();
+        return new AdminViewPage();
+    }
+
+    public static String inProgressNotification(XWikiWebDriver driver)
+    {
+        return driver.findElement(By.cssSelector(".xnotification.xnotification-inprogress")).getText();
+    }
+
+    public static String errorNotification(XWikiWebDriver driver)
+    {
+        return driver.findElement(By.cssSelector(".xnotification.xnotification-error")).getText();
+    }
+
+    public static String  successNotification(XWikiWebDriver driver)
+    {
+        return driver.findElement(By.cssSelector(".xnotification.xnotification-done")).getText();
     }
 }
