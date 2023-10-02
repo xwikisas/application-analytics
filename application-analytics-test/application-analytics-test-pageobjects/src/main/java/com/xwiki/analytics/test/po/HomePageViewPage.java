@@ -61,7 +61,6 @@ public class HomePageViewPage extends ViewPage
     private static HomePageViewPage clickAddGadget(XWikiWebDriver driver)
     {
         driver.findElement(By.cssSelector(".addgadget")).click();
-
         return new HomePageViewPage();
     }
 
