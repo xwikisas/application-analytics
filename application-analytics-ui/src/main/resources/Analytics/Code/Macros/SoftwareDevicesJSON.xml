@@ -20,27 +20,28 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc version="1.4" reference="Analytics.Code.Macros.PagesFollowingASiteSearchJSON" locale="">
+<xwikidoc version="1.4" reference="Analytics.Code.Macros.SoftwareDevicesJSON" locale="">
   <web>Analytics.Code.Macros</web>
-  <name>PagesFollowingASiteSearchJSON</name>
+  <name>SoftwareDevicesJSON</name>
   <language/>
   <defaultLanguage/>
   <translation>0</translation>
   <creator>xwiki:XWiki.Admin</creator>
-  <parent>xwiki:Analytics.Code.Macros.PagesFollowingASiteSearch</parent>
+  <parent>WebHome</parent>
   <author>xwiki:XWiki.Admin</author>
   <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
   <version>1.1</version>
-  <title>PagesFollowingASiteSearchJSON</title>
+  <title>SoftwareDevicesJSON</title>
   <comment/>
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>true</hidden>
   <content>{{include reference='Analytics.Code.Macros.VelocityMacros'/}}
+
 {{velocity}}
 #if ($xcontext.action == 'get')
   #set ($offset = $numbertool.toNumber($request.offset).intValue())
-  ## The offset sent by the livedata starts at 1.
+  ## The offset sent by the live table starts at 1.
   #set ($offset = $offset - 1)
   #if (!$offset || $offset &lt; 0)
     #set ($offset = 0)
@@ -49,25 +50,28 @@
   #if (!$limit)
     #set ($limit = 15)
   #end
-  ##
-  #set ($matomoKeysMapping = {
-    'destinationPage': 'label',
-    'clicked': 'nb_hits_following_search',
-    'pageViews': 'nb_hits',
-    'loadTime': 'avg_page_load_time'
+
+  #set ($keys = {
+    $request.label: 'label',
+    'visits': 'nb_visits',
+    'nbOfActions': 'nb_actions',
+    'timeSpent': 'sum_visit_length',
+    'bounceRate': 'bounce_count',
+    'conversionRate': 'nb_visits_converted'
   })
-  #set ($sort = 'destinationPage')
-  #set ($order = 'asc')
+
+  #set ($sort = 'nb_visits')
+  #set ($order = 'desc')
   #if ($request.sort)
-    #set ($sort = $matomoKeysMapping.get($request.sort))
+    #set ($sort = $keys.get($request.sort))
     #set ($order = $request.dir)
   #end
 
-  #set ($filters = {})
-  #foreach ($key in $matomoKeysMapping.keySet())
+  #set ($filters={})
+  #foreach ($key in $keys.keySet())
     #set ($value = $request.get($key))
     #if ($value &amp;&amp; $value != '')
-      #set ($discard = $filters.put($matomoKeysMapping.get($key), $request.get($key)))
+      $filters.put($keys.get($key), $request.get($key))
     #end
   #end
 
@@ -75,13 +79,11 @@
     'period': $request.period,
     'date': $request.date,
     'module': 'API',
-    'method': 'Actions.getPageUrlsFollowingSiteSearch',
+    'method': $request.matomoMethod,
     'format': 'json',
-    'filter_limit' : $request.limitEntries,
+    'filter_limit': $request.limitEntries,
     'filter_sort_column': $sort,
-    'filter_sort_order': $order,
-    'expanded': '1',
-    'flat': '1'
+    'filter_sort_order': $order
   })
 
   ## Get the JSON response from Matomo.
@@ -90,6 +92,7 @@
     #set ($toIndex =  $mathtool.min($mathtool.add($offset, $limit), $analyticsResult.size()))
     #subSet( $analyticsResult, $offset, $toIndex, $resultList)
   #end
+
   #set ($results = {
     'totalrows': $analyticsResult.size(),
     'returnedrows': $resultList.size(),
@@ -98,16 +101,33 @@
     'rows': []
   })
   #foreach ($currentEntry in $resultList)
-    #set ($rowIdentifier = $currentEntry.get('url').asText())
+    ## The Resolution.getConfiguration method from matomo doesn't return a segment for each row and to get segment I
+    ## must split the label into it's components and construct the segment myself.
+    #if ($request.matomoMethod == 'Resolution.getConfiguration')
+      #set ($values= $currentEntry.get('label').asText().split(' / '))
+      #set ($segmentsName = ['operatingSystemName', 'browserName', 'resolution'])
+      #set ($segmentParts = [])
+      #foreach ($i in [0..2])
+        #set ($currentSegment = $segmentsName.get($i) + '==' + $values.get($i))
+        #set ($discard = $segmentParts.add($currentSegment))
+      #end
+      #set ($segment = $stringtool.join($segmentParts, ';'))
+      #else
+        #set ($segment = $currentEntry.get('segment').asText())
+    #end
+    #set ($conversionRate =  $currentEntry.get('nb_visits_converted').asText() + '%')
     #set ($discard = $results.rows.add({
-      'destinationPage': "#createLinkElement($currentEntry.get('label').asText(), $rowIdentifier)",
-      'clicked': $currentEntry.get('nb_hits_following_search').asText(),
-      'pageViews': $currentEntry.get('nb_hits').asText(),
-      'loadTime': $mathtool.roundTo(2, $currentEntry.get('avg_page_load_time').asDouble()),
-      'actions': "#analyticsActions($rowIdentifier)"
+      $request.label: $currentEntry.get('label').asText(),
+      'visits':  $currentEntry.get('nb_visits').asText(),
+      'nbOfActions': $currentEntry.get('nb_actions').asText(),
+      'timeSpent': $currentEntry.get('sum_visit_length').asText(),
+      'bounceRate': $currentEntry.get('bounce_count').asText(),
+      'conversionRate': $conversionRate,
+      'actions': "#analyticsActions($segment)"
     }))
   #end
   #jsonResponse($results)
 #end
-{{/velocity}}</content>
+{{/velocity}}
+</content>
 </xwikidoc>

@@ -20,9 +20,9 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc version="1.4" reference="Analytics.Code.Macros.MostViewedPages" locale="">
+<xwikidoc version="1.4" reference="Analytics.Code.Macros.DeviceModel" locale="">
   <web>Analytics.Code.Macros</web>
-  <name>MostViewedPages</name>
+  <name>DeviceModel</name>
   <language/>
   <defaultLanguage/>
   <translation>0</translation>
@@ -31,17 +31,17 @@
   <author>xwiki:XWiki.Admin</author>
   <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
   <version>1.1</version>
-  <title>MostViewedPages</title>
+  <title>DeviceModel</title>
   <comment/>
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>true</hidden>
-  <content>{{mostViewedPages/}}</content>
+  <content>{{deviceModel/}}</content>
   <object>
-    <name>Analytics.Code.Macros.MostViewedPages</name>
+    <name>Analytics.Code.Macros.DeviceModel</name>
     <number>0</number>
     <className>XWiki.WikiMacroClass</className>
-    <guid>dc943965-6af8-4905-8508-9b8c248c3930</guid>
+    <guid>2e6f11ab-2f28-4f6b-9e43-23df1de663dd</guid>
     <class>
       <name>XWiki.WikiMacroClass</name>
       <customClass/>
@@ -242,54 +242,52 @@
     <property>
       <code>{{include reference='Analytics.Code.Macros.VelocityMacros'/}}
 
-{{include reference="Licenses.Code.VelocityMacros"/}}
-
 {{velocity}}
 #macro(executeMacro)
   #getDate()
-  #set ($discard =$xwiki.jsx.use('Analytics.Code.Macros.RowEvolution'))
-  #set ($parameters = $escapetool.url({
-    'resultPage': 'Analytics.Code.Macros.MostViewedPagesJSON',
+  #set ($discard = $xwiki.jsx.use('Analytics.Code.Macros.RowEvolution'))#set ($parameters = $escapetool.url({
+    'resultPage': 'Analytics.Code.Macros.SoftwareDevicesJSON',
     'date': $date,
     'period': 'range',
     'limitEntries': '-1',
-    'translationPrefix': 'analytics.mostViewedPages.header.'
+    'translationPrefix': 'analytics.softwareDevices.header.',
+    'matomoMethod': ' DevicesDetection.getModel',
+    'label': 'deviceModel'
   }))
   #set ($liveDataConfig= {
     'meta': {
       'propertyDescriptors': [
-        {'id': 'pageTitle', 'displayer': 'html'},
+        {'id': 'deviceModel', 'displayer': 'html'},
         {'id': 'visits', 'displayer': 'html'},
-        {'id': 'hits', 'displayer': 'html'},
+        {'id': 'nbOfActions', 'displayer': 'html'},
         {'id': 'timeSpent', 'displayer': 'html'},
-        {'id': 'entryNbActions', 'displayer': 'html'},
         {'id': 'bounceRate', 'displayer': 'html'},
-        {'id': 'exitRate', 'displayer': 'html'},
-        {'id': 'actions', 'filterable': false, 'sortable': false, 'displayer': 'html'}
+        {'id': 'actions',"filterable": false, "sortable": false, 'displayer': 'html'}
       ],
       'entryDescriptor': {
-        'idProperty': 'pageTitle'
+        'idProperty': 'deviceModel'
       }
     }
   })
-  #getAnalyticsMacroId('mostViewedMacro', $macroId)
+  #getAnalyticsMacroId('deviceModelMacro', $macroId)
 
   {{liveData
     id="$macroId"
-    properties="pageTitle, visits, hits, timeSpent, entryNbActions, bounceRate, exitRate, actions"
+    properties='deviceModel, visits, nbOfActions, timeSpent, bounceRate, actions'
     source='liveTable'
     sourceParameters="$parameters"
-    sort='hits:desc'
+    sort='visits:desc'
   }}$jsontool.serialize($liveDataConfig){{/liveData}}
 
   #set ($rowEvolutionParams = {
-    'pageViews': 'nb_hits',
-    'uniqueViews': 'nb_visits',
-    "avgTime": 'avg_time_on_page'
+    'visits': 'nb_visits',
+    'actions': 'nb_actions',
+    'timeSpent': 'sum_visit_length',
+    'bounceRate': 'bounce_count'
   })
-  #modalRowEvolution($rowEvolutionParams, 'MostViewedPages', $macroId)
+  #modalRowEvolution($rowEvolutionParams, 'DeviceModel', $macroId)
 #end
-#if ($services.licensing.licensor.hasLicensureForEntity(
+        #if ($services.licensing.licensor.hasLicensureForEntity(
   $services.model.createDocumentReference('', ['Analytics', 'Code'], 'ConfigurationClass')))
   #executeMacro()
 #else
@@ -313,10 +311,10 @@
       <description/>
     </property>
     <property>
-      <id>mostViewedPages</id>
+      <id>deviceModel</id>
     </property>
     <property>
-      <name>Most Viewed Page</name>
+      <name>Device Model</name>
     </property>
     <property>
       <priority/>
@@ -329,10 +327,10 @@
     </property>
   </object>
   <object>
-    <name>Analytics.Code.Macros.MostViewedPages</name>
+    <name>Analytics.Code.Macros.DeviceModel</name>
     <number>0</number>
     <className>XWiki.WikiMacroParameterClass</className>
-    <guid>6e3cae3f-3127-4fb2-a590-5dce2f4be0d0</guid>
+    <guid>b3f23dc8-2655-4b29-a2ce-68a6752630bd</guid>
     <class>
       <name>XWiki.WikiMacroParameterClass</name>
       <customClass/>
@@ -407,10 +405,10 @@
     </property>
   </object>
   <object>
-    <name>Analytics.Code.Macros.MostViewedPages</name>
+    <name>Analytics.Code.Macros.DeviceModel</name>
     <number>1</number>
     <className>XWiki.WikiMacroParameterClass</className>
-    <guid>8a9fb4a7-d7e2-4d7d-84b8-8afb71b4606d</guid>
+    <guid>72c506e4-9b6d-4549-aed2-44238ca2dafe</guid>
     <class>
       <name>XWiki.WikiMacroParameterClass</name>
       <customClass/>

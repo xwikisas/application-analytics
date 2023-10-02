@@ -20,9 +20,9 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc version="1.4" reference="Analytics.Code.Macros.MostViewedPages" locale="">
+<xwikidoc version="1.4" reference="Analytics.Code.Macros.DeviceType" locale="">
   <web>Analytics.Code.Macros</web>
-  <name>MostViewedPages</name>
+  <name>DeviceType</name>
   <language/>
   <defaultLanguage/>
   <translation>0</translation>
@@ -31,17 +31,17 @@
   <author>xwiki:XWiki.Admin</author>
   <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
   <version>1.1</version>
-  <title>MostViewedPages</title>
+  <title>DeviceType</title>
   <comment/>
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>true</hidden>
-  <content>{{mostViewedPages/}}</content>
+  <content>{{deviceType/}}</content>
   <object>
-    <name>Analytics.Code.Macros.MostViewedPages</name>
+    <name>Analytics.Code.Macros.DeviceType</name>
     <number>0</number>
     <className>XWiki.WikiMacroClass</className>
-    <guid>dc943965-6af8-4905-8508-9b8c248c3930</guid>
+    <guid>c6511038-1218-4f32-b8f8-e242e1a94e41</guid>
     <class>
       <name>XWiki.WikiMacroClass</name>
       <customClass/>
@@ -242,52 +242,50 @@
     <property>
       <code>{{include reference='Analytics.Code.Macros.VelocityMacros'/}}
 
-{{include reference="Licenses.Code.VelocityMacros"/}}
-
 {{velocity}}
 #macro(executeMacro)
   #getDate()
-  #set ($discard =$xwiki.jsx.use('Analytics.Code.Macros.RowEvolution'))
-  #set ($parameters = $escapetool.url({
-    'resultPage': 'Analytics.Code.Macros.MostViewedPagesJSON',
+  #set ($discard = $xwiki.jsx.use('Analytics.Code.Macros.RowEvolution'))#set ($parameters = $escapetool.url({
+    'resultPage': 'Analytics.Code.Macros.SoftwareDevicesJSON',
     'date': $date,
     'period': 'range',
     'limitEntries': '-1',
-    'translationPrefix': 'analytics.mostViewedPages.header.'
+    'translationPrefix': 'analytics.softwareDevices.header.',
+    'matomoMethod': 'DevicesDetection.getType ',
+    'label': 'deviceType'
   }))
   #set ($liveDataConfig= {
     'meta': {
       'propertyDescriptors': [
-        {'id': 'pageTitle', 'displayer': 'html'},
+        {'id': 'deviceType', 'displayer': 'html'},
         {'id': 'visits', 'displayer': 'html'},
-        {'id': 'hits', 'displayer': 'html'},
+        {'id': 'nbOfActions', 'displayer': 'html'},
         {'id': 'timeSpent', 'displayer': 'html'},
-        {'id': 'entryNbActions', 'displayer': 'html'},
         {'id': 'bounceRate', 'displayer': 'html'},
-        {'id': 'exitRate', 'displayer': 'html'},
-        {'id': 'actions', 'filterable': false, 'sortable': false, 'displayer': 'html'}
+        {'id': 'actions','filterable': false, 'sortable': false, 'displayer': 'html'}
       ],
       'entryDescriptor': {
-        'idProperty': 'pageTitle'
+        'idProperty': 'deviceType'
       }
     }
   })
-  #getAnalyticsMacroId('mostViewedMacro', $macroId)
+  #getAnalyticsMacroId('deviceTypeMacro', $macroId)
 
   {{liveData
     id="$macroId"
-    properties="pageTitle, visits, hits, timeSpent, entryNbActions, bounceRate, exitRate, actions"
+    properties='deviceType, visits, nbOfActions, timeSpent, bounceRate, actions'
     source='liveTable'
     sourceParameters="$parameters"
-    sort='hits:desc'
+    sort='visits:desc'
   }}$jsontool.serialize($liveDataConfig){{/liveData}}
 
   #set ($rowEvolutionParams = {
-    'pageViews': 'nb_hits',
-    'uniqueViews': 'nb_visits',
-    "avgTime": 'avg_time_on_page'
+    'visits': 'nb_visits',
+    'actions': 'nb_actions',
+    'timeSpent': 'sum_visit_length',
+    'bounceRate': 'bounce_count'
   })
-  #modalRowEvolution($rowEvolutionParams, 'MostViewedPages', $macroId)
+  #modalRowEvolution($rowEvolutionParams, 'DeviceType', $macroId)
 #end
 #if ($services.licensing.licensor.hasLicensureForEntity(
   $services.model.createDocumentReference('', ['Analytics', 'Code'], 'ConfigurationClass')))
@@ -313,10 +311,10 @@
       <description/>
     </property>
     <property>
-      <id>mostViewedPages</id>
+      <id>deviceType</id>
     </property>
     <property>
-      <name>Most Viewed Page</name>
+      <name>Device Type</name>
     </property>
     <property>
       <priority/>
@@ -329,10 +327,246 @@
     </property>
   </object>
   <object>
-    <name>Analytics.Code.Macros.MostViewedPages</name>
+    <name>Analytics.Code.Macros.DeviceType</name>
+    <number>1</number>
+    <className>XWiki.WikiMacroClass</className>
+    <guid>d80dd5c2-bffe-402a-8b3d-26aeb4f56108</guid>
+    <class>
+      <name>XWiki.WikiMacroClass</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <async_cached>
+        <defaultValue>0</defaultValue>
+        <disabled>0</disabled>
+        <displayFormType>select</displayFormType>
+        <displayType/>
+        <name>async_cached</name>
+        <number>13</number>
+        <prettyName>Cached</prettyName>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+      </async_cached>
+      <async_context>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <freeText>forbidden</freeText>
+        <largeStorage>0</largeStorage>
+        <multiSelect>1</multiSelect>
+        <name>async_context</name>
+        <number>14</number>
+        <prettyName>Context elements</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator>, </separator>
+        <separators>|, </separators>
+        <size>5</size>
+        <unmodifiable>0</unmodifiable>
+        <values>action=Action|doc.reference=Document|icon.theme=Icon theme|locale=Language|rendering.defaultsyntax=Default syntax|rendering.restricted=Restricted|rendering.targetsyntax=Target syntax|request.base=Request base URL|request.parameters=Request parameters|request.url=Request URL|request.wiki=Request wiki|user=User|wiki=Wiki</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </async_context>
+      <async_enabled>
+        <defaultValue>0</defaultValue>
+        <disabled>0</disabled>
+        <displayFormType>select</displayFormType>
+        <displayType/>
+        <name>async_enabled</name>
+        <number>12</number>
+        <prettyName>Asynchronous rendering</prettyName>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+      </async_enabled>
+      <code>
+        <disabled>0</disabled>
+        <editor>Text</editor>
+        <name>code</name>
+        <number>10</number>
+        <prettyName>Macro code</prettyName>
+        <rows>20</rows>
+        <size>40</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </code>
+      <contentDescription>
+        <contenttype>PureText</contenttype>
+        <disabled>0</disabled>
+        <editor>PureText</editor>
+        <name>contentDescription</name>
+        <number>9</number>
+        <prettyName>Content description (Not applicable for "No content" type)</prettyName>
+        <rows>5</rows>
+        <size>40</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </contentDescription>
+      <contentJavaType>
+        <cache>0</cache>
+        <defaultValue>Unknown</defaultValue>
+        <disabled>0</disabled>
+        <displayType>input</displayType>
+        <freeText>allowed</freeText>
+        <largeStorage>1</largeStorage>
+        <multiSelect>0</multiSelect>
+        <name>contentJavaType</name>
+        <number>8</number>
+        <picker>1</picker>
+        <prettyName>Macro content type</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator>|</separator>
+        <separators>|</separators>
+        <size>1</size>
+        <unmodifiable>0</unmodifiable>
+        <values>Unknown|Wiki</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </contentJavaType>
+      <contentType>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <freeText>forbidden</freeText>
+        <largeStorage>0</largeStorage>
+        <multiSelect>0</multiSelect>
+        <name>contentType</name>
+        <number>7</number>
+        <prettyName>Macro content availability</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator>|</separator>
+        <separators>|</separators>
+        <size>1</size>
+        <unmodifiable>0</unmodifiable>
+        <values>Optional|Mandatory|No content</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </contentType>
+      <defaultCategory>
+        <disabled>0</disabled>
+        <name>defaultCategory</name>
+        <number>4</number>
+        <prettyName>Default category</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </defaultCategory>
+      <description>
+        <contenttype>PureText</contenttype>
+        <disabled>0</disabled>
+        <editor>PureText</editor>
+        <name>description</name>
+        <number>3</number>
+        <prettyName>Macro description</prettyName>
+        <rows>5</rows>
+        <size>40</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </description>
+      <id>
+        <disabled>0</disabled>
+        <name>id</name>
+        <number>1</number>
+        <prettyName>Macro id</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </id>
+      <name>
+        <disabled>0</disabled>
+        <name>name</name>
+        <number>2</number>
+        <prettyName>Macro name</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </name>
+      <priority>
+        <disabled>0</disabled>
+        <name>priority</name>
+        <number>11</number>
+        <numberType>integer</numberType>
+        <prettyName>Priority</prettyName>
+        <size>10</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
+      </priority>
+      <supportsInlineMode>
+        <disabled>0</disabled>
+        <displayFormType>select</displayFormType>
+        <displayType>yesno</displayType>
+        <name>supportsInlineMode</name>
+        <number>5</number>
+        <prettyName>Supports inline mode</prettyName>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+      </supportsInlineMode>
+      <visibility>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <freeText>forbidden</freeText>
+        <largeStorage>0</largeStorage>
+        <multiSelect>0</multiSelect>
+        <name>visibility</name>
+        <number>6</number>
+        <prettyName>Macro visibility</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator>|</separator>
+        <separators>|</separators>
+        <size>1</size>
+        <unmodifiable>0</unmodifiable>
+        <values>Current User|Current Wiki|Global</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </visibility>
+    </class>
+    <property>
+      <async_cached>0</async_cached>
+    </property>
+    <property>
+      <async_context/>
+    </property>
+    <property>
+      <async_enabled>0</async_enabled>
+    </property>
+    <property>
+      <code/>
+    </property>
+    <property>
+      <contentDescription/>
+    </property>
+    <property>
+      <contentJavaType/>
+    </property>
+    <property>
+      <contentType/>
+    </property>
+    <property>
+      <defaultCategory/>
+    </property>
+    <property>
+      <description/>
+    </property>
+    <property>
+      <id/>
+    </property>
+    <property>
+      <name/>
+    </property>
+    <property>
+      <priority/>
+    </property>
+    <property>
+      <supportsInlineMode/>
+    </property>
+    <property>
+      <visibility/>
+    </property>
+  </object>
+  <object>
+    <name>Analytics.Code.Macros.DeviceType</name>
     <number>0</number>
     <className>XWiki.WikiMacroParameterClass</className>
-    <guid>6e3cae3f-3127-4fb2-a590-5dce2f4be0d0</guid>
+    <guid>4b7d2bae-df15-4d8c-99da-0486524a85f5</guid>
     <class>
       <name>XWiki.WikiMacroParameterClass</name>
       <customClass/>
@@ -407,10 +641,10 @@
     </property>
   </object>
   <object>
-    <name>Analytics.Code.Macros.MostViewedPages</name>
+    <name>Analytics.Code.Macros.DeviceType</name>
     <number>1</number>
     <className>XWiki.WikiMacroParameterClass</className>
-    <guid>8a9fb4a7-d7e2-4d7d-84b8-8afb71b4606d</guid>
+    <guid>b8b5779d-3dae-401f-bd87-3d0a50e1d964</guid>
     <class>
       <name>XWiki.WikiMacroParameterClass</name>
       <customClass/>
