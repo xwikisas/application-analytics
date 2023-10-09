@@ -13,6 +13,7 @@ charset = "utf8mb4"
 salt = "221e020a358ad259431e9ec76ba8a941"
 trusted_hosts[] = "localhost"
 trusted_hosts[] = "localhost:9999"
+enable_trusted_host_check = 0
 debug = 1
 
 [PluginsInstalled]

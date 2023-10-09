@@ -24,8 +24,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.xwiki.administration.test.po.AdministrationPage;
 import org.xwiki.test.ui.XWikiWebDriver;
+import org.xwiki.test.ui.po.ViewPage;
 
-public class AdminViewPage
+public class AdminViewPage extends ViewPage
 {
     public AdminViewPage()
     {

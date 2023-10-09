@@ -42,5 +42,5 @@ public class Config
 
     public static final String MATOMO_CREDENTIALS = "ADMIN1";
 
-    public static final String MATOMO_AUTH_TOKEN = "91be1bca1315c35abd605ad8a544eece";
+    public static String MATOMO_AUTH_TOKEN = "91be1bca1315c35abd605ad8a544eece";
 }
