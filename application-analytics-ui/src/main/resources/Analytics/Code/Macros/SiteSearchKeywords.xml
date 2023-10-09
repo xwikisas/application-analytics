@@ -287,7 +287,7 @@
 #end
 #if ($services.licensing.licensor.hasLicensureForEntity(
   $services.model.createDocumentReference('', ['Analytics', 'Code'], 'ConfigurationClass')))
-  #if ($xwiki.getDocument('Analytics.WebHome'))
+#if ($xwiki.hasAccessLevel('view', 'Analytics.WebHome'))
     #executeMacro()
   #else
     {{error}}$escapetool.xml($services.localization.render('rendering.macro.accessDenied')){{/error}}
