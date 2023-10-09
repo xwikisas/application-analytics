@@ -150,7 +150,7 @@ analytics.livedata.action.rowEvolution.title=Row Evolution
 
 ## Others
 
-rendering.macro.accessDenied=Please contact the administrator to resolve this issue.
+analytics.accessDenied=Please contact the administrator to resolve this issue.
 analytics.extension.name=Analytics Application (Pro)
 analytics.extension.title=Analytics
 rendering.macro.analyticsFilter.startDate=Start date

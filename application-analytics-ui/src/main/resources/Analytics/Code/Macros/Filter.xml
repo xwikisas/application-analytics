@@ -472,7 +472,7 @@
   #if ($xwiki.hasAccessLevel('view', 'Analytics.WebHome'))
     #executeMacro()
   #else
-    {{error}}$escapetool.xml($services.localization.render('rendering.macro.accessDenied')){{/error}}
+    {{error}}$escapetool.xml($services.localization.render('analytics.accessDenied')){{/error}}
   #end
 #else
   {{error}}#getMissingLicenseMessage('analytics.extension.name'){{/error}}
