@@ -20,7 +20,6 @@
 package com.xwiki.analytics.internal.configuration;
 
 import java.util.Arrays;
-import java.util.List;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -43,13 +42,15 @@ import org.xwiki.stability.Unstable;
 @Unstable
 public class AnalyticsConfigurationSource extends AbstractDocumentConfigurationSource
 {
-    private static final List<String> SPACE_NAMES = Arrays.asList("Analytics", "Code");
+    static final String CODE = "Code";
+    static final String ANALYTICS = "Analytics";
+    static final String CONFIGURATION = "Configuration";
 
     private static final LocalDocumentReference DOCUMENT_REFERENCE =
-        new LocalDocumentReference(SPACE_NAMES, "Configuration");
+        new LocalDocumentReference(Arrays.asList(ANALYTICS, CODE, CONFIGURATION), "WebHome");
 
     private static final LocalDocumentReference CLASS_REFERENCE =
-        new LocalDocumentReference(SPACE_NAMES, "ConfigurationClass");
+        new LocalDocumentReference(Arrays.asList(ANALYTICS, CODE), "ConfigurationClass");
 
     @Override
     protected DocumentReference getDocumentReference()
