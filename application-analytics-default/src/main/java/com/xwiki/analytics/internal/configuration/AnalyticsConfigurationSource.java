@@ -20,6 +20,7 @@
 package com.xwiki.analytics.internal.configuration;
 
 import java.util.Arrays;
+import java.util.List;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -45,9 +46,9 @@ public class AnalyticsConfigurationSource extends AbstractDocumentConfigurationS
     static final String CODE = "Code";
     static final String ANALYTICS = "Analytics";
     static final String CONFIGURATION = "Configuration";
-
+    static final List<String> SPACE = Arrays.asList(ANALYTICS, CODE);
     private static final LocalDocumentReference DOCUMENT_REFERENCE =
-        new LocalDocumentReference(Arrays.asList(ANALYTICS, CODE, CONFIGURATION), "WebHome");
+        new LocalDocumentReference(Arrays.asList(ANALYTICS, CODE), CONFIGURATION);
 
     private static final LocalDocumentReference CLASS_REFERENCE =
         new LocalDocumentReference(Arrays.asList(ANALYTICS, CODE), "ConfigurationClass");

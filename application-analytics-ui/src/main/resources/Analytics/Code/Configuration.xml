@@ -20,14 +20,14 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc version="1.4" reference="Analytics.Code.Configuration.WebHome" locale="">
-  <web>Analytics.Code.Configuration</web>
-  <name>WebHome</name>
+<xwikidoc version="1.4" reference="Analytics.Code.Configuration" locale="">
+  <web>Analytics.Code</web>
+  <name>Configuration</name>
   <language/>
   <defaultLanguage/>
   <translation>0</translation>
   <creator>xwiki:XWiki.Admin</creator>
-  <parent>Analytics.Code.WebHome</parent>
+  <parent>WebHome</parent>
   <author>xwiki:XWiki.Admin</author>
   <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
   <version>1.1</version>
@@ -38,7 +38,7 @@
   <hidden>true</hidden>
   <content/>
   <object>
-    <name>Analytics.Code.Configuration.WebHome</name>
+    <name>Analytics.Code.Configuration</name>
     <number>0</number>
     <className>Analytics.Code.ConfigurationClass</className>
     <guid>32650844-6ba2-4398-b782-7c364e062917</guid>
@@ -142,7 +142,7 @@
     </property>
   </object>
   <object>
-    <name>Analytics.Code.Configuration.WebHome</name>
+    <name>Analytics.Code.Configuration</name>
     <number>0</number>
     <className>XWiki.ConfigurableClass</className>
     <guid>79bf1e4b-b5e0-4bd7-9376-9766d181a58a</guid>
@@ -401,7 +401,7 @@
     </property>
   </object>
   <object>
-    <name>Analytics.Code.Configuration.WebHome</name>
+    <name>Analytics.Code.Configuration</name>
     <number>0</number>
     <className>XWiki.XWikiRights</className>
     <guid>ed723823-5407-4549-a3b4-a5d838a010f7</guid>
@@ -484,7 +484,7 @@
     </property>
   </object>
   <object>
-    <name>Analytics.Code.Configuration.WebHome</name>
+    <name>Analytics.Code.Configuration</name>
     <number>1</number>
     <className>XWiki.XWikiRights</className>
     <guid>b92ab3a0-0e70-444d-afcd-92f15285829d</guid>
