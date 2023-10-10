@@ -54,7 +54,7 @@
     full access to these documents (view, edit, delete) without having a license, so use this property wisely. -->
     <xwiki.extension.licensing.excludedDocuments>
       Analytics.WebPreferences,
-      Analytics.Code.Configuration
+      Analytics.Code.Configuration.WebHome
     </xwiki.extension.licensing.excludedDocuments>
     <xwiki.clirr.skip>true</xwiki.clirr.skip>
   </properties>
