@@ -154,7 +154,6 @@ require(['jquery', 'chart'], ($) =&gt; {
     {
       let currentItem =  data[i];
       let currentValue = currentItem[field] || 0;
-      // if the currentValue is a string that means that it co
       if(typeof currentValue === 'string' )
       {
         currentValue = parseFloat(currentValue.replace('%', ''))
