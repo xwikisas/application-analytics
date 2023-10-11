@@ -277,7 +277,7 @@
 
   #set ($rowEvolutionParams = {
     'searches': 'nb_visits',
-    'searchResultsPages': 'nb_pages_per_search'
+    'searchResultPages': 'nb_pages_per_search'
   })
   #modalRowEvolution($rowEvolutionParams, 'SearchCategories', $macroId)
 #end

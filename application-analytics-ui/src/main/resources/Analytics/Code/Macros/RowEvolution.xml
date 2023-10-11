@@ -147,6 +147,22 @@ require(['jquery', 'chart'], ($) =&gt; {
   let currentOptions;
   let currentLoadingAnimation;
 
+  function processValues(data, field)
+  {
+    let result = []
+    for(let i=0; i&lt;data.length; i++)
+    {
+      currentItem =  data[i];
+      currentValue = currentItem[field] || 0;
+      // if the currentValue is a string that means that it co
+      if(typeof currentValue === 'string' )
+      {
+        currentValue = parseFloat(currentValue.replace('%', ''))
+      }
+      result.push(currentValue)
+    }
+    return result;
+  }
   /**
    * Creates the chart for displaying the data.
    *
@@ -154,7 +170,7 @@ require(['jquery', 'chart'], ($) =&gt; {
    */
   const renderChart = (data) =&gt; {
     const dates = data.map(item =&gt; item.date);
-    const field = data.map(item =&gt; item[currentModal.find(SELECTORS.field).val()] || 0);
+    const values = processValues(data, currentModal.find(SELECTORS.field).val())
     const ctx = currentModal.find(SELECTORS.chart);
     // I can't modify and exiting chart because chart.js caches data about the chart and it can display the old data in
     // some cases.
@@ -167,7 +183,7 @@ require(['jquery', 'chart'], ($) =&gt; {
         labels: dates,
         datasets: [{
           label: '',
-          data: field,
+          data: values,
           borderColor: currentOptions.data('color'),
           fill: false
         }]
@@ -282,8 +298,7 @@ require(['jquery', 'chart'], ($) =&gt; {
     displayPeriodDurations(period);
     fetchChartData(currentOptions.data('rowIdentifier'));
   });
-});
-</code>
+});</code>
     </property>
     <property>
       <name/>

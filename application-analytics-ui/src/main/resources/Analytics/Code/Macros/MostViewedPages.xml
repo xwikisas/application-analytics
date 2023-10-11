@@ -285,7 +285,9 @@
   #set ($rowEvolutionParams = {
     'pageViews': 'nb_hits',
     'uniqueViews': 'nb_visits',
-    "avgTime": 'avg_time_on_page'
+    "avgTime": 'avg_time_on_page',
+    'bounceRate': 'bounce_rate',
+    'exitRate': 'exit_rate'
   })
   #modalRowEvolution($rowEvolutionParams, 'MostViewedPages', $macroId)
 #end

@@ -283,7 +283,7 @@
   #set ($rowEvolutionParams = {
     'visits': 'nb_visits',
     'actions': 'nb_actions',
-    'spentTime': 'sum_visit_length',
+    'timeSpent': 'sum_visit_length',
     'bounceRate': 'bounce_count'
   })
   #modalRowEvolution($rowEvolutionParams, 'Browsers', $macroId)
