@@ -43,7 +43,7 @@ import org.xwiki.stability.Unstable;
 @Unstable
 public class AnalyticsConfigurationSource extends AbstractDocumentConfigurationSource
 {
-    static final List<String> SPACE_NAMES = Arrays.asList("Analytics", "Code");
+    private static final List<String> SPACE_NAMES = Arrays.asList("Analytics", "Code");
 
     private static final LocalDocumentReference DOCUMENT_REFERENCE =
         new LocalDocumentReference(SPACE_NAMES, "Configuration");
