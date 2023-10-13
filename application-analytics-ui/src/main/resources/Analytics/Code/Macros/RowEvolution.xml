@@ -146,20 +146,21 @@ require(['jquery', 'chart'], ($) =&gt; {
   let currentModal;
   let currentOptions;
   let currentLoadingAnimation;
-
-  function processValues(data, field)
-  {
-    let result = []
-    for(let i=0; i&lt;data.length; i++)
-    {
-      let currentItem =  data[i];
-      let currentValue = currentItem[field] || 0;
-      if(typeof currentValue === 'string' )
-      {
-        currentValue = parseFloat(currentValue.replace('%', ''))
-      }
-      result.push(currentValue)
+  /**
+  * Processes the data parameter and returns an array of numbers.
+  *
+  * @param data json with the dataset.
+  * @param field the field that will pe processed.
+  */
+  function processChartValues(data, field) {
+    let result = $.map(data, function(currentItem) {
+    let currentValue = currentItem[field] || 0;
+    if (typeof currentValue === 'string') {
+        currentValue = parseFloat(currentValue.replace('%', ''));
     }
+    return currentValue;
+    });
+
     return result;
   }
   /**
@@ -169,7 +170,7 @@ require(['jquery', 'chart'], ($) =&gt; {
    */
   const renderChart = (data) =&gt; {
     const dates = data.map(item =&gt; item.date);
-    const values = processValues(data, currentModal.find(SELECTORS.field).val())
+    const values = processChartValues(data, currentModal.find(SELECTORS.field).val())
     const ctx = currentModal.find(SELECTORS.chart);
     // I can't modify and exiting chart because chart.js caches data about the chart and it can display the old data in
     // some cases.
