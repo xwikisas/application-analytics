@@ -62,6 +62,20 @@
       <validationRegExp/>
       <classType>com.xpn.xwiki.objects.classes.PasswordClass</classType>
     </authToken>
+    <requestAddress>
+      <customDisplay/>
+      <disabled>0</disabled>
+      <hint/>
+      <name>requestAddress</name>
+      <number>4</number>
+      <picker>1</picker>
+      <prettyName>requestAddress</prettyName>
+      <size>30</size>
+      <unmodifiable>0</unmodifiable>
+      <validationMessage/>
+      <validationRegExp/>
+      <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+    </requestAddress>
     <siteId>
       <customDisplay/>
       <disabled>0</disabled>
@@ -93,19 +107,49 @@
       <validationRegExp/>
       <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
     </trackingCode>
-    <requestAddress>
-      <customDisplay/>
-      <disabled>0</disabled>
-      <hint/>
-      <name>requestAddress</name>
-      <number>4</number>
-      <picker>1</picker>
-      <prettyName>requestAddress</prettyName>
-      <size>30</size>
-      <unmodifiable>0</unmodifiable>
-      <validationMessage/>
-      <validationRegExp/>
-      <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-    </requestAddress>
   </class>
+  <object>
+    <name>Analytics.Code.ConfigurationClass</name>
+    <number>0</number>
+    <className>XWiki.ClassSheetBinding</className>
+    <guid>a5b7deca-c076-4281-a180-18136f6c0dbd</guid>
+    <class>
+      <name>XWiki.ClassSheetBinding</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <sheet>
+        <cache>0</cache>
+        <classname/>
+        <customDisplay/>
+        <disabled>0</disabled>
+        <displayType>input</displayType>
+        <hint/>
+        <idField/>
+        <multiSelect>0</multiSelect>
+        <name>sheet</name>
+        <number>1</number>
+        <picker>1</picker>
+        <prettyName>Sheet</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators/>
+        <size>30</size>
+        <sort>none</sort>
+        <sql/>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <valueField/>
+        <classType>com.xpn.xwiki.objects.classes.PageClass</classType>
+      </sheet>
+    </class>
+    <property>
+      <sheet>Analytics.Code.ConfigurationSheet</sheet>
+    </property>
+  </object>
 </xwikidoc>

@@ -114,31 +114,16 @@
       </trackingCode>
     </class>
     <property>
-      <authToken>d20b0be0807053ea1fc03705483b9f2a</authToken>
+      <authToken/>
     </property>
     <property>
-      <requestAddress>http://130.61.233.19/matomo/</requestAddress>
+      <requestAddress/>
     </property>
     <property>
-      <siteId>3</siteId>
+      <siteId/>
     </property>
     <property>
-      <trackingCode>&lt;!-- Matomo --&gt;
-&lt;script&gt;
-  var _paq = window._paq = window._paq || [];
-  /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
-  _paq.push(['trackPageView']);
-  _paq.push(['enableLinkTracking']);
-  (function() {
-    var u="http://130.61.233.19/matomo/";
-    _paq.push(['setTrackerUrl', u+'matomo.php']);
-    _paq.push(['setSiteId', '3']);
-    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-    g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
-  })();
-&lt;/script&gt;
-&lt;!-- End Matomo Code --&gt;
-</trackingCode>
+      <trackingCode/>
     </property>
   </object>
   <object>
@@ -367,10 +352,14 @@
       <categoryIcon/>
     </property>
     <property>
-      <codeToExecute/>
+      <codeToExecute>{{display reference="Analytics.Code.Configuration"/}}
+
+{{velocity}}
+#set ($discard =$xwiki.jsx.use('Analytics.Code.Configuration'))
+{{/velocity}}</codeToExecute>
     </property>
     <property>
-      <configurationClass>Analytics.Code.ConfigurationClass</configurationClass>
+      <configurationClass/>
     </property>
     <property>
       <displayBeforeCategory/>
@@ -403,8 +392,158 @@
   <object>
     <name>Analytics.Code.Configuration</name>
     <number>0</number>
+    <className>XWiki.JavaScriptExtension</className>
+    <guid>3ac70a70-0269-4be0-843f-f0c30ac0d15c</guid>
+    <class>
+      <name>XWiki.JavaScriptExtension</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <cache>
+        <cache>0</cache>
+        <defaultValue>long</defaultValue>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <freeText>forbidden</freeText>
+        <largeStorage>0</largeStorage>
+        <multiSelect>0</multiSelect>
+        <name>cache</name>
+        <number>5</number>
+        <prettyName>Caching policy</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators>|, </separators>
+        <size>1</size>
+        <unmodifiable>0</unmodifiable>
+        <values>long|short|default|forbid</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </cache>
+      <code>
+        <contenttype>PureText</contenttype>
+        <disabled>0</disabled>
+        <editor>PureText</editor>
+        <name>code</name>
+        <number>2</number>
+        <prettyName>Code</prettyName>
+        <rows>20</rows>
+        <size>50</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </code>
+      <name>
+        <disabled>0</disabled>
+        <name>name</name>
+        <number>1</number>
+        <prettyName>Name</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </name>
+      <parse>
+        <disabled>0</disabled>
+        <displayFormType>select</displayFormType>
+        <displayType>yesno</displayType>
+        <name>parse</name>
+        <number>4</number>
+        <prettyName>Parse content</prettyName>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+      </parse>
+      <use>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <freeText>forbidden</freeText>
+        <largeStorage>0</largeStorage>
+        <multiSelect>0</multiSelect>
+        <name>use</name>
+        <number>3</number>
+        <prettyName>Use this extension</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators>|, </separators>
+        <size>1</size>
+        <unmodifiable>0</unmodifiable>
+        <values>currentPage|onDemand|always</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </use>
+    </class>
+    <property>
+      <cache>long</cache>
+    </property>
+    <property>
+      <code>define('analyticsConfigMessages', {
+  prefix: 'analytics.config.checkConnection.',
+  keys: [
+    'error',
+    'loading',
+    'success'
+  ]
+});
+
+require(['jquery', 'xwiki-l10n!analyticsConfigMessages', 'xwiki-meta'], ($, l10n, xm) =&gt; {
+
+  let notification;
+  $('#checkMatomoConnection').on('load', function () {
+    notification = new XWiki.widgets.Notification(l10n['loading'], 'inprogress');
+   // Wait for Matomo to process the request.
+    setTimeout(() =&gt; {
+        checkConnection();
+    }, 2000);
+  });
+
+  // On save, check that the added configurations are correct. For this, a hidden iframe is used to load a page with
+  // these configuration and then it's checked if the request was registered by Matomo.
+  $(document).on('xwiki:document:saved', function (e) {
+    let currentURL = new URL(window.location.href);
+    let random = Math.random().toString().substring(2, 15);
+    // Add a token to the current URL in order to identify the request on the Matomo side.
+    currentURL.searchParams.set("checkMatomoConnection", `${xm.userReference}${random}`);
+    $('#checkMatomoConnection').attr('src', currentURL.toString());
+  });
+
+  function checkConnection() {
+    const params = {
+      'type': 'tracker',
+      'pageUrl': $('#checkMatomoConnection').attr('src')
+    }
+    const queryString = $.param(params);
+    let getLastVisitsDetailsJSONRef = XWiki.Model.resolve('Analytics.Code.GetLastVisitsDetailsJSON', XWiki.EntityType.DOCUMENT);
+    let url = new XWiki.Document(getLastVisitsDetailsJSONRef).getURL('get');
+    $.getJSON(`${url}?${queryString}`)
+      .done((data) =&gt; {
+        if (data.length) {
+          notification.replace(new XWiki.widgets.Notification(l10n['success'], 'done'));
+        } else {
+          notification.replace(new XWiki.widgets.Notification(l10n['error'], 'error'));
+        }
+      })
+      .fail(() =&gt; {
+        notification.replace(new XWiki.widgets.Notification(l10n['error'], 'error'));
+      });
+  }
+});
+</code>
+    </property>
+    <property>
+      <name/>
+    </property>
+    <property>
+      <parse>0</parse>
+    </property>
+    <property>
+      <use>currentPage</use>
+    </property>
+  </object>
+  <object>
+    <name>Analytics.Code.Configuration</name>
+    <number>0</number>
     <className>XWiki.XWikiRights</className>
-    <guid>ed723823-5407-4549-a3b4-a5d838a010f7</guid>
+    <guid>224e3846-d781-4023-b8bc-80f2724feab8</guid>
     <class>
       <name>XWiki.XWikiRights</name>
       <customClass/>
@@ -487,7 +626,7 @@
     <name>Analytics.Code.Configuration</name>
     <number>1</number>
     <className>XWiki.XWikiRights</className>
-    <guid>b92ab3a0-0e70-444d-afcd-92f15285829d</guid>
+    <guid>ee223448-c31b-40f7-bfc7-01a7721f79e2</guid>
     <class>
       <name>XWiki.XWikiRights</name>
       <customClass/>
