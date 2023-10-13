@@ -44,14 +44,16 @@ import org.xwiki.stability.Unstable;
 public class AnalyticsConfigurationSource extends AbstractDocumentConfigurationSource
 {
     static final String CODE = "Code";
+
     static final String ANALYTICS = "Analytics";
-    static final String CONFIGURATION = "Configuration";
-    static final List<String> SPACE = Arrays.asList(ANALYTICS, CODE);
+
+    static final List<String> SPACE_NAMES = Arrays.asList("Analytics", "Code");
+
     private static final LocalDocumentReference DOCUMENT_REFERENCE =
-        new LocalDocumentReference(Arrays.asList(ANALYTICS, CODE), CONFIGURATION);
+        new LocalDocumentReference(SPACE_NAMES, "Configuration");
 
     private static final LocalDocumentReference CLASS_REFERENCE =
-        new LocalDocumentReference(Arrays.asList(ANALYTICS, CODE), "ConfigurationClass");
+        new LocalDocumentReference(SPACE_NAMES, "ConfigurationClass");
 
     @Override
     protected DocumentReference getDocumentReference()
