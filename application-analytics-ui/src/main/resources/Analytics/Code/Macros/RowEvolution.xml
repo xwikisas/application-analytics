@@ -170,7 +170,7 @@ require(['jquery', 'chart'], ($) =&gt; {
    */
   const renderChart = (data) =&gt; {
     const dates = data.map(item =&gt; item.date);
-    const values = processChartValues(data, currentModal.find(SELECTORS.field).val())
+    const values = processChartValues(data, currentModal.find(SELECTORS.field).val());
     const ctx = currentModal.find(SELECTORS.chart);
     // I can't modify and exiting chart because chart.js caches data about the chart and it can display the old data in
     // some cases.
