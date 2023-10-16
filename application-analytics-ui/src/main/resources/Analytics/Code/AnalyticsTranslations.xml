@@ -138,10 +138,10 @@ analytics.livedata.action.rowEvolution.title=Row Evolution
 analytics.extension.name=Analytics Application (Pro)
 analytics.extension.title=Analytics
 rendering.macro.analyticsFilter.apply=Apply
-rendering.macro.analyticsFilter.description=Add filtering options for the analytics macros of the current page. The filtering criteria will be saved in the current URL, to have a reproducible state, and will also override eventual filter set at macro level.</content>
+rendering.macro.analyticsFilter.description=Add filtering options for the analytics macros of the current page. The filtering criteria will be saved in the current URL, to have a reproducible state, and will also override eventual filter set at macro level.
 rendering.macro.analyticsFilter.endDate=End date
 rendering.macro.analyticsFilter.name=Analytics filter
-rendering.macro.analyticsFilter.startDate=Start date
+rendering.macro.analyticsFilter.startDate=Start date</content>
   <object>
     <name>Analytics.Code.AnalyticsTranslations</name>
     <number>0</number>
