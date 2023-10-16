@@ -35,6 +35,7 @@
     productivity by using real-time statistics.
   </description>
   <properties>
+    <!-- Name to display by the Extension Manager -->
     <xwiki.extension.name>Analytics Application (Pro)</xwiki.extension.name>
     <xwiki.extension.category>application</xwiki.extension.category>
 
@@ -42,7 +43,6 @@
      buying a license or getting a trial license, but they cannot edit or delete them. -->
     <xwiki.extension.licensing.publicDocuments>
     </xwiki.extension.licensing.publicDocuments>
-    <!-- Name to display by the Extension Manager -->
     <!-- The list of documents that are not covered by the extension license. The user that installs the extension has
     full access to these documents (view, edit, delete) without having a license, so use this property wisely. -->
     <xwiki.extension.licensing.excludedDocuments>
