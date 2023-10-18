@@ -43,9 +43,9 @@ analytics.mostViewedPages.header.date=Date
 analytics.mostViewedPages.header.emptyvalue=-
 analytics.mostViewedPages.header.entryNbActions=No. of actions
 analytics.mostViewedPages.header.exitRate=Exit rate
-analytics.mostViewedPages.header.hits=Page views
-analytics.mostViewedPages.header.pageTitle=Page title
-analytics.mostViewedPages.header.timeSpent=Time spent(s)
+analytics.mostViewedPages.header.hits=Views
+analytics.mostViewedPages.header.pageTitle=Title
+analytics.mostViewedPages.header.timeSpent=Time spent
 analytics.mostViewedPages.header.visits=Unique visitors
 analytics.mostViewedPages.header.year=Year
 analytics.mostViewedPages.parameter.label.endDate=End time of the date interval used for this macro
@@ -133,6 +133,28 @@ analytics.config.checkConnection.success=Test connection succeeded!
 
 ## Livedata keys
 analytics.livedata.action.rowEvolution.title=Row Evolution
+
+## Descriptions
+analytics.PagesFollowingASiteSearchJSON.header.clicked.hint=The number of times this page was visited after a visitor did a search on your website, and clicked on this page in the search results.
+analytics.PagesFollowingASiteSearchJSON.header.destinationPage.hint
+analytics.PagesFollowingASiteSearchJSON.header.loadTime.hint=Average time(in seconds) it takes from requesting a page until the page is fully rendered within the browser
+analytics.PagesFollowingASiteSearchJSON.header.pageViews.hint=The number of times this page was visited.
+analytics.mostViewedPages.header.bounceRate.hint=The percentage of visits that started on this page and left the website straight away.
+analytics.mostViewedPages.header.entryNbActions.hint=The number of actions performed by the users.
+analytics.mostViewedPages.header.exitRate.hint=The percentage of visits that left the website after viewing this page.
+analytics.mostViewedPages.header.hits.hint=The number of times this page was visited.
+analytics.mostViewedPages.header.timeSpent.hint=The time that the user has spent on the page.
+analytics.mostViewedPages.header.visits.hint=The number of visits that included this page. If a page was viewed multiple times during one visit, it is only counted once.
+analytics.searchCategories.header.searchResultsPages.hint=Visitors will search on your website, and sometimes click "next" to view more results. This is the average number of search results pages viewed for this keyword.
+analytics.searchCategories.header.searches.hint=The number of visits that searched for this keyword on your website's search engine.
+analytics.siteSearchKeywords.header.exitRate.hint=The percentage of visits that left the website after searching for this Keyword on your Site Search engine.
+analytics.siteSearchKeywords.header.nbOfResultPages.hint=Visitors will search on your website, and sometimes click "next" to view more results this is the average number of search results pages viewed for this keyword.
+analytics.siteSearchKeywords.header.searches.hint=The number of visits that searched for this keyword on your website's search engine.
+analytics.softwareDevices.header.bounceRate.hint=The percentage of visits that only had a single pageview. This means that the visitor left the website directly from the entrance page.
+analytics.softwareDevices.header.conversionRate.hint=The percentage of visits that triggered a goal conversion.
+analytics.softwareDevices.header.nbOfActions.hint=The total number of actions performed by your visitors.
+analytics.softwareDevices.header.timeSpent.hint=The time that the user have spent using a specific engine.
+analytics.softwareDevices.header.visits.hint=If a vistor comes to your website for the first time or if they visit a page more than 30 minutes after their last page view, this will be recorded as new visit.
 
 ## Others
 analytics.extension.name=Analytics Application (Pro)
