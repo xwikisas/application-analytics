@@ -61,26 +61,12 @@
         <picker>1</picker>
         <prettyName>Authentication Token </prettyName>
         <size>30</size>
-        <storageType>Clear</storageType>
+        <storageType>Hash</storageType>
         <unmodifiable>0</unmodifiable>
         <validationMessage/>
         <validationRegExp/>
         <classType>com.xpn.xwiki.objects.classes.PasswordClass</classType>
       </authToken>
-      <requestAddress>
-        <customDisplay/>
-        <disabled>0</disabled>
-        <hint/>
-        <name>requestAddress</name>
-        <number>4</number>
-        <picker>1</picker>
-        <prettyName>requestAddress</prettyName>
-        <size>30</size>
-        <unmodifiable>0</unmodifiable>
-        <validationMessage/>
-        <validationRegExp/>
-        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-      </requestAddress>
       <siteId>
         <customDisplay/>
         <disabled>0</disabled>
@@ -104,7 +90,7 @@
         <name>trackingCode</name>
         <number>1</number>
         <picker>1</picker>
-        <prettyName>Tracking Code</prettyName>
+        <prettyName>Matomo Tracking Code</prettyName>
         <rows>20</rows>
         <size>40</size>
         <unmodifiable>0</unmodifiable>
@@ -112,15 +98,29 @@
         <validationRegExp/>
         <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
       </trackingCode>
+      <requestAddress>
+        <customDisplay/>
+        <disabled>0</disabled>
+        <hint/>
+        <name>requestAddress</name>
+        <number>4</number>
+        <picker>1</picker>
+        <prettyName>requestAddress</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </requestAddress>
     </class>
     <property>
-      <authToken>ed98ea0ba05a48c9c735042ba395fdb3</authToken>
+      <authToken/>
     </property>
     <property>
-      <requestAddress>http://130.61.233.19/matomo/</requestAddress>
+      <requestAddress/>
     </property>
     <property>
-      <siteId>3</siteId>
+      <siteId/>
     </property>
     <property>
       <trackingCode/>
