@@ -153,7 +153,7 @@ require(['jquery', 'chart'], ($) =&gt; {
   * @param field the field that will pe processed.
   */
   function processChartValues(data, field) {
-      let result = $.map(data, function(currentItem) {
+    let result = $.map(data, function(currentItem) {
       let currentValue = currentItem[field] || 0;
       if (typeof currentValue === 'string') {
           currentValue = parseFloat(currentValue.replace('%', ''));
