@@ -162,11 +162,11 @@
     </property>
     <property>
       <content>{{velocity}}
-#set ($object =  $xwiki.getDocument("Analytics.Code.Configuration").getObject('Analytics.Code.ConfigurationClass'))
-#set ($value = $object.getProperty("trackingCode").value)
-#if ($value)
+#set ($configuration = $services.analytics.getConfiguration())
+#set ($trackingCode = $configuration.getTrackingCode())
+#if ($trackingCode)
   {{html clean="false"}}
-    $value
+    $trackingCode
   {{/html}}
 #end
 {{/velocity}}

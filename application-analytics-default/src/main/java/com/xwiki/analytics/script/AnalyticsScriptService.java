@@ -31,6 +31,7 @@ import org.xwiki.stability.Unstable;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.xwiki.analytics.AnalyticsManager;
+import com.xwiki.analytics.configuration.AnalyticsConfiguration;
 
 /**
  * Script service for the Analytics Application.
@@ -47,6 +48,9 @@ public class AnalyticsScriptService implements ScriptService
     @Inject
     @Named("Matomo")
     private AnalyticsManager analyticsManager;
+
+    @Inject
+    private AnalyticsConfiguration configuration;
 
     /**
      * Get data from Matomo API, in a format specific to the macro that will use it.
@@ -65,5 +69,15 @@ public class AnalyticsScriptService implements ScriptService
         } catch (Exception e) {
             throw new RuntimeException(String.format("Failed to get data for [%s]", jsonNormaliserHint), e);
         }
+    }
+
+    /**
+     *
+     * @return the analytics configuration.
+     * @since 1.1
+     */
+    public AnalyticsConfiguration getConfiguration()
+    {
+        return configuration;
     }
 }

@@ -68,6 +68,12 @@ public class DefaultAnalyticsConfiguration implements AnalyticsConfiguration
         return getProperty("authToken", "");
     }
 
+    @Override
+    public String getTrackingCode()
+    {
+        return getProperty("trackingCode", "");
+    }
+
     private <T> T getProperty(String key, T defaultValue)
     {
         T value = this.configDocument.getProperty(key, defaultValue);

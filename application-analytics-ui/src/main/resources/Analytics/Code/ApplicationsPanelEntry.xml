@@ -20,25 +20,25 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc version="1.4" reference="Analytics.Code.ApplicationPanel" locale="">
+<xwikidoc version="1.4" reference="Analytics.Code.ApplicationsPanelEntry" locale="">
   <web>Analytics.Code</web>
-  <name>ApplicationPanel</name>
+  <name>ApplicationsPanelEntry</name>
   <language/>
   <defaultLanguage/>
   <translation>0</translation>
   <creator>xwiki:XWiki.Admin</creator>
-  <parent>Main.WebHome</parent>
+  <parent>WebHome</parent>
   <author>xwiki:XWiki.Admin</author>
   <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
   <version>1.1</version>
-  <title>ApplicationPanel</title>
+  <title>ApplicationsPanelEntry</title>
   <comment/>
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>true</hidden>
   <content/>
   <object>
-    <name>Analytics.Code.ApplicationPanel</name>
+    <name>Analytics.Code.ApplicationsPanelEntry</name>
     <number>0</number>
     <className>XWiki.UIExtensionClass</className>
     <guid>2b5f7380-6691-427f-9f0e-ce53a3b95d89</guid>
@@ -170,9 +170,11 @@
       <name>platform.panels.AnalyticsApplication</name>
     </property>
     <property>
-      <parameters>label=$services.localization.render('analytics.extension.title')
-        target=Analytics.WebHome
-        icon=icon:chart-bar</parameters>
+      <parameters>#if ($xwiki.hasAccessLevel('view', 'Analytics.WebHome'))
+  label=$services.localization.render('analytics.extension.title')
+          target=Analytics.WebHome
+          icon=icon:chart-bar
+#end</parameters>
     </property>
     <property>
       <scope>wiki</scope>
