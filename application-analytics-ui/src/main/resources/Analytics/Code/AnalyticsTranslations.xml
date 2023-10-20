@@ -63,11 +63,18 @@ analytics.PagesFollowingASiteSearchJSON.header.pageViews=Views
 ## Row Evolution
 analytics.rowEvolution.modal.close=Close
 analytics.rowEvolution.modal.day.label=Day
+analytics.rowEvolution.modal.field.actions=Actions
 analytics.rowEvolution.modal.field.avgTime=Time spent on page
+analytics.rowEvolution.modal.field.bounceRate=Bounce rate(%)
+analytics.rowEvolution.modal.field.clickedSearchResult=Clicked in search results
+analytics.rowEvolution.modal.field.conversionRate=Conversion rate
+analytics.rowEvolution.modal.field.exitRate=Exit rate(%)
 analytics.rowEvolution.modal.field.pageViews=Page views
 analytics.rowEvolution.modal.field.searchResultPages=Search result pages
 analytics.rowEvolution.modal.field.searches=Searches
+analytics.rowEvolution.modal.field.timeSpent=Time spent
 analytics.rowEvolution.modal.field.uniqueViews=Unique views
+analytics.rowEvolution.modal.field.visits=Visits
 analytics.rowEvolution.modal.field=Field
 analytics.rowEvolution.modal.label=Row Evolution
 analytics.rowEvolution.modal.month.label=Month
@@ -78,9 +85,6 @@ analytics.rowEvolution.modal.year.label=Year
 
 ## Site Search Keywords Macro
 analytics.action.hover.rowEvolution=Row evolution
-analytics.rowEvolution.modal.field.clickedSearchResult=Clicked in search results
-analytics.rowEvolution.modal.field.searchResultsPages=Search result pages
-analytics.rowEvolution.modal.field.searches=Searches
 analytics.siteSearchKeywords.header.actions=Actions
 analytics.siteSearchKeywords.header.exitRate=Search exists(%)
 analytics.siteSearchKeywords.header.keyword=Keyword
@@ -88,13 +92,6 @@ analytics.siteSearchKeywords.header.nbOfResultPages=Search results pages
 analytics.siteSearchKeywords.header.searches=Searches
 
 ## Search Categories
-analytics.rowEvolution.modal.field.actions=Actions
-analytics.rowEvolution.modal.field.avgTime=Avg. time spent
-analytics.rowEvolution.modal.field.bounceRate=Bounce rate
-analytics.rowEvolution.modal.field.clickedSearchResult=Clicked in search results
-analytics.rowEvolution.modal.field.conversionRate=Conversion rate
-analytics.rowEvolution.modal.field.timeSpent=Time spent
-analytics.rowEvolution.modal.field.visits=Visits
 analytics.searchCategories.header.actions=Actions
 analytics.searchCategories.header.category=Category
 analytics.searchCategories.header.searchResultsPages=Search result pages
