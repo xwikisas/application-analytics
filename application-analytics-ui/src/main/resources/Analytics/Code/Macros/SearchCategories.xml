@@ -266,7 +266,7 @@
       }
     }
   })
-  #getAnalyticsMacroId('searchCategories', $macroId )
+  #getAnalyticsMacroId('searchCategoriesMacro', $macroId )
 
   {{liveData
     id="$macroId"

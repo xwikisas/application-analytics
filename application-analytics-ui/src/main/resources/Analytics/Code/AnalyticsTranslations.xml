@@ -131,6 +131,24 @@ analytics.config.checkConnection.error=Failed to connect to Matomo. Please check
 analytics.config.checkConnection.loading=Checking connection to Matomo.
 analytics.config.checkConnection.success=Test connection succeeded!
 
+## Descriptions
+analytics.descriptionsAndLinks.browserEnginesMacro=This report shows your visitors' browsers broken down into browser engines.
+analytics.descriptionsAndLinks.browsersMacro=This report contains information about what kind of browser your visitors were using.
+analytics.descriptionsAndLinks.configurationsMacro=This report shows the brands / manufacturers of the devices your visitors were using. In most cases this information is only available for non-desktop devices.
+analytics.descriptionsAndLinks.deviceBrandMacro=This report shows the brands / manufacturers of the devices your visitors were using. In most cases this information is only available for non-desktop devices.
+analytics.descriptionsAndLinks.deviceModelMacro=This report shows the devices your visitors are using. Each model is displayed combined with the device brand as some model names are used by multiple brands.
+analytics.descriptionsAndLinks.deviceTypeMacro=This report shows the types of devices your visitors were using. This report will always show all device types Matomo is able to detect, even if there were no visits with a specific type.
+analytics.descriptionsAndLinks.mostViewedMacro=When visitors search on your website, they are looking for a particular page, content, product, or service. This report lists the pages that were clicked the most after an internal search.
+rendering.macro.mostViewedPages.name=Most viewed pages
+analytics.descriptionsAndLinks.operatingSystemVersionsMacro=This report shows you the operating systems your visitors are using. Each version and distribution is shown separately.
+analytics.descriptionsAndLinks.pagesFollowingASiteSearch=Displays pages users clicked on after a search.
+rendering.macro.PagesFollowingASiteSearch.name=Pages following a site search
+analytics.descriptionsAndLinks.screenResolutionMacro=This report shows the screen resolutions your visitors used when viewing your website.
+analytics.descriptionsAndLinks.searchCategories=This report lists the Categories that visitors selected when they made a Search on your website.
+rendering.macro.searchCategories.name=Search categories
+analytics.descriptionsAndLinks.siteSearchKeywords=This report lists the Search Keywords that visitors searched for on your internal Search Engine.
+rendering.macro.siteSearchKeywords.name=Site search keywords
+
 ## Livedata keys
 analytics.livedata.action.rowEvolution.title=Row Evolution
 

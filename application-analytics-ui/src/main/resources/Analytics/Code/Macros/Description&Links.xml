@@ -20,28 +20,189 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc version="1.4" reference="Analytics.Code.Macros.Browsers" locale="">
+<xwikidoc version="1.4" reference="Analytics.Code.Macros.Description&amp;Links" locale="">
   <web>Analytics.Code.Macros</web>
-  <name>Browsers</name>
+  <name>Description&amp;Links</name>
   <language/>
   <defaultLanguage/>
   <translation>0</translation>
   <creator>xwiki:XWiki.Admin</creator>
-  <parent>WebHome</parent>
+  <parent>Main.WebHome</parent>
   <author>xwiki:XWiki.Admin</author>
   <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
   <version>1.1</version>
-  <title>Browsers</title>
+  <title>Description&amp;Links</title>
   <comment/>
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>true</hidden>
-  <content>{{browsers/}}</content>
+  <content/>
   <object>
-    <name>Analytics.Code.Macros.Browsers</name>
+    <name>Analytics.Code.Macros.Description&amp;Links</name>
+    <number>0</number>
+    <className>XWiki.JavaScriptExtension</className>
+    <guid>d00e6d41-1217-466a-a0af-3c0019fc3f2d</guid>
+    <class>
+      <name>XWiki.JavaScriptExtension</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <cache>
+        <cache>0</cache>
+        <defaultValue>long</defaultValue>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <freeText>forbidden</freeText>
+        <largeStorage>0</largeStorage>
+        <multiSelect>0</multiSelect>
+        <name>cache</name>
+        <number>5</number>
+        <prettyName>Caching policy</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators>|, </separators>
+        <size>1</size>
+        <unmodifiable>0</unmodifiable>
+        <values>long|short|default|forbid</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </cache>
+      <code>
+        <contenttype>PureText</contenttype>
+        <disabled>0</disabled>
+        <editor>PureText</editor>
+        <name>code</name>
+        <number>2</number>
+        <prettyName>Code</prettyName>
+        <rows>20</rows>
+        <size>50</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </code>
+      <name>
+        <disabled>0</disabled>
+        <name>name</name>
+        <number>1</number>
+        <prettyName>Name</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </name>
+      <parse>
+        <disabled>0</disabled>
+        <displayFormType>select</displayFormType>
+        <displayType>yesno</displayType>
+        <name>parse</name>
+        <number>4</number>
+        <prettyName>Parse content</prettyName>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+      </parse>
+      <use>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <freeText>forbidden</freeText>
+        <largeStorage>0</largeStorage>
+        <multiSelect>0</multiSelect>
+        <name>use</name>
+        <number>3</number>
+        <prettyName>Use this extension</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators>|, </separators>
+        <size>1</size>
+        <unmodifiable>0</unmodifiable>
+        <values>currentPage|onDemand|always</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </use>
+    </class>
+    <property>
+      <cache>long</cache>
+    </property>
+    <property>
+      <code>define('analyticsDescriptionsAndLinks', {
+  prefix: 'analytics.descriptionsAndLinks.',
+  keys: [
+    'browserEnginesMacro',
+    'browsersMacro',
+    'configurationsMacro',
+    'deviceBrandMacro',
+    'deviceModelMacro',
+    'deviceTypeMacro',
+    'mostViewedMacro',
+    'operatingSystemVersionsMacro',
+    'pagesFollowingASiteSearch',
+    'screenResolutionMacro',
+    'searchCategories',
+    'siteSearchKeywords'
+  ]
+});
+require(['jquery', 'xwiki-l10n!analyticsDescriptionsAndLinks'], ($,l10n) =&gt; {
+      const referenceMappings ={
+        'browserEnginesMacro': 'Analytics.Code.Macros.BrowserEngines',
+        'browsersMacro': 'Analytics.Code.Macros.Browsers',
+        'configurationsMacro': 'Analytics.Code.Macros.Configurations',
+        'deviceBrandMacro':'Analytics.Code.Macros.DeviceBrand',
+        'deviceModelMacro': 'Analytics.Code.Macros.DeviceModel',
+        'deviceTypeMacro': 'Analytics.Code.Macros.DeviceType',
+        'mostViewedMacro': 'Analytics.Code.Macros.MostViewedPages',
+        'operatingSystemVersionsMacro': 'Analytics.Code.Macros.OperatingSystemVersions',
+        'pagesFollowingASiteSearch': 'Analytics.Code.Macros.PagesFollowingASiteSearch',
+        'screenResolutionMacro': 'Analytics.Code.Macros.ScreenResolution',
+        'searchCategories': 'Analytics.Code.Macros.SearchCategories',
+        'siteSearchKeywords': 'Analytics.Code.Macros.SiteSearchKeywords'
+    };
+    let templatePage = XWiki.Model.resolve('Analytics.Code.Macros.Description&amp;LinksTemplate', XWiki.EntityType.DOCUMENT);
+    let url = new XWiki.Document(templatePage).getURL('get');
+
+    $.post(new XWiki.Document(templatePage).getURL('get'), function(data) {
+        $('.xdialog-content .xwikicontent p a').html(data);
+    })
+    .done((data) =&gt; {
+        $(document).ready(function() {
+            $('[id^="gadget_"]').each(function() {
+                let id = $(this).find('.gadget-content div').first().attr('id');
+                if(id !=null) {
+                   let macroName =  id.substring(0, id.indexOf('_'));
+                   //  if the macro name is not present in the reference  mapping then we can skip the gadget.
+                   if(referenceMappings[macroName]){
+                     let reference = XWiki.Model.resolve(referenceMappings[macroName], XWiki.EntityType.DOCUMENT);
+                     let url = new XWiki.Document(reference).getURL('view');
+                     // Convert the data string into a html element using jquery to add title &amp; href properties
+                     dataElement = $(data);
+                     dataElement.attr('title', l10n[macroName]); // The title property should contain the description of the macro.
+                     dataElement.attr('href', url); // Should pe a link to the macro page, this link should be solved by using a resolver and the page reference.
+                     $(this).find('.gadget-title').append(dataElement);
+                  }
+                }
+            });
+        });
+    })
+    .fail(() =&gt; {
+        // Handle failure
+    });
+});
+</code>
+    </property>
+    <property>
+      <name/>
+    </property>
+    <property>
+      <parse>0</parse>
+    </property>
+    <property>
+      <use>currentPage</use>
+    </property>
+  </object>
+  <object>
+    <name>Analytics.Code.Macros.Description&amp;Links</name>
     <number>0</number>
     <className>XWiki.WikiMacroClass</className>
-    <guid>e8d75903-7c69-4854-8ad9-9e43b6693d73</guid>
+    <guid>aa55d253-f9ed-460f-a3b2-b13875f26727</guid>
     <class>
       <name>XWiki.WikiMacroClass</name>
       <customClass/>
@@ -240,60 +401,8 @@
       <async_enabled>0</async_enabled>
     </property>
     <property>
-      <code>{{include reference='Analytics.Code.Macros.VelocityMacros'/}}
-
-{{velocity}}
-#macro(executeMacro)
-  #getDate()
-  #set ($discard = $xwiki.jsx.use('Analytics.Code.Macros.RowEvolution'))
-  #set ($parameters = $escapetool.url({
-    'resultPage': 'Analytics.Code.Macros.SoftwareDevicesJSON',
-    'date': $date,
-    'period': 'range',
-    'limitEntries': '-1',
-    'translationPrefix': 'analytics.softwareDevices.header.',
-    'matomoMethod': 'DevicesDetection.getBrowsers',
-    'label': 'browser'
-  }))
-  #set ($liveDataConfig= {
-    'meta': {
-      'propertyDescriptors': [
-        {'id': 'browser', 'displayer': 'html'},
-        {'id': 'visits', 'displayer': 'html'},
-        {'id': 'nbOfActions', 'displayer': 'html'},
-        {'id': 'timeSpent', 'displayer': 'html'},
-        {'id': 'bounceRate', 'displayer': 'html'},
-        {'id': 'actions','filterable': false, 'sortable': false, 'displayer': 'html'}
-      ],
-      'entryDescriptor': {
-        'idProperty': 'browser'
-      }
-    }
-  })
-  #getAnalyticsMacroId('browsersMacro', $macroId)
-
-  {{liveData
-    id="$macroId"
-    properties='browser, visits, nbOfActions, timeSpent, bounceRate, actions'
-    source='liveTable'
-    sourceParameters="$parameters"
-    sort='visits:desc'
-  }}$jsontool.serialize($liveDataConfig){{/liveData}}
-
-  #set ($rowEvolutionParams = {
-    'visits': 'nb_visits',
-    'actions': 'nb_actions',
-    'spentTime': 'sum_visit_length',
-    'bounceRate': 'bounce_count'
-  })
-  #modalRowEvolution($rowEvolutionParams, 'Browsers', $macroId)
-#end
-#if ($services.licensing.licensor.hasLicensureForEntity(
-  $services.model.createDocumentReference('', ['Analytics', 'Code'], 'ConfigurationClass')))
-  #executeMacro()
-#else
-  {{error}}#getMissingLicenseMessage('analytics.extension.name'){{/error}}
-#end
+      <code>{{velocity}}
+#set ($discard = $xwiki.jsx.use('Analytics.Code.Macros.Description&amp;Links'))
 {{/velocity}}</code>
     </property>
     <property>
@@ -306,16 +415,16 @@
       <contentType>No content</contentType>
     </property>
     <property>
-      <defaultCategory/>
+      <defaultCategory>Analytics</defaultCategory>
     </property>
     <property>
       <description/>
     </property>
     <property>
-      <id>browsers</id>
+      <id>description</id>
     </property>
     <property>
-      <name>Browsers</name>
+      <name>Description&amp;Links</name>
     </property>
     <property>
       <priority/>
@@ -325,162 +434,6 @@
     </property>
     <property>
       <visibility>Current Wiki</visibility>
-    </property>
-  </object>
-  <object>
-    <name>Analytics.Code.Macros.Browsers</name>
-    <number>0</number>
-    <className>XWiki.WikiMacroParameterClass</className>
-    <guid>eabb60b6-0ff2-4901-82c6-cef1b60de0fe</guid>
-    <class>
-      <name>XWiki.WikiMacroParameterClass</name>
-      <customClass/>
-      <customMapping/>
-      <defaultViewSheet/>
-      <defaultEditSheet/>
-      <defaultWeb/>
-      <nameField/>
-      <validationScript/>
-      <defaultValue>
-        <disabled>0</disabled>
-        <name>defaultValue</name>
-        <number>4</number>
-        <prettyName>Parameter default value</prettyName>
-        <size>30</size>
-        <unmodifiable>0</unmodifiable>
-        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-      </defaultValue>
-      <description>
-        <disabled>0</disabled>
-        <name>description</name>
-        <number>2</number>
-        <prettyName>Parameter description</prettyName>
-        <rows>5</rows>
-        <size>40</size>
-        <unmodifiable>0</unmodifiable>
-        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
-      </description>
-      <mandatory>
-        <disabled>0</disabled>
-        <displayFormType>select</displayFormType>
-        <displayType>yesno</displayType>
-        <name>mandatory</name>
-        <number>3</number>
-        <prettyName>Parameter mandatory</prettyName>
-        <unmodifiable>0</unmodifiable>
-        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
-      </mandatory>
-      <name>
-        <disabled>0</disabled>
-        <name>name</name>
-        <number>1</number>
-        <prettyName>Parameter name</prettyName>
-        <size>30</size>
-        <unmodifiable>0</unmodifiable>
-        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-      </name>
-      <type>
-        <disabled>0</disabled>
-        <name>type</name>
-        <number>5</number>
-        <prettyName>Parameter type</prettyName>
-        <size>60</size>
-        <unmodifiable>0</unmodifiable>
-        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-      </type>
-    </class>
-    <property>
-      <defaultValue/>
-    </property>
-    <property>
-      <description/>
-    </property>
-    <property>
-      <mandatory>0</mandatory>
-    </property>
-    <property>
-      <name>startDate</name>
-    </property>
-    <property>
-      <type>java.util.Date</type>
-    </property>
-  </object>
-  <object>
-    <name>Analytics.Code.Macros.Browsers</name>
-    <number>1</number>
-    <className>XWiki.WikiMacroParameterClass</className>
-    <guid>2b9fc1a0-5c93-486d-b963-a1573addc7a8</guid>
-    <class>
-      <name>XWiki.WikiMacroParameterClass</name>
-      <customClass/>
-      <customMapping/>
-      <defaultViewSheet/>
-      <defaultEditSheet/>
-      <defaultWeb/>
-      <nameField/>
-      <validationScript/>
-      <defaultValue>
-        <disabled>0</disabled>
-        <name>defaultValue</name>
-        <number>4</number>
-        <prettyName>Parameter default value</prettyName>
-        <size>30</size>
-        <unmodifiable>0</unmodifiable>
-        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-      </defaultValue>
-      <description>
-        <disabled>0</disabled>
-        <name>description</name>
-        <number>2</number>
-        <prettyName>Parameter description</prettyName>
-        <rows>5</rows>
-        <size>40</size>
-        <unmodifiable>0</unmodifiable>
-        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
-      </description>
-      <mandatory>
-        <disabled>0</disabled>
-        <displayFormType>select</displayFormType>
-        <displayType>yesno</displayType>
-        <name>mandatory</name>
-        <number>3</number>
-        <prettyName>Parameter mandatory</prettyName>
-        <unmodifiable>0</unmodifiable>
-        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
-      </mandatory>
-      <name>
-        <disabled>0</disabled>
-        <name>name</name>
-        <number>1</number>
-        <prettyName>Parameter name</prettyName>
-        <size>30</size>
-        <unmodifiable>0</unmodifiable>
-        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-      </name>
-      <type>
-        <disabled>0</disabled>
-        <name>type</name>
-        <number>5</number>
-        <prettyName>Parameter type</prettyName>
-        <size>60</size>
-        <unmodifiable>0</unmodifiable>
-        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-      </type>
-    </class>
-    <property>
-      <defaultValue/>
-    </property>
-    <property>
-      <description/>
-    </property>
-    <property>
-      <mandatory>0</mandatory>
-    </property>
-    <property>
-      <name>endDate</name>
-    </property>
-    <property>
-      <type>java.util.Date</type>
     </property>
   </object>
 </xwikidoc>

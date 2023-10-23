@@ -270,7 +270,7 @@
     }
   })
 
-  #getAnalyticsMacroId('siteSearchKeywords', $macroId)
+  #getAnalyticsMacroId('siteSearchKeywordsMacro', $macroId)
 
   {{liveData
     id="$macroId"
