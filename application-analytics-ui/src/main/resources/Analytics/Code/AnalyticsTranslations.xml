@@ -59,8 +59,6 @@ analytics.mostViewedPages.parameter.label.startDate=Start time of the date inter
 rendering.macro.mostViewedPages.description=When visitors search on your website, they are looking for a particular page, content, product, or service. This report lists the pages that were clicked the most after an internal search.
 rendering.macro.mostViewedPages.name=Most viewed pages
 
-
-
 ## Pages following a site search
 analytics.PagesFollowingASiteSearchJSON.header.actions=Actions
 analytics.PagesFollowingASiteSearchJSON.header.clicked.hint=The number of times this page was visited after a visitor did a search on your website, and clicked on this page in the search results.
@@ -72,7 +70,7 @@ analytics.PagesFollowingASiteSearchJSON.header.loadTime=Avg. load time
 analytics.PagesFollowingASiteSearchJSON.header.pageViews.hint=The number of times this page was visited.
 analytics.PagesFollowingASiteSearchJSON.header.pageViews=Views
 rendering.macro.PagesFollowingASiteSearch.description=Displays pages users clicked on after a search.
-rendering.macro.PagesFollowingASiteSearch.name=Pages following a aite search
+rendering.macro.PagesFollowingASiteSearch.name=Pages following a site search
 
 ## Row Evolution
 analytics.rowEvolution.modal.close=Close
