@@ -170,11 +170,10 @@
       <name>platform.panels.AnalyticsApplication</name>
     </property>
     <property>
-      <parameters>#if ($xwiki.hasAccessLevel('view', 'Analytics.WebHome'))
-  label=$services.localization.render('analytics.extension.title')
-          target=Analytics.WebHome
-          icon=icon:chart-bar
-#end</parameters>
+      <parameters>## If one property is empty then the entry point won't be listed. Thus we check for view rights since we don't want to show the Analytics Application otherwise.
+label=#if($xwiki.hasAccessLevel('view', 'Analytics.WebHome'))$services.localization.render('analytics.extension.title')#end
+target=Analytics.WebHome
+icon=icon:chart-bar</parameters>
     </property>
     <property>
       <scope>wiki</scope>
