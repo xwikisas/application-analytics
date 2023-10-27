@@ -162,14 +162,12 @@
     </property>
     <property>
       <content>{{velocity}}
-#try("trackingCode")
-  #set ($configuration = $services.analytics.getConfiguration())
-  #set ($trackingCode = $configuration.getTrackingCode())
-  #if ($trackingCode)
-    {{html clean="false"}}
-      $trackingCode
-    {{/html}}
-  #end
+#set ($configuration = $services.analytics.getConfiguration())
+#set ($trackingCode = $configuration.getTrackingCode())
+#if ($trackingCode)
+  {{html clean="false"}}
+    $trackingCode
+  {{/html}}
 #end
 {{/velocity}}
 </content>

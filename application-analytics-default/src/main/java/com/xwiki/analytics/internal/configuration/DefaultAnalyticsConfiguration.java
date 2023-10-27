@@ -53,33 +53,24 @@ public class DefaultAnalyticsConfiguration implements AnalyticsConfiguration
     @Override
     public String getRequestAddress()
     {
-        return getProperty("requestAddress", "");
+        return this.configDocument.getProperty("requestAddress", "");
     }
 
     @Override
     public String getIdSite()
     {
-        return getProperty("siteId", "");
+        return this.configDocument.getProperty("siteId", "");
     }
 
     @Override
     public String getAuthenticationToken()
     {
-        return getProperty("authToken", "");
+        return this.configDocument.getProperty("authToken", "");
     }
 
     @Override
     public String getTrackingCode()
     {
-        return getProperty("trackingCode", "");
-    }
-
-    private <T> T getProperty(String key, T defaultValue)
-    {
-        T value = this.configDocument.getProperty(key, defaultValue);
-        if (value == null || value.equals(defaultValue)) {
-            throw new RuntimeException(MessageFormat.format("The {0} is missing.", key));
-        }
-        return value;
+        return this.configDocument.getProperty("trackingCode", "");
     }
 }
