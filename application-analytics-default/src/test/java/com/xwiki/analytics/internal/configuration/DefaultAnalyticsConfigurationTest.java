@@ -73,6 +73,12 @@ public class DefaultAnalyticsConfigurationTest
         assertEquals("13.192.200.19", this.defaultAnalyticsConfiguration.getRequestAddress());
     }
 
+    @Test
+    void getTrackingCode()
+    {
+        when(this.analyticsConfigurationSource.getProperty("trackingCode", "")).thenReturn("TEST");
+        assertEquals("TEST", this.defaultAnalyticsConfiguration.getTrackingCode());
+    }
     @BeforeEach
     private void setLogger()
     {

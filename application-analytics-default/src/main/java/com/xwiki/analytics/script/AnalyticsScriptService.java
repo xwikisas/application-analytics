@@ -61,6 +61,7 @@ public class AnalyticsScriptService implements ScriptService
      * @param parameters a map of the parameters needed for this request
      * @return response from Matomo API, in a normalized JSON format
      */
+    @Unstable
     public JsonNode getMatomoRequestResult(Map<String, String> parameters, Map<String, String> filters,
         String jsonNormaliserHint)
     {
@@ -75,6 +76,7 @@ public class AnalyticsScriptService implements ScriptService
      *
      * @return the analytics configuration.
      */
+    @Unstable
     public AnalyticsConfiguration getConfiguration()
     {
         return configuration;
