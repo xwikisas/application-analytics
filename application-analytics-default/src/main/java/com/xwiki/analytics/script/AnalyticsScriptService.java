@@ -75,6 +75,7 @@ public class AnalyticsScriptService implements ScriptService
     /**
      *
      * @return the analytics configuration.
+     * @since 1.0 I must add the @since to be able to build the application
      */
     @Unstable
     public AnalyticsConfiguration getConfiguration()
