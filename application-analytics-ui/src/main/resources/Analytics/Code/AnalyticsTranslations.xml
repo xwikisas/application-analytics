@@ -38,27 +38,39 @@
   <hidden>true</hidden>
   <content>## Most Viewed Pages Macro
 analytics.mostViewedPages.header.actions=Actions
+analytics.mostViewedPages.header.bounceRate.hint=The percentage of visits that started on this page and left the website straight away.
 analytics.mostViewedPages.header.bounceRate=Bounce rate
 analytics.mostViewedPages.header.date=Date
 analytics.mostViewedPages.header.emptyvalue=-
+analytics.mostViewedPages.header.entryNbActions.hint=The number of actions performed by the users.
 analytics.mostViewedPages.header.entryNbActions=No. of actions
+analytics.mostViewedPages.header.exitRate.hint=The percentage of visits that left the website after viewing this page.
 analytics.mostViewedPages.header.exitRate=Exit rate
-analytics.mostViewedPages.header.hits=Page views
-analytics.mostViewedPages.header.pageTitle=Page title
-analytics.mostViewedPages.header.timeSpent=Time spent(s)
+analytics.mostViewedPages.header.hits.hint=The number of times this page was visited.
+analytics.mostViewedPages.header.hits=Views
+analytics.mostViewedPages.header.pageTitle=Title
+analytics.mostViewedPages.header.timeSpent.hint=The time that the user has spent on the page.
+analytics.mostViewedPages.header.timeSpent=Time spent
+analytics.mostViewedPages.header.visits.hint=The number of visits that included this page. If a page was viewed multiple times during one visit, it is only counted once.
 analytics.mostViewedPages.header.visits=Unique visitors
 analytics.mostViewedPages.header.year=Year
 analytics.mostViewedPages.parameter.label.endDate=End time of the date interval used for this macro
 analytics.mostViewedPages.parameter.label.startDate=Start time of the date interval used for this macro
+rendering.macro.mostViewedPages.description=When visitors search on your website, they are looking for a particular page, content, product, or service. This report lists the pages that were clicked the most after an internal search.
 rendering.macro.mostViewedPages.name=Most viewed pages
 
 ## Pages following a site search
 analytics.PagesFollowingASiteSearchJSON.header.actions=Actions
+analytics.PagesFollowingASiteSearchJSON.header.clicked.hint=The number of times this page was visited after a visitor did a search on your website, and clicked on this page in the search results.
 analytics.PagesFollowingASiteSearchJSON.header.clicked=Clicked in search results
 analytics.PagesFollowingASiteSearchJSON.header.date=Date
 analytics.PagesFollowingASiteSearchJSON.header.destinationPage=Destination page
+analytics.PagesFollowingASiteSearchJSON.header.loadTime.hint=Average time(in seconds) it takes from requesting a page until the page is fully rendered within the browser
 analytics.PagesFollowingASiteSearchJSON.header.loadTime=Avg. load time
+analytics.PagesFollowingASiteSearchJSON.header.pageViews.hint=The number of times this page was visited.
 analytics.PagesFollowingASiteSearchJSON.header.pageViews=Views
+rendering.macro.PagesFollowingASiteSearch.description=Displays pages users clicked on after a search.
+rendering.macro.PagesFollowingASiteSearch.name=Pages following a site search
 
 ## Row Evolution
 analytics.rowEvolution.modal.close=Close
@@ -86,33 +98,96 @@ analytics.rowEvolution.modal.year.label=Year
 ## Site Search Keywords Macro
 analytics.action.hover.rowEvolution=Row evolution
 analytics.siteSearchKeywords.header.actions=Actions
+analytics.siteSearchKeywords.header.exitRate.hint=The percentage of visits that left the website after searching for this Keyword on your Site Search engine.
 analytics.siteSearchKeywords.header.exitRate=Search exists(%)
 analytics.siteSearchKeywords.header.keyword=Keyword
+analytics.siteSearchKeywords.header.nbOfResultPages.hint=Visitors will search on your website, and sometimes click "next" to view more results this is the average number of search results pages viewed for this keyword.
 analytics.siteSearchKeywords.header.nbOfResultPages=Search results pages
+analytics.siteSearchKeywords.header.searches.hint=The number of visits that searched for this keyword on your website's search engine.
 analytics.siteSearchKeywords.header.searches=Searches
+rendering.macro.siteSearchKeywords.description=This report lists the Search Keywords that visitors searched for on your internal Search Engine.
+rendering.macro.siteSearchKeywords.name=Site search keywords
 
 ## Search Categories
 analytics.searchCategories.header.actions=Actions
 analytics.searchCategories.header.category=Category
+analytics.searchCategories.header.searchResultsPages.hint=Visitors will search on your website, and sometimes click "next" to view more results. This is the average number of search results pages viewed for this keyword.
 analytics.searchCategories.header.searchResultsPages=Search result pages
+analytics.searchCategories.header.searches.hint=The number of visits that searched for this keyword on your website's search engine.
 analytics.searchCategories.header.searches=Searches
 analytics.searchCategories.header.title=Search category
+rendering.macro.searchCategories.description=This report lists the Categories that visitors selected when they made a Search on your website.
+rendering.macro.searchCategories.name=Search categories
 
 ## Software/Devices Macros
+The most important information for web developers is what kind of rendering engine their visitors are using. The labels contain the names of the engines followed by the most common browser using that engine in brackets.
 analytics.softwareDevices.header.actions=Actions
+analytics.softwareDevices.header.bounceRate.hint=The percentage of visits that only had a single pageview. This means that the visitor left the website directly from the entrance page.
 analytics.softwareDevices.header.bounceRate=Bounce rate
 analytics.softwareDevices.header.browser=Browser
 analytics.softwareDevices.header.configurations=Configuration
+analytics.softwareDevices.header.conversionRate.hint=The percentage of visits that triggered a goal conversion.
 analytics.softwareDevices.header.conversionRate=Conversion(%)
 analytics.softwareDevices.header.deviceBrand=Brand
 analytics.softwareDevices.header.deviceModel=Device model
 analytics.softwareDevices.header.deviceType=Device type
 analytics.softwareDevices.header.engines=Browser engine
+analytics.softwareDevices.header.nbOfActions.hint=The total number of actions performed by your visitors.
 analytics.softwareDevices.header.nbOfActions=User actions
 analytics.softwareDevices.header.osVersion=OS version
 analytics.softwareDevices.header.resolution=Resolution
+analytics.softwareDevices.header.timeSpent.hint=The time that the user have spent using a specific engine.
 analytics.softwareDevices.header.timeSpent=Time spent
+analytics.softwareDevices.header.visits.hint=If a vistor comes to your website for the first time or if they visit a page more than 30 minutes after their last page view, this will be recorded as new visit.
 analytics.softwareDevices.header.visits=Visits
+rendering.macro.browserEngines.description=This report shows your visitors' browsers broken down into browser engines.
+rendering.macro.browserEngines.name=Browser engines
+rendering.macro.browserEngines.parameter.endDate.name=End date
+rendering.macro.browserEngines.parameter.endDate.description=End time of the date interval used for this macro.
+rendering.macro.browserEngines.parameter.startDate.name=End date
+rendering.macro.browserEngines.parameter.startDate.description=Start time of the date interval used for this macro.
+rendering.macro.browsers.description=This report contains information about what kind of browser your visitors were using.
+rendering.macro.browsers.name=Browsers
+rendering.macro.browsers.parameter.endDate.name=End date
+rendering.macro.browsers.parameter.endDate.description=End time of the date interval used for this macro.
+rendering.macro.browsers.parameter.startDate.name=End date
+rendering.macro.browsers.parameter.startDate.description=Start time of the date interval used for this macro.
+rendering.macro.configurations.description=This report shows the most common overall configurations that your visitors had. A configuration is the combination of an operating system, a browser type and a screen resolution.
+rendering.macro.configurations.name=Configurations
+rendering.macro.configurations.parameter.endDate.name=End date
+rendering.macro.configurations.parameter.endDate.description=End time of the date interval used for this macro.
+rendering.macro.configurations.parameter.startDate.name=End date
+rendering.macro.configurations.parameter.startDate.description=Start time of the date interval used for this macro.
+rendering.macro.deviceBrand.description=This report shows the brands / manufacturers of the devices your visitors were using. In most cases this information is only available for non-desktop devices.
+rendering.macro.deviceBrand.name=Device brand
+rendering.macro.deviceBrand.parameter.endDate.name=End date
+rendering.macro.deviceBrand.parameter.endDate.description=End time of the date interval used for this macro.
+rendering.macro.deviceBrand.parameter.startDate.name=End date
+rendering.macro.deviceBrand.parameter.startDate.description=Start time of the date interval used for this macro.
+rendering.macro.deviceModel.description=This report shows the devices your visitors are using. Each model is displayed combined with the device brand as some model names are used by multiple brands.
+rendering.macro.deviceModel.name=Device model
+rendering.macro.deviceModel.parameter.endDate.name=End date
+rendering.macro.deviceModel.parameter.endDate.description=End time of the date interval used for this macro.
+rendering.macro.deviceModel.parameter.startDate.name=End date
+rendering.macro.deviceModel.parameter.startDate.description=Start time of the date interval used for this macro.
+rendering.macro.deviceType.description=This report shows the types of devices your visitors were using. This report will always show all device types Matomo is able to detect, even if there were no visits with a specific type.
+rendering.macro.deviceType.name=Device type
+rendering.macro.deviceType.parameter.endDate.name=End date
+rendering.macro.deviceType.parameter.endDate.description=End time of the date interval used for this macro.
+rendering.macro.deviceType.parameter.startDate.name=End date
+rendering.macro.deviceType.parameter.startDate.description=Start time of the date interval used for this macro.
+rendering.macro.operatingSystemVersions.description=This report shows you the operating systems your visitors are using. Each version and distribution is shown separately.
+rendering.macro.operatingSystemVersions.name=Operating system versions
+rendering.macro.operatingSystemVersions.parameter.endDate.name=End date
+rendering.macro.operatingSystemVersions.parameter.endDate.description=End time of the date interval used for this macro.
+rendering.macro.operatingSystemVersions.parameter.startDate.name=End date
+rendering.macro.operatingSystemVersions.parameter.startDate.description=Start time of the date interval used for this macro.
+rendering.macro.screenResolution.description=This report shows the screen resolutions your visitors used when viewing your website.
+rendering.macro.screenResolution.name=Screen Resolution
+rendering.macro.screenResolution.parameter.endDate.name=End date
+rendering.macro.screenResolution.parameter.endDate.description=End time of the date interval used for this macro.
+rendering.macro.screenResolution.parameter.startDate.name=End date
+rendering.macro.screenResolution.parameter.startDate.description=Start time of the date interval used for this macro.
 
 ## Admin section
 Analytics.Code.ConfigurationClass_authToken.hint=Token generated by Matomo to be capable of using the API to view the data. This token can be generated from Settings -&gt; Personal -&gt; Security -&gt; Create New Token
