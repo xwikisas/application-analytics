@@ -72,7 +72,7 @@
   #end
 
   #set ($parameters = {
-    #if 'period': $request.period,
+    'period': $request.period,
     'date': $request.date,
     'module': 'API',
     'method': 'Actions.getSiteSearchKeywords',

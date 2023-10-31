@@ -19,7 +19,6 @@
  */
 package com.xwiki.analytics.internal.configuration;
 
-import java.text.MessageFormat;
 
 import javax.inject.Inject;
 import javax.inject.Named;

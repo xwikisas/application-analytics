@@ -74,9 +74,7 @@ public class AnalyticsScriptService implements ScriptService
     /**
      *
      * @return the analytics configuration.
-     * @since 1.0
      */
-    @Unstable
     public AnalyticsConfiguration getConfiguration()
     {
         return configuration;
