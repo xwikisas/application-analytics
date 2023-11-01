@@ -245,6 +245,7 @@
 
 {{velocity}}
 #macro(executeMacro)
+  #displayAnalyticsMacroTitle('Analytics.Code.Macros.PagesFollowingASiteSearch', 'rendering.macro.PagesFollowingASiteSearch.description', 'rendering.macro.PagesFollowingASiteSearch.name')
   #getDate()
   #set ($discard = $xwiki.jsx.use('Analytics.Code.Macros.RowEvolution'))
   #set ($parameters = $escapetool.url({

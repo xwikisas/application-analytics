@@ -124,66 +124,31 @@
       <cache>long</cache>
     </property>
     <property>
-      <code>define('analyticsDescriptionsAndLinks', {
-  prefix: 'analytics.descriptionsAndLinks.',
-  keys: [
-    'browserEnginesMacro',
-    'browsersMacro',
-    'configurationsMacro',
-    'deviceBrandMacro',
-    'deviceModelMacro',
-    'deviceTypeMacro',
-    'mostViewedMacro',
-    'operatingSystemVersionsMacro',
-    'pagesFollowingASiteSearch',
-    'screenResolutionMacro',
-    'searchCategories',
-    'siteSearchKeywords'
-  ]
-});
-require(['jquery', 'xwiki-l10n!analyticsDescriptionsAndLinks'], ($,l10n) =&gt; {
-      const referenceMappings ={
-        'browserEnginesMacro': 'Analytics.Code.Macros.BrowserEngines',
-        'browsersMacro': 'Analytics.Code.Macros.Browsers',
-        'configurationsMacro': 'Analytics.Code.Macros.Configurations',
-        'deviceBrandMacro':'Analytics.Code.Macros.DeviceBrand',
-        'deviceModelMacro': 'Analytics.Code.Macros.DeviceModel',
-        'deviceTypeMacro': 'Analytics.Code.Macros.DeviceType',
-        'mostViewedMacro': 'Analytics.Code.Macros.MostViewedPages',
-        'operatingSystemVersionsMacro': 'Analytics.Code.Macros.OperatingSystemVersions',
-        'pagesFollowingASiteSearch': 'Analytics.Code.Macros.PagesFollowingASiteSearch',
-        'screenResolutionMacro': 'Analytics.Code.Macros.ScreenResolution',
-        'searchCategories': 'Analytics.Code.Macros.SearchCategories',
-        'siteSearchKeywords': 'Analytics.Code.Macros.SiteSearchKeywords'
-    };
-    let templatePage = XWiki.Model.resolve('Analytics.Code.Macros.Description&amp;LinksTemplate', XWiki.EntityType.DOCUMENT);
-    let url = new XWiki.Document(templatePage).getURL('get');
+      <code>require(['jquery'], function ($) {
 
-    $.post(new XWiki.Document(templatePage).getURL('get'), function(data) {
-        $('.xdialog-content .xwikicontent p a').html(data);
-    })
-    .done((data) =&gt; {
-        $(document).ready(function() {
-            $('[id^="gadget_"]').each(function() {
-                let id = $(this).find('.gadget-content div').first().attr('id');
-                if(id !=null) {
-                   let macroName =  id.substring(0, id.indexOf('_'));
-                   //  if the macro name is not present in the reference  mapping then we can skip the gadget.
-                   if(referenceMappings[macroName]){
-                     let reference = XWiki.Model.resolve(referenceMappings[macroName], XWiki.EntityType.DOCUMENT);
-                     let url = new XWiki.Document(reference).getURL('view');
-                     // Convert the data string into a html element using jquery to add title &amp; href properties
-                     dataElement = $(data);
-                     dataElement.attr('title', l10n[macroName]); // The title property should contain the description of the macro.
-                     dataElement.attr('href', url); // Should pe a link to the macro page, this link should be solved by using a resolver and the page reference.
-                     $(this).find('.gadget-title').append(dataElement);
-                  }
+    function getInfoIcon() {
+        const iconURL = `${XWiki.contextPath}/rest/wikis/${XWiki.currentWiki}/iconThemes/icons?name=info`;
+        return window.fetch(iconURL, {
+            headers: {
+                'Accept': 'application/json'
+            }
+        })
+        .then(response =&gt; response.json())
+        .then(response =&gt; response.icons[0]);
+    }
+
+    $(document).ready(function () {
+        getInfoIcon().then(icon =&gt; {
+            $('[id^="gadget_"]').each(function () {
+                let hiddenElement = $(this).find('.gadget-content .analytics-description-hidden');
+                if (hiddenElement.length &gt; 0) {
+                    let dataElement = $(`&lt;a class="${icon.cssClass} analyticsTitleMargin"&gt; &lt;/a&gt;`);
+                    dataElement.attr('title', hiddenElement.data('description'));
+                    dataElement.attr('href', hiddenElement.data('url'));
+                    $(this).find('.gadget-title').append(dataElement);
                 }
             });
         });
-    })
-    .fail(() =&gt; {
-        // Handle failure
     });
 });
 </code>
@@ -196,6 +161,129 @@ require(['jquery', 'xwiki-l10n!analyticsDescriptionsAndLinks'], ($,l10n) =&gt; {
     </property>
     <property>
       <use>currentPage</use>
+    </property>
+  </object>
+  <object>
+    <name>Analytics.Code.Macros.Description&amp;Links</name>
+    <number>0</number>
+    <className>XWiki.StyleSheetExtension</className>
+    <guid>6333fa06-464a-48f5-9c6e-7ccd1071a381</guid>
+    <class>
+      <name>XWiki.StyleSheetExtension</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <cache>
+        <cache>0</cache>
+        <defaultValue>long</defaultValue>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <freeText>forbidden</freeText>
+        <largeStorage>0</largeStorage>
+        <multiSelect>0</multiSelect>
+        <name>cache</name>
+        <number>5</number>
+        <prettyName>Caching policy</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators>|, </separators>
+        <size>1</size>
+        <unmodifiable>0</unmodifiable>
+        <values>long|short|default|forbid</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </cache>
+      <code>
+        <contenttype>PureText</contenttype>
+        <disabled>0</disabled>
+        <editor>PureText</editor>
+        <name>code</name>
+        <number>2</number>
+        <prettyName>Code</prettyName>
+        <rows>20</rows>
+        <size>50</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </code>
+      <contentType>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <freeText>forbidden</freeText>
+        <largeStorage>0</largeStorage>
+        <multiSelect>0</multiSelect>
+        <name>contentType</name>
+        <number>6</number>
+        <prettyName>Content Type</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators>|, </separators>
+        <size>1</size>
+        <unmodifiable>0</unmodifiable>
+        <values>CSS|LESS</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </contentType>
+      <name>
+        <disabled>0</disabled>
+        <name>name</name>
+        <number>1</number>
+        <prettyName>Name</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </name>
+      <parse>
+        <disabled>0</disabled>
+        <displayFormType>select</displayFormType>
+        <displayType>yesno</displayType>
+        <name>parse</name>
+        <number>4</number>
+        <prettyName>Parse content</prettyName>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+      </parse>
+      <use>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <freeText>forbidden</freeText>
+        <largeStorage>0</largeStorage>
+        <multiSelect>0</multiSelect>
+        <name>use</name>
+        <number>3</number>
+        <prettyName>Use this extension</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators>|, </separators>
+        <size>1</size>
+        <unmodifiable>0</unmodifiable>
+        <values>currentPage|onDemand|always</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </use>
+    </class>
+    <property>
+      <cache>long</cache>
+    </property>
+    <property>
+      <code>.analyticsTitleMargin
+{
+  margin-left:2px;
+}</code>
+    </property>
+    <property>
+      <contentType/>
+    </property>
+    <property>
+      <name/>
+    </property>
+    <property>
+      <parse/>
+    </property>
+    <property>
+      <use/>
     </property>
   </object>
   <object>

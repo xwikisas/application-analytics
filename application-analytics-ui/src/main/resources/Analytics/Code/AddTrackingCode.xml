@@ -171,18 +171,18 @@
 #end
 {{/velocity}}
 </content>
-  </property>
-  <property>
-    <extensionPointId>org.xwiki.platform.html.head</extensionPointId>
-  </property>
-  <property>
-    <name>com.xwiki.analytics.trackerCode</name>
-  </property>
-  <property>
-  <parameters/>
-  </property>
-  <property>
-    <scope>wiki</scope>
-  </property>
+    </property>
+    <property>
+      <extensionPointId>org.xwiki.platform.html.head</extensionPointId>
+    </property>
+    <property>
+      <name>com.xwiki.analytics.trackerCode</name>
+    </property>
+    <property>
+      <parameters/>
+    </property>
+    <property>
+      <scope>wiki</scope>
+    </property>
   </object>
 </xwikidoc>

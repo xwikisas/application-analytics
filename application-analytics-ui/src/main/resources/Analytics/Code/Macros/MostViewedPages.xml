@@ -246,6 +246,7 @@
 
 {{velocity}}
 #macro(executeMacro)
+  #displayAnalyticsMacroTitle('Analytics.Code.Macros.MostViewedPages', 'rendering.macro.mostViewedPages.description', 'rendering.macro.mostViewedPages.name')
   #getDate()
   #set ($discard =$xwiki.jsx.use('Analytics.Code.Macros.RowEvolution'))
   #set ($parameters = $escapetool.url({

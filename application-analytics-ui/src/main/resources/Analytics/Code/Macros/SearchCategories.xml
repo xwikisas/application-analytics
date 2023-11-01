@@ -244,6 +244,7 @@
 
 {{velocity}}
 #macro(executeMacro)
+  #displayAnalyticsMacroTitle('Analytics.Code.Macros.SearchCategories', 'rendering.macro.searchCategories.description', 'rendering.macro.searchCategories.name')
   #getDate()
   #set ($discard =$xwiki.jsx.use('Analytics.Code.Macros.RowEvolution'))
   #set ($parameters = $escapetool.url({
