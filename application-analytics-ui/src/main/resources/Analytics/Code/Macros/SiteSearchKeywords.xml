@@ -281,7 +281,8 @@
 
   #set ($rowEvolutionParams = {
     'searches': 'nb_visits',
-    'searchResultPages': 'nb_pages_per_search'
+    'searchResultPages': 'nb_pages_per_search',
+    'exitRate': 'exit_rate'
   })
   #modalRowEvolution($rowEvolutionParams, 'SiteSearchKeyword' $macroId)
 #end
@@ -303,7 +304,7 @@
       <contentType>No content</contentType>
     </property>
     <property>
-      <defaultCategory/>
+      <defaultCategory>Analytics</defaultCategory>
     </property>
     <property>
       <description/>
