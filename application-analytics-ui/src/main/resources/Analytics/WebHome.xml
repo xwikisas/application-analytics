@@ -36,12 +36,7 @@
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>false</hidden>
-  <content>{{dashboard/}}
-
-
-{{description/}}
-
-</content>
+  <content>{{dashboard/}}</content>
   <object>
     <name>Analytics.WebHome</name>
     <number>0</number>
