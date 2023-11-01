@@ -44,7 +44,6 @@ analytics.mostViewedPages.header.date=Date
 analytics.mostViewedPages.header.emptyvalue=-
 analytics.mostViewedPages.header.entryNbActions.hint=The number of actions performed by the users.
 analytics.mostViewedPages.header.entryNbActions=No. of actions
-analytics.mostViewedPages.header.exitRate.hint=The percentage of visits that left the website after viewing this page.
 analytics.mostViewedPages.header.exitRate=Exit rate
 analytics.mostViewedPages.header.hits.hint=The number of times this page was visited.
 analytics.mostViewedPages.header.hits=Views
