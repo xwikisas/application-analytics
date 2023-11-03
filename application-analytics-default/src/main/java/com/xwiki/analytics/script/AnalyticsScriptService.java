@@ -19,12 +19,15 @@
  */
 package com.xwiki.analytics.script;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.inject.Provider;
 import javax.inject.Singleton;
 
+import org.slf4j.Logger;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.script.service.ScriptService;
 import org.xwiki.stability.Unstable;
@@ -45,27 +48,40 @@ import com.xwiki.analytics.configuration.AnalyticsConfiguration;
 @Singleton
 public class AnalyticsScriptService implements ScriptService
 {
+    private static final String INVALID_MANAGER = "The manager couldn't be retrieved! Check if the hint is valid!";
+
     @Inject
-    @Named("Matomo")
-    private AnalyticsManager analyticsManager;
+    private Logger logger;
 
     @Inject
     private AnalyticsConfiguration configuration;
 
+    @Inject
+    private Provider<List<AnalyticsManager>> managerProvider;
     /**
      * Get data from Matomo API, in a format specific to the macro that will use it.
      *
-     * @param jsonNormaliserHint hint specific to the component that will normalize the Matomo result response,
-     *     since it's given / resulted format depends on the context were is used.
-     * @param filters holds the criteria for filtering a dataset.
      * @param parameters a map of the parameters needed for this request
-     * @return response from Matomo API, in a normalized JSON format
+     * @param filters holds the criteria for filtering a dataset.
+     * @param jsonNormaliserHint hint specific to the component that will normalize the response, since it's given /
+     * resulted format depends on the context were is used.
+     * @param managerHint hint specific to the service that will request the data
+     * @return a normalized JSON format
      */
-    public JsonNode getMatomoRequestResult(Map<String, String> parameters, Map<String, String> filters,
-        String jsonNormaliserHint)
+    public JsonNode makeRequest(Map<String, String> parameters, Map<String, String> filters,
+        String jsonNormaliserHint, String managerHint)
     {
+        if (managerHint == null || managerHint.isEmpty()) {
+            logger.warn("The hint for the manager can not be null or empty");
+            throw new RuntimeException(INVALID_MANAGER);
+        }
+        AnalyticsManager manager = getManager(managerHint);
+        if (manager == null) {
+            logger.warn(INVALID_MANAGER);
+            throw new RuntimeException(INVALID_MANAGER);
+        }
         try {
-            return analyticsManager.requestData(parameters, filters, jsonNormaliserHint);
+            return manager.requestData(parameters, filters, jsonNormaliserHint);
         } catch (Exception e) {
             throw new RuntimeException(String.format("Failed to get data for [%s]", jsonNormaliserHint), e);
         }
@@ -78,5 +94,15 @@ public class AnalyticsScriptService implements ScriptService
     public AnalyticsConfiguration getConfiguration()
     {
         return configuration;
+    }
+
+    private AnalyticsManager getManager(String hint)
+    {
+        for (AnalyticsManager manager : managerProvider.get()) {
+            if (hint.equals(manager.getIdentifier())) {
+                return manager;
+            }
+        }
+        return null;
     }
 }

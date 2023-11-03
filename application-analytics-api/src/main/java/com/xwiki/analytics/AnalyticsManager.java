@@ -47,4 +47,11 @@ public interface AnalyticsManager
      */
     JsonNode requestData(Map<String, String> parameters, Map<String, String> filters, String jsonNormaliserHint)
         throws IOException;
+
+    /**
+     * Retrieve the hint of a component.
+     *
+     * @return hint of the component
+     */
+    String getIdentifier();
 }

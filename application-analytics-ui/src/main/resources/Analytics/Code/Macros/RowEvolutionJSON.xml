@@ -84,7 +84,7 @@
   #set ($discard =  $parameters.put('segment', $request.rowIdentifier))
 
 #end
-#set ($analyticsResult = $services.analytics.getMatomoRequestResult($parameters, $filters, 'RowEvolution'))
+#set ($analyticsResult = $services.analytics.makeRequest($parameters, $filters, 'RowEvolution', 'Matomo'))
 #jsonResponse($analyticsResult)
 {{/velocity}}
 </content>

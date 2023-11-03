@@ -56,6 +56,8 @@ import com.xwiki.analytics.configuration.AnalyticsConfiguration;
 @Unstable
 public class MatomoAnalyticsManager implements AnalyticsManager
 {
+    static final String HINT = "Matomo";
+
     private static final String FAIL_RETRIEVE = "Error occurred while retrieving Matomo statistic results.";
 
     @Inject
@@ -87,6 +89,12 @@ public class MatomoAnalyticsManager implements AnalyticsManager
         JsonNormaliser jsonNormaliser = this.selectNormaliser(jsonNormaliserHint);
         getJsonNormaliser(jsonNormaliserHint);
         return jsonNormaliser.normaliseData(executeHttpRequest(parameters), filters);
+    }
+
+    @Override
+    public String getIdentifier()
+    {
+        return HINT;
     }
 
     /**
