@@ -60,9 +60,7 @@ public class AnalyticsScriptService implements ScriptService
      * @param filters holds the criteria for filtering a dataset.
      * @param parameters a map of the parameters needed for this request
      * @return response from Matomo API, in a normalized JSON format
-     * @since 1.0
      */
-    @Unstable
     public JsonNode getMatomoRequestResult(Map<String, String> parameters, Map<String, String> filters,
         String jsonNormaliserHint)
     {
@@ -76,9 +74,7 @@ public class AnalyticsScriptService implements ScriptService
     /**
      *
      * @return the analytics configuration.
-     * @since 1.0
      */
-    @Unstable
     public AnalyticsConfiguration getConfiguration()
     {
         return configuration;
