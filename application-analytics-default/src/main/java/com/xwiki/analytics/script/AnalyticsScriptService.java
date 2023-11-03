@@ -40,7 +40,7 @@ import com.xwiki.analytics.configuration.AnalyticsConfiguration;
  * Script service for the Analytics Application.
  *
  * @version $Id$
- * @since 1.1
+ * @since 1.0
  */
 @Component
 @Named("analytics")
