@@ -125,21 +125,10 @@
     </property>
     <property>
       <code>require(['jquery'], function ($) {
-  function getInfoIcon() {
-    const iconURL = `${XWiki.contextPath}/rest/wikis/${XWiki.currentWiki}/iconThemes/icons?name=info`;
-    return $.ajax({
-      url: iconURL,
-      type: 'GET',
-      dataType: 'json',
-      headers: {
-        'Accept': 'application/json'
-      }
-    })
-    .then(response =&gt; response.icons[0]);
-  }
-
   $(document).ready(function () {
-    getInfoIcon().then(icon =&gt; {
+    const iconURL = `${XWiki.contextPath}/rest/wikis/${XWiki.currentWiki}/iconThemes/icons?name=info`;
+    $.getJSON(iconURL, function(response) {
+      const icon = response.icons[0];
       $('[id^="gadget_"]').each(function () {
         console.log($(this));
         let hiddenElement = $(this).find('.gadget-content .analytics-description-hidden');
