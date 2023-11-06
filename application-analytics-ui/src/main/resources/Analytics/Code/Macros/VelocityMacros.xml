@@ -191,16 +191,16 @@
 #end
 
 #macro(displayAnalyticsMacroTitle, $macroReferencer, $descriptionTranslationKey, $nameTranslationKey)
-  #set ($discard = $xwiki.ssx.use('Analytics.Code.Macros.Description&amp;amp;Links'))
+  #set ($discard = $xwiki.ssx.use('Analytics.Code.AnalyticsJS'))
   #set ($url = $xwiki.getURL($macroReferencer))
-  #set ($xwiki_gadget = $doc.getObject('XWiki.GadgetClass'))
+  #set ($isDashboard = $doc.getObject('XWiki.GadgetClass'))
   #set ($description = $escapetool.xml($services.localization.render($descriptionTranslationKey)))
-  #if ($xwiki_gadget)
+  #if ($isDashboard)
     ## inside a dashboard so we need to add the eye icon to the tile of the dashboard gadget.
     {{html}}
       &lt;div class="hidden analytics-description-hidden" data-url=$url data-description="$description"&gt;&lt;/div&gt;
     {{/html}}
-    #set ($discard = $xwiki.jsx.use('Analytics.Code.Macros.Description&amp;amp;Links'))
+    #set ($discard = $xwiki.jsx.use('Analytics.Code.AnalyticsJS'))
   #else
   ## Needs css, for the time being is just a prototype
     {{html}}
