@@ -84,7 +84,7 @@
   })
 
   ## Get the JSON response from Matomo.
-  #set ($analyticsResult = $services.analytics.makeRequest($parameters, $filters, 'MostViewedPages', 'Matomo'))
+  #set ($analyticsResult = $services.analytics.makeRequest($parameters, $filters, 'MostViewedPages'))
   #if ($offset &lt; $analyticsResult.size())
     #set ($toIndex =  $mathtool.min($mathtool.add($offset, $limit), $analyticsResult.size()))
     #subSet ($analyticsResult, $offset, $toIndex, $resultList)

@@ -47,7 +47,7 @@
     'format': 'json',
     'segment': $segment
   })
-  #jsonResponse($services.analytics.makeRequest($parameters, {}, 'MostViewedPages', 'Matomo'))
+  #jsonResponse($services.analytics.makeRequest($parameters, {}, 'MostViewedPages'))
 #end
 {{/velocity}}</content>
 </xwikidoc>
