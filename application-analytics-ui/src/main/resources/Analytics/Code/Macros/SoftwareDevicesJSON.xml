@@ -116,11 +116,12 @@
         #set ($segment = $currentEntry.get('segment').asText())
     #end
     #set ($conversionRate =  $currentEntry.get('nb_visits_converted').asText() + '%')
+    #getTime($currentEntry.get('sum_visit_length').asInt())
     #set ($discard = $results.rows.add({
       $request.label: $currentEntry.get('label').asText(),
       'visits':  $currentEntry.get('nb_visits').asText(),
       'nbOfActions': $currentEntry.get('nb_actions').asText(),
-      'timeSpent': $currentEntry.get('sum_visit_length').asText(),
+      'timeSpent': $time,
       'bounceRate': $currentEntry.get('bounce_count').asText(),
       'conversionRate': $conversionRate,
       'actions': "#analyticsActions($segment)"

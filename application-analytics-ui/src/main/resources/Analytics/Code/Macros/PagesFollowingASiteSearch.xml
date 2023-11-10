@@ -279,7 +279,9 @@
 
   #set ($rowEvolutionParams = {
     'pageViews': 'nb_hits',
-    'clickedSearchResult': 'nb_hits_following_search'
+    'clickedSearchResult': 'nb_hits_following_search',
+    'bounceRate': 'bounce_rate',
+    'exitRate': 'exit_rate'
   })
   #modalRowEvolution($rowEvolutionParams, 'PagesFollowingASiteSearch', $macroId)
 #end
@@ -301,7 +303,7 @@
       <contentType>No content</contentType>
     </property>
     <property>
-      <defaultCategory/>
+      <defaultCategory>Analytics</defaultCategory>
     </property>
     <property>
       <description/>

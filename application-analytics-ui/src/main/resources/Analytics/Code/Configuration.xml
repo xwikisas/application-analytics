@@ -509,7 +509,7 @@ require(['jquery', 'xwiki-l10n!analyticsConfigMessages', 'xwiki-meta'], ($, l10n
   function checkConnection() {
     const params = {
       'type': 'tracker',
-      'pageUrl': window.location.href
+      'pageUrl': $('#checkMatomoConnection').attr('src')
     }
     const queryString = $.param(params);
     let getLastVisitsDetailsJSONRef = XWiki.Model.resolve('Analytics.Code.GetLastVisitsDetailsJSON', XWiki.EntityType.DOCUMENT);
