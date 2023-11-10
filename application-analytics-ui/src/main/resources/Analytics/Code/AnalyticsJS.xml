@@ -130,8 +130,7 @@
     $.getJSON(iconURL, function(response) {
       const icon = response.icons[0];
       $('[id^="gadget_"]').each(function () {
-        console.log($(this));
-        let hiddenElement = $(this).find('.gadget-content .analytics-description-hidden');
+        let hiddenElement = $(this).find('.gadget-content .analytics-description');
         if (hiddenElement.length &gt; 0) {
           let dataElement = $(`&lt;a class="${icon.cssClass} analyticsTitleMargin"&gt;&lt;/a&gt;`);
           dataElement.attr('title', hiddenElement.data('description'));
