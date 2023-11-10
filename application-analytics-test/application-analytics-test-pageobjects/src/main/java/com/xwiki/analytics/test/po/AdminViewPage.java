@@ -28,11 +28,6 @@ import org.xwiki.test.ui.po.ViewPage;
 
 public class AdminViewPage extends ViewPage
 {
-    public AdminViewPage()
-    {
-
-    }
-
     private static final String trackingCodeId = "Analytics.Code.ConfigurationClass_0_trackingCode";
 
     private static final String authTokenId = "Analytics.Code.ConfigurationClass_0_authToken";
@@ -41,6 +36,11 @@ public class AdminViewPage extends ViewPage
 
     private static final String requestAddressId = "Analytics.Code.ConfigurationClass_0_requestAddress";
 
+    public AdminViewPage()
+    {
+
+    }
+
     public static AdminViewPage gotoAdminPage()
     {
         AdministrationPage administrationPage = AdministrationPage.gotoPage();
@@ -48,50 +48,67 @@ public class AdminViewPage extends ViewPage
         return new AdminViewPage();
     }
 
-    public static AdminViewPage setTrackingCode(XWikiWebDriver driver, String value)
+    public AdminViewPage setTrackingCode(XWikiWebDriver driver, String value)
     {
         driver.findElement(By.id(trackingCodeId)).sendKeys(value);
-        return new AdminViewPage();
+        return this;
     }
 
-    public static AdminViewPage setAuthTokenId(XWikiWebDriver driver, String value)
+    public AdminViewPage setAuthTokenId(XWikiWebDriver driver, String value)
     {
         driver.findElement(By.id(authTokenId)).sendKeys(value);
-        return new AdminViewPage();
+        return this;
     }
 
-    public static AdminViewPage setIdSiteId(XWikiWebDriver driver, String value)
+    public AdminViewPage setIdSiteId(XWikiWebDriver driver, String value)
     {
         driver.findElement(By.id(idSiteId)).sendKeys(value);
-        return new AdminViewPage();
+        return this;
     }
 
-    public static AdminViewPage setRequestAddressId(XWikiWebDriver driver, String value)
+    public AdminViewPage setRequestAddressId(XWikiWebDriver driver, String value)
     {
         driver.findElement(By.id(requestAddressId)).sendKeys(value);
-        return new AdminViewPage();
+        return this;
     }
 
-    public static AdminViewPage bringSaveButtonIntoView(XWikiWebDriver driver)
+    public AdminViewPage bringSaveButtonIntoView(XWikiWebDriver driver)
     {
         WebElement saveButton = driver.findElement(By.cssSelector(".btn.btn-primary"));
         Actions actions = driver.createActions();
         actions.moveToElement(saveButton).click().perform();
-        return new AdminViewPage();
+        return this;
     }
 
-    public static String inProgressNotification(XWikiWebDriver driver)
+    public boolean inProgressNotification(String message)
     {
-        return driver.findElement(By.cssSelector(".xnotification.xnotification-inprogress")).getText();
+
+        try {
+            this.waitForNotificationInProgressMessage(message);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
-    public static String errorNotification(XWikiWebDriver driver)
+    public boolean errorNotification(String message)
     {
-        return driver.findElement(By.cssSelector(".xnotification.xnotification-error")).getText();
+
+        try {
+            this.waitForNotificationErrorMessage(message);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
-    public static String  successNotification(XWikiWebDriver driver)
+    public boolean successNotification(String message)
     {
-        return driver.findElement(By.cssSelector(".xnotification.xnotification-done")).getText();
+        try {
+            this.waitForNotificationSuccessMessage(message);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }
