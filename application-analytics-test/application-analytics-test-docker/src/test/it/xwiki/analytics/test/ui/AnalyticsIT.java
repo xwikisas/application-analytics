@@ -98,8 +98,11 @@ public class AnalyticsIT
         assertTrue(adminViewPage.inProgressNotification("Checking connection to Matomo."));
         assertTrue(adminViewPage.errorNotification("Failed to connect to Matomo. Please check your configuration "
             + "values."));
+<<<<<<< Updated upstream
         HomePageViewPage.gotoPageHomePage();
 
+=======
+>>>>>>> Stashed changes
     }
 
     /**
@@ -123,7 +126,7 @@ public class AnalyticsIT
         assertTrue(adminViewPage.successNotification("Test connection succeeded!"));
         HomePageViewPage.gotoPageHomePage();
 
-    }
+ }
 
     /**
      * Checks if an admin can add/remove macros to the main dashboard.
