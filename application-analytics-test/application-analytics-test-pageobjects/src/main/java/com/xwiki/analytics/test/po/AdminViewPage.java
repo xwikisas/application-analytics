@@ -50,25 +50,33 @@ public class AdminViewPage extends ViewPage
 
     public AdminViewPage setTrackingCode(XWikiWebDriver driver, String value)
     {
-        driver.findElement(By.id(trackingCodeId)).sendKeys(value);
+        WebElement element = driver.findElement(By.id(trackingCodeId));
+        element.clear();
+        element.sendKeys(value);
         return this;
     }
 
     public AdminViewPage setAuthTokenId(XWikiWebDriver driver, String value)
     {
-        driver.findElement(By.id(authTokenId)).sendKeys(value);
+        WebElement element = driver.findElement(By.id(authTokenId));
+        element.clear();
+        element.sendKeys(value);
         return this;
     }
 
     public AdminViewPage setIdSiteId(XWikiWebDriver driver, String value)
     {
-        driver.findElement(By.id(idSiteId)).sendKeys(value);
+        WebElement element = driver.findElement(By.id(idSiteId));
+        element.clear();
+        element.sendKeys(value);
         return this;
     }
 
     public AdminViewPage setRequestAddressId(XWikiWebDriver driver, String value)
     {
-        driver.findElement(By.id(requestAddressId)).sendKeys(value);
+        WebElement element = driver.findElement(By.id(requestAddressId));
+        element.clear();
+        element.sendKeys(value);
         return this;
     }
 

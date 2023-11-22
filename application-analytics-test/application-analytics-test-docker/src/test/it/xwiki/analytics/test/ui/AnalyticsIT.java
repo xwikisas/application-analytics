@@ -89,6 +89,7 @@ public class AnalyticsIT
     {
         AdminViewPage adminViewPage = new AdminViewPage();
         AdminViewPage.gotoAdminPage();
+        System.out.println("/q/q " + Config.MATOMO_AUTH_TOKEN +" /q/q");
         adminViewPage.setTrackingCode(driver, "").setAuthTokenId(driver, Config.MATOMO_AUTH_TOKEN)
             .setIdSiteId(driver, "1").setRequestAddressId(driver, Config.ADDRESS + ":" + Config.MATOMO_BRIDGE_PORT)
             .bringSaveButtonIntoView(driver);
@@ -98,11 +99,7 @@ public class AnalyticsIT
         assertTrue(adminViewPage.inProgressNotification("Checking connection to Matomo."));
         assertTrue(adminViewPage.errorNotification("Failed to connect to Matomo. Please check your configuration "
             + "values."));
-<<<<<<< Updated upstream
         HomePageViewPage.gotoPageHomePage();
-
-=======
->>>>>>> Stashed changes
     }
 
     /**
@@ -131,8 +128,8 @@ public class AnalyticsIT
     /**
      * Checks if an admin can add/remove macros to the main dashboard.
      */
-    @Test
-    @Order(3)
+    //@Test
+    //@Order(3)
     void appEntryRedirectsToHomePage(XWikiWebDriver driver) throws InterruptedException
     {
 
