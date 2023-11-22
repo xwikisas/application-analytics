@@ -46,4 +46,9 @@ public interface AnalyticsConfiguration
      * @return the authentication token that permits to access the statistics
      */
     String getAuthenticationToken();
+
+    /**
+     * @return the tracking code for Matomo.
+     */
+    String getTrackingCode();
 }

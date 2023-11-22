@@ -31,12 +31,13 @@ import org.xwiki.stability.Unstable;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.xwiki.analytics.AnalyticsManager;
+import com.xwiki.analytics.configuration.AnalyticsConfiguration;
 
 /**
  * Script service for the Analytics Application.
  *
  * @version $Id$
- * @since 1.1
+ * @since 1.0
  */
 @Component
 @Named("analytics")
@@ -45,19 +46,22 @@ import com.xwiki.analytics.AnalyticsManager;
 public class AnalyticsScriptService implements ScriptService
 {
     @Inject
+    private AnalyticsConfiguration configuration;
+
+    @Inject
     @Named("Matomo")
     private AnalyticsManager analyticsManager;
 
     /**
-     * Get data from Matomo API, in a format specific to the macro that will use it.
+     * Get data from the analytics API, in normalized JSON format.
      *
-     * @param jsonNormaliserHint hint specific to the component that will normalize the Matomo result response,
-     *     since it's given / resulted format depends on the context were is used.
-     * @param filters holds the criteria for filtering a dataset.
      * @param parameters a map of the parameters needed for this request
-     * @return response from Matomo API, in a normalized JSON format
+     * @param filters holds the criteria for filtering a dataset.
+     * @param jsonNormaliserHint hint specific to the component that will normalize the response, since it's given /
+     *     resulted format depends on the context were is used.
+     * @return a normalized JSON format
      */
-    public JsonNode getMatomoRequestResult(Map<String, String> parameters, Map<String, String> filters,
+    public JsonNode makeRequest(Map<String, String> parameters, Map<String, String> filters,
         String jsonNormaliserHint)
     {
         try {
@@ -65,5 +69,13 @@ public class AnalyticsScriptService implements ScriptService
         } catch (Exception e) {
             throw new RuntimeException(String.format("Failed to get data for [%s]", jsonNormaliserHint), e);
         }
+    }
+
+    /**
+     * @return the analytics configuration.
+     */
+    public AnalyticsConfiguration getConfiguration()
+    {
+        return configuration;
     }
 }

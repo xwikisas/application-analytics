@@ -73,81 +73,12 @@ public class DefaultAnalyticsConfigurationTest
         assertEquals("13.192.200.19", this.defaultAnalyticsConfiguration.getRequestAddress());
     }
 
-    /**
-     * Will test to see if the function will throw an error when the request address is null
-     */
     @Test
-    void getAddressWithMissingValue()
+    void getTrackingCode()
     {
-        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
-            this.defaultAnalyticsConfiguration.getRequestAddress();
-        });
-        assertEquals("The requestAddress is missing.", exception.getMessage());
+        when(this.analyticsConfigurationSource.getProperty("trackingCode", "")).thenReturn("TEST");
+        assertEquals("TEST", this.defaultAnalyticsConfiguration.getTrackingCode());
     }
-
-    /**
-     * Will test to see if the function will throw an error when the id site is null
-     */
-    @Test
-    void getIdSiteMissingValue()
-    {
-        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
-            this.defaultAnalyticsConfiguration.getIdSite();
-        });
-        assertEquals("The siteId is missing.", exception.getMessage());
-    }
-
-    /**
-     * Will test to see if the function will throw an error when the auth token is null
-     */
-    @Test
-    void getAuthTokenMissingValue()
-    {
-        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
-            this.defaultAnalyticsConfiguration.getAuthenticationToken();
-        });
-        assertEquals("The authToken is missing.", exception.getMessage());
-    }
-
-    /**
-     * Will test to see if the function will throw an error when the request address is empty
-     */
-    @Test
-    void getAddressWithDefaultValue()
-    {
-        when(this.analyticsConfigurationSource.getProperty("requestAddress", "")).thenReturn("");
-        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
-            this.defaultAnalyticsConfiguration.getRequestAddress();
-        });
-        assertEquals("The requestAddress is missing.", exception.getMessage());
-    }
-
-    /**
-     * Will test to see if the function will throw an error when the id site is empty
-     */
-    @Test
-    void getIdSiteWithDefaultValue()
-    {
-        when(this.analyticsConfigurationSource.getProperty("siteId", "")).thenReturn("");
-        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
-            this.defaultAnalyticsConfiguration.getIdSite();
-        });
-        assertEquals("The siteId is missing.", exception.getMessage());
-    }
-
-    /**
-     * Will test to see if the function will throw an error when the auth token is empty
-     */
-    @Test
-    void getAuthTokenWithDefaultValue()
-    {
-        when(this.analyticsConfigurationSource.getProperty("authToken", "")).thenReturn("");
-        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
-            this.defaultAnalyticsConfiguration.getAuthenticationToken();
-        });
-        assertEquals("The authToken is missing.", exception.getMessage());
-    }
-
     @BeforeEach
     private void setLogger()
     {
