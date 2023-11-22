@@ -207,6 +207,8 @@ analytics.config.checkConnection.success=Test connection succeeded!
 analytics.livedata.action.rowEvolution.title=Row Evolution
 
 ## Others
+
+analytics.accessDenied=You do not have access to view this macro. Please contact the administrator to resolve this issue.
 analytics.extension.name=Analytics Application (Pro)
 analytics.extension.title=Analytics
 rendering.macro.analyticsFilter.apply=Apply
