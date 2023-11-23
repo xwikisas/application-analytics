@@ -190,6 +190,24 @@
   #set ($macroId = $macro + '_' + $analyticsId)
 #end
 
+#macro(displayAnalyticsMacroTitle, $macroDocumentReference, $descriptionTranslationKey, $nameTranslationKey)
+  #set ($discard = $xwiki.ssx.use('Analytics.Code.AnalyticsJS'))
+  #set ($url = $xwiki.getURL($macroDocumentReference))
+  #set ($isDashboard = $doc.getObject('XWiki.GadgetClass'))
+  #set ($description = $escapetool.xml($services.localization.render($descriptionTranslationKey)))
+  #if ($isDashboard)
+    ## Inside a dashboard so we need to add the eye icon to the tile of the dashboard gadget.
+    {{html clean="false"}}
+      &lt;div hidden class="analytics-description" data-url=$url data-description="$description"&gt;&lt;/div&gt;
+    {{/html}}
+    #set ($discard = $xwiki.jsx.use('Analytics.Code.AnalyticsJS'))
+  #else
+    {{html clean="false"}}
+     &lt;h2&gt;&lt;div&gt;&lt;span&gt;$escapetool.xml($services.localization.render($nameTranslationKey))&lt;/span&gt; &lt;a title="$description" href=$url&gt;$services.icon.renderHTML('info')&lt;/a&gt;&lt;div&gt;&lt;/h2&gt;
+    {{/html}}
+  #end
+#end
+
 #macro (getTime, $totalSeconds)
   #if ($totalSeconds)
     #set ($duration = $xwiki.jodatime.getDuration($totalSeconds * 1000))

@@ -244,6 +244,7 @@
 
 {{velocity}}
 #macro(executeMacro)
+  #displayAnalyticsMacroTitle('Analytics.Code.Macros.Browsers', 'rendering.macro.browsers.description', 'rendering.macro.browsers.name')
   #getDate()
   #set ($discard = $xwiki.jsx.use('Analytics.Code.Macros.RowEvolution'))
   #set ($parameters = $escapetool.url({
@@ -270,7 +271,7 @@
       }
     }
   })
-  #getAnalyticsMacroId('BrowsersMacro', $macroId)
+  #getAnalyticsMacroId('browsersMacro', $macroId)
 
   {{liveData
     id="$macroId"
