@@ -128,19 +128,36 @@ public class AnalyticsIT
     /**
      * Checks if an admin can add/remove macros to the main dashboard.
      */
-    //@Test
-    //@Order(3)
+    @Test
+    @Order(3)
     void appEntryRedirectsToHomePage(XWikiWebDriver driver) throws InterruptedException
     {
-
+        HomePageViewPage.gotoPageHomePage();
         // Add a gadget to the dashboard.
         HomePageViewPage.gotoAndEdit().addNewMacro(driver, "searchCategories", "Search Categories")
             .saveDashboard(driver);
+        // Wait 2 seconds for the macros to load
+        Thread.sleep(2000);
         assertEquals(HomePageViewPage.noOfGadgets(driver), 3);
         // Remove a gadget from the dashboard.
         HomePageViewPage.gotoAndEdit().removeLastMacro(driver).saveDashboard(driver);
+        // Wait 2 seconds for the macros to load
+        Thread.sleep(2000);
         assertEquals(HomePageViewPage.noOfGadgets(driver), 2);
     }
+
+
+    @Test
+    @Order(4)
+    void checkMacroDescription(XWikiWebDriver driver)
+    {
+        HomePageViewPage.gotoPageHomePage();
+        String description =  HomePageViewPage.getMacroDescription(driver, 0);
+        System.out.println("/n/n" + description + "/n/n");
+        assertEquals("When visitors search on your website, they are looking for a particular page, content, product,"
+            + " or service. This report lists the pages that were clicked the most after an internal search.", description);
+    }
+
 
     /**
      * Create and start a container with the database.

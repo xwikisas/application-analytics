@@ -20,6 +20,7 @@
 package com.xwiki.analytics.test.po;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.openqa.selenium.By;
@@ -101,4 +102,11 @@ public class HomePageViewPage extends ViewPage
         waitAndClick(driver, ".xdialog-box.xdialog-box-confirmation .xdialog-content .buttonwrapper");
         return new HomePageViewPage();
     }
+
+    public static String getMacroDescription(XWikiWebDriver driver, int id)
+    {
+        List<WebElement> elements = driver.findElements(By.cssSelector(".analytics-description"));
+        return elements.get(id).getAttribute("title");
+    }
+
 }
