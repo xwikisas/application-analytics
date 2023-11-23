@@ -37,6 +37,7 @@
     <xwiki.surefire.captureconsole.skip>true</xwiki.surefire.captureconsole.skip>
   </properties>
   <dependencies>
+
     <!-- Use a fake licensor script service while running the functional tests. -->
     <dependency>
       <groupId>com.xwiki.licensing</groupId>

@@ -66,10 +66,24 @@
     <dependency>
       <groupId>org.xwiki.platform</groupId>
       <artifactId>xwiki-platform-dashboard-ui</artifactId>
+      <scope>runtime</scope>
       <version>${platform.version}</version>
       <type>xar</type>
     </dependency>
-
+    <dependency>
+      <groupId>org.xwiki.platform</groupId>
+      <artifactId>xwiki-platform-icon-ui</artifactId>
+      <version>${platform.version}</version>
+      <scope>runtime</scope>
+      <type>xar</type>
+    </dependency>
+    <dependency>
+      <groupId>org.xwiki.platform</groupId>
+      <artifactId>xwiki-platform-icon-rest-default</artifactId>
+      <version>${platform.version}</version>
+      <scope>runtime</scope>
+      <type>jar</type>
+    </dependency>
     <dependency>
       <groupId>org.xwiki.contrib</groupId>
       <artifactId>application-chartjs-webjar</artifactId>

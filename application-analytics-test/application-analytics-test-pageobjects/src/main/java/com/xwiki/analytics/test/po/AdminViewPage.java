@@ -36,9 +36,10 @@ public class AdminViewPage extends ViewPage
 
     private static final String requestAddressId = "Analytics.Code.ConfigurationClass_0_requestAddress";
 
+    private static XWikiWebDriver driver;
     public AdminViewPage()
     {
-
+            driver = getUtil().getDriver();
     }
 
     public static AdminViewPage gotoAdminPage()
@@ -48,7 +49,7 @@ public class AdminViewPage extends ViewPage
         return new AdminViewPage();
     }
 
-    public AdminViewPage setTrackingCode(XWikiWebDriver driver, String value)
+    public AdminViewPage setTrackingCode(String value)
     {
         WebElement element = driver.findElement(By.id(trackingCodeId));
         element.clear();
@@ -56,7 +57,7 @@ public class AdminViewPage extends ViewPage
         return this;
     }
 
-    public AdminViewPage setAuthTokenId(XWikiWebDriver driver, String value)
+    public AdminViewPage setAuthTokenId( String value)
     {
         WebElement element = driver.findElement(By.id(authTokenId));
         element.clear();
@@ -64,7 +65,7 @@ public class AdminViewPage extends ViewPage
         return this;
     }
 
-    public AdminViewPage setIdSiteId(XWikiWebDriver driver, String value)
+    public AdminViewPage setIdSiteId( String value)
     {
         WebElement element = driver.findElement(By.id(idSiteId));
         element.clear();
@@ -72,7 +73,7 @@ public class AdminViewPage extends ViewPage
         return this;
     }
 
-    public AdminViewPage setRequestAddressId(XWikiWebDriver driver, String value)
+    public AdminViewPage setRequestAddressId(String value)
     {
         WebElement element = driver.findElement(By.id(requestAddressId));
         element.clear();
@@ -80,7 +81,7 @@ public class AdminViewPage extends ViewPage
         return this;
     }
 
-    public AdminViewPage bringSaveButtonIntoView(XWikiWebDriver driver)
+    public AdminViewPage bringSaveButtonIntoView()
     {
         WebElement saveButton = driver.findElement(By.cssSelector(".btn.btn-primary"));
         Actions actions = driver.createActions();

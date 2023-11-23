@@ -33,9 +33,11 @@ import org.xwiki.test.ui.po.ViewPage;
 
 public class HomePageViewPage extends ViewPage
 {
+    
+    private static XWikiWebDriver driver;
     public HomePageViewPage()
     {
-
+        this.driver  = getUtil().getDriver();
     }
 
     public static HomePageViewPage gotoPageHomePage()
@@ -53,57 +55,58 @@ public class HomePageViewPage extends ViewPage
         return new HomePageViewPage();
     }
 
-    public static HomePageViewPage addNewMacro(XWikiWebDriver driver, String macroID, String macroName)
+    public static HomePageViewPage addNewMacro(String macroID, String macroName)
     {
-        clickAddGadget(driver).selectMacro(driver, macroID, macroName);
+        
+        clickAddGadget().selectMacro(macroID, macroName);
         return new HomePageViewPage();
     }
 
-    private static HomePageViewPage clickAddGadget(XWikiWebDriver driver)
+    private static HomePageViewPage clickAddGadget()
     {
         driver.findElement(By.cssSelector(".addgadget")).click();
         return new HomePageViewPage();
     }
 
-    private static void waitAndClick(XWikiWebDriver driver, String css)
+    private static void waitAndClick(String css)
     {
         driver.waitUntilElementIsEnabled(driver.findElement(By.cssSelector(css)));
         driver.findElement(By.cssSelector(css)).click();
     }
-    private static void selectMacro(XWikiWebDriver driver, String macroID, String macroName)
+    private static void selectMacro(String macroID, String macroName)
     {
         // Will bring into view the macro that I want to use.
         driver.findElement(By.cssSelector(".macro-textFilter")).sendKeys(macroName);
-        waitAndClick(driver,  String.format("li[data-macroid=\"%s\"]", macroID));
+        waitAndClick(String.format("li[data-macroid=\"%s\"]", macroID));
         // Will wait until the select button becomes enabled and will click on it.
-        waitAndClick(driver, ".modal.macro-selector-modal.gadget-selector-modal.in .modal-footer .btn-primary");
+        waitAndClick(".modal.macro-selector-modal.gadget-selector-modal.in .modal-footer .btn-primary");
         // Will wait until the submit button becomes enabled and will click on it.
-        waitAndClick(driver,".modal.macro-editor-modal.in .modal-footer .btn-primary");
+        waitAndClick(".modal.macro-editor-modal.in .modal-footer .btn-primary");
     }
 
-    public static int noOfGadgets(XWikiWebDriver driver)
+    public static int noOfGadgets()
     {
        return driver.findElements(By.className("gadget")).size();
     }
-    public static HomePageViewPage saveDashboard(XWikiWebDriver driver)
+    public static HomePageViewPage saveDashboard()
     {
-        waitAndClick(driver, ".bottombuttons.sticky-buttons .btn-primary");
+        waitAndClick(".bottombuttons.sticky-buttons .btn-primary");
         return new HomePageViewPage();
     }
-    public static HomePageViewPage removeLastMacro(XWikiWebDriver driver)
+    public static HomePageViewPage removeLastMacro()
     {
 
         WebElement lastGadget = driver.findElement(By.cssSelector(".gadget:last-of-type"));
         // Move the cursor to be on top of the macro to reveal the remove button.
         new Actions(driver.getWrappedDriver()).moveToElement(lastGadget).perform();
         // Click on the remove button when it becomes available.
-        waitAndClick(driver ,".gadget:last-of-type .remove");
+        waitAndClick(".gadget:last-of-type .remove");
         // Click on the confirm button to remove the macro.
-        waitAndClick(driver, ".xdialog-box.xdialog-box-confirmation .xdialog-content .buttonwrapper");
+        waitAndClick(".xdialog-box.xdialog-box-confirmation .xdialog-content .buttonwrapper");
         return new HomePageViewPage();
     }
 
-    public static String getMacroDescription(XWikiWebDriver driver, int id)
+    public static String getMacroDescription(int id)
     {
         List<WebElement> elements = driver.findElements(By.cssSelector(".analytics-description"));
         return elements.get(id).getAttribute("title");

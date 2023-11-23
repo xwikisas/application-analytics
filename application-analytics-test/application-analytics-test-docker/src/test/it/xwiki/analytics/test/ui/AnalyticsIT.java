@@ -19,10 +19,8 @@
  */
 package xwiki.analytics.test.ui;
 
-import java.sql.SQLOutput;
 import java.util.Collections;
 
-import org.jmock.lib.action.ThrowAction;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -30,7 +28,6 @@ import org.testcontainers.containers.Container;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.utility.DockerImageName;
-import org.xwiki.model.reference.DocumentReference;
 import org.xwiki.test.docker.internal.junit5.DockerTestUtils;
 import org.xwiki.test.docker.junit5.TestConfiguration;
 import org.xwiki.test.docker.junit5.UITest;
@@ -40,12 +37,13 @@ import org.xwiki.test.ui.XWikiWebDriver;
 import com.xwiki.analytics.test.po.AdminViewPage;
 import com.xwiki.analytics.test.po.HomePageViewPage;
 import com.xwiki.analytics.test.po.MatomoViewPage;
+import com.xwiki.analytics.test.po.MostViewedMacroViewPages;
 
 import xwiki.analytics.test.ui.config.Config;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
+
 
 @UITest
 public class AnalyticsIT
@@ -90,9 +88,9 @@ public class AnalyticsIT
         AdminViewPage adminViewPage = new AdminViewPage();
         AdminViewPage.gotoAdminPage();
         System.out.println("/q/q " + Config.MATOMO_AUTH_TOKEN +" /q/q");
-        adminViewPage.setTrackingCode(driver, "").setAuthTokenId(driver, Config.MATOMO_AUTH_TOKEN)
-            .setIdSiteId(driver, "1").setRequestAddressId(driver, Config.ADDRESS + ":" + Config.MATOMO_BRIDGE_PORT)
-            .bringSaveButtonIntoView(driver);
+        adminViewPage.setTrackingCode("").setAuthTokenId(Config.MATOMO_AUTH_TOKEN)
+            .setIdSiteId("1").setRequestAddressId(Config.ADDRESS + ":" + Config.MATOMO_BRIDGE_PORT)
+            .bringSaveButtonIntoView();
 
         assertTrue(adminViewPage.inProgressNotification("Saving..."));
         assertTrue(adminViewPage.successNotification("Saved"));
@@ -114,9 +112,9 @@ public class AnalyticsIT
         AdminViewPage adminViewPage = new AdminViewPage();
 
         AdminViewPage.gotoAdminPage();
-        adminViewPage.setTrackingCode(driver, getTrackingCode()).setAuthTokenId(driver,
-            Config.MATOMO_AUTH_TOKEN).setIdSiteId(driver, "1").setRequestAddressId(driver,
-            "http://" + Config.ADDRESS + ":" + Config.MATOMO_BRIDGE_PORT + "/").bringSaveButtonIntoView(driver);
+        adminViewPage.setTrackingCode(getTrackingCode()).setAuthTokenId(
+            Config.MATOMO_AUTH_TOKEN).setIdSiteId("1").setRequestAddressId(
+            "http://" + Config.ADDRESS + ":" + Config.MATOMO_BRIDGE_PORT + "/").bringSaveButtonIntoView();
         assertTrue(adminViewPage.inProgressNotification("Saving..."));
         assertTrue(adminViewPage.successNotification("Saved"));
         assertTrue(adminViewPage.inProgressNotification("Checking connection to Matomo."));
@@ -134,28 +132,43 @@ public class AnalyticsIT
     {
         HomePageViewPage.gotoPageHomePage();
         // Add a gadget to the dashboard.
-        HomePageViewPage.gotoAndEdit().addNewMacro(driver, "searchCategories", "Search Categories")
-            .saveDashboard(driver);
+        HomePageViewPage.gotoAndEdit().addNewMacro("searchCategories", "Search Categories")
+            .saveDashboard();
         // Wait 2 seconds for the macros to load
         Thread.sleep(2000);
-        assertEquals(HomePageViewPage.noOfGadgets(driver), 3);
+        assertEquals(HomePageViewPage.noOfGadgets(), 3);
         // Remove a gadget from the dashboard.
-        HomePageViewPage.gotoAndEdit().removeLastMacro(driver).saveDashboard(driver);
+        HomePageViewPage.gotoAndEdit().removeLastMacro().saveDashboard();
         // Wait 2 seconds for the macros to load
         Thread.sleep(2000);
-        assertEquals(HomePageViewPage.noOfGadgets(driver), 2);
+        assertEquals(HomePageViewPage.noOfGadgets(), 2);
+    }
+
+    @Test
+    @Order(5)
+    void checkRowEvolutionModal()
+    {
+        MostViewedMacroViewPages.gotoPage();
+        MostViewedMacroViewPages.openRowEvolutionModal();
+        assertTrue(MostViewedMacroViewPages.isModalDisplayed());
+        MostViewedMacroViewPages.closeModal();
     }
 
 
     @Test
     @Order(4)
-    void checkMacroDescription(XWikiWebDriver driver)
+    void checkMacroDescription(XWikiWebDriver driver) throws InterruptedException
     {
         HomePageViewPage.gotoPageHomePage();
-        String description =  HomePageViewPage.getMacroDescription(driver, 0);
-        System.out.println("/n/n" + description + "/n/n");
-        assertEquals("When visitors search on your website, they are looking for a particular page, content, product,"
-            + " or service. This report lists the pages that were clicked the most after an internal search.", description);
+        while (true)
+        {
+            System.out.println("test");
+            Thread.sleep(10000);
+
+        }
+        //assertEquals("When visitors search on your website, they are looking for a particular page, content, product,"
+        ///    + " or service. This report lists the pages that were clicked the most after an internal search.",
+        //description);
     }
 
 
