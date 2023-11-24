@@ -36,7 +36,9 @@
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>true</hidden>
-  <content>{{deviceModel/}}</content>
+  <content>{{analyticsFilter/}}
+
+{{deviceModel/}}</content>
   <object>
     <name>Analytics.Code.Macros.DeviceModel</name>
     <number>0</number>
