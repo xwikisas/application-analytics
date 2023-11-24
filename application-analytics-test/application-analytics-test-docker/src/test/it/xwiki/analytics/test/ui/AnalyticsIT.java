@@ -44,37 +44,54 @@ import xwiki.analytics.test.ui.config.Config;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-
 @UITest
 public class AnalyticsIT
 {
-    @BeforeAll
-    void setup(TestConfiguration testConfiguration, TestUtils testUtils) throws Exception
+    /**
+     * Creates the Admin user
+     */
+    public void setupUsers(TestUtils testUtils)
     {
-
-        GenericContainer<?> sqlContainer = startDb(testConfiguration);
-        GenericContainer<?> matomoContainer = startMatomo(testConfiguration, sqlContainer);
-        Container.ExecResult result = matomoContainer.execInContainer(
-            "sh", "-c",
-            "grep -rl 'matomo.js' /var/www/html/ | xargs -d '\\n' -I {} sed -i 's/matomo.js/xwiki.js/g' \"{}\""
-        );
-        matomoContainer.execInContainer(
-            "sh", "-c",
-            "mv /var/www/html/matomo.js /var/www/html/xwiki.js"
-        );
-
-        Config.MATOMO_AUTH_TOKEN =
-            MatomoViewPage.createToken("http://" + Config.ADDRESS + ":" + matomoContainer.getMappedPort(80));
-        HomePageViewPage.gotoPageHomePage();
         testUtils.loginAsSuperAdmin();
         testUtils.setGlobalRights("XWiki.XWikiAdminGroup", "", "admin", true);
         testUtils.createAdminUser();
         testUtils.loginAsAdmin();
-        HomePageViewPage.gotoPageHomePage();
+    }
+
+    /**
+     * Start the matomo and sql containers, rename the matomo.js to a random int to force the browser to load the
+     * tracking script without explicit settings and generate a new auth token for matomo to be used in the tests.
+     */
+    public void setupContainers(TestConfiguration testConfiguration) throws Exception
+    {
+        GenericContainer<?> sqlContainer = startDb(testConfiguration);
+        GenericContainer<?> matomoContainer = startMatomo(testConfiguration, sqlContainer);
+        Container.ExecResult result = matomoContainer.execInContainer("sh", "-c",
+            "grep -rl 'matomo.js' /var/www/html/ | xargs -d '\\n' -I {} sed -i 's/matomo.js/36011373.js/g' \"{}\"");
+        matomoContainer.execInContainer("sh", "-c", "mv /var/www/html/matomo.js /var/www/html/36011373.js");
+
+        Config.MATOMO_AUTH_TOKEN =
+            MatomoViewPage.createToken("http://" + Config.ADDRESS + ":" + matomoContainer.getMappedPort(80));
+    }
+
+    /**
+     * Import the platform.html.head UIExtension point to make the tracking code work in the test environmnet.
+     */
+    private void setupUIExtension(TestUtils testUtils) throws Exception
+    {
         testUtils.setWikiPreference("meta",
             "#foreach($uix in $services.uix.getExtensions(\"org.xwiki.platform.html.head\","
                 + " {'sortByParameter' : 'order'}))\n" + "  $services.rendering.render($uix.execute(), 'xhtml/1.0')\n"
                 + "#end");
+    }
+
+    @BeforeAll
+    void setup(TestConfiguration testConfiguration, TestUtils testUtils) throws Exception
+    {
+        setupContainers(testConfiguration);
+        setupUIExtension(testUtils);
+        setupUsers(testUtils);
+        HomePageViewPage.gotoPageHomePage();
     }
 
     /**
@@ -87,16 +104,15 @@ public class AnalyticsIT
     {
         AdminViewPage adminViewPage = new AdminViewPage();
         AdminViewPage.gotoAdminPage();
-        System.out.println("/q/q " + Config.MATOMO_AUTH_TOKEN +" /q/q");
-        adminViewPage.setTrackingCode("").setAuthTokenId(Config.MATOMO_AUTH_TOKEN)
-            .setIdSiteId("1").setRequestAddressId(Config.ADDRESS + ":" + Config.MATOMO_BRIDGE_PORT)
-            .bringSaveButtonIntoView();
+        System.out.println("/q/q " + Config.MATOMO_AUTH_TOKEN + " /q/q");
+        adminViewPage.setTrackingCode("").setAuthTokenId(Config.MATOMO_AUTH_TOKEN).setIdSiteId("1")
+            .setRequestAddressId(Config.ADDRESS + ":" + Config.MATOMO_BRIDGE_PORT).bringSaveButtonIntoView();
 
         assertTrue(adminViewPage.inProgressNotification("Saving..."));
         assertTrue(adminViewPage.successNotification("Saved"));
         assertTrue(adminViewPage.inProgressNotification("Checking connection to Matomo."));
-        assertTrue(adminViewPage.errorNotification("Failed to connect to Matomo. Please check your configuration "
-            + "values."));
+        assertTrue(adminViewPage.errorNotification(
+            "Failed to connect to Matomo. Please check your configuration " + "values."));
         HomePageViewPage.gotoPageHomePage();
     }
 
@@ -112,28 +128,27 @@ public class AnalyticsIT
         AdminViewPage adminViewPage = new AdminViewPage();
 
         AdminViewPage.gotoAdminPage();
-        adminViewPage.setTrackingCode(getTrackingCode()).setAuthTokenId(
-            Config.MATOMO_AUTH_TOKEN).setIdSiteId("1").setRequestAddressId(
-            "http://" + Config.ADDRESS + ":" + Config.MATOMO_BRIDGE_PORT + "/").bringSaveButtonIntoView();
+        adminViewPage.setTrackingCode(Config.getTrackingCode()).setAuthTokenId(Config.MATOMO_AUTH_TOKEN).setIdSiteId(
+            "1")
+            .setRequestAddressId("http://" + Config.ADDRESS + ":" + Config.MATOMO_BRIDGE_PORT + "/")
+            .bringSaveButtonIntoView();
         assertTrue(adminViewPage.inProgressNotification("Saving..."));
         assertTrue(adminViewPage.successNotification("Saved"));
         assertTrue(adminViewPage.inProgressNotification("Checking connection to Matomo."));
         assertTrue(adminViewPage.successNotification("Test connection succeeded!"));
         HomePageViewPage.gotoPageHomePage();
-
- }
+    }
 
     /**
-     * Checks if an admin can add/remove macros to the main dashboard.
+     * Checks if the admin has edit permissions in the home page of the application.
      */
     @Test
     @Order(3)
-    void appEntryRedirectsToHomePage(XWikiWebDriver driver) throws InterruptedException
+    void checkEditPermissions(XWikiWebDriver driver) throws InterruptedException
     {
         HomePageViewPage.gotoPageHomePage();
         // Add a gadget to the dashboard.
-        HomePageViewPage.gotoAndEdit().addNewMacro("searchCategories", "Search Categories")
-            .saveDashboard();
+        HomePageViewPage.gotoAndEdit().addNewMacro("searchCategories", "Search Categories").saveDashboard();
         // Wait 2 seconds for the macros to load
         Thread.sleep(2000);
         assertEquals(HomePageViewPage.noOfGadgets(), 3);
@@ -144,6 +159,23 @@ public class AnalyticsIT
         assertEquals(HomePageViewPage.noOfGadgets(), 2);
     }
 
+    /**
+     * Checks that the description is loaded properly for a macro.
+     */
+    @Test
+    @Order(4)
+    void checkMacroDescription(XWikiWebDriver driver) throws InterruptedException
+    {
+        MostViewedMacroViewPages.gotoPage();
+
+        assertEquals("When visitors search on your website, they are looking for a particular page, content, product,"
+                + " or service. This report lists the pages that were clicked the most after an internal search.",
+            MostViewedMacroViewPages.getMacroDescription());
+    }
+
+    /**
+     * Checks that the Row Evolution modal is loaded properly.
+     */
     @Test
     @Order(5)
     void checkRowEvolutionModal()
@@ -151,32 +183,11 @@ public class AnalyticsIT
         MostViewedMacroViewPages.gotoPage();
         MostViewedMacroViewPages.openRowEvolutionModal();
         assertTrue(MostViewedMacroViewPages.isModalDisplayed());
-        MostViewedMacroViewPages.closeModal();
     }
-
-
-    @Test
-    @Order(4)
-    void checkMacroDescription(XWikiWebDriver driver) throws InterruptedException
-    {
-        HomePageViewPage.gotoPageHomePage();
-        while (true)
-        {
-            System.out.println("test");
-            Thread.sleep(10000);
-
-        }
-        //assertEquals("When visitors search on your website, they are looking for a particular page, content, product,"
-        ///    + " or service. This report lists the pages that were clicked the most after an internal search.",
-        //description);
-    }
-
 
     /**
      * Create and start a container with the database.
      *
-     * @param testConfiguration configuration for the test container
-     * @return reference to the container
      */
     private MySQLContainer startDb(TestConfiguration testConfiguration) throws Exception
     {
@@ -198,7 +209,6 @@ public class AnalyticsIT
      *
      * @param testConfiguration test configuration
      * @param dbContainer reference to the db container
-     * @return reference to the container
      */
     private GenericContainer startMatomo(TestConfiguration testConfiguration, GenericContainer dbContainer)
         throws Exception
@@ -210,24 +220,5 @@ public class AnalyticsIT
         matomoContainer.setPortBindings(Collections.singletonList(String.format("%d:80", Config.MATOMO_BRIDGE_PORT)));
         DockerTestUtils.startContainer(matomoContainer, testConfiguration);
         return matomoContainer;
-    }
-
-    private String getTrackingCode()
-    {
-        return "<!-- Matomo -->\n"
-            + "<script>\n"
-            + "  var _paq = window._paq = window._paq || [];\n"
-            + "  /* tracker methods like \"setCustomDimension\" should be called before \"trackPageView\" */\n"
-            + "  _paq.push(['trackPageView']);\n"
-            + "  _paq.push(['enableLinkTracking']);\n"
-            + "  (function() {\n"
-            + "    var u=\"http://" + Config.ADDRESS + ":" + Config.MATOMO_BRIDGE_PORT + "/" + "\";\n"
-            + "    _paq.push(['setTrackerUrl', u+'matomo.php']);\n"
-            + "    _paq.push(['setSiteId', '1']);\n"
-            + "    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];\n"
-            + "    g.async=true; g.src=u+'xwiki.js'; s.parentNode.insertBefore(g,s);\n"
-            + "  })();\n"
-            + "</script>\n"
-            + "<!-- End Matomo Code -->\n";
     }
 }

@@ -88,8 +88,9 @@ public class HomePageViewPage extends ViewPage
     {
        return driver.findElements(By.className("gadget")).size();
     }
-    public static HomePageViewPage saveDashboard()
+    public static HomePageViewPage saveDashboard() throws InterruptedException
     {
+
         waitAndClick(".bottombuttons.sticky-buttons .btn-primary");
         return new HomePageViewPage();
     }

@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Arrays;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.xwiki.test.ui.XWikiWebDriver;
 import org.xwiki.test.ui.po.ViewPage;
 
@@ -56,6 +57,12 @@ public class MostViewedMacroViewPages extends ViewPage
         if(driver.findElement(By.cssSelector(ROW_EVOLUTION_MODAL_SELECTOR)).isDisplayed())
             return true;
         return false;
+    }
+        public static String getMacroDescription()
+    {
+        driver.waitUntilElementIsVisible(By.cssSelector(".xcontent h2 div a"));
+        return driver.findElement(By.cssSelector(".xcontent h2 div a")).getAttribute("title");
+
     }
     public static void closeModal()
     {
