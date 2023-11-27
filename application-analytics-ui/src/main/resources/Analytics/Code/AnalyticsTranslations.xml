@@ -61,21 +61,11 @@ rendering.macro.mostViewedPages.name=Most viewed pages
 
 ## Exit Pages
 analytics.exitPages.header.actions=Actions
-analytics.exitPages.header.bounceRate.hint=The percentage of visits that started on this page and left the website straight away.
-analytics.exitPages.header.bounceRate=Bounce rate
-analytics.exitPages.header.date=Date
-analytics.exitPages.header.emptyvalue=-
-analytics.exitPages.header.entryNbActions.hint=The number of actions performed by the users.
-analytics.exitPages.header.entryNbActions=No. of actions
 analytics.exitPages.header.exitRate.hint=The percentage of visits that left the website after viewing this page.
 analytics.exitPages.header.exitRate=Exit rate
 analytics.exitPages.header.exitNbVisits.hint=Number of visits that ended on this page.
 analytics.exitPages.header.exitNbVisits=Exits
-analytics.exitPages.header.hits.hint=The number of times this page was visited.
-analytics.exitPages.header.hits=Views
 analytics.exitPages.header.pageTitle=Title
-analytics.exitPages.header.timeSpent.hint=The time that the user has spent on the page.
-analytics.exitPages.header.timeSpent=Time spent
 analytics.exitPages.header.visits.hint=The number of visits that included this page. If a page was viewed multiple times during one visit, it is only counted once.
 analytics.exitPages.header.visits=Unique visitors
 analytics.exitPages.header.year=Year
