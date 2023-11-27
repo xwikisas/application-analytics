@@ -276,7 +276,7 @@
 
   {{liveData
     id="$macroId"
-    properties="pageTitle,exitNbVisits, visits, exitRate, actions"
+    properties="pageTitle, exitNbVisits, visits, exitRate, actions"
     source='liveTable'
     sourceParameters="$parameters"
     sort='exitNbVisits:desc'
