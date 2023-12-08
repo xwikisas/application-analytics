@@ -68,7 +68,7 @@
   #set ($filters = {})
   #foreach ($key in $matomoKeysMapping.keySet())
     #set ($value = $request.get($key))
-    #if ($value &amp;&amp; $value != '')
+    #if ("$!value" != '')
       #set ($discard = $filters.put($matomoKeysMapping.get($key), $request.get($key)))
     #end
   #end

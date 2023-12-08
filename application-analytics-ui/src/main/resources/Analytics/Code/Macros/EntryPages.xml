@@ -38,7 +38,7 @@
   <hidden>true</hidden>
   <content>{{analyticsFilter/}}
 
-{{mostViewedPages/}}</content>
+{{entryPages/}}</content>
   <object>
     <name>Analytics.Code.Macros.EntryPages</name>
     <number>0</number>
