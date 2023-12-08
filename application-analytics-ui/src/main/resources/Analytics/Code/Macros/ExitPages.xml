@@ -250,7 +250,7 @@
 #macro(executeMacro)
   #displayAnalyticsMacroTitle('Analytics.Code.Macros.ExitPages', 'rendering.macro.exitPages.description', 'rendering.macro.exitPages.name')
   #getDate()
-  #set ($discard =$xwiki.jsx.use('Analytics.Code.Macros.RowEvolution'))
+  #set ($discard = $xwiki.jsx.use('Analytics.Code.Macros.RowEvolution'))
   #set ($parameters = $escapetool.url({
     'resultPage': 'Analytics.Code.Macros.ExitPagesJSON',
     'date': $date,

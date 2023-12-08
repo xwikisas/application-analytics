@@ -40,16 +40,7 @@
 
 {{velocity}}
 #if ($xcontext.action == 'get')
-  #set ($offset = $numbertool.toNumber($request.offset).intValue())
-  ## The offset sent by the live table starts at 1.
-  #set ($offset = $offset - 1)
-  #if (!$offset || $offset &lt; 0)
-    #set ($offset = 0)
-  #end
-  #set ($limit = $numbertool.toNumber($request.limit).intValue())
-  #if (!$limit)
-    #set ($limit = 15)
-  #end
+  #livedataPagination($request.offset)
 
   ## Mapping between the livedata columns and the Matomo fields.
   #set ($matomoKeysMapping = {
@@ -65,13 +56,7 @@
     #set ($order = $request.dir)
   #end
 
-  #set ($filters = {})
-  #foreach ($key in $matomoKeysMapping.keySet())
-    #set ($value = $request.get($key))
-    #if ($value &amp;&amp; $value != '')
-      #set ($discard = $filters.put($matomoKeysMapping.get($key), $request.get($key)))
-    #end
-  #end
+  #prepareFilters($matomoKeysMapping)
 
   #set ($parameters = {
     'period' : $request.period,

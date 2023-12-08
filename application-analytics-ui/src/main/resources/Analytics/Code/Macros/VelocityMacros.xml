@@ -238,5 +238,28 @@
     #set ($time = "00:00:00:00")
   #end
 #end
+
+#macro (livedataPagination, $offset)
+  #set ($offset = $numbertool.toNumber($offset).intValue())
+    ## The offset sent by the live table starts at 1.
+  #set ($offset = $offset - 1)
+  #if (!$offset || $offset &lt; 0)
+    #set ($offset = 0)
+  #end
+  #set ($limit = $numbertool.toNumber($request.limit).intValue())
+  #if (!$limit)
+    #set ($limit = 15)
+  #end
+#end
+
+#macro (prepareFilters, $mappings)
+  #set ($filters = {})
+  #foreach ($key in $mappings.keySet())
+    #set ($value = $request.get($key))
+    #if ("$!value" != '')
+      #set ($discard = $filters.put($mappings.get($key), $request.get($key)))
+    #end
+  #end
+#end
 {{/velocity}}</content>
 </xwikidoc>
