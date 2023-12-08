@@ -318,10 +318,10 @@
       <description/>
     </property>
     <property>
-      <id>mostViewedPages</id>
+      <id>entryPages</id>
     </property>
     <property>
-      <name>Most Viewed Page</name>
+      <name>Entry Pages</name>
     </property>
     <property>
       <priority/>
