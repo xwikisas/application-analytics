@@ -290,8 +290,8 @@
   #modalRowEvolution($rowEvolutionParams, 'ExitPages', $macroId)
 #end
 #if ($services.licensing.licensor.hasLicensureForEntity(
-  $services.model.createDocumentReference('', ['Analytics', 'Code'], 'ConfigurationClass')))
-  #if ($xwiki.hasAccessLevel('view', 'Analytics.WebHome'))
+    $services.model.createDocumentReference('', ['Analytics', 'Code'], 'ConfigurationClass')))
+  #if ($services.security.authorization.hasAccess('view', 'xwiki:Analytics.WebHome'))
     #executeMacro()
   #else
     {{error}}{{translation key="analytics.accessDenied" /}}{{/error}}
