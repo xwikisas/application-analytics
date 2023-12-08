@@ -36,7 +36,9 @@
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>true</hidden>
-  <content>{{searchCategories/}}</content>
+  <content>{{analyticsFilter/}}
+
+{{searchCategories/}}</content>
   <object>
     <name>Analytics.Code.Macros.SearchCategories</name>
     <number>0</number>

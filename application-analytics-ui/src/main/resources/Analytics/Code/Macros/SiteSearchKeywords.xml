@@ -36,8 +36,10 @@
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>true</hidden>
-  <content>{{siteSearchKeywords /}}
-  </content>
+  <content>{{analyticsFilter/}}
+
+{{siteSearchKeywords /}}
+</content>
   <object>
     <name>Analytics.Code.Macros.SiteSearchKeywords</name>
     <number>0</number>
