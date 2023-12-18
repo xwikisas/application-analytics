@@ -40,15 +40,12 @@
     <!-- Don't run Checkstyle in test modules -->
     <xwiki.checkstyle.skip>true</xwiki.checkstyle.skip>
   </properties>
-       <modules>
-        <module>application-analytics-test-docker</module>
-        <module>application-analytics-test-pageobjects</module>
-      </modules>
     <profiles>
     <profile>
       <id>docker</id>
-      <modules>
+       <modules>
         <module>application-analytics-test-docker</module>
+        <module>application-analytics-test-pageobjects</module>
       </modules>
     </profile>
   </profiles>

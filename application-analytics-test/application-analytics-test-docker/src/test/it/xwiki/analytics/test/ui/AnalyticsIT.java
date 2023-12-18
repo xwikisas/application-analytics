@@ -33,6 +33,7 @@ import org.xwiki.test.docker.junit5.TestConfiguration;
 import org.xwiki.test.docker.junit5.UITest;
 import org.xwiki.test.ui.TestUtils;
 import org.xwiki.test.ui.XWikiWebDriver;
+import org.xwiki.test.ui.po.BaseModal;
 
 import com.xwiki.analytics.test.po.AdminViewPage;
 import com.xwiki.analytics.test.po.HomePageViewPage;
@@ -69,7 +70,6 @@ public class AnalyticsIT
         Container.ExecResult result = matomoContainer.execInContainer("sh", "-c",
             "grep -rl 'matomo.js' /var/www/html/ | xargs -d '\\n' -I {} sed -i 's/matomo.js/36011373.js/g' \"{}\"");
         matomoContainer.execInContainer("sh", "-c", "mv /var/www/html/matomo.js /var/www/html/36011373.js");
-
         Config.MATOMO_AUTH_TOKEN =
             MatomoViewPage.createToken("http://" + Config.ADDRESS + ":" + matomoContainer.getMappedPort(80));
     }
@@ -103,16 +103,15 @@ public class AnalyticsIT
     void checkWrongConfigs(XWikiWebDriver driver) throws InterruptedException
     {
         AdminViewPage adminViewPage = new AdminViewPage();
-        AdminViewPage.gotoAdminPage();
+        adminViewPage.gotoAdminPage();
         System.out.println("/q/q " + Config.MATOMO_AUTH_TOKEN + " /q/q");
         adminViewPage.setTrackingCode("").setAuthTokenId(Config.MATOMO_AUTH_TOKEN).setIdSiteId("1")
             .setRequestAddressId(Config.ADDRESS + ":" + Config.MATOMO_BRIDGE_PORT).bringSaveButtonIntoView();
 
-        assertTrue(adminViewPage.inProgressNotification("Saving..."));
-        assertTrue(adminViewPage.successNotification("Saved"));
-        assertTrue(adminViewPage.inProgressNotification("Checking connection to Matomo."));
-        assertTrue(adminViewPage.errorNotification(
-            "Failed to connect to Matomo. Please check your configuration " + "values."));
+        adminViewPage.inProgressNotification("Saving...");
+        adminViewPage.successNotification("Saved");
+        adminViewPage.inProgressNotification("Checking connection to Matomo.");
+        adminViewPage.errorNotification("Failed to connect to Matomo. Please check your configuration " + "values.");
         HomePageViewPage.gotoPageHomePage();
     }
 
@@ -127,15 +126,14 @@ public class AnalyticsIT
 
         AdminViewPage adminViewPage = new AdminViewPage();
 
-        AdminViewPage.gotoAdminPage();
-        adminViewPage.setTrackingCode(Config.getTrackingCode()).setAuthTokenId(Config.MATOMO_AUTH_TOKEN).setIdSiteId(
-            "1")
-            .setRequestAddressId("http://" + Config.ADDRESS + ":" + Config.MATOMO_BRIDGE_PORT + "/")
+        adminViewPage.gotoAdminPage();
+        adminViewPage.setTrackingCode(Config.getTrackingCode()).setAuthTokenId(Config.MATOMO_AUTH_TOKEN)
+            .setIdSiteId("1").setRequestAddressId("http://" + Config.ADDRESS + ":" + Config.MATOMO_BRIDGE_PORT + "/")
             .bringSaveButtonIntoView();
-        assertTrue(adminViewPage.inProgressNotification("Saving..."));
-        assertTrue(adminViewPage.successNotification("Saved"));
-        assertTrue(adminViewPage.inProgressNotification("Checking connection to Matomo."));
-        assertTrue(adminViewPage.successNotification("Test connection succeeded!"));
+        adminViewPage.inProgressNotification("Saving...");
+        adminViewPage.successNotification("Saved");
+        adminViewPage.inProgressNotification("Checking connection to Matomo.");
+        adminViewPage.successNotification("Test connection succeeded!");
         HomePageViewPage.gotoPageHomePage();
     }
 
@@ -146,17 +144,18 @@ public class AnalyticsIT
     @Order(3)
     void checkEditPermissions(XWikiWebDriver driver) throws InterruptedException
     {
+
         HomePageViewPage.gotoPageHomePage();
         // Add a gadget to the dashboard.
         HomePageViewPage.gotoAndEdit().addNewMacro("searchCategories", "Search Categories").saveDashboard();
         // Wait 2 seconds for the macros to load
         Thread.sleep(2000);
-        assertEquals(HomePageViewPage.noOfGadgets(), 3);
+        assertEquals(3,HomePageViewPage.noOfGadgets() );
         // Remove a gadget from the dashboard.
         HomePageViewPage.gotoAndEdit().removeLastMacro().saveDashboard();
         // Wait 2 seconds for the macros to load
         Thread.sleep(2000);
-        assertEquals(HomePageViewPage.noOfGadgets(), 2);
+        assertEquals(2,HomePageViewPage.noOfGadgets());
     }
 
     /**
@@ -166,11 +165,12 @@ public class AnalyticsIT
     @Order(4)
     void checkMacroDescription(XWikiWebDriver driver) throws InterruptedException
     {
-        MostViewedMacroViewPages.gotoPage();
+        MostViewedMacroViewPages mostViewedMacroViewPages = new MostViewedMacroViewPages();
+        mostViewedMacroViewPages.gotoPage();
 
         assertEquals("When visitors search on your website, they are looking for a particular page, content, product,"
                 + " or service. This report lists the pages that were clicked the most after an internal search.",
-            MostViewedMacroViewPages.getMacroDescription());
+            mostViewedMacroViewPages.getMacroDescription());
     }
 
     /**
@@ -180,14 +180,14 @@ public class AnalyticsIT
     @Order(5)
     void checkRowEvolutionModal()
     {
-        MostViewedMacroViewPages.gotoPage();
-        MostViewedMacroViewPages.openRowEvolutionModal();
-        assertTrue(MostViewedMacroViewPages.isModalDisplayed());
+        MostViewedMacroViewPages mostViewedMacroViewPages = new MostViewedMacroViewPages();
+        BaseModal baseModal = mostViewedMacroViewPages.gotoPage().openRowEvolutionModal();
+        System.out.println("/MODAL/ " + baseModal.isDisplayed() + "/A/A");
+        assertTrue(baseModal.isDisplayed());
     }
 
     /**
      * Create and start a container with the database.
-     *
      */
     private MySQLContainer startDb(TestConfiguration testConfiguration) throws Exception
     {

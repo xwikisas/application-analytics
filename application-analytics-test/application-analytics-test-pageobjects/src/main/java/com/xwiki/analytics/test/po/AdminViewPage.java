@@ -28,21 +28,21 @@ import org.xwiki.test.ui.po.ViewPage;
 
 public class AdminViewPage extends ViewPage
 {
-    private static final String trackingCodeId = "Analytics.Code.ConfigurationClass_0_trackingCode";
+    private static final String TRACKING_CODE_ID = "Analytics.Code.ConfigurationClass_0_trackingCode";
 
-    private static final String authTokenId = "Analytics.Code.ConfigurationClass_0_authToken";
+    private static final String AUTH_TOKEN_ID = "Analytics.Code.ConfigurationClass_0_authToken";
 
-    private static final String idSiteId = "Analytics.Code.ConfigurationClass_0_siteId";
+    private static final String IS_SITE = "Analytics.Code.ConfigurationClass_0_siteId";
 
-    private static final String requestAddressId = "Analytics.Code.ConfigurationClass_0_requestAddress";
+    private static final String REQUEST_ADDRESS_ID = "Analytics.Code.ConfigurationClass_0_requestAddress";
 
-    private static XWikiWebDriver driver;
+    private XWikiWebDriver driver;
     public AdminViewPage()
     {
             driver = getUtil().getDriver();
     }
 
-    public static AdminViewPage gotoAdminPage()
+    public AdminViewPage gotoAdminPage()
     {
         AdministrationPage administrationPage = AdministrationPage.gotoPage();
         administrationPage.clickSection("Other", "Analytics");
@@ -51,7 +51,7 @@ public class AdminViewPage extends ViewPage
 
     public AdminViewPage setTrackingCode(String value)
     {
-        WebElement element = driver.findElement(By.id(trackingCodeId));
+        WebElement element = driver.findElement(By.id(TRACKING_CODE_ID));
         element.clear();
         element.sendKeys(value);
         return this;
@@ -59,7 +59,7 @@ public class AdminViewPage extends ViewPage
 
     public AdminViewPage setAuthTokenId( String value)
     {
-        WebElement element = driver.findElement(By.id(authTokenId));
+        WebElement element = driver.findElement(By.id(AUTH_TOKEN_ID));
         element.clear();
         element.sendKeys(value);
         return this;
@@ -67,7 +67,7 @@ public class AdminViewPage extends ViewPage
 
     public AdminViewPage setIdSiteId( String value)
     {
-        WebElement element = driver.findElement(By.id(idSiteId));
+        WebElement element = driver.findElement(By.id(IS_SITE));
         element.clear();
         element.sendKeys(value);
         return this;
@@ -75,7 +75,7 @@ public class AdminViewPage extends ViewPage
 
     public AdminViewPage setRequestAddressId(String value)
     {
-        WebElement element = driver.findElement(By.id(requestAddressId));
+        WebElement element = driver.findElement(By.id(REQUEST_ADDRESS_ID));
         element.clear();
         element.sendKeys(value);
         return this;
@@ -89,35 +89,18 @@ public class AdminViewPage extends ViewPage
         return this;
     }
 
-    public boolean inProgressNotification(String message)
+    public void inProgressNotification(String message)
     {
-
-        try {
-            this.waitForNotificationInProgressMessage(message);
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
+        this.waitForNotificationInProgressMessage(message);
     }
 
-    public boolean errorNotification(String message)
+    public void errorNotification(String message)
     {
-
-        try {
             this.waitForNotificationErrorMessage(message);
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
     }
 
-    public boolean successNotification(String message)
+    public void successNotification(String message)
     {
-        try {
-            this.waitForNotificationSuccessMessage(message);
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
+        this.waitForNotificationSuccessMessage(message);
     }
 }

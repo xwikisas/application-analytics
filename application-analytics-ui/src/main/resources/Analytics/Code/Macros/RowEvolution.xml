@@ -212,7 +212,8 @@ require(['jquery', 'chart'], ($) =&gt; {
       period: currentOptions.data('period'),
       date: `last${currentOptions.data('date')}`,
       macroName: currentOptions.data('macroName'),
-      rowIdentifier: rowIdentifier
+      rowIdentifier: rowIdentifier,
+      action: "GET"
     };
     const queryString = $.param(params);
     $.getJSON(`${requestPageUrl}?${queryString}`)

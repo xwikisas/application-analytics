@@ -34,6 +34,7 @@ public class Config
     public static final String DB_PASSWORD = "secret";
 
     public static final String ADDRESS = "172.17.0.1";
+
     public static final String MATOMO_CONTAINER_NAME = "matomo:latest";
 
     public static final String MATOMO_CONFIG_FILE_PATH = "/var/www/html/config/config.ini.php";
@@ -42,18 +43,26 @@ public class Config
 
     public static final String MATOMO_CREDENTIALS = "ADMIN1";
 
-    //139fe0f667fe8eb309cad6179e486d1e
     public static String MATOMO_AUTH_TOKEN = "91be1bca1315c35abd605ad8a544eece";
 
     public static String getTrackingCode()
     {
-        return "<!-- Matomo -->\n" + "<script>\n" + "  var _paq = window._paq = window._paq || [];\n"
+        String sb = "<!-- Matomo -->\n"
+            + "<script>\n"
+            + "  var _paq = window._paq = window._paq || [];\n"
             + "  /* tracker methods like \"setCustomDimension\" should be called before \"trackPageView\" */\n"
-            + "  _paq.push(['trackPageView']);\n" + "  _paq.push(['enableLinkTracking']);\n" + "  (function() {\n"
-            + "    var u=\"http://" + Config.ADDRESS + ":" + Config.MATOMO_BRIDGE_PORT + "/" + "\";\n"
-            + "    _paq.push(['setTrackerUrl', u+'matomo.php']);\n" + "    _paq.push(['setSiteId', '1']);\n"
+            + "  _paq.push(['trackPageView']);\n"
+            + "  _paq.push(['enableLinkTracking']);\n"
+            + "  (function() {\n"
+            + "    var u=\"http://" + Config.ADDRESS + ":" + Config.MATOMO_BRIDGE_PORT
+            + "/\";\n"
+            + "    _paq.push(['setTrackerUrl', u+'matomo.php']);\n"
+            + "    _paq.push(['setSiteId', '1']);\n"
             + "    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];\n"
-            + "    g.async=true; g.src=u+'36011373.js'; s.parentNode.insertBefore(g,s);\n" + "  })();\n" + "</script>\n"
+            + "    g.async=true; g.src=u+'36011373.js'; s.parentNode.insertBefore(g,s);\n"
+            + "  })();\n"
+            + "</script>\n"
             + "<!-- End Matomo Code -->\n";
+        return sb;
     }
 }
