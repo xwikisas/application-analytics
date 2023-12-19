@@ -30,26 +30,30 @@ import org.xwiki.test.ui.po.BaseModal;
 import org.xwiki.test.ui.po.ViewPage;
 
 /**
- * View for the MostViewedPages macro that let's us interact with the page.
+ * View for the MostViewedPages macro that lets us interact with the page of the macro.
  */
-public class MostViewedMacroViewPages extends ViewPage
+public class MostViewedPagesMacroViewPage extends ViewPage
 {
-    private final XWikiWebDriver driver;
-
     private static final String ROW_EVOLUTION_BUTTON_SELECTOR = ".analyticsRowEvolution";
 
-    public MostViewedMacroViewPages()
+    private final XWikiWebDriver driver;
+
+    public MostViewedPagesMacroViewPage()
     {
         driver = getUtil().getDriver();
     }
 
-    public MostViewedMacroViewPages gotoPage()
+    public MostViewedPagesMacroViewPage gotoPage()
     {
         List<String> spaces = Arrays.asList("Analytics", "Code", "Macros");
         getUtil().gotoPage(spaces, "MostViewedPages", "view", "");
         return this;
     }
 
+    /**
+     * Opens the Row Evolution modal and waits until it is fully visible before returning it.
+     * @return the modal
+     */
     public BaseModal openRowEvolutionModal()
     {
         BaseModal baseModal = new BaseModal(By.cssSelector(".modal-dialog.modal-lg"));
@@ -58,10 +62,14 @@ public class MostViewedMacroViewPages extends ViewPage
         return baseModal;
     }
 
+    /***
+     * This method first waits for the visibility of an information button, identified by a specific CSS selector.
+     * Once the information button is visible it selects the tile attribute and returns it.
+     * @return THe description of a macro.
+     */
     public String getMacroDescription()
     {
         driver.waitUntilElementIsVisible(By.cssSelector(".xcontent h2 div a"));
         return driver.findElement(By.cssSelector(".xcontent h2 div a")).getAttribute("title");
     }
-
 }

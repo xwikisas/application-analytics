@@ -27,11 +27,51 @@ import org.xwiki.test.ui.po.editor.EditPage;
 
 public class HomePageEditPage extends EditPage
 {
-    private XWikiWebDriver driver;
+    private final XWikiWebDriver driver;
 
     public HomePageEditPage()
     {
         driver = getUtil().getDriver();
+    }
+
+    /**
+     * Adds a new macro to the homepage of the application.
+     * @param macroID id of the macro
+     * @param macroName name of the macro
+     * @return
+     */
+
+    public HomePageEditPage addNewMacro(String macroID, String macroName)
+    {
+
+        this.clickAddGadget().selectMacro(macroID, macroName);
+        return this;
+    }
+
+    /**
+     * Removes the last macro that is on the page.
+     * @return
+     */
+
+    public HomePageEditPage removeLastMacro()
+    {
+
+        WebElement lastGadget = driver.findElement(By.cssSelector(".gadget:last-of-type"));
+        // Move the cursor to be on top of the macro to reveal the remove button.
+        new Actions(driver.getWrappedDriver()).moveToElement(lastGadget).perform();
+        // Click on the remove button when it becomes available.
+        waitAndClick(".gadget:last-of-type .remove");
+        // Click on the confirm button to remove the macro.
+        waitAndClick(".xdialog-box.xdialog-box-confirmation .xdialog-content .buttonwrapper");
+        return this;
+    }
+
+    public HomePageViewPage saveDashboard()
+    {
+
+        EditPage editPage = new EditPage();
+        editPage.clickSaveAndView();
+        return new HomePageViewPage();
     }
 
     private HomePageEditPage clickAddGadget()
@@ -55,33 +95,5 @@ public class HomePageEditPage extends EditPage
         waitAndClick(".modal.macro-selector-modal.gadget-selector-modal.in .modal-footer .btn-primary");
         // Will wait until the submit button becomes enabled and will click on it.
         waitAndClick(".modal.macro-editor-modal.in .modal-footer .btn-primary");
-    }
-
-    public HomePageEditPage addNewMacro(String macroID, String macroName)
-    {
-
-        this.clickAddGadget().selectMacro(macroID, macroName);
-        return this;
-    }
-
-    public HomePageEditPage removeLastMacro()
-    {
-
-        WebElement lastGadget = driver.findElement(By.cssSelector(".gadget:last-of-type"));
-        // Move the cursor to be on top of the macro to reveal the remove button.
-        new Actions(driver.getWrappedDriver()).moveToElement(lastGadget).perform();
-        // Click on the remove button when it becomes available.
-        waitAndClick(".gadget:last-of-type .remove");
-        // Click on the confirm button to remove the macro.
-        waitAndClick(".xdialog-box.xdialog-box-confirmation .xdialog-content .buttonwrapper");
-        return this;
-    }
-
-    public HomePageViewPage saveDashboard()
-    {
-
-        EditPage editPage = new EditPage();
-        editPage.clickSaveAndView();
-        return new HomePageViewPage();
     }
 }

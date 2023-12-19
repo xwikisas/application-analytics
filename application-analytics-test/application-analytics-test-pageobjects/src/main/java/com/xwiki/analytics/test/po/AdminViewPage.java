@@ -36,10 +36,11 @@ public class AdminViewPage extends ViewPage
 
     private static final String REQUEST_ADDRESS_ID = "Analytics.Code.ConfigurationClass_0_requestAddress";
 
-    private XWikiWebDriver driver;
+    private final XWikiWebDriver driver;
+
     public AdminViewPage()
     {
-            driver = getUtil().getDriver();
+        driver = getUtil().getDriver();
     }
 
     public AdminViewPage gotoAdminPage()
@@ -57,7 +58,7 @@ public class AdminViewPage extends ViewPage
         return this;
     }
 
-    public AdminViewPage setAuthTokenId( String value)
+    public AdminViewPage setAuthTokenId(String value)
     {
         WebElement element = driver.findElement(By.id(AUTH_TOKEN_ID));
         element.clear();
@@ -65,7 +66,7 @@ public class AdminViewPage extends ViewPage
         return this;
     }
 
-    public AdminViewPage setIdSiteId( String value)
+    public AdminViewPage setIdSiteId(String value)
     {
         WebElement element = driver.findElement(By.id(IS_SITE));
         element.clear();
@@ -96,7 +97,7 @@ public class AdminViewPage extends ViewPage
 
     public void errorNotification(String message)
     {
-            this.waitForNotificationErrorMessage(message);
+        this.waitForNotificationErrorMessage(message);
     }
 
     public void successNotification(String message)

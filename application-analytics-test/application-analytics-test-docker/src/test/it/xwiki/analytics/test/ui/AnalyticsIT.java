@@ -38,7 +38,7 @@ import org.xwiki.test.ui.po.BaseModal;
 import com.xwiki.analytics.test.po.AdminViewPage;
 import com.xwiki.analytics.test.po.HomePageViewPage;
 import com.xwiki.analytics.test.po.MatomoViewPage;
-import com.xwiki.analytics.test.po.MostViewedMacroViewPages;
+import com.xwiki.analytics.test.po.MostViewedPagesMacroViewPage;
 
 import xwiki.analytics.test.ui.config.Config;
 
@@ -150,12 +150,12 @@ public class AnalyticsIT
         HomePageViewPage.gotoAndEdit().addNewMacro("searchCategories", "Search Categories").saveDashboard();
         // Wait 2 seconds for the macros to load
         Thread.sleep(2000);
-        assertEquals(3,HomePageViewPage.noOfGadgets() );
+        assertEquals(3, HomePageViewPage.noOfGadgets());
         // Remove a gadget from the dashboard.
         HomePageViewPage.gotoAndEdit().removeLastMacro().saveDashboard();
         // Wait 2 seconds for the macros to load
         Thread.sleep(2000);
-        assertEquals(2,HomePageViewPage.noOfGadgets());
+        assertEquals(2, HomePageViewPage.noOfGadgets());
     }
 
     /**
@@ -165,12 +165,12 @@ public class AnalyticsIT
     @Order(4)
     void checkMacroDescription(XWikiWebDriver driver) throws InterruptedException
     {
-        MostViewedMacroViewPages mostViewedMacroViewPages = new MostViewedMacroViewPages();
-        mostViewedMacroViewPages.gotoPage();
+        MostViewedPagesMacroViewPage mostViewedPagesMacroViewPage = new MostViewedPagesMacroViewPage();
+        mostViewedPagesMacroViewPage.gotoPage();
 
         assertEquals("When visitors search on your website, they are looking for a particular page, content, product,"
                 + " or service. This report lists the pages that were clicked the most after an internal search.",
-            mostViewedMacroViewPages.getMacroDescription());
+            mostViewedPagesMacroViewPage.getMacroDescription());
     }
 
     /**
@@ -180,8 +180,8 @@ public class AnalyticsIT
     @Order(5)
     void checkRowEvolutionModal()
     {
-        MostViewedMacroViewPages mostViewedMacroViewPages = new MostViewedMacroViewPages();
-        BaseModal baseModal = mostViewedMacroViewPages.gotoPage().openRowEvolutionModal();
+        MostViewedPagesMacroViewPage mostViewedPagesMacroViewPage = new MostViewedPagesMacroViewPage();
+        BaseModal baseModal = mostViewedPagesMacroViewPage.gotoPage().openRowEvolutionModal();
         System.out.println("/MODAL/ " + baseModal.isDisplayed() + "/A/A");
         assertTrue(baseModal.isDisplayed());
     }
