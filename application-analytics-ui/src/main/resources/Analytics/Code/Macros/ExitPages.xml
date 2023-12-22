@@ -291,7 +291,7 @@
 #end
 #if ($services.licensing.licensor.hasLicensureForEntity(
     $services.model.createDocumentReference('', ['Analytics', 'Code'], 'ConfigurationClass')))
-  #if ($services.security.authorization.hasAccess('view', 'xwiki:Analytics.WebHome'))
+  #if ($services.security.authorization.hasAccess('view', 'Analytics.WebHome'))
     #executeMacro()
   #else
     {{error}}{{translation key="analytics.accessDenied" /}}{{/error}}

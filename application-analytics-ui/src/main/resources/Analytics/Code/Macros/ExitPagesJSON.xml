@@ -40,8 +40,7 @@
 
 {{velocity}}
 #if ($xcontext.action == 'get')
-  #livedataPagination($request.offset)
-
+  #analytics_livedataPagination()
   ## Mapping between the livedata columns and the Matomo fields.
   #set ($matomoKeysMapping = {
     'pageTitle' : 'label',

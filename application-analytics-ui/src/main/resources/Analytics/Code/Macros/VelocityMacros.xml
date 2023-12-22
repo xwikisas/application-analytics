@@ -239,9 +239,9 @@
   #end
 #end
 
-#macro (livedataPagination, $offset)
-  #set ($offset = $numbertool.toNumber($offset).intValue())
-    ## The offset sent by the live table starts at 1.
+#macro (analytics_livedataPagination)
+  #set ($offset = $numbertool.toNumber($request.offset).intValue())
+  ## The offset sent by the live table starts at 1.
   #set ($offset = $offset - 1)
   #if (!$offset || $offset &lt; 0)
     #set ($offset = 0)
