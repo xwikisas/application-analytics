@@ -82,7 +82,9 @@
 #elseif($request.macroName == 'OperatingSystemVersions')
   #set ($discard = $parameters.put('method', 'DevicesDetection.getOsVersions'))
   #set ($discard =  $parameters.put('segment', $request.rowIdentifier))
-
+#elseif($request.macroName == 'ExitPages')
+  #set ($discard = $parameters.put('pageUrl', $request.rowIdentifier))
+  #set ($discard = $parameters.put('method', 'Actions.getPageUrl'))
 #end
 #set ($analyticsResult = $services.analytics.makeRequest($parameters, $filters, 'RowEvolution'))
 #jsonResponse($analyticsResult)
