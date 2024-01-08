@@ -72,6 +72,10 @@ analytics.entryPages.parameter.label.endDate=End time of the date interval used 
 analytics.entryPages.parameter.label.startDate=Start time of the date interval used for this macro
 rendering.macro.entryPages.description=This report contains information about the entry pages that were used during the specified period. An entry page is the first page that a user views during their visit.
 rendering.macro.entryPages.name=Entry Pages
+rendering.macro.entryPages.parameter.endDate.name=End date
+rendering.macro.entryPages.parameter.endDate.description=End time of the date interval used for this macro.
+rendering.macro.entryPages.parameter.startDate.name=End date
+rendering.macro.entryPages.parameter.startDate.description=Start time of the date interval used for this macro.
 
 ## Pages following a site search
 analytics.PagesFollowingASiteSearchJSON.header.actions=Actions
