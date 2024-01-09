@@ -250,7 +250,7 @@
 #macro(executeMacro)
   #displayAnalyticsMacroTitle('Analytics.Code.Macros.EntryPages', 'rendering.macro.entryPages.description', 'rendering.macro.entryPages.name')
   #getDate()
-  #set ($discard =$xwiki.jsx.use('Analytics.Code.Macros.RowEvolution'))
+  #set ($discard = $xwiki.jsx.use('Analytics.Code.Macros.RowEvolution'))
   #set ($parameters = $escapetool.url({
     'resultPage': 'Analytics.Code.Macros.EntryPagesJSON',
     'date': $date,
@@ -258,7 +258,7 @@
     'limitEntries': '-1',
     'translationPrefix': 'analytics.entryPages.header.'
   }))
-  #set ($liveDataConfig= {
+  #set ($liveDataConfig = {
     'meta': {
       'propertyDescriptors': [
         {'id': 'pageTitle', 'displayer': 'html'},
@@ -292,7 +292,7 @@
 #end
 #if ($services.licensing.licensor.hasLicensureForEntity(
     $services.model.createDocumentReference('', ['Analytics', 'Code'], 'ConfigurationClass')))
-  #if($services.security.authorization.hasAccess('view', 'xwiki:Analytics.WebHome'))
+  #if($services.security.authorization.hasAccess('view', 'Analytics.WebHome'))
     #executeMacro()
   #else
     {{error}}{{translation key="analytics.accessDenied" /}}{{/error}}

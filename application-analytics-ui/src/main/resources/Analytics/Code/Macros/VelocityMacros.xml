@@ -239,7 +239,7 @@
   #end
 #end
 
-macro (analytics_livedataPagination)
+#macro (analytics_livedataPagination)
   #set ($offset = $numbertool.toNumber($request.offset).intValue())
   ## The offset sent by the live table starts at 1.
   #set ($offset = $offset - 1)
@@ -252,7 +252,7 @@ macro (analytics_livedataPagination)
   #end
 #end
 
-#macro (analytics_prepareFilters, $mappings)
+#macro (analytics_prepareFilters $mappings)
   #set ($filters = {})
   #foreach ($key in $mappings.keySet())
     #set ($value = $request.get($key))
