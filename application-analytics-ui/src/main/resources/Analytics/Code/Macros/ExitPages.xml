@@ -258,7 +258,7 @@
     'limitEntries': '-1',
     'translationPrefix': 'analytics.exitPages.header.'
   }))
-  #set ($liveDataConfig= {
+  #set ($liveDataConfig = {
     'meta': {
       'propertyDescriptors': [
         {'id': 'pageTitle', 'displayer': 'html'},
