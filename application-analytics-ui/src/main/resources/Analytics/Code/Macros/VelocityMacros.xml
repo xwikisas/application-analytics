@@ -252,7 +252,7 @@
   #end
 #end
 
-#macro (analytics_prepareFilters $mappings)
+#macro (analytics_readFiltersFromRequest $mappings)
   #set ($filters = {})
   #foreach ($key in $mappings.keySet())
     #set ($value = $request.get($key))

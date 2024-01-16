@@ -55,7 +55,7 @@
     #set ($order = $request.dir)
   #end
 
-  #analytics_prepareFilters($matomoKeysMapping)
+  #analytics_readFiltersFromRequest($matomoKeysMapping)
   #set ($parameters = {
     'period' : $request.period,
     'date' : $request.date,
