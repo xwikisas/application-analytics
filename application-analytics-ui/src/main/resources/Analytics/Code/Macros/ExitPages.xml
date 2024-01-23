@@ -20,30 +20,30 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc version="1.4" reference="Analytics.Code.Macros.OperatingSystemVersions" locale="">
+<xwikidoc version="1.4" reference="Analytics.Code.Macros.ExitPages" locale="">
   <web>Analytics.Code.Macros</web>
-  <name>OperatingSystemVersions</name>
+  <name>ExitPages</name>
   <language/>
   <defaultLanguage/>
   <translation>0</translation>
   <creator>xwiki:XWiki.Admin</creator>
-  <parent>Analytics.WebHome</parent>
+  <parent>WebHome</parent>
   <author>xwiki:XWiki.Admin</author>
   <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
   <version>1.1</version>
-  <title>OperatingSystemVersions</title>
+  <title>ExitPages</title>
   <comment/>
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>true</hidden>
   <content>{{analyticsFilter/}}
 
-{{operatingSystemVersions/}}</content>
+{{exitPages/}}</content>
   <object>
-    <name>Analytics.Code.Macros.OperatingSystemVersions</name>
+    <name>Analytics.Code.Macros.ExitPages</name>
     <number>0</number>
     <className>XWiki.WikiMacroClass</className>
-    <guid>11548f6c-3002-431d-a169-3fc8e584003a</guid>
+    <guid>f10f255a-63c6-470a-ad11-9427e8fc570e</guid>
     <class>
       <name>XWiki.WikiMacroClass</name>
       <customClass/>
@@ -244,57 +244,54 @@
     <property>
       <code>{{include reference='Analytics.Code.Macros.VelocityMacros'/}}
 
+{{include reference="Licenses.Code.VelocityMacros"/}}
+
 {{velocity}}
 #macro(executeMacro)
-  #displayAnalyticsMacroTitle('Analytics.Code.Macros.OperatingSystemVersions', 'rendering.macro.operatingSystemVersions.description', 'rendering.macro.operatingSystemVersions.name')
+  #displayAnalyticsMacroTitle('Analytics.Code.Macros.ExitPages', 'rendering.macro.exitPages.description', 'rendering.macro.exitPages.name')
   #getDate()
-  #set ($discard = $xwiki.jsx.use('Analytics.Code.Macros.RowEvolution'))#set ($parameters = $escapetool.url({
-    'resultPage': 'Analytics.Code.Macros.SoftwareDevicesJSON',
+  #set ($discard = $xwiki.jsx.use('Analytics.Code.Macros.RowEvolution'))
+  #set ($parameters = $escapetool.url({
+    'resultPage': 'Analytics.Code.Macros.ExitPagesJSON',
     'date': $date,
     'period': 'range',
     'limitEntries': '-1',
-    'translationPrefix': 'analytics.softwareDevices.header.',
-    'matomoMethod': 'DevicesDetection.getOsVersions',
-    'label': 'osVersion'
+    'translationPrefix': 'analytics.exitPages.header.'
   }))
-  #set ($liveDataConfig= {
+  #set ($liveDataConfig = {
     'meta': {
       'propertyDescriptors': [
-        {'id': 'osVersion', 'displayer': 'html'},
+        {'id': 'pageTitle', 'displayer': 'html'},
+        {'id': 'exitNbVisits', 'displayer': 'html'},
         {'id': 'visits', 'displayer': 'html'},
-        {'id': 'nbOfActions', 'displayer': 'html'},
-        {'id': 'timeSpent', 'displayer': 'html'},
-        {'id': 'bounceRate', 'displayer': 'html'},
-        {'id': 'conversionRate', 'displayer': 'html'},
-        {'id': 'actions','filterable': false, 'sortable': false, 'displayer': 'html'}
+        {'id': 'exitRate', 'displayer': 'html'},
+        {'id': 'actions', 'filterable': false, 'sortable': false, 'displayer': 'html'}
       ],
       'entryDescriptor': {
-        'idProperty': 'osVersion'
+        'idProperty': 'pageTitle'
       }
     }
   })
-  #getAnalyticsMacroId('operatingSystemVersionsMacro', $macroId)
+  #getAnalyticsMacroId('exitPagesMacro', $macroId)
 
   {{liveData
     id="$macroId"
-    properties='osVersion, visits, nbOfActions, timeSpent, bounceRate, conversionRate, actions'
+    properties="pageTitle, exitNbVisits, visits, exitRate, actions"
     source='liveTable'
     sourceParameters="$parameters"
-    sort='visits:desc'
+    sort='exitNbVisits:desc'
   }}$jsontool.serialize($liveDataConfig){{/liveData}}
 
   #set ($rowEvolutionParams = {
-    'visits': 'nb_visits',
-    'actions': 'nb_actions',
-    'timeSpent': 'sum_visit_length',
-    'bounceRate': 'bounce_count',
-    'conversionRate': 'nb_visits_converted'
+    'exits': 'exit_nb_visits',
+    'uniqueViews': 'nb_visits',
+    'exitRate': 'exit_rate'
   })
-  #modalRowEvolution($rowEvolutionParams, 'OperatingSystemVersions', $macroId)
+  #modalRowEvolution($rowEvolutionParams, 'ExitPages', $macroId)
 #end
 #if ($services.licensing.licensor.hasLicensureForEntity(
-  $services.model.createDocumentReference('', ['Analytics', 'Code'], 'ConfigurationClass')))
-  #if ($xwiki.hasAccessLevel('view', 'Analytics.WebHome'))
+    $services.model.createDocumentReference('', ['Analytics', 'Code'], 'ConfigurationClass')))
+  #if ($services.security.authorization.hasAccess('view', 'Analytics.WebHome'))
     #executeMacro()
   #else
     {{error}}{{translation key="analytics.accessDenied" /}}{{/error}}
@@ -320,26 +317,26 @@
       <description/>
     </property>
     <property>
-      <id>operatingSystemVersions</id>
+      <id>exitPages</id>
     </property>
     <property>
-      <name>Operating System Versions</name>
+      <name>Exit Pages</name>
     </property>
     <property>
       <priority/>
     </property>
     <property>
-      <supportsInlineMode>1</supportsInlineMode>
+      <supportsInlineMode>0</supportsInlineMode>
     </property>
     <property>
       <visibility>Current Wiki</visibility>
     </property>
   </object>
   <object>
-    <name>Analytics.Code.Macros.OperatingSystemVersions</name>
+    <name>Analytics.Code.Macros.ExitPages</name>
     <number>0</number>
     <className>XWiki.WikiMacroParameterClass</className>
-    <guid>64bdddf9-2c35-4c26-b607-9164242c23b3</guid>
+    <guid>2a90a472-b371-4c5c-9835-847d30bea49a</guid>
     <class>
       <name>XWiki.WikiMacroParameterClass</name>
       <customClass/>
@@ -414,10 +411,10 @@
     </property>
   </object>
   <object>
-    <name>Analytics.Code.Macros.OperatingSystemVersions</name>
+    <name>Analytics.Code.Macros.ExitPages</name>
     <number>1</number>
     <className>XWiki.WikiMacroParameterClass</className>
-    <guid>499484df-bcc6-4080-9a82-6e67b2c0c98e</guid>
+    <guid>2295018e-5eaf-4958-a17e-3eca21462408</guid>
     <class>
       <name>XWiki.WikiMacroParameterClass</name>
       <customClass/>

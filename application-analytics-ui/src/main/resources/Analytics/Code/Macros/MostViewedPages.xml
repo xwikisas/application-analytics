@@ -36,7 +36,9 @@
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>true</hidden>
-  <content>{{mostViewedPages/}}</content>
+  <content>{{analyticsFilter/}}
+
+{{mostViewedPages/}}</content>
   <object>
     <name>Analytics.Code.Macros.MostViewedPages</name>
     <number>0</number>

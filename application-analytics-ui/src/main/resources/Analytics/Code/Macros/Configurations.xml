@@ -36,7 +36,9 @@
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>true</hidden>
-  <content>{{configurations/}}</content>
+  <content>{{analyticsFilter/}}
+
+{{configurations/}}</content>
   <object>
     <name>Analytics.Code.Macros.Configurations</name>
     <number>0</number>

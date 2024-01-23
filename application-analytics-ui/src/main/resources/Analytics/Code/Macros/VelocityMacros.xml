@@ -239,6 +239,12 @@
   #end
 #end
 
+#*
+Matomo does not offer a direct way to obtain the total number of rows that will be returned from a request. LiveData
+requires the total number for pagination, and because of this, I have to make a request to get all the elements.
+If Matomo updates their API to return the total number of rows a request would yield, we should switch to using their
+API as it is faster
+*#
 #macro (analytics_livedataPagination)
   #set ($offset = $numbertool.toNumber($request.offset).intValue())
   ## The offset sent by the live table starts at 1.
@@ -252,7 +258,7 @@
   #end
 #end
 
-#macro (analytics_readFiltersFromRequest $mappings)
+#macro (analytics_readFiltersFromRequest, $mappings)
   #set ($filters = {})
   #foreach ($key in $mappings.keySet())
     #set ($value = $request.get($key))

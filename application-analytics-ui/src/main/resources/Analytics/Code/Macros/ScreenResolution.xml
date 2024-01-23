@@ -36,7 +36,9 @@
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>true</hidden>
-  <content>{{screenResolution/}}</content>
+  <content>{{analyticsFilter/}}
+
+{{screenResolution/}}</content>
   <object>
     <name>Analytics.Code.Macros.ScreenResolution</name>
     <number>0</number>
