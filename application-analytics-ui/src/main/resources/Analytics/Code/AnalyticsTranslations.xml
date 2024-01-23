@@ -59,6 +59,24 @@ analytics.mostViewedPages.parameter.label.startDate=Start time of the date inter
 rendering.macro.mostViewedPages.description=When visitors search on your website, they are looking for a particular page, content, product, or service. This report lists the pages that were clicked the most after an internal search.
 rendering.macro.mostViewedPages.name=Most viewed pages
 
+## Entry Pages
+analytics.entryPages.header.actions=Actions
+analytics.entryPages.header.bounces.hint=Number of visits that started and ended on this page.
+analytics.entryPages.header.bounces=Bounces
+analytics.entryPages.header.entrances.hint=Number of visits that started on this page.
+analytics.entryPages.header.entrances=Entrances
+analytics.entryPages.header.pageTitle=Title
+analytics.entryPages.header.visits.hint=The number of visits that included this page. If a page was viewed multiple times during one visit, it is only counted once.
+analytics.entryPages.header.visits=Unique visitors
+analytics.entryPages.parameter.label.endDate=End time of the date interval used for this macro
+analytics.entryPages.parameter.label.startDate=Start time of the date interval used for this macro
+rendering.macro.entryPages.description=This report contains information about the entry pages that were used during the specified period. An entry page is the first page that a user views during their visit.
+rendering.macro.entryPages.name=Entry pages
+rendering.macro.entryPages.parameter.endDate.name=End date
+rendering.macro.entryPages.parameter.endDate.description=End time of the date interval used for this macro.
+rendering.macro.entryPages.parameter.startDate.name=End date
+rendering.macro.entryPages.parameter.startDate.description=Start time of the date interval used for this macro.
+
 ## Exit Pages
 analytics.exitPages.header.actions=Actions
 analytics.exitPages.header.exitRate.hint=The percentage of visits that left the website after viewing this page.
@@ -94,9 +112,11 @@ analytics.rowEvolution.modal.close=Close
 analytics.rowEvolution.modal.day.label=Day
 analytics.rowEvolution.modal.field.actions=Actions
 analytics.rowEvolution.modal.field.avgTime=Time spent on page
+analytics.rowEvolution.modal.field.bounces=Bounces
 analytics.rowEvolution.modal.field.bounceRate=Bounce rate(%)
 analytics.rowEvolution.modal.field.clickedSearchResult=Clicked in search results
 analytics.rowEvolution.modal.field.conversionRate=Conversion rate
+analytics.rowEvolution.modal.field.entrances=Entrances
 analytics.rowEvolution.modal.field.exitRate=Exit rate(%)
 analytics.rowEvolution.modal.field.exits=Exits
 analytics.rowEvolution.modal.field.pageViews=Page views
