@@ -246,8 +246,8 @@
 
 {{velocity}}
 #macro(executeMacro)
-  #displayAnalyticsMacroTitle('Analytics.Code.Macros.DeviceBrand', 'rendering.macro.deviceBrand.description', 'rendering.macro.deviceBrand.name')
-  #getDate()
+  #analytics_displayAnalyticsMacroTitle('Analytics.Code.Macros.DeviceBrand', 'rendering.macro.deviceBrand.description', 'rendering.macro.deviceBrand.name')
+  #analytics_getDate()
   #set ($discard = $xwiki.jsx.use('Analytics.Code.Macros.RowEvolution'))#set ($parameters = $escapetool.url({
     'resultPage': 'Analytics.Code.Macros.SoftwareDevicesJSON',
     'date': $date,
@@ -272,7 +272,7 @@
       }
     }
   })
-  #getAnalyticsMacroId('deviceBrandMacro', $macroId)
+  #analytics_getAnalyticsMacroId('deviceBrandMacro', $macroId)
 
   {{liveData
     id="$macroId"
@@ -288,7 +288,7 @@
     'timeSpent': 'sum_visit_length',
     'bounceRate': 'bounce_count'
   })
-  #modalRowEvolution($rowEvolutionParams, 'DeviceBrand', $macroId)
+  #analytics_modalRowEvolution($rowEvolutionParams, 'DeviceBrand', $macroId)
 #end
 #if ($services.licensing.licensor.hasLicensureForEntity(
   $services.model.createDocumentReference('', ['Analytics', 'Code'], 'ConfigurationClass')))

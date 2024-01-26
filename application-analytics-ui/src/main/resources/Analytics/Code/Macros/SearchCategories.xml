@@ -246,8 +246,8 @@
 
 {{velocity}}
 #macro(executeMacro)
-  #displayAnalyticsMacroTitle('Analytics.Code.Macros.SearchCategories', 'rendering.macro.searchCategories.description', 'rendering.macro.searchCategories.name')
-  #getDate()
+  #analytics_displayAnalyticsMacroTitle('Analytics.Code.Macros.SearchCategories', 'rendering.macro.searchCategories.description', 'rendering.macro.searchCategories.name')
+  #analytics_getDate()
   #set ($discard =$xwiki.jsx.use('Analytics.Code.Macros.RowEvolution'))
   #set ($parameters = $escapetool.url({
     'date': $date,
@@ -269,7 +269,7 @@
       }
     }
   })
-  #getAnalyticsMacroId('searchCategoriesMacro', $macroId )
+  #analytics_getAnalyticsMacroId('searchCategoriesMacro', $macroId )
 
   {{liveData
     id="$macroId"
@@ -282,7 +282,7 @@
     'searches': 'nb_visits',
     'searchResultPages': 'nb_pages_per_search'
   })
-  #modalRowEvolution($rowEvolutionParams, 'SearchCategories', $macroId)
+  #analytics_modalRowEvolution($rowEvolutionParams, 'SearchCategories', $macroId)
 #end
 #if ($services.licensing.licensor.hasLicensureForEntity(
   $services.model.createDocumentReference('', ['Analytics', 'Code'], 'ConfigurationClass')))

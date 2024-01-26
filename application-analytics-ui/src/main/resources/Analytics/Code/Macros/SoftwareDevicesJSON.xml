@@ -40,18 +40,8 @@
 
 {{velocity}}
 #if ($xcontext.action == 'get')
-  #set ($offset = $numbertool.toNumber($request.offset).intValue())
-  ## The offset sent by the live table starts at 1.
-  #set ($offset = $offset - 1)
-  #if (!$offset || $offset &lt; 0)
-    #set ($offset = 0)
-  #end
-  #set ($limit = $numbertool.toNumber($request.limit).intValue())
-  #if (!$limit)
-    #set ($limit = 15)
-  #end
-
-  #set ($keys = {
+  #analytics_livedataPagination()
+  #set ($matomoKeysMapping = {
     $request.label: 'label',
     'visits': 'nb_visits',
     'nbOfActions': 'nb_actions',
@@ -63,19 +53,13 @@
   #set ($sort = 'nb_visits')
   #set ($order = 'desc')
   #if ($request.sort)
-    #set ($sort = $keys.get($request.sort))
+    #set ($sort = $matomoKeysMapping.get($request.sort))
     #set ($order = $request.dir)
   #end
 
-  #set ($filters={})
-  #foreach ($key in $keys.keySet())
-    #set ($value = $request.get($key))
-    #if ($value &amp;&amp; $value != '')
-      $filters.put($keys.get($key), $request.get($key))
-    #end
-  #end
+  #analytics_readFiltersFromRequest($matomoKeysMapping)
 
-  #set ($parameters = {
+    #set ($parameters = {
     'period': $request.period,
     'date': $request.date,
     'module': 'API',
@@ -90,7 +74,7 @@
   #set ($analyticsResult = $services.analytics.makeRequest($parameters, $filters, 'MostViewedPages'))
   #if ($offset &lt; $analyticsResult.size())
     #set ($toIndex =  $mathtool.min($mathtool.add($offset, $limit), $analyticsResult.size()))
-    #subSet( $analyticsResult, $offset, $toIndex, $resultList)
+    #analytics_subSet( $analyticsResult, $offset, $toIndex, $resultList)
   #end
 
   #set ($results = {
@@ -116,7 +100,7 @@
         #set ($segment = $currentEntry.get('segment').asText())
     #end
     #set ($conversionRate =  $currentEntry.get('nb_visits_converted').asText() + '%')
-    #getTime($currentEntry.get('sum_visit_length').asInt())
+    #analytics_getTime($currentEntry.get('sum_visit_length').asInt())
     #set ($discard = $results.rows.add({
       $request.label: $currentEntry.get('label').asText(),
       'visits':  $currentEntry.get('nb_visits').asText(),
@@ -124,7 +108,7 @@
       'timeSpent': $time,
       'bounceRate': $currentEntry.get('bounce_count').asText(),
       'conversionRate': $conversionRate,
-      'actions': "#analyticsActions($segment)"
+      'actions': "#analytics_actions($segment)"
     }))
   #end
   #jsonResponse($results)

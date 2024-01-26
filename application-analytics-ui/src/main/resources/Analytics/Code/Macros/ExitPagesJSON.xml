@@ -74,7 +74,7 @@
   #set ($analyticsResult = $services.analytics.makeRequest($parameters, $filters, 'MostViewedPages'))
   #if ($offset &lt; $analyticsResult.size())
     #set ($toIndex = $mathtool.min($mathtool.add($offset, $limit), $analyticsResult.size()))
-    #subSet($analyticsResult, $offset, $toIndex, $resultList)
+    #analytics_subSet($analyticsResult, $offset, $toIndex, $resultList)
   #end
 
   #set ($results = {
@@ -87,13 +87,13 @@
   #foreach ($currentEntry in $resultList)
     #set ($url = $currentEntry.get('url').asText())
     #set ($discard = $results.rows.add({
-      'pageTitle' : "#createLinkElement($currentEntry.get('label').asText(), $url)",
+      'pageTitle' : "#analytics_createLinkElement($currentEntry.get('label').asText(), $url)",
       'visits' :  $currentEntry.get('nb_visits').asText(),
       'entryNbActions' : $currentEntry.get('entry_nb_actions').asText(),
       'bounceRate' : $currentEntry.get('bounce_rate').asText(),
       'exitRate' : $currentEntry.get('exit_rate').asText(),
       'exitNbVisits': $currentEntry.get('exit_nb_visits').asText(),
-      'actions' : "#analyticsActions($url)"
+      'actions' : "#analytics_actions($url)"
     }))
   #end
   #jsonResponse($results)

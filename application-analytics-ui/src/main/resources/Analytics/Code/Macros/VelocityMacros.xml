@@ -37,7 +37,7 @@
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>true</hidden>
   <content>{{velocity output='false'}}
-#macro (getDate)
+#macro (analytics_getDate)
   ## If the analytics filter is used on a dashboard page, this could add filter parameters in the URL and these  have
   ## priority over what is set at the macro level.
   #if ($request.analyticsStartDate || $request.analyticsEndDate)
@@ -62,11 +62,11 @@
   #set ($date = $startDate + ',' + $endDate)
 #end
 
-#macro (createLinkElement $label $link)
+#macro (analytics_createLinkElement $label $link)
 &lt;a href = $link&gt;$label&lt;/a&gt;
 #end
 
-#macro (subSet $object $start $end $resultList)
+#macro (analytics_subSet $object $start $end $resultList)
   #set ($resultList = [])
   #set ($end = $mathtool.sub($end,1))
   #foreach ($i in [$start..$end])
@@ -75,7 +75,7 @@
   #end
 #end 
 
-#macro(analyticsActions $parameter)
+#macro(analytics_actions $parameter)
 &lt;div class="analyticsActions"&gt;
   &lt;div class="analyticsRowEvolution"  data-row-identifier=$parameter&gt;
     &lt;a class="action" title="$escapetool.xml($services.localization.render(
@@ -86,7 +86,7 @@
 &lt;/div&gt;
 #end
 
-#macro(durationSelect $className $options $id)
+#macro(analytics_durationSelect $className $options $id)
 &lt;select i class="$className form-control" aria-labelledby=$id&gt;
   #foreach($option in $options)
     &lt;option value="$option"&gt;$option&lt;/option&gt;
@@ -94,13 +94,13 @@
 &lt;/select&gt;
 #end
 
-#macro(durationOption $value)
+#macro(analytics_durationOption $value)
   &lt;option value="$value"&gt;
     $escapetool.xml($services.localization.render('analytics.rowEvolution.modal.' + $value.toLowerCase() + '.label'))
   &lt;/option&gt;
 #end
 
-#macro(durationSelectList $class $options)
+#macro(analytics_durationSelectList $class $options)
   &lt;select class="$class form-control" aria-label='duration'&gt;
     #foreach($option in $options)
       &lt;option value="$option"&gt;$option&lt;/option&gt;
@@ -108,7 +108,7 @@
   &lt;/select&gt;
 #end
 
-#macro(rowEvolutionFieldSelect $matomoFields $id)
+#macro(analytics_rowEvolutionFieldSelect $matomoFields $id)
   &lt;select id="rowEvolutionPeriod$id"  class="form-control rowEvolutionField"&gt;
     #foreach($key in $matomoFields.keySet())
       &lt;option value="$matomoFields.get($key)"&gt;
@@ -118,7 +118,7 @@
   &lt;/select&gt;
 #end
 
-#macro(modalRowEvolution $matomoFields $macroName $id)
+#macro(analytics_modalRowEvolution $matomoFields $macroName $id)
   #set ($requestPageURL = $xwiki.getURL('Analytics.Code.Macros.RowEvolutionJSON'))
   {{html clean=false}}
   &lt;div class="modal fade analyticsRowEvolutionModal" tabindex="-1" role="dialog" aria-label="chartModalLabel"
@@ -135,7 +135,7 @@
         &lt;/div&gt;
         &lt;div class="rowEvolutionOptions" data-macro-name=$macroName data-request-page-url=$requestPageURL
           data-color=$theme.notificationInfoColor&gt;
-          #rowEvolutionModalBody($matomoFields $id)
+          #analytics_rowEvolutionModalBody($matomoFields $id)
           &lt;div class='loading'&gt;
             &lt;canvas class="chartDisplay"&gt;&lt;/canvas&gt;
           &lt;/div&gt;
@@ -151,7 +151,7 @@
   {{/html}}
 #end
 
-#macro(rowEvolutionModalBody $matomoFields $id)
+#macro(analytics_rowEvolutionModalBody $matomoFields $id)
   &lt;div class="modal-body"&gt;
     &lt;div class="container-fluid"&gt;
       &lt;div class="row"&gt;
@@ -160,24 +160,24 @@
           'analytics.rowEvolution.modal.period'))
           &lt;/label&gt;
           &lt;select id="rowEvolutionPeriod$id" class="rowEvolutionPeriod form-control"&gt;
-            #durationOption("Day")
-            #durationOption("Week")
-            #durationOption("Month")
-            #durationOption("Year")
+            #analytics_durationOption("Day")
+            #analytics_durationOption("Week")
+            #analytics_durationOption("Month")
+            #analytics_durationOption("Year")
           &lt;/select&gt;
         &lt;/div&gt;
         &lt;div class="col-md-3"&gt;
           &lt;label id=$id&gt;$escapetool.xml($services.localization.render('analytics.rowEvolution.modal.periodLength')):
           &lt;/label&gt;
-          #durationSelectList("rowEvolutionPeriodLengthDay" [30, 8, 60, 90, 180, 365, 500] $id)
-          #durationSelectList("rowEvolutionPeriodLengthWeek" [4, 12, 26, 52, 104, 500] $id)
-          #durationSelectList("rowEvolutionPeriodLengthMonth" [3, 6, 12, 24, 36, 120] $id)
-          #durationSelectList("rowEvolutionPeriodLengthYear" [3, 5, 10] $id)
+          #analytics_durationSelectList("rowEvolutionPeriodLengthDay" [30, 8, 60, 90, 180, 365, 500] $id)
+          #analytics_durationSelectList("rowEvolutionPeriodLengthWeek" [4, 12, 26, 52, 104, 500] $id)
+          #analytics_durationSelectList("rowEvolutionPeriodLengthMonth" [3, 6, 12, 24, 36, 120] $id)
+          #analytics_durationSelectList("rowEvolutionPeriodLengthYear" [3, 5, 10] $id)
         &lt;/div&gt;
         &lt;div class="col-md-3"&gt;
           &lt;label for="rowEvolutionPeriod$id"&gt;$escapetool.xml($services.localization.render('analytics.rowEvolution.modal.field'))
           &lt;/label&gt;
-          #rowEvolutionFieldSelect($matomoFields $id)
+          #analytics_rowEvolutionFieldSelect($matomoFields $id)
         &lt;/div&gt;
       &lt;/div&gt;
     &lt;/div&gt;
@@ -185,12 +185,12 @@
 #end
 
 #set ($analyticsId = -1)
-#macro (getAnalyticsMacroId $macro $macroId)
+#macro (analytics_getAnalyticsMacroId $macro $macroId)
   #set ($analyticsId = $analyticsId + 1)
   #set ($macroId = $macro + '_' + $analyticsId)
 #end
 
-#macro(displayAnalyticsMacroTitle, $macroDocumentReference, $descriptionTranslationKey, $nameTranslationKey)
+#macro(analytics_displayAnalyticsMacroTitle, $macroDocumentReference, $descriptionTranslationKey, $nameTranslationKey)
   #set ($discard = $xwiki.ssx.use('Analytics.Code.AnalyticsJS'))
   #set ($url = $xwiki.getURL($macroDocumentReference))
   #set ($isDashboard = $doc.getObject('XWiki.GadgetClass'))
