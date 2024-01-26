@@ -246,8 +246,8 @@
 
 {{velocity}}
 #macro(executeMacro)
-  #displayAnalyticsMacroTitle('Analytics.Code.Macros.ScreenResolution', 'rendering.macro.screenResolution.description', 'rendering.macro.screenResolution.name')
-  #getDate()
+  #analytics_displayMacroTitle('Analytics.Code.Macros.ScreenResolution', 'rendering.macro.screenResolution.description', 'rendering.macro.screenResolution.name')
+  #analytics_getDate()
   #set ($discard = $xwiki.jsx.use('Analytics.Code.Macros.RowEvolution'))#set ($period = 'range')
   #set ($parameters = $escapetool.url({
     'resultPage': 'Analytics.Code.Macros.SoftwareDevicesJSON',
@@ -273,7 +273,7 @@
       }
     }
   })
-  #getAnalyticsMacroId('screenResolutionMacro', $macroId)
+  #analytics_getMacroId('screenResolutionMacro', $macroId)
 
   {{liveData
     id="$macroId"
@@ -289,7 +289,7 @@
     'timeSpent': 'sum_visit_length',
     'bounceRate': 'bounce_count'
   })
-  #modalRowEvolution($rowEvolutionParams, 'ScreenResolution', $macroId)
+  #analytics_modalRowEvolution($rowEvolutionParams, 'ScreenResolution', $macroId)
 #end
 #if ($services.licensing.licensor.hasLicensureForEntity(
   $services.model.createDocumentReference('', ['Analytics', 'Code'], 'ConfigurationClass')))
@@ -328,7 +328,7 @@
       <priority/>
     </property>
     <property>
-      <supportsInlineMode>1</supportsInlineMode>
+      <supportsInlineMode>0</supportsInlineMode>
     </property>
     <property>
       <visibility>Current Wiki</visibility>

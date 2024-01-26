@@ -40,17 +40,7 @@
 
 {{velocity}}
 #if ($xcontext.action == 'get')
-  #set ($offset = $numbertool.toNumber($request.offset).intValue())
-  ## The offset sent by the live table starts at 1.
-  #set ($offset = $offset - 1)
-  #if (!$offset || $offset &lt; 0)
-    #set ($offset = 0)
-  #end
-  #set ($limit = $numbertool.toNumber($request.limit).intValue())
-  #if (!$limit)
-    #set ($limit = 15)
-  #end
-
+ #analytics_livedataPagination()
   ## Mapping between the livedata columns and the Matomo fields.
   #set ($matomoKeysMapping = {
     'pageTitle' : 'label',
@@ -68,14 +58,7 @@
     #set ($order = $request.dir)
   #end
 
-  #set ($filters = {})
-  #foreach ($key in $matomoKeysMapping.keySet())
-    #set ($value = $request.get($key))
-    #if ($value &amp;&amp; $value != '')
-      #set ($discard = $filters.put($matomoKeysMapping.get($key), $request.get($key)))
-    #end
-  #end
-
+  #analytics_readFiltersFromRequest($matomoKeysMapping)
   #set ($parameters = {
     'period' : $request.period,
     'date' : $request.date,
@@ -93,7 +76,7 @@
   #set ($analyticsResult = $services.analytics.makeRequest($parameters, $filters, 'MostViewedPages'))
   #if ($offset &lt; $analyticsResult.size())
     #set ($toIndex = $mathtool.min($mathtool.add($offset, $limit), $analyticsResult.size()))
-    #subSet($analyticsResult, $offset, $toIndex, $resultList)
+    #analytics_subSet($analyticsResult, $offset, $toIndex, $resultList)
   #end
 
   #set ($results = {
@@ -105,16 +88,16 @@
   })
   #foreach ($currentEntry in $resultList)
     #set ($url = $currentEntry.get('url').asText())
-    #getTime($currentEntry.get('sum_time_spent').asInt())
+    #analytics_getTime($currentEntry.get('sum_time_spent').asInt())
     #set ($discard = $results.rows.add({
-      'pageTitle' : "#createLinkElement($currentEntry.get('label').asText(), $url)",
+      'pageTitle' : "#analytics_createLinkElement($currentEntry.get('label').asText(), $url)",
       'visits' :  $currentEntry.get('nb_visits').asText(),
       'hits' : $currentEntry.get('nb_hits').asText(),
       'timeSpent' : $time,
       'entryNbActions' : $currentEntry.get('entry_nb_actions').asText(),
       'bounceRate' : $currentEntry.get('bounce_rate').asText(),
       'exitRate' : $currentEntry.get('exit_rate').asText(),
-      'actions' : "#analyticsActions($url)"
+      'actions' : "#analytics_actions($url)"
     }))
   #end
   #jsonResponse($results)

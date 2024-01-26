@@ -248,8 +248,8 @@
 
 {{velocity}}
 #macro(executeMacro)
-  #displayAnalyticsMacroTitle('Analytics.Code.Macros.MostViewedPages', 'rendering.macro.mostViewedPages.description', 'rendering.macro.mostViewedPages.name')
-  #getDate()
+  #analytics_displayMacroTitle('Analytics.Code.Macros.MostViewedPages', 'rendering.macro.mostViewedPages.description', 'rendering.macro.mostViewedPages.name')
+  #analytics_getDate()
   #set ($discard =$xwiki.jsx.use('Analytics.Code.Macros.RowEvolution'))
   #set ($parameters = $escapetool.url({
     'resultPage': 'Analytics.Code.Macros.MostViewedPagesJSON',
@@ -275,7 +275,7 @@
       }
     }
   })
-  #getAnalyticsMacroId('mostViewedMacro', $macroId)
+  #analytics_getMacroId('mostViewedMacro', $macroId)
 
   {{liveData
     id="$macroId"
@@ -292,7 +292,7 @@
     'bounceRate': 'bounce_rate',
     'exitRate': 'exit_rate'
   })
-  #modalRowEvolution($rowEvolutionParams, 'MostViewedPages', $macroId)
+  #analytics_modalRowEvolution($rowEvolutionParams, 'MostViewedPages', $macroId)
 #end
 #if ($services.licensing.licensor.hasLicensureForEntity(
   $services.model.createDocumentReference('', ['Analytics', 'Code'], 'ConfigurationClass')))
@@ -331,7 +331,7 @@
       <priority/>
     </property>
     <property>
-      <supportsInlineMode>1</supportsInlineMode>
+      <supportsInlineMode>0</supportsInlineMode>
     </property>
     <property>
       <visibility>Current Wiki</visibility>

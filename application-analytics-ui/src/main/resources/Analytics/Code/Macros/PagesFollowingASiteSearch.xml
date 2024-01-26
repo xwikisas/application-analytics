@@ -247,8 +247,8 @@
 
 {{velocity}}
 #macro(executeMacro)
-  #displayAnalyticsMacroTitle('Analytics.Code.Macros.PagesFollowingASiteSearch', 'rendering.macro.PagesFollowingASiteSearch.description', 'rendering.macro.PagesFollowingASiteSearch.name')
-  #getDate()
+  #analytics_displayMacroTitle('Analytics.Code.Macros.PagesFollowingASiteSearch', 'rendering.macro.PagesFollowingASiteSearch.description', 'rendering.macro.PagesFollowingASiteSearch.name')
+  #analytics_getDate()
   #set ($discard = $xwiki.jsx.use('Analytics.Code.Macros.RowEvolution'))
   #set ($parameters = $escapetool.url({
     'date': $date,
@@ -271,7 +271,7 @@
       }
     }
   })
-  #getAnalyticsMacroId('pagesFollowingASiteSearchMacro', $macroId)
+  #analytics_getMacroId('pagesFollowingASiteSearchMacro', $macroId)
 
   {{liveData
     id="$macroId"
@@ -286,7 +286,7 @@
     'bounceRate': 'bounce_rate',
     'exitRate': 'exit_rate'
   })
-  #modalRowEvolution($rowEvolutionParams, 'PagesFollowingASiteSearch', $macroId)
+  #analytics_modalRowEvolution($rowEvolutionParams, 'PagesFollowingASiteSearch', $macroId)
 #end
 #if ($services.licensing.licensor.hasLicensureForEntity(
   $services.model.createDocumentReference('', ['Analytics', 'Code'], 'ConfigurationClass')))
@@ -325,7 +325,7 @@
       <priority/>
     </property>
     <property>
-      <supportsInlineMode>1</supportsInlineMode>
+      <supportsInlineMode>0</supportsInlineMode>
     </property>
     <property>
       <visibility>Current Wiki</visibility>
