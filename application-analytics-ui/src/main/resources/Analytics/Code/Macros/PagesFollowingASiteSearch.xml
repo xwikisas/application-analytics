@@ -247,7 +247,7 @@
 
 {{velocity}}
 #macro(executeMacro)
-  #analytics_displayAnalyticsMacroTitle('Analytics.Code.Macros.PagesFollowingASiteSearch', 'rendering.macro.PagesFollowingASiteSearch.description', 'rendering.macro.PagesFollowingASiteSearch.name')
+  #analytics_displayMacroTitle('Analytics.Code.Macros.PagesFollowingASiteSearch', 'rendering.macro.PagesFollowingASiteSearch.description', 'rendering.macro.PagesFollowingASiteSearch.name')
   #analytics_getDate()
   #set ($discard = $xwiki.jsx.use('Analytics.Code.Macros.RowEvolution'))
   #set ($parameters = $escapetool.url({
@@ -271,7 +271,7 @@
       }
     }
   })
-  #analytics_getAnalyticsMacroId('pagesFollowingASiteSearchMacro', $macroId)
+  #analytics_getMacroId('pagesFollowingASiteSearchMacro', $macroId)
 
   {{liveData
     id="$macroId"

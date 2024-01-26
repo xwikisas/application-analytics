@@ -59,7 +59,7 @@
 
   #analytics_readFiltersFromRequest($matomoKeysMapping)
 
-    #set ($parameters = {
+  #set ($parameters = {
     'period': $request.period,
     'date': $request.date,
     'module': 'API',

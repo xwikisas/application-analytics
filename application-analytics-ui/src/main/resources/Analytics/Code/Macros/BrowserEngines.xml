@@ -246,7 +246,7 @@
 
 {{velocity}}
 #macro(executeMacro)
-  #analytics_displayAnalyticsMacroTitle('Analytics.Code.Macros.BrowserEngines', 'rendering.macro.browserEngines.description', 'rendering.macro.browserEngines.name')
+  #analytics_displayMacroTitle('Analytics.Code.Macros.BrowserEngines', 'rendering.macro.browserEngines.description', 'rendering.macro.browserEngines.name')
   #analytics_getDate()
   #set ($discard = $xwiki.jsx.use('Analytics.Code.Macros.RowEvolution'))
   #set ($parameters = $escapetool.url({
@@ -274,7 +274,7 @@
       }
     }
   })
-  #analytics_getAnalyticsMacroId('browserEnginesMacro', $macroId)
+  #analytics_getMacroId('browserEnginesMacro', $macroId)
 
   {{liveData
     id="$macroId"

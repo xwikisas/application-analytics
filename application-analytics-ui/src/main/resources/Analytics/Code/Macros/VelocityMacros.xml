@@ -185,12 +185,12 @@
 #end
 
 #set ($analyticsId = -1)
-#macro (analytics_getAnalyticsMacroId $macro $macroId)
+#macro (analytics_getMacroId $macro $macroId)
   #set ($analyticsId = $analyticsId + 1)
   #set ($macroId = $macro + '_' + $analyticsId)
 #end
 
-#macro(analytics_displayAnalyticsMacroTitle, $macroDocumentReference, $descriptionTranslationKey, $nameTranslationKey)
+#macro(analytics_displayMacroTitle, $macroDocumentReference, $descriptionTranslationKey, $nameTranslationKey)
   #set ($discard = $xwiki.ssx.use('Analytics.Code.AnalyticsJS'))
   #set ($url = $xwiki.getURL($macroDocumentReference))
   #set ($isDashboard = $doc.getObject('XWiki.GadgetClass'))

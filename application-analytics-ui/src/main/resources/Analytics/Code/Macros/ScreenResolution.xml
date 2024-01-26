@@ -246,7 +246,7 @@
 
 {{velocity}}
 #macro(executeMacro)
-  #analytics_displayAnalyticsMacroTitle('Analytics.Code.Macros.ScreenResolution', 'rendering.macro.screenResolution.description', 'rendering.macro.screenResolution.name')
+  #analytics_displayMacroTitle('Analytics.Code.Macros.ScreenResolution', 'rendering.macro.screenResolution.description', 'rendering.macro.screenResolution.name')
   #analytics_getDate()
   #set ($discard = $xwiki.jsx.use('Analytics.Code.Macros.RowEvolution'))#set ($period = 'range')
   #set ($parameters = $escapetool.url({
@@ -273,7 +273,7 @@
       }
     }
   })
-  #analytics_getAnalyticsMacroId('screenResolutionMacro', $macroId)
+  #analytics_getMacroId('screenResolutionMacro', $macroId)
 
   {{liveData
     id="$macroId"

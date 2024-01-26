@@ -246,7 +246,7 @@
 
 {{velocity}}
 #macro(executeMacro)
-  #analytics_displayAnalyticsMacroTitle('Analytics.Code.Macros.DeviceModel', 'rendering.macro.deviceModel.description', 'rendering.macro.deviceModel.name')
+  #analytics_displayMacroTitle('Analytics.Code.Macros.DeviceModel', 'rendering.macro.deviceModel.description', 'rendering.macro.deviceModel.name')
   #analytics_getDate()
   #set ($discard = $xwiki.jsx.use('Analytics.Code.Macros.RowEvolution'))#set ($parameters = $escapetool.url({
     'resultPage': 'Analytics.Code.Macros.SoftwareDevicesJSON',
@@ -272,7 +272,7 @@
       }
     }
   })
-  #analytics_getAnalyticsMacroId('deviceModelMacro', $macroId)
+  #analytics_getMacroId('deviceModelMacro', $macroId)
 
   {{liveData
     id="$macroId"

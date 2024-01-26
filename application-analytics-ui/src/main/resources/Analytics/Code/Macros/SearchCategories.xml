@@ -246,7 +246,7 @@
 
 {{velocity}}
 #macro(executeMacro)
-  #analytics_displayAnalyticsMacroTitle('Analytics.Code.Macros.SearchCategories', 'rendering.macro.searchCategories.description', 'rendering.macro.searchCategories.name')
+  #analytics_displayMacroTitle('Analytics.Code.Macros.SearchCategories', 'rendering.macro.searchCategories.description', 'rendering.macro.searchCategories.name')
   #analytics_getDate()
   #set ($discard =$xwiki.jsx.use('Analytics.Code.Macros.RowEvolution'))
   #set ($parameters = $escapetool.url({
@@ -269,7 +269,7 @@
       }
     }
   })
-  #analytics_getAnalyticsMacroId('searchCategoriesMacro', $macroId )
+  #analytics_getMacroId('searchCategoriesMacro', $macroId )
 
   {{liveData
     id="$macroId"

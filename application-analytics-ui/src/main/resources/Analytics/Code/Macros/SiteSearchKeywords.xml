@@ -247,7 +247,7 @@
 
 {{velocity}}
 #macro(executeMacro)
-  #analytics_displayAnalyticsMacroTitle('Analytics.Code.Macros.SiteSearchKeywords', 'rendering.macro.siteSearchKeywords.description', 'rendering.macro.siteSearchKeywords.name')
+  #analytics_displayMacroTitle('Analytics.Code.Macros.SiteSearchKeywords', 'rendering.macro.siteSearchKeywords.description', 'rendering.macro.siteSearchKeywords.name')
   #analytics_getDate()
   #set ($discard =$xwiki.jsx.use('Analytics.Code.Macros.RowEvolution'))
   #set ($parameters = $escapetool.url({
@@ -273,7 +273,7 @@
     }
   })
 
-  #analytics_getAnalyticsMacroId('siteSearchKeywordsMacro', $macroId)
+  #analytics_getMacroId('siteSearchKeywordsMacro', $macroId)
 
   {{liveData
     id="$macroId"

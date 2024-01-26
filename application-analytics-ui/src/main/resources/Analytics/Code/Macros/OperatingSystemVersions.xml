@@ -246,7 +246,7 @@
 
 {{velocity}}
 #macro(executeMacro)
-  #analytics_displayAnalyticsMacroTitle('Analytics.Code.Macros.OperatingSystemVersions', 'rendering.macro.operatingSystemVersions.description', 'rendering.macro.operatingSystemVersions.name')
+  #analytics_displayMacroTitle('Analytics.Code.Macros.OperatingSystemVersions', 'rendering.macro.operatingSystemVersions.description', 'rendering.macro.operatingSystemVersions.name')
   #analytics_getDate()
   #set ($discard = $xwiki.jsx.use('Analytics.Code.Macros.RowEvolution'))#set ($parameters = $escapetool.url({
     'resultPage': 'Analytics.Code.Macros.SoftwareDevicesJSON',
@@ -273,7 +273,7 @@
       }
     }
   })
-  #analytics_getAnalyticsMacroId('operatingSystemVersionsMacro', $macroId)
+  #analytics_getMacroId('operatingSystemVersionsMacro', $macroId)
 
   {{liveData
     id="$macroId"
