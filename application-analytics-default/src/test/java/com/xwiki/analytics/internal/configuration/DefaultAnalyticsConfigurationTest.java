@@ -80,7 +80,7 @@ public class DefaultAnalyticsConfigurationTest
         assertEquals("TEST", this.defaultAnalyticsConfiguration.getTrackingCode());
     }
     @BeforeEach
-    private void setLogger()
+    void setLogger()
     {
         ReflectionUtils.setFieldValue(this.defaultAnalyticsConfiguration, "logger", this.logger);
     }
