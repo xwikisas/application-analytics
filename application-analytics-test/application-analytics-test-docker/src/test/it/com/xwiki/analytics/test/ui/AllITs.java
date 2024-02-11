@@ -17,7 +17,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package xwiki.analytics.test.ui;
+package com.xwiki.analytics.test.ui;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;

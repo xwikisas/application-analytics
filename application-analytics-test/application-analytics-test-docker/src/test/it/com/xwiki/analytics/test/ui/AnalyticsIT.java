@@ -17,7 +17,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package xwiki.analytics.test.ui;
+package com.xwiki.analytics.test.ui;
 
 import java.util.Collections;
 
@@ -39,8 +39,7 @@ import com.xwiki.analytics.test.po.AdminViewPage;
 import com.xwiki.analytics.test.po.HomePageViewPage;
 import com.xwiki.analytics.test.po.MatomoViewPage;
 import com.xwiki.analytics.test.po.MostViewedPagesMacroViewPage;
-
-import xwiki.analytics.test.ui.config.Config;
+import com.xwiki.analytics.test.ui.config.Config;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -216,7 +215,7 @@ public class AnalyticsIT
         GenericContainer<?> matomoContainer = new GenericContainer<>(Config.MATOMO_CONTAINER_NAME).withExposedPorts(80)
             .withEnv("MATOMO_DATABASE_HOST",
                 Config.ADDRESS + ":" + dbContainer.getMappedPort(Config.DB_CONTAINER_EXPOSED_PORT))
-            .withFileSystemBind("src/main/resources/config.ini.php", Config.MATOMO_CONFIG_FILE_PATH);
+            .withFileSystemBind("src/test/it/resources/config.ini.php", Config.MATOMO_CONFIG_FILE_PATH);
         matomoContainer.setPortBindings(Collections.singletonList(String.format("%d:80", Config.MATOMO_BRIDGE_PORT)));
         DockerTestUtils.startContainer(matomoContainer, testConfiguration);
         return matomoContainer;

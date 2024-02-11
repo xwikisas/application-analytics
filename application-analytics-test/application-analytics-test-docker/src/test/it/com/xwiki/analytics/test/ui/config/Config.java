@@ -17,7 +17,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package xwiki.analytics.test.ui.config;
+package com.xwiki.analytics.test.ui.config;
 
 public class Config
 {
@@ -35,7 +35,7 @@ public class Config
 
     public static final String ADDRESS = "172.17.0.1";
 
-    public static final String MATOMO_CONTAINER_NAME = "matomo:latest";
+    public static final String MATOMO_CONTAINER_NAME = "matomo:4.15.1";
 
     public static final String MATOMO_CONFIG_FILE_PATH = "/var/www/html/config/config.ini.php";
 

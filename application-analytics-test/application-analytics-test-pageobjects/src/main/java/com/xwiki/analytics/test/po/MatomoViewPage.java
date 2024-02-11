@@ -24,6 +24,8 @@ import org.xwiki.model.reference.DocumentReference;
 import org.xwiki.test.ui.XWikiWebDriver;
 import org.xwiki.test.ui.po.ViewPage;
 
+import static org.junit.Assert.fail;
+
 /**
  * Encompass the process of creating a Matomo token using the browser interface provided by Matomo.
  */
@@ -47,7 +49,6 @@ public class MatomoViewPage extends ViewPage
         getUtil().gotoPage(address);
         getUtil().gotoPage(
             address + "/index.php?module=UsersManager&action=addNewToken&idSite=1&period=day&date=2023" + "-09-03");
-
         driver.findElement(By.id("login_form_login")).sendKeys(credentials);
         driver.findElement(By.id("login_form_password")).sendKeys(credentials);
         driver.findElement(By.id("login_form_submit")).click();

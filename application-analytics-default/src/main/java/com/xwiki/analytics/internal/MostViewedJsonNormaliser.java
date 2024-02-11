@@ -30,6 +30,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.resource.CreateResourceReferenceException;
 import org.xwiki.resource.CreateResourceTypeException;
@@ -45,7 +46,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.xwiki.analytics.JsonNormaliser;
 
-import liquibase.repackaged.org.apache.commons.lang3.exception.ExceptionUtils;
 
 /**
  * Implementation for {@link JsonNormaliser}.

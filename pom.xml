@@ -24,7 +24,7 @@
   <parent>
     <groupId>com.xwiki.parent</groupId>
     <artifactId>xwikisas-parent-platform</artifactId>
-    <version>13.10-3</version>
+    <version>14.10-1</version>
   </parent>
   <groupId>com.xwiki.analytics</groupId>
   <artifactId>application-analytics</artifactId>
@@ -52,6 +52,13 @@
     <module>application-analytics-api</module>
     <module>application-analytics-default</module>
     <module>application-analytics-ui</module>
-    <module>application-analytics-test</module>
   </modules>
+  <profiles>
+    <profile>
+      <id>integration-tests</id>
+      <modules>
+        <module>application-analytics-test</module>
+      </modules>
+    </profile>
+  </profiles>
 </project>
