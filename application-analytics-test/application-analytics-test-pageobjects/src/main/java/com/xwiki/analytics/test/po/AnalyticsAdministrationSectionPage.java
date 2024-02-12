@@ -26,7 +26,7 @@ import org.xwiki.administration.test.po.AdministrationPage;
 import org.xwiki.test.ui.XWikiWebDriver;
 import org.xwiki.test.ui.po.ViewPage;
 
-public class AdminViewPage extends ViewPage
+public class AnalyticsAdministrationSectionPage extends ViewPage
 {
     private static final String TRACKING_CODE_ID = "Analytics.Code.ConfigurationClass_0_trackingCode";
 
@@ -38,19 +38,19 @@ public class AdminViewPage extends ViewPage
 
     private final XWikiWebDriver driver;
 
-    public AdminViewPage()
+    public AnalyticsAdministrationSectionPage()
     {
         driver = getUtil().getDriver();
     }
 
-    public AdminViewPage gotoAdminPage()
+    public AnalyticsAdministrationSectionPage gotoPage()
     {
         AdministrationPage administrationPage = AdministrationPage.gotoPage();
         administrationPage.clickSection("Other", "Analytics");
-        return new AdminViewPage();
+        return new AnalyticsAdministrationSectionPage();
     }
 
-    public AdminViewPage setTrackingCode(String value)
+    public AnalyticsAdministrationSectionPage setTrackingCode(String value)
     {
         WebElement element = driver.findElement(By.id(TRACKING_CODE_ID));
         element.clear();
@@ -58,7 +58,7 @@ public class AdminViewPage extends ViewPage
         return this;
     }
 
-    public AdminViewPage setAuthTokenId(String value)
+    public AnalyticsAdministrationSectionPage setAuthTokenId(String value)
     {
         WebElement element = driver.findElement(By.id(AUTH_TOKEN_ID));
         element.clear();
@@ -66,7 +66,7 @@ public class AdminViewPage extends ViewPage
         return this;
     }
 
-    public AdminViewPage setIdSiteId(String value)
+    public AnalyticsAdministrationSectionPage setIdSiteId(String value)
     {
         WebElement element = driver.findElement(By.id(IS_SITE));
         element.clear();
@@ -74,7 +74,7 @@ public class AdminViewPage extends ViewPage
         return this;
     }
 
-    public AdminViewPage setRequestAddressId(String value)
+    public AnalyticsAdministrationSectionPage setRequestAddressId(String value)
     {
         WebElement element = driver.findElement(By.id(REQUEST_ADDRESS_ID));
         element.clear();
@@ -82,26 +82,11 @@ public class AdminViewPage extends ViewPage
         return this;
     }
 
-    public AdminViewPage bringSaveButtonIntoView()
+    public AnalyticsAdministrationSectionPage saveConfigs()
     {
         WebElement saveButton = driver.findElement(By.cssSelector(".btn.btn-primary"));
         Actions actions = driver.createActions();
         actions.moveToElement(saveButton).click().perform();
         return this;
-    }
-
-    public void inProgressNotification(String message)
-    {
-        this.waitForNotificationInProgressMessage(message);
-    }
-
-    public void errorNotification(String message)
-    {
-        this.waitForNotificationErrorMessage(message);
-    }
-
-    public void successNotification(String message)
-    {
-        this.waitForNotificationSuccessMessage(message);
     }
 }

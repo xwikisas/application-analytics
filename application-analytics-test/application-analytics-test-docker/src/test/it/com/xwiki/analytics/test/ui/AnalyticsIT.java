@@ -24,7 +24,8 @@ import java.util.Collections;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-import org.testcontainers.containers.Container;
+import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.utility.DockerImageName;
@@ -35,17 +36,17 @@ import org.xwiki.test.ui.TestUtils;
 import org.xwiki.test.ui.XWikiWebDriver;
 import org.xwiki.test.ui.po.BaseModal;
 
-import com.xwiki.analytics.test.po.AdminViewPage;
-import com.xwiki.analytics.test.po.HomePageViewPage;
+import com.xwiki.analytics.test.po.AnalyticsAdministrationSectionPage;
+import com.xwiki.analytics.test.po.AnalyticsEditPage;
+import com.xwiki.analytics.test.po.AnalyticsViewPage;
 import com.xwiki.analytics.test.po.MatomoViewPage;
 import com.xwiki.analytics.test.po.MostViewedPagesMacroViewPage;
 import com.xwiki.analytics.test.ui.config.Config;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
 @UITest
-public class AnalyticsIT
+class AnalyticsIT
 {
     /**
      * Creates the Admin user
@@ -53,9 +54,11 @@ public class AnalyticsIT
     public void setupUsers(TestUtils testUtils)
     {
         testUtils.loginAsSuperAdmin();
+        //TODO remove this line when upgrading the parent to >=15.10 because it was added to createAdminUser function
         testUtils.setGlobalRights("XWiki.XWikiAdminGroup", "", "admin", true);
         testUtils.createAdminUser();
         testUtils.loginAsAdmin();
+
     }
 
     /**
@@ -66,7 +69,8 @@ public class AnalyticsIT
     {
         GenericContainer<?> sqlContainer = startDb(testConfiguration);
         GenericContainer<?> matomoContainer = startMatomo(testConfiguration, sqlContainer);
-        Container.ExecResult result = matomoContainer.execInContainer("sh", "-c",
+        // Modify the name of the matomo.js to make sure that the browser doesn't block it.
+        matomoContainer.execInContainer("sh", "-c",
             "grep -rl 'matomo.js' /var/www/html/ | xargs -d '\\n' -I {} sed -i 's/matomo.js/36011373.js/g' \"{}\"");
         matomoContainer.execInContainer("sh", "-c", "mv /var/www/html/matomo.js /var/www/html/36011373.js");
         Config.MATOMO_AUTH_TOKEN =
@@ -74,7 +78,7 @@ public class AnalyticsIT
     }
 
     /**
-     * Import the platform.html.head UIExtension point to make the tracking code work in the test environmnet.
+     * Import the platform.html.head UIExtension point to make the tracking code work in the test environment.
      */
     private void setupUIExtension(TestUtils testUtils) throws Exception
     {
@@ -90,32 +94,31 @@ public class AnalyticsIT
         setupContainers(testConfiguration);
         setupUIExtension(testUtils);
         setupUsers(testUtils);
-        HomePageViewPage.gotoPageHomePage();
+        AnalyticsViewPage.gotoPage();
     }
 
     /**
-     * The function checks that the "Save" button displays the correct messages when the configurations provided by the
+     * Check that the Save button displays the correct messages when the configurations provided by the
      * users are incorrect.
      */
     @Test
     @Order(1)
     void checkWrongConfigs(XWikiWebDriver driver) throws InterruptedException
     {
-        AdminViewPage adminViewPage = new AdminViewPage();
-        adminViewPage.gotoAdminPage();
-        System.out.println("/q/q " + Config.MATOMO_AUTH_TOKEN + " /q/q");
-        adminViewPage.setTrackingCode("").setAuthTokenId(Config.MATOMO_AUTH_TOKEN).setIdSiteId("1")
-            .setRequestAddressId(Config.ADDRESS + ":" + Config.MATOMO_BRIDGE_PORT).bringSaveButtonIntoView();
+        AnalyticsAdministrationSectionPage analyticsConfigViewPage = new AnalyticsAdministrationSectionPage();
+        analyticsConfigViewPage.gotoPage();
+        analyticsConfigViewPage.setTrackingCode("").setAuthTokenId(Config.MATOMO_AUTH_TOKEN).setIdSiteId("1")
+            .setRequestAddressId(Config.ADDRESS + ":" + Config.MATOMO_BRIDGE_PORT).saveConfigs();
 
-        adminViewPage.inProgressNotification("Saving...");
-        adminViewPage.successNotification("Saved");
-        adminViewPage.inProgressNotification("Checking connection to Matomo.");
-        adminViewPage.errorNotification("Failed to connect to Matomo. Please check your configuration " + "values.");
-        HomePageViewPage.gotoPageHomePage();
+        analyticsConfigViewPage.waitForNotificationInProgressMessage("Saving...");
+        analyticsConfigViewPage.waitForNotificationSuccessMessage("Saved");
+        analyticsConfigViewPage.waitForNotificationInProgressMessage("Checking connection to Matomo.");
+        analyticsConfigViewPage.waitForNotificationErrorMessage("Failed to connect to Matomo. Please check your configuration " + "values.");
+        AnalyticsViewPage.gotoPage();
     }
 
     /**
-     * The function checks that the "Save" button displays the correct messages when the configurations provided by the
+     * Check that the Save button displays the correct messages when the configurations provided by the
      * users are correct.
      */
     @Test
@@ -123,17 +126,17 @@ public class AnalyticsIT
     void checkValidConfigs(XWikiWebDriver driver) throws InterruptedException
     {
 
-        AdminViewPage adminViewPage = new AdminViewPage();
+        AnalyticsAdministrationSectionPage analyticsConfigViewPage = new AnalyticsAdministrationSectionPage();
 
-        adminViewPage.gotoAdminPage();
-        adminViewPage.setTrackingCode(Config.getTrackingCode()).setAuthTokenId(Config.MATOMO_AUTH_TOKEN)
+        analyticsConfigViewPage.gotoPage();
+        analyticsConfigViewPage.setTrackingCode(Config.getTrackingCode()).setAuthTokenId(Config.MATOMO_AUTH_TOKEN)
             .setIdSiteId("1").setRequestAddressId("http://" + Config.ADDRESS + ":" + Config.MATOMO_BRIDGE_PORT + "/")
-            .bringSaveButtonIntoView();
-        adminViewPage.inProgressNotification("Saving...");
-        adminViewPage.successNotification("Saved");
-        adminViewPage.inProgressNotification("Checking connection to Matomo.");
-        adminViewPage.successNotification("Test connection succeeded!");
-        HomePageViewPage.gotoPageHomePage();
+            .saveConfigs();
+        analyticsConfigViewPage.waitForNotificationInProgressMessage("Saving...");
+        analyticsConfigViewPage.waitForNotificationSuccessMessage("Saved");
+        analyticsConfigViewPage.waitForNotificationInProgressMessage("Checking connection to Matomo.");
+        analyticsConfigViewPage.waitForNotificationSuccessMessage("Test connection succeeded!");
+        AnalyticsViewPage.gotoPage();
     }
 
     /**
@@ -144,17 +147,12 @@ public class AnalyticsIT
     void checkEditPermissions(XWikiWebDriver driver) throws InterruptedException
     {
 
-        HomePageViewPage.gotoPageHomePage();
+        AnalyticsViewPage analyticsViewPage = AnalyticsViewPage.gotoPage();
         // Add a gadget to the dashboard.
-        HomePageViewPage.gotoAndEdit().addNewMacro("searchCategories", "Search Categories").saveDashboard();
-        // Wait 2 seconds for the macros to load
-        Thread.sleep(2000);
-        assertEquals(3, HomePageViewPage.noOfGadgets());
-        // Remove a gadget from the dashboard.
-        HomePageViewPage.gotoAndEdit().removeLastMacro().saveDashboard();
-        // Wait 2 seconds for the macros to load
-        Thread.sleep(2000);
-        assertEquals(2, HomePageViewPage.noOfGadgets());
+        AnalyticsEditPage.gotoPage().addNewMacro("Search Categories").saveDashboard();
+        driver.waitUntilCondition(ExpectedConditions.numberOfElementsToBeMoreThan(By.cssSelector(".gadget-content"),
+            2));
+        assertEquals(3, analyticsViewPage.getGadgetCount());
     }
 
     /**
@@ -181,7 +179,6 @@ public class AnalyticsIT
     {
         MostViewedPagesMacroViewPage mostViewedPagesMacroViewPage = new MostViewedPagesMacroViewPage();
         BaseModal baseModal = mostViewedPagesMacroViewPage.gotoPage().openRowEvolutionModal();
-        System.out.println("/MODAL/ " + baseModal.isDisplayed() + "/A/A");
         assertTrue(baseModal.isDisplayed());
     }
 

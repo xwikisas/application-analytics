@@ -19,44 +19,29 @@
  */
 package com.xwiki.analytics.test.po;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.openqa.selenium.By;
-import org.xwiki.model.reference.DocumentReference;
-import org.xwiki.test.ui.XWikiWebDriver;
 import org.xwiki.test.ui.po.ViewPage;
 
-public class HomePageViewPage extends ViewPage
+public class AnalyticsViewPage extends ViewPage
 {
-    private static XWikiWebDriver driver;
 
-    public HomePageViewPage()
+
+    public AnalyticsViewPage()
     {
-        driver = getUtil().getDriver();
+
     }
 
-    public static HomePageViewPage gotoPageHomePage()
+    public static AnalyticsViewPage gotoPage()
     {
         getUtil().gotoPage("Analytics", "WebHome");
-        return new HomePageViewPage();
+        return new AnalyticsViewPage();
     }
-
-    public static HomePageEditPage gotoAndEdit()
-    {
-        DocumentReference documentReference = new DocumentReference("xwiki", "Analytics", "WebHome");
-        Map<String, String> params = new HashMap<>();
-        params.put("force", "1");
-        getUtil().gotoPage(documentReference, "edit", params);
-        return new HomePageEditPage();
-    }
-
     /**
      * Calculates the number of gadgets that are present on the homepage of the application.
      * @return number of gadgets
      */
-    public static int noOfGadgets()
+    public int getGadgetCount()
     {
-        return driver.findElements(By.className("gadget")).size();
+        return getUtil().getDriver().findElements(By.className("gadget")).size();
     }
 }

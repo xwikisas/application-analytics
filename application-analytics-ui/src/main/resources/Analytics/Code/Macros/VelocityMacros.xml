@@ -203,7 +203,7 @@
     #set ($discard = $xwiki.jsx.use('Analytics.Code.AnalyticsJS'))
   #else
     {{html clean="false"}}
-     &lt;h2&gt;&lt;div&gt;&lt;span&gt;$escapetool.xml($services.localization.render($nameTranslationKey))&lt;/span&gt; &lt;a title="$description" href=$url&gt;$services.icon.renderHTML('info')&lt;/a&gt;&lt;div&gt;&lt;/h2&gt;
+     &lt;h2&gt;&lt;div&gt;&lt;span&gt;$escapetool.xml($services.localization.render($nameTranslationKey))&lt;/span&gt; &lt;a class="analyticsDescription" title="$description" href=$url&gt;$services.icon.renderHTML('info')&lt;/a&gt;&lt;div&gt;&lt;/h2&gt;
     {{/html}}
   #end
 #end

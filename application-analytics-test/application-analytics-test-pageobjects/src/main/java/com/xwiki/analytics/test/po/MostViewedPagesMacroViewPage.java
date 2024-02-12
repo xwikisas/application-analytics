@@ -25,7 +25,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.openqa.selenium.By;
-import org.xwiki.test.ui.XWikiWebDriver;
 import org.xwiki.test.ui.po.BaseModal;
 import org.xwiki.test.ui.po.ViewPage;
 
@@ -36,11 +35,9 @@ public class MostViewedPagesMacroViewPage extends ViewPage
 {
     private static final String ROW_EVOLUTION_BUTTON_SELECTOR = ".analyticsRowEvolution";
 
-    private final XWikiWebDriver driver;
 
     public MostViewedPagesMacroViewPage()
     {
-        driver = getUtil().getDriver();
     }
 
     public MostViewedPagesMacroViewPage gotoPage()
@@ -57,8 +54,8 @@ public class MostViewedPagesMacroViewPage extends ViewPage
     public BaseModal openRowEvolutionModal()
     {
         BaseModal baseModal = new BaseModal(By.cssSelector(".modal-dialog.modal-lg"));
-        driver.waitUntilElementIsVisible(By.cssSelector(ROW_EVOLUTION_BUTTON_SELECTOR));
-        driver.findElement(By.cssSelector(ROW_EVOLUTION_BUTTON_SELECTOR)).click();
+        getUtil().getDriver().waitUntilElementIsVisible(By.cssSelector(ROW_EVOLUTION_BUTTON_SELECTOR));
+        getUtil().getDriver().findElement(By.cssSelector(ROW_EVOLUTION_BUTTON_SELECTOR)).click();
         return baseModal;
     }
 
@@ -69,7 +66,7 @@ public class MostViewedPagesMacroViewPage extends ViewPage
      */
     public String getMacroDescription()
     {
-        driver.waitUntilElementIsVisible(By.cssSelector(".xcontent h2 div a"));
-        return driver.findElement(By.cssSelector(".xcontent h2 div a")).getAttribute("title");
+        getUtil().getDriver().waitUntilElementIsVisible(By.cssSelector(".analyticsDescription"));
+        return getUtil().getDriver().findElement(By.cssSelector(".analyticsDescription")).getAttribute("title");
     }
 }
