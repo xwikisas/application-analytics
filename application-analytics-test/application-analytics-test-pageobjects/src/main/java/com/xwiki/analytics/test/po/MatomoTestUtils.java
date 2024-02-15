@@ -20,9 +20,8 @@
 package com.xwiki.analytics.test.po;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.xwiki.test.ui.XWikiWebDriver;
-
-import static org.junit.Assert.fail;
 
 /**
  * Encompass the process of creating a Matomo token using the browser interface provided by Matomo.
@@ -43,7 +42,6 @@ public class MatomoTestUtils {
      * @return the newly created token as a string
      */
     public static String createToken(String address, XWikiWebDriver driver) {
-
         driver.get(address + "/index.php?module=UsersManager&action=addNewToken&idSite=1&period=day&date=2023-09-03");
         driver.waitUntilElementIsVisible(By.id(LOGIN_FORM_LOGIN_ID));
         driver.findElement(By.id(LOGIN_FORM_LOGIN_ID)).sendKeys(CREDENTIALS);
@@ -55,7 +53,8 @@ public class MatomoTestUtils {
         driver.findElement(By.id(LOGIN_FORM_PASSWORD_ID)).sendKeys(CREDENTIALS);
         driver.waitUntilElementIsVisible(By.id(LOGIN_FORM_SUBMIT_ID));
         driver.findElement(By.id(LOGIN_FORM_SUBMIT_ID)).click();
-        driver.waitUntilElementIsVisible(By.id(DESCRIPTION_ID));
+        // Sometimes the Matomo page loads slower and to avoid a flicker the timeout needs to be increased.
+        driver.waitUntilCondition(ExpectedConditions.visibilityOfElementLocated(By.id(DESCRIPTION_ID)), 15);
         driver.findElement(By.id(DESCRIPTION_ID)).sendKeys("TEST TOKEN");
         driver.waitUntilElementIsVisible(By.cssSelector(BTN_CSS_SELECTOR));
         driver.findElement(By.cssSelector(BTN_CSS_SELECTOR)).click();
