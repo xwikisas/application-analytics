@@ -22,25 +22,43 @@ package com.xwiki.analytics.test.po;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.FindBy;
 import org.xwiki.administration.test.po.AdministrationPage;
 import org.xwiki.test.ui.XWikiWebDriver;
 import org.xwiki.test.ui.po.ViewPage;
 
+/**
+ * Responsible for interacting with the configuration tab of the application.
+ */
 public class AnalyticsAdministrationSectionPage extends ViewPage
 {
-    private static final String TRACKING_CODE_ID = "Analytics.Code.ConfigurationClass_0_trackingCode";
+    @FindBy(
+            id = "Analytics.Code.ConfigurationClass_0_trackingCode"
+    )
+    private WebElement tracking_code;
 
-    private static final String AUTH_TOKEN_ID = "Analytics.Code.ConfigurationClass_0_authToken";
 
-    private static final String IS_SITE = "Analytics.Code.ConfigurationClass_0_siteId";
+    @FindBy(
+            id = "Analytics.Code.ConfigurationClass_0_authToken"
+    )
+    private WebElement auth_token;
 
-    private static final String REQUEST_ADDRESS_ID = "Analytics.Code.ConfigurationClass_0_requestAddress";
+    @FindBy(
+            id = "Analytics.Code.ConfigurationClass_0_siteId"
+    )
+    private WebElement site;
 
-    private final XWikiWebDriver driver;
+
+    @FindBy(
+            id = "Analytics.Code.ConfigurationClass_0_requestAddress"
+    )
+    private WebElement request_address;
+
+
 
     public AnalyticsAdministrationSectionPage()
     {
-        driver = getUtil().getDriver();
+
     }
 
     public AnalyticsAdministrationSectionPage gotoPage()
@@ -52,40 +70,36 @@ public class AnalyticsAdministrationSectionPage extends ViewPage
 
     public AnalyticsAdministrationSectionPage setTrackingCode(String value)
     {
-        WebElement element = driver.findElement(By.id(TRACKING_CODE_ID));
-        element.clear();
-        element.sendKeys(value);
+        tracking_code.clear();
+        tracking_code.sendKeys(value);
         return this;
     }
 
     public AnalyticsAdministrationSectionPage setAuthTokenId(String value)
     {
-        WebElement element = driver.findElement(By.id(AUTH_TOKEN_ID));
-        element.clear();
-        element.sendKeys(value);
+        auth_token.clear();
+        auth_token.sendKeys(value);
         return this;
     }
 
     public AnalyticsAdministrationSectionPage setIdSiteId(String value)
     {
-        WebElement element = driver.findElement(By.id(IS_SITE));
-        element.clear();
-        element.sendKeys(value);
+        site.clear();
+        site.sendKeys(value);
         return this;
     }
 
     public AnalyticsAdministrationSectionPage setRequestAddressId(String value)
     {
-        WebElement element = driver.findElement(By.id(REQUEST_ADDRESS_ID));
-        element.clear();
-        element.sendKeys(value);
+        request_address.clear();
+        request_address.sendKeys(value);
         return this;
     }
 
     public AnalyticsAdministrationSectionPage saveConfigs()
     {
-        WebElement saveButton = driver.findElement(By.cssSelector(".btn.btn-primary"));
-        Actions actions = driver.createActions();
+        WebElement saveButton = getUtil().getDriver().findElement(By.cssSelector(".btn.btn-primary"));
+        Actions actions = getUtil().getDriver().createActions();
         actions.moveToElement(saveButton).click().perform();
         return this;
     }

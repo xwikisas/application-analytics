@@ -25,48 +25,33 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.openqa.selenium.By;
-import org.xwiki.test.ui.po.BaseModal;
+import org.openqa.selenium.WebElement;
+import org.xwiki.test.ui.po.BaseElement;
 import org.xwiki.test.ui.po.ViewPage;
 
 /**
- * View for the MostViewedPages macro that lets us interact with the page of the macro.
+ * View for the MostViewedPages macro that lets us interact with the macro.
  */
-public class MostViewedPagesMacroViewPage extends ViewPage
+public class MostViewedPagesElement extends BaseElement
 {
-    private static final String ROW_EVOLUTION_BUTTON_SELECTOR = ".analyticsRowEvolution";
 
 
-    public MostViewedPagesMacroViewPage()
+    WebElement macroOutput;
+    public MostViewedPagesElement(String id)
     {
+        getUtil().getDriver().waitUntilElementIsVisible(By.id(id));
+        macroOutput = getUtil().getDriver().findElement(By.id(id));
     }
 
-    public MostViewedPagesMacroViewPage gotoPage()
-    {
-        List<String> spaces = Arrays.asList("Analytics", "Code", "Macros");
-        getUtil().gotoPage(spaces, "MostViewedPages", "view", "");
-        return this;
-    }
 
-    /**
-     * Opens the Row Evolution modal and waits until it is fully visible before returning it.
-     * @return the modal
-     */
-    public BaseModal openRowEvolutionModal()
-    {
-        BaseModal baseModal = new BaseModal(By.cssSelector(".modal-dialog.modal-lg"));
-        getUtil().getDriver().waitUntilElementIsVisible(By.cssSelector(ROW_EVOLUTION_BUTTON_SELECTOR));
-        getUtil().getDriver().findElement(By.cssSelector(ROW_EVOLUTION_BUTTON_SELECTOR)).click();
-        return baseModal;
-    }
 
     /***
      * This method first waits for the visibility of an information button, identified by a specific CSS selector.
      * Once the information button is visible it selects the tile attribute and returns it.
-     * @return THe description of a macro.
+     * @return the description of a macro.
      */
     public String getMacroDescription()
     {
-        getUtil().getDriver().waitUntilElementIsVisible(By.cssSelector(".analyticsDescription"));
-        return getUtil().getDriver().findElement(By.cssSelector(".analyticsDescription")).getAttribute("title");
+        return macroOutput.findElement(By.cssSelector(".analyticsDescription")).getAttribute("title");
     }
 }

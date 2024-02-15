@@ -26,6 +26,10 @@ import org.openqa.selenium.By;
 import org.xwiki.ckeditor.test.po.MacroDialogSelectModal;
 import org.xwiki.model.reference.DocumentReference;
 import org.xwiki.test.ui.po.editor.EditPage;
+
+/**
+ * Responsible for interacting with the main page of the application when the page is in edit mode.
+ */
 public class AnalyticsEditPage extends EditPage
 {
 

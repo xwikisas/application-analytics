@@ -20,30 +20,20 @@
 package com.xwiki.analytics.test.po;
 
 import org.openqa.selenium.By;
-import org.xwiki.test.ui.po.ViewPage;
+import org.xwiki.test.ui.po.BaseModal;
 
-/**
- * Responsible for interacting with the main page of the application when the page is in view mode.
- */
-public class AnalyticsViewPage extends ViewPage
-{
+public class RowEvolutionModal extends BaseModal {
+    private static final String ROW_EVOLUTION_BUTTON_SELECTOR = ".analyticsRowEvolution";
 
 
-    public AnalyticsViewPage()
+    public RowEvolutionModal(By selector) {
+        super(selector);
+    }
+    public RowEvolutionModal openModal()
     {
+        getUtil().getDriver().waitUntilElementIsVisible(By.cssSelector(ROW_EVOLUTION_BUTTON_SELECTOR));
+        getUtil().getDriver().findElement(By.cssSelector(ROW_EVOLUTION_BUTTON_SELECTOR)).click();
+        return this;
     }
 
-    public static AnalyticsViewPage gotoPage()
-    {
-        getUtil().gotoPage("Analytics", "WebHome");
-        return new AnalyticsViewPage();
-    }
-    /**
-     * Calculates the number of gadgets that are present on the homepage of the application.
-     * @return number of gadgets
-     */
-    public int getGadgetCount()
-    {
-        return getUtil().getDriver().findElements(By.className("gadget")).size();
-    }
 }
