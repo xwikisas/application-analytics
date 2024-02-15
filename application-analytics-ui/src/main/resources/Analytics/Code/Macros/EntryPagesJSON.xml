@@ -20,9 +20,9 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc version="1.4" reference="Analytics.Code.Macros.SiteSearchKeywordsJSON" locale="">
+<xwikidoc version="1.4" reference="Analytics.Code.Macros.EntryPagesJSON" locale="">
   <web>Analytics.Code.Macros</web>
-  <name>SiteSearchKeywordsJSON</name>
+  <name>EntryPagesJSON</name>
   <language/>
   <defaultLanguage/>
   <translation>0</translation>
@@ -31,30 +31,22 @@
   <author>xwiki:XWiki.Admin</author>
   <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
   <version>1.1</version>
-  <title>SiteSearchKeywordsJSON</title>
+  <title>EntryPagesJSON</title>
   <comment/>
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>true</hidden>
   <content>{{include reference='Analytics.Code.Macros.VelocityMacros'/}}
+
 {{velocity}}
-#if ($xcontext.action == 'get')
-  #set ($offset = $numbertool.toNumber($request.offset).intValue())
-  ## The offset sent by the live table starts at 1.
-  #set ($offset = $offset - 1)
-  #if (!$offset || $offset &lt; 0)
-    #set ($offset = 0)
-  #end
-  #set ($limit = $numbertool.toNumber($request.limit).intValue())
-  #if (!$limit)
-    #set ($limit = 15)
-  #end
-  ##
+  #analytics_livedataPagination()
+
+  ## Mapping between the livedata columns and the Matomo fields.
   #set ($matomoKeysMapping = {
-    'keyword': 'label',
-    'searches': 'nb_visits',
-    'nbOfResultPages': 'nb_pages_per_search',
-    'exitRate': 'exit_rate'
+    'pageTitle' : 'label',
+    'visits': 'nb_visits',
+    'entrances': 'entry_nb_visits',
+    'bounces': 'entry_bounce_count'
   })
   #set ($sort = 'nb_hits')
   #set ($order = 'desc')
@@ -63,46 +55,43 @@
     #set ($order = $request.dir)
   #end
 
-  #set ($filters={})
-  #foreach ($key in $matomoKeysMapping.keySet())
-    #set ($value = $request.get($key))
-    #if ($value &amp;&amp; $value != '')
-      #set($discard = $filters.put($matomoKeysMapping.get($key), $request.get($key)))
-    #end
-  #end
-
+  #analytics_readFiltersFromRequest($matomoKeysMapping)
   #set ($parameters = {
-    'period': $request.period,
-    'date': $request.date,
-    'module': 'API',
-    'method': 'Actions.getSiteSearchKeywords',
-    'format': 'json',
-    'filter_limit': $request.limitEntries,
-    'filter_sort_column': $sort,
-    'filter_sort_order': $order
+    'period' : $request.period,
+    'date' : $request.date,
+    'module' : 'API',
+    'method' : 'Actions.getPageUrls',
+    'format' : 'json',
+    'filter_limit' : $request.limitEntries,
+    'filter_sort_column' : $sort,
+    'filter_sort_order' : $order,
+    'expanded' : '1',
+    'flat' : '1'
   })
 
   ## Get the JSON response from Matomo.
   #set ($analyticsResult = $services.analytics.makeRequest($parameters, $filters, 'MostViewedPages'))
   #if ($offset &lt; $analyticsResult.size())
-    #set ($toIndex =  $mathtool.min($mathtool.add($offset, $limit), $analyticsResult.size()))
-    #analytics_subSet($analyticsResult, $offset, $toIndex, $resultList)
+    #set ($toIndex = $mathtool.min($mathtool.add($offset, $limit), $analyticsResult.size()))
+    #subSet($analyticsResult, $offset, $toIndex, $resultList)
   #end
+
   #set ($results = {
-    'totalrows': $analyticsResult.size(),
-    'returnedrows': $resultList.size(),
-    'offset': $mathtool.add($offset, 1),
-    'reqNo': $numbertool.toNumber($request.reqNo).intValue(),
-    'rows': []
+    "totalrows": $analyticsResult.size(),
+    "returnedrows": $resultList.size(),
+    "offset": $mathtool.add($offset, 1),
+    "reqNo": $numbertool.toNumber($request.reqNo).intValue(),
+    "rows": []
   })
-  #foreach($currentEntry  in $resultList)
-    #set ($parameter =  $currentEntry.get('segment').asText())
+  #foreach ($currentEntry in $resultList)
+    #set ($url = $currentEntry.get('url').asText())
+    #getTime($currentEntry.get('sum_time_spent').asInt())
     #set ($discard = $results.rows.add({
-      'keyword': $currentEntry.get('label').asText(),
-      'searches': $currentEntry.get('nb_visits').asText(),
-      'nbOfResultPages': $currentEntry.get('nb_pages_per_search').asText(),
-      'exitRate': $currentEntry.get('exit_rate').asText(),
-      'actions': "#analytics_actions($parameter)"
+      'pageTitle' : "#createLinkElement($currentEntry.get('label').asText(), $url)",
+      'visits' :  $currentEntry.get('nb_visits').asText(),
+      'entrances' :  $currentEntry.get('entry_nb_visits').asText(),
+      'bounces' :  $currentEntry.get('entry_bounce_count').asText(),
+      'actions' : "#analyticsActions($url)"
     }))
   #end
   #jsonResponse($results)

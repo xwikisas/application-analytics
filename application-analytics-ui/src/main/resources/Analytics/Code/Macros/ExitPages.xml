@@ -20,9 +20,9 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc version="1.4" reference="Analytics.Code.Macros.DeviceModel" locale="">
+<xwikidoc version="1.4" reference="Analytics.Code.Macros.ExitPages" locale="">
   <web>Analytics.Code.Macros</web>
-  <name>DeviceModel</name>
+  <name>ExitPages</name>
   <language/>
   <defaultLanguage/>
   <translation>0</translation>
@@ -31,19 +31,19 @@
   <author>xwiki:XWiki.Admin</author>
   <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
   <version>1.1</version>
-  <title>DeviceModel</title>
+  <title>ExitPages</title>
   <comment/>
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>true</hidden>
   <content>{{analyticsFilter/}}
 
-{{deviceModel/}}</content>
+{{exitPages/}}</content>
   <object>
-    <name>Analytics.Code.Macros.DeviceModel</name>
+    <name>Analytics.Code.Macros.ExitPages</name>
     <number>0</number>
     <className>XWiki.WikiMacroClass</className>
-    <guid>2e6f11ab-2f28-4f6b-9e43-23df1de663dd</guid>
+    <guid>f10f255a-63c6-470a-ad11-9427e8fc570e</guid>
     <class>
       <name>XWiki.WikiMacroClass</name>
       <customClass/>
@@ -244,55 +244,54 @@
     <property>
       <code>{{include reference='Analytics.Code.Macros.VelocityMacros'/}}
 
+{{include reference="Licenses.Code.VelocityMacros"/}}
+
 {{velocity}}
 #macro(executeMacro)
-  #analytics_displayMacroTitle('Analytics.Code.Macros.DeviceModel', 'rendering.macro.deviceModel.description', 'rendering.macro.deviceModel.name')
+  #analytics_displayMacroTitle('Analytics.Code.Macros.ExitPages', 'rendering.macro.exitPages.description', 'rendering.macro.exitPages.name')
   #analytics_getDate()
-  #set ($discard = $xwiki.jsx.use('Analytics.Code.Macros.RowEvolution'))#set ($parameters = $escapetool.url({
-    'resultPage': 'Analytics.Code.Macros.SoftwareDevicesJSON',
+  #set ($discard = $xwiki.jsx.use('Analytics.Code.Macros.RowEvolution'))
+  #set ($parameters = $escapetool.url({
+    'resultPage': 'Analytics.Code.Macros.ExitPagesJSON',
     'date': $date,
     'period': 'range',
     'limitEntries': '-1',
-    'translationPrefix': 'analytics.softwareDevices.header.',
-    'matomoMethod': ' DevicesDetection.getModel',
-    'label': 'deviceModel'
+    'translationPrefix': 'analytics.exitPages.header.'
   }))
-  #set ($liveDataConfig= {
+  #set ($liveDataConfig = {
     'meta': {
       'propertyDescriptors': [
-        {'id': 'deviceModel', 'displayer': 'html'},
+        {'id': 'pageTitle', 'displayer': 'html'},
+        {'id': 'exitNbVisits', 'displayer': 'html'},
         {'id': 'visits', 'displayer': 'html'},
-        {'id': 'nbOfActions', 'displayer': 'html'},
-        {'id': 'timeSpent', 'displayer': 'html'},
-        {'id': 'bounceRate', 'displayer': 'html'},
-        {'id': 'actions',"filterable": false, "sortable": false, 'displayer': 'html'}
+        {'id': 'exitRate', 'displayer': 'html'},
+        {'id': 'actions', 'filterable': false, 'sortable': false, 'displayer': 'html'}
       ],
       'entryDescriptor': {
-        'idProperty': 'deviceModel'
+        'idProperty': 'pageTitle'
       }
     }
   })
-  #analytics_getMacroId('deviceModelMacro', $macroId)
+  #analytics_getMacroId('exitPagesMacro', $macroId)
 
   {{liveData
     id="$macroId"
-    properties='deviceModel, visits, nbOfActions, timeSpent, bounceRate, actions'
+    properties="pageTitle, exitNbVisits, visits, exitRate, actions"
     source='liveTable'
     sourceParameters="$parameters"
-    sort='visits:desc'
+    sort='exitNbVisits:desc'
   }}$jsontool.serialize($liveDataConfig){{/liveData}}
 
   #set ($rowEvolutionParams = {
-    'visits': 'nb_visits',
-    'actions': 'nb_actions',
-    'timeSpent': 'sum_visit_length',
-    'bounceRate': 'bounce_count'
+    'exits': 'exit_nb_visits',
+    'uniqueViews': 'nb_visits',
+    'exitRate': 'exit_rate'
   })
-  #analytics_modalRowEvolution($rowEvolutionParams, 'DeviceModel', $macroId)
+  #analytics_modalRowEvolution($rowEvolutionParams, 'ExitPages', $macroId)
 #end
-        #if ($services.licensing.licensor.hasLicensureForEntity(
-  $services.model.createDocumentReference('', ['Analytics', 'Code'], 'ConfigurationClass')))
-  #if ($xwiki.hasAccessLevel('view', 'Analytics.WebHome'))
+#if ($services.licensing.licensor.hasLicensureForEntity(
+    $services.model.createDocumentReference('', ['Analytics', 'Code'], 'ConfigurationClass')))
+  #if ($services.security.authorization.hasAccess('view', 'Analytics.WebHome'))
     #executeMacro()
   #else
     {{error}}{{translation key="analytics.accessDenied" /}}{{/error}}
@@ -318,10 +317,10 @@
       <description/>
     </property>
     <property>
-      <id>deviceModel</id>
+      <id>exitPages</id>
     </property>
     <property>
-      <name>Device Model</name>
+      <name>Exit Pages</name>
     </property>
     <property>
       <priority/>
@@ -334,10 +333,10 @@
     </property>
   </object>
   <object>
-    <name>Analytics.Code.Macros.DeviceModel</name>
+    <name>Analytics.Code.Macros.ExitPages</name>
     <number>0</number>
     <className>XWiki.WikiMacroParameterClass</className>
-    <guid>b3f23dc8-2655-4b29-a2ce-68a6752630bd</guid>
+    <guid>2a90a472-b371-4c5c-9835-847d30bea49a</guid>
     <class>
       <name>XWiki.WikiMacroParameterClass</name>
       <customClass/>
@@ -412,10 +411,10 @@
     </property>
   </object>
   <object>
-    <name>Analytics.Code.Macros.DeviceModel</name>
+    <name>Analytics.Code.Macros.ExitPages</name>
     <number>1</number>
     <className>XWiki.WikiMacroParameterClass</className>
-    <guid>72c506e4-9b6d-4549-aed2-44238ca2dafe</guid>
+    <guid>2295018e-5eaf-4958-a17e-3eca21462408</guid>
     <class>
       <name>XWiki.WikiMacroParameterClass</name>
       <customClass/>

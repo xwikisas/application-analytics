@@ -20,9 +20,9 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc version="1.4" reference="Analytics.Code.Macros.DeviceModel" locale="">
+<xwikidoc version="1.4" reference="Analytics.Code.Macros.EntryPages" locale="">
   <web>Analytics.Code.Macros</web>
-  <name>DeviceModel</name>
+  <name>EntryPages</name>
   <language/>
   <defaultLanguage/>
   <translation>0</translation>
@@ -31,19 +31,19 @@
   <author>xwiki:XWiki.Admin</author>
   <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
   <version>1.1</version>
-  <title>DeviceModel</title>
+  <title>EntryPages</title>
   <comment/>
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>true</hidden>
   <content>{{analyticsFilter/}}
 
-{{deviceModel/}}</content>
+{{entryPages/}}</content>
   <object>
-    <name>Analytics.Code.Macros.DeviceModel</name>
+    <name>Analytics.Code.Macros.EntryPages</name>
     <number>0</number>
     <className>XWiki.WikiMacroClass</className>
-    <guid>2e6f11ab-2f28-4f6b-9e43-23df1de663dd</guid>
+    <guid>6a428e84-c0d8-4312-aa5b-834cc449bd0f</guid>
     <class>
       <name>XWiki.WikiMacroClass</name>
       <customClass/>
@@ -244,55 +244,55 @@
     <property>
       <code>{{include reference='Analytics.Code.Macros.VelocityMacros'/}}
 
+{{include reference="Licenses.Code.VelocityMacros"/}}
+
 {{velocity}}
 #macro(executeMacro)
-  #analytics_displayMacroTitle('Analytics.Code.Macros.DeviceModel', 'rendering.macro.deviceModel.description', 'rendering.macro.deviceModel.name')
-  #analytics_getDate()
-  #set ($discard = $xwiki.jsx.use('Analytics.Code.Macros.RowEvolution'))#set ($parameters = $escapetool.url({
-    'resultPage': 'Analytics.Code.Macros.SoftwareDevicesJSON',
+  #displayAnalyticsMacroTitle('Analytics.Code.Macros.EntryPages', 'rendering.macro.entryPages.description', 'rendering.macro.entryPages.name')
+  #getDate()
+  #set ($discard = $xwiki.jsx.use('Analytics.Code.Macros.RowEvolution'))
+  #set ($parameters = $escapetool.url({
+    'resultPage': 'Analytics.Code.Macros.EntryPagesJSON',
     'date': $date,
     'period': 'range',
     'limitEntries': '-1',
-    'translationPrefix': 'analytics.softwareDevices.header.',
-    'matomoMethod': ' DevicesDetection.getModel',
-    'label': 'deviceModel'
+    'translationPrefix': 'analytics.entryPages.header.'
   }))
-  #set ($liveDataConfig= {
+  #set ($liveDataConfig = {
     'meta': {
       'propertyDescriptors': [
-        {'id': 'deviceModel', 'displayer': 'html'},
+        {'id': 'pageTitle', 'displayer': 'html'},
+        {'id': 'entrances', 'displayer': 'html'},
         {'id': 'visits', 'displayer': 'html'},
-        {'id': 'nbOfActions', 'displayer': 'html'},
-        {'id': 'timeSpent', 'displayer': 'html'},
-        {'id': 'bounceRate', 'displayer': 'html'},
-        {'id': 'actions',"filterable": false, "sortable": false, 'displayer': 'html'}
+        {'id': 'bounces', 'displayer': 'html'},
+        {'id': 'actions', 'filterable': false, 'sortable': false, 'displayer': 'html'}
       ],
       'entryDescriptor': {
-        'idProperty': 'deviceModel'
+        'idProperty': 'pageTitle'
       }
     }
   })
-  #analytics_getMacroId('deviceModelMacro', $macroId)
+  #getAnalyticsMacroId('entryPagesMacro', $macroId)
 
   {{liveData
     id="$macroId"
-    properties='deviceModel, visits, nbOfActions, timeSpent, bounceRate, actions'
+    properties="pageTitle, entrances, visits, bounces, actions"
     source='liveTable'
     sourceParameters="$parameters"
-    sort='visits:desc'
+    sort='entrances:desc'
   }}$jsontool.serialize($liveDataConfig){{/liveData}}
 
   #set ($rowEvolutionParams = {
-    'visits': 'nb_visits',
-    'actions': 'nb_actions',
-    'timeSpent': 'sum_visit_length',
-    'bounceRate': 'bounce_count'
+    'entrances': 'entry_nb_visits',
+    'bounces': 'entry_bounce_count',
+    'bounceRate': 'bounce_rate',
+    'exitRate': 'exit_rate'
   })
-  #analytics_modalRowEvolution($rowEvolutionParams, 'DeviceModel', $macroId)
+  #modalRowEvolution($rowEvolutionParams, 'EntryPages', $macroId)
 #end
-        #if ($services.licensing.licensor.hasLicensureForEntity(
-  $services.model.createDocumentReference('', ['Analytics', 'Code'], 'ConfigurationClass')))
-  #if ($xwiki.hasAccessLevel('view', 'Analytics.WebHome'))
+#if ($services.licensing.licensor.hasLicensureForEntity(
+    $services.model.createDocumentReference('', ['Analytics', 'Code'], 'ConfigurationClass')))
+  #if($services.security.authorization.hasAccess('view', 'Analytics.WebHome'))
     #executeMacro()
   #else
     {{error}}{{translation key="analytics.accessDenied" /}}{{/error}}
@@ -318,10 +318,10 @@
       <description/>
     </property>
     <property>
-      <id>deviceModel</id>
+      <id>entryPages</id>
     </property>
     <property>
-      <name>Device Model</name>
+      <name>Entry Pages</name>
     </property>
     <property>
       <priority/>
@@ -334,10 +334,10 @@
     </property>
   </object>
   <object>
-    <name>Analytics.Code.Macros.DeviceModel</name>
+    <name>Analytics.Code.Macros.EntryPages</name>
     <number>0</number>
     <className>XWiki.WikiMacroParameterClass</className>
-    <guid>b3f23dc8-2655-4b29-a2ce-68a6752630bd</guid>
+    <guid>4dd2c140-a58f-4daf-a9a9-a319242075c2</guid>
     <class>
       <name>XWiki.WikiMacroParameterClass</name>
       <customClass/>
@@ -412,10 +412,10 @@
     </property>
   </object>
   <object>
-    <name>Analytics.Code.Macros.DeviceModel</name>
+    <name>Analytics.Code.Macros.EntryPages</name>
     <number>1</number>
     <className>XWiki.WikiMacroParameterClass</className>
-    <guid>72c506e4-9b6d-4549-aed2-44238ca2dafe</guid>
+    <guid>2e8da238-9a78-4b39-9b96-31e63902f1a0</guid>
     <class>
       <name>XWiki.WikiMacroParameterClass</name>
       <customClass/>

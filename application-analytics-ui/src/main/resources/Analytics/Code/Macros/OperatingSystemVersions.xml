@@ -36,7 +36,9 @@
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>true</hidden>
-  <content>{{operatingSystemVersions/}}</content>
+  <content>{{analyticsFilter/}}
+
+{{operatingSystemVersions/}}</content>
   <object>
     <name>Analytics.Code.Macros.OperatingSystemVersions</name>
     <number>0</number>
@@ -244,8 +246,8 @@
 
 {{velocity}}
 #macro(executeMacro)
-  #displayAnalyticsMacroTitle('Analytics.Code.Macros.OperatingSystemVersions', 'rendering.macro.operatingSystemVersions.description', 'rendering.macro.operatingSystemVersions.name')
-  #getDate()
+  #analytics_displayMacroTitle('Analytics.Code.Macros.OperatingSystemVersions', 'rendering.macro.operatingSystemVersions.description', 'rendering.macro.operatingSystemVersions.name')
+  #analytics_getDate()
   #set ($discard = $xwiki.jsx.use('Analytics.Code.Macros.RowEvolution'))#set ($parameters = $escapetool.url({
     'resultPage': 'Analytics.Code.Macros.SoftwareDevicesJSON',
     'date': $date,
@@ -271,7 +273,7 @@
       }
     }
   })
-  #getAnalyticsMacroId('operatingSystemVersionsMacro', $macroId)
+  #analytics_getMacroId('operatingSystemVersionsMacro', $macroId)
 
   {{liveData
     id="$macroId"
@@ -288,7 +290,7 @@
     'bounceRate': 'bounce_count',
     'conversionRate': 'nb_visits_converted'
   })
-  #modalRowEvolution($rowEvolutionParams, 'OperatingSystemVersions', $macroId)
+  #analytics_modalRowEvolution($rowEvolutionParams, 'OperatingSystemVersions', $macroId)
 #end
 #if ($services.licensing.licensor.hasLicensureForEntity(
   $services.model.createDocumentReference('', ['Analytics', 'Code'], 'ConfigurationClass')))
@@ -327,7 +329,7 @@
       <priority/>
     </property>
     <property>
-      <supportsInlineMode>1</supportsInlineMode>
+      <supportsInlineMode>0</supportsInlineMode>
     </property>
     <property>
       <visibility>Current Wiki</visibility>
