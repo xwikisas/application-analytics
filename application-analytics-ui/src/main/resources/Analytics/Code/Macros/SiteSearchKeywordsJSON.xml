@@ -20,7 +20,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc version="1.4" reference="Analytics.Code.Macros.SiteSearchKeywordsJSON" locale="">
+<xwikidoc version="1.5" reference="Analytics.Code.Macros.SiteSearchKeywordsJSON" locale="">
   <web>Analytics.Code.Macros</web>
   <name>SiteSearchKeywordsJSON</name>
   <language/>

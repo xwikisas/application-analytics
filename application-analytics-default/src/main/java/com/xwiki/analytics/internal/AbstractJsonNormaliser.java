@@ -79,10 +79,10 @@ public abstract class AbstractJsonNormaliser implements JsonNormaliser
      * Handles each entry that was returned by Matomo and processes it.
      *
      * @param jsonNode an array of jsons
-     * @param filters holds the criteria for filtering a dataset
+     * @param filters  holds the criteria for filtering a dataset
      * @return array of jsons
      */
-    protected ArrayNode processArrayNode(JsonNode jsonNode, Map<String, String> filters)
+    protected JsonNode processArrayNode(JsonNode jsonNode, Map<String, String> filters)
     {
         ArrayNode arrayNode = OBJECT_MAPPER.createArrayNode();
         for (JsonNode objNode : jsonNode) {
@@ -99,10 +99,10 @@ public abstract class AbstractJsonNormaliser implements JsonNormaliser
      * objects.
      *
      * @param jsonNode the response from Matomo that is a json
-     * @param filters holds the criteria for filtering a dataset
+     * @param filters  holds the criteria for filtering a dataset
      * @return array of jsons that have been processed
      */
-    protected ArrayNode processObjectNode(JsonNode jsonNode, Map<String, String> filters) throws JsonProcessingException
+    protected JsonNode processObjectNode(JsonNode jsonNode, Map<String, String> filters) throws JsonProcessingException
     {
         ArrayNode arrayNode = OBJECT_MAPPER.createArrayNode();
         Iterator<String> fieldNames = jsonNode.fieldNames();

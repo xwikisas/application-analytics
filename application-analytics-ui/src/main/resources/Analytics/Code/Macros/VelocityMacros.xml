@@ -20,7 +20,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc version="1.4" reference="Analytics.Code.Macros.VelocityMacros" locale="">
+<xwikidoc version="1.5" reference="Analytics.Code.Macros.VelocityMacros" locale="">
   <web>Analytics.Code.Macros</web>
   <name>VelocityMacros</name>
   <language/>
@@ -266,6 +266,45 @@ API as it is faster
       #set ($discard = $filters.put($mappings.get($key), $request.get($key)))
     #end
   #end
+#end
+
+#macro (analytics_createGraph, $id, $options, $class, $date)
+{{html}}
+&lt;div id="$id" class="container-fluid $class"&gt;
+  &lt;div class="date hidden" data-date="$date"&gt;&lt;/div&gt;
+  &lt;div class="row"&gt;
+    &lt;div class="col-xs-12"&gt;
+      &lt;canvas class="loading analytics_fullWidthCanvas"&gt;&lt;/canvas&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="row"&gt;
+    &lt;!-- Options Select --&gt;
+    &lt;div class="col-xs-6"&gt;
+      &lt;select class="form-control analytics_visitsOverviewOptions" title="$escapetool.xml($services.localization.render('analytics.visitsOverview.options.description'))"&gt;
+        #foreach ($entry in $options.entrySet())
+          #analytics_graphOptions($entry.getKey(), $entry.getValue())
+        #end
+      &lt;/select&gt;
+    &lt;/div&gt;
+    &lt;!-- Periods Select --&gt;
+    &lt;div class="col-xs-6"&gt;
+      &lt;select class="form-control analytics_visitsOverviewPeriods" title="$escapetool.xml($services.localization.render('analytics.visitsOverview.period.description'))"&gt;
+        #analytics_graphOptions($escapetool.xml($services.localization.render('period.day')), 'day')
+        #analytics_graphOptions($escapetool.xml($services.localization.render('period.month')), 'month')
+        #analytics_graphOptions($escapetool.xml($services.localization.render('period.week')), 'week')
+        #analytics_graphOptions($escapetool.xml($services.localization.render('period.year')), 'year')
+      &lt;/select&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+{{/html}}
+#end
+
+
+#macro (analytics_graphOptions, $key, $value)
+  &lt;option value="$value"&gt;
+    $escapetool.xml($services.localization.render('analytics.visitsOverview.' + $key + '.option'))
+  &lt;/option&gt;
 #end
 {{/velocity}}</content>
 </xwikidoc>
