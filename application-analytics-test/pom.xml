@@ -30,9 +30,9 @@
     <version>1.0-SNAPSHOT</version>
   </parent>
   <artifactId>application-analytics-test</artifactId>
-  <name>Application Analytics (PRO)- Tests - Parent POM</name>
+  <name>Application Analytics (Pro)- Tests - Parent POM</name>
   <packaging>pom</packaging>
-  <description>Application Analytics (PRO) - Tests - Parent POM</description>
+  <description>Application Analytics (Pro) - Tests - Parent POM</description>
   <properties>
     <!-- Don't run CLIRR or Revapi in test modules since we don't care about backward compatibility for tests. -->
     <xwiki.clirr.skip>true</xwiki.clirr.skip>

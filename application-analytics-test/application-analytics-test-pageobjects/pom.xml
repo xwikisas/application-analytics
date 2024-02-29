@@ -28,9 +28,9 @@
     <version>1.0-SNAPSHOT</version>
   </parent>
   <artifactId>application-analytics-test-pageobjects</artifactId>
-  <name>Application Analytics (PRO) - Test - Page Objects</name>
+  <name>Application Analytics (Pro) - Test - Page Objects</name>
   <packaging>jar</packaging>
-  <description>Application Analytics (PRO) - Test - Page Objects</description>
+  <description>Application Analytics (Pro) - Test - Page Objects</description>
   <dependencies>
     <dependency>
       <groupId>org.xwiki.platform</groupId>

@@ -32,8 +32,9 @@ import org.xwiki.test.ui.po.editor.EditPage;
  */
 public class AnalyticsEditPage extends EditPage
 {
-
-    public AnalyticsEditPage(){}
+    public AnalyticsEditPage()
+    {
+    }
 
     /**
      * Adds a new macro to the homepage of the application.
@@ -41,13 +42,13 @@ public class AnalyticsEditPage extends EditPage
      * @param macroName name of the macro
      * @return
      */
-
     public AnalyticsEditPage addNewMacro(String macroName)
     {
 
         this.clickAddGadget().selectMacro(macroName);
         return this;
     }
+
     public static AnalyticsEditPage gotoPage()
     {
         DocumentReference documentReference = new DocumentReference("xwiki", "Analytics", "WebHome");
@@ -56,6 +57,7 @@ public class AnalyticsEditPage extends EditPage
         getUtil().gotoPage(documentReference, "edit", params);
         return new AnalyticsEditPage();
     }
+
     public AnalyticsViewPage saveDashboard()
     {
         this.clickSaveAndView();
@@ -64,26 +66,21 @@ public class AnalyticsEditPage extends EditPage
 
     private AnalyticsEditPage clickAddGadget()
     {
-         getUtil().getDriver().findElement(By.cssSelector(".addgadget")).click();
+        getDriver().findElement(By.cssSelector(".addgadget")).click();
         return this;
-    }
-
-    private void waitAndClick(String css)
-    {
-         getUtil().getDriver().waitUntilElementIsEnabled( getUtil().getDriver().findElement(By.cssSelector(css)));
-         getUtil().getDriver().findElement(By.cssSelector(css)).click();
     }
 
     private void selectMacro(String macroName)
     {
         MacroDialogSelectModal macroDialogSelectModal = new MacroDialogSelectModal();
         // Will bring into view the macro that I want to use.
-        getUtil().getDriver().findElement(By.cssSelector(".macro-textFilter")).sendKeys(macroName);
+        getDriver().findElement(By.cssSelector(".macro-textFilter")).sendKeys(macroName);
         macroDialogSelectModal.filterByText(macroName, 1);
         macroDialogSelectModal.getFirstMacro();
         macroDialogSelectModal.clickSelect();
         // Right now the MacroDialogSelectModal doesn't have a method to press submit.
-        waitAndClick(".modal.macro-editor-modal.in .modal-footer .btn-primary");
-
+        String css = ".modal.macro-editor-modal.in .modal-footer .btn-primary";
+        getDriver().waitUntilElementIsEnabled(getUtil().getDriver().findElement(By.cssSelector(css)));
+        getDriver().findElement(By.cssSelector(css)).click();
     }
 }

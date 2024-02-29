@@ -21,6 +21,7 @@ package com.xwiki.analytics.test.ui.config;
 
 public class Config
 {
+    // The custom sql container is needed to skip the Matomo installation wizard.
     public static final String DB_CONTAINER_NAME = "farcasut/custom-mysql:latest";
 
     public static final int DB_CONTAINER_EXPOSED_PORT = 3306;

@@ -22,18 +22,19 @@ package com.xwiki.analytics.test.po;
 import org.openqa.selenium.By;
 import org.xwiki.test.ui.po.BaseModal;
 
-public class RowEvolutionModal extends BaseModal {
+public class RowEvolutionModal extends BaseModal
+{
     private static final String ROW_EVOLUTION_BUTTON_SELECTOR = ".analyticsRowEvolution";
 
-
-    public RowEvolutionModal(By selector) {
+    public RowEvolutionModal(By selector)
+    {
         super(selector);
     }
+
     public RowEvolutionModal openModal()
     {
-        getUtil().getDriver().waitUntilElementIsVisible(By.cssSelector(ROW_EVOLUTION_BUTTON_SELECTOR));
-        getUtil().getDriver().findElement(By.cssSelector(ROW_EVOLUTION_BUTTON_SELECTOR)).click();
+        getDriver().waitUntilElementIsVisible(By.cssSelector(ROW_EVOLUTION_BUTTON_SELECTOR));
+        getDriver().findElement(By.cssSelector(ROW_EVOLUTION_BUTTON_SELECTOR)).click();
         return this;
     }
-
 }

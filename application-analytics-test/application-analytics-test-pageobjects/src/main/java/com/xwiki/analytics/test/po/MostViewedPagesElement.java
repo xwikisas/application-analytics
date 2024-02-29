@@ -21,29 +21,22 @@
 
 package com.xwiki.analytics.test.po;
 
-import java.util.Arrays;
-import java.util.List;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.xwiki.test.ui.po.BaseElement;
-import org.xwiki.test.ui.po.ViewPage;
 
 /**
  * View for the MostViewedPages macro that lets us interact with the macro.
  */
 public class MostViewedPagesElement extends BaseElement
 {
+    static final private String MODAL_CSS = ".modal-dialog.modal-lg";
 
+    private WebElement container;
 
-    WebElement macroOutput;
-    public MostViewedPagesElement(String id)
+    public MostViewedPagesElement()
     {
-        getUtil().getDriver().waitUntilElementIsVisible(By.id(id));
-        macroOutput = getUtil().getDriver().findElement(By.id(id));
     }
-
-
 
     /***
      * This method first waits for the visibility of an information button, identified by a specific CSS selector.
@@ -52,6 +45,19 @@ public class MostViewedPagesElement extends BaseElement
      */
     public String getMacroDescription()
     {
-        return macroOutput.findElement(By.cssSelector(".analyticsDescription")).getAttribute("title");
+        return container.findElement(By.cssSelector(".analyticsDescription")).getAttribute("title");
+    }
+
+    public RowEvolutionModal openModal()
+    {
+        RowEvolutionModal modal = new RowEvolutionModal(By.cssSelector(MODAL_CSS));
+        modal.openModal();
+        return modal;
+    }
+
+    public void waitUntilReady(String id)
+    {
+        getDriver().waitUntilElementIsVisible(By.id(id));
+        container = getDriver().findElement(By.id(id));
     }
 }

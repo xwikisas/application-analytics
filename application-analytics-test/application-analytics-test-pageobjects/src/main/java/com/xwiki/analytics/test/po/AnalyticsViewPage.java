@@ -27,8 +27,6 @@ import org.xwiki.test.ui.po.ViewPage;
  */
 public class AnalyticsViewPage extends ViewPage
 {
-
-
     public AnalyticsViewPage()
     {
     }
@@ -38,12 +36,19 @@ public class AnalyticsViewPage extends ViewPage
         getUtil().gotoPage("Analytics", "WebHome");
         return new AnalyticsViewPage();
     }
+
     /**
      * Calculates the number of gadgets that are present on the homepage of the application.
+     *
      * @return number of gadgets
      */
     public int getGadgetCount()
     {
         return getUtil().getDriver().findElements(By.className("gadget")).size();
+    }
+
+    public boolean hasEditButton()
+    {
+        return !getDriver().findElementsWithoutWaiting(By.id("tmEdit")).isEmpty();
     }
 }

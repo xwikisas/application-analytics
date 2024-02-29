@@ -26,13 +26,20 @@ import org.xwiki.test.ui.XWikiWebDriver;
 /**
  * Encompass the process of creating a Matomo token using the browser interface provided by Matomo.
  */
-public class MatomoTestUtils {
+public class MatomoTestUtils
+{
     private static final String CREDENTIALS = "ADMIN1";
+
     private static final String LOGIN_FORM_LOGIN_ID = "login_form_login";
+
     private static final String LOGIN_FORM_PASSWORD_ID = "login_form_password";
+
     private static final String LOGIN_FORM_SUBMIT_ID = "login_form_submit";
+
     private static final String DESCRIPTION_ID = "description";
+
     private static final String BTN_CSS_SELECTOR = ".btn";
+
     private static final String TAG_NAME_CODE = "code";
 
     /**
@@ -41,7 +48,8 @@ public class MatomoTestUtils {
      * @param address The address of the Matomo container.
      * @return the newly created token as a string
      */
-    public static String createToken(String address, XWikiWebDriver driver) {
+    public static String createToken(String address, XWikiWebDriver driver)
+    {
         driver.get(address + "/index.php?module=UsersManager&action=addNewToken&idSite=1&period=day&date=2023-09-03");
         driver.waitUntilElementIsVisible(By.id(LOGIN_FORM_LOGIN_ID));
         driver.findElement(By.id(LOGIN_FORM_LOGIN_ID)).sendKeys(CREDENTIALS);

@@ -31,7 +31,7 @@
   </parent>
   <artifactId>application-analytics-test-docker</artifactId>
   <packaging>jar</packaging>
-  <description>Functional tests for the Analytics Application (PRO)</description>
+  <description>Functional tests for the Analytics Application (Pro)</description>
   <properties>
     <!-- Functional tests are allowed to output content to the console -->
     <xwiki.surefire.captureconsole.skip>true</xwiki.surefire.captureconsole.skip>

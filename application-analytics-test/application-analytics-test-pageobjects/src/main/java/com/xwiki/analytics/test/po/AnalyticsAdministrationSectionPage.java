@@ -24,7 +24,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.xwiki.administration.test.po.AdministrationPage;
-import org.xwiki.test.ui.XWikiWebDriver;
 import org.xwiki.test.ui.po.ViewPage;
 
 /**
@@ -32,29 +31,17 @@ import org.xwiki.test.ui.po.ViewPage;
  */
 public class AnalyticsAdministrationSectionPage extends ViewPage
 {
-    @FindBy(
-            id = "Analytics.Code.ConfigurationClass_0_trackingCode"
-    )
+    @FindBy(id = "Analytics.Code.ConfigurationClass_0_trackingCode")
     private WebElement tracking_code;
 
-
-    @FindBy(
-            id = "Analytics.Code.ConfigurationClass_0_authToken"
-    )
+    @FindBy(id = "Analytics.Code.ConfigurationClass_0_authToken")
     private WebElement auth_token;
 
-    @FindBy(
-            id = "Analytics.Code.ConfigurationClass_0_siteId"
-    )
+    @FindBy(id = "Analytics.Code.ConfigurationClass_0_siteId")
     private WebElement site;
 
-
-    @FindBy(
-            id = "Analytics.Code.ConfigurationClass_0_requestAddress"
-    )
+    @FindBy(id = "Analytics.Code.ConfigurationClass_0_requestAddress")
     private WebElement request_address;
-
-
 
     public AnalyticsAdministrationSectionPage()
     {
