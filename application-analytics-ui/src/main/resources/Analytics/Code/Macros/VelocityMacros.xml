@@ -119,7 +119,7 @@
 #end
 
 #macro(analytics_modalRowEvolution $matomoFields $macroName $id)
-  #set ($requestPageURL = $xwiki.getURL('Analytics.Code.Macros.RowEvolutionJSON'))
+  #set ($requestPageURL = $xwiki.getURL('Analytics.Code.Macros.RowEvolutionJSON', 'get'))
   {{html clean=false}}
   &lt;div class="modal fade analyticsRowEvolutionModal" tabindex="-1" role="dialog" aria-label="chartModalLabel"
        aria-hidden="true"&gt;
@@ -203,7 +203,7 @@
     #set ($discard = $xwiki.jsx.use('Analytics.Code.AnalyticsJS'))
   #else
     {{html clean="false"}}
-     &lt;h2&gt;&lt;div&gt;&lt;span&gt;$escapetool.xml($services.localization.render($nameTranslationKey))&lt;/span&gt; &lt;a title="$description" href=$url&gt;$services.icon.renderHTML('info')&lt;/a&gt;&lt;div&gt;&lt;/h2&gt;
+     &lt;h2&gt;&lt;div&gt;&lt;span&gt;$escapetool.xml($services.localization.render($nameTranslationKey))&lt;/span&gt; &lt;a class="analyticsDescription" title="$description" href=$url&gt;$services.icon.renderHTML('info')&lt;/a&gt;&lt;div&gt;&lt;/h2&gt;
     {{/html}}
   #end
 #end
