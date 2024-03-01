@@ -1,0 +1,277 @@
+<?xml version="1.1" encoding="UTF-8"?>
+
+<!--
+ * See the NOTICE file distributed with this work for additional
+ * information regarding copyright ownership.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+-->
+
+<xwikidoc version="1.5" reference="Analytics.Code.Macros.VisitsSummary" locale="">
+  <web>Analytics.Code.Macros</web>
+  <name>VisitsSummary</name>
+  <language/>
+  <defaultLanguage/>
+  <translation>0</translation>
+  <creator>xwiki:XWiki.Admin</creator>
+  <parent>Main.WebHome</parent>
+  <author>xwiki:XWiki.Admin</author>
+  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+  <version>1.1</version>
+  <title>VisitsSummary</title>
+  <comment/>
+  <minorEdit>false</minorEdit>
+  <syntaxId>xwiki/2.1</syntaxId>
+  <hidden>true</hidden>
+  <content/>
+  <object>
+    <name>Analytics.Code.Macros.VisitsSummary</name>
+    <number>0</number>
+    <className>XWiki.JavaScriptExtension</className>
+    <guid>b09f973f-c0c4-4db8-847a-5ac0d98f82b7</guid>
+    <class>
+      <name>XWiki.JavaScriptExtension</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <cache>
+        <cache>0</cache>
+        <defaultValue>long</defaultValue>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <freeText>forbidden</freeText>
+        <largeStorage>0</largeStorage>
+        <multiSelect>0</multiSelect>
+        <name>cache</name>
+        <number>5</number>
+        <prettyName>Caching policy</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators>|, </separators>
+        <size>1</size>
+        <unmodifiable>0</unmodifiable>
+        <values>long|short|default|forbid</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </cache>
+      <code>
+        <contenttype>PureText</contenttype>
+        <disabled>0</disabled>
+        <editor>PureText</editor>
+        <name>code</name>
+        <number>2</number>
+        <prettyName>Code</prettyName>
+        <restricted>0</restricted>
+        <rows>20</rows>
+        <size>50</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </code>
+      <name>
+        <disabled>0</disabled>
+        <name>name</name>
+        <number>1</number>
+        <prettyName>Name</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </name>
+      <parse>
+        <disabled>0</disabled>
+        <displayFormType>select</displayFormType>
+        <displayType>yesno</displayType>
+        <name>parse</name>
+        <number>4</number>
+        <prettyName>Parse content</prettyName>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+      </parse>
+      <use>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <freeText>forbidden</freeText>
+        <largeStorage>0</largeStorage>
+        <multiSelect>0</multiSelect>
+        <name>use</name>
+        <number>3</number>
+        <prettyName>Use this extension</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators>|, </separators>
+        <size>1</size>
+        <unmodifiable>0</unmodifiable>
+        <values>currentPage|onDemand|always</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </use>
+    </class>
+    <property>
+      <cache>long</cache>
+    </property>
+    <property>
+      <code>require.config({
+  paths: {
+    chart: "$services.webjars.url('org.webjars:chartjs', 'Chart.bundle.min.js')"
+  }
+});
+
+require(['jquery', 'chart'], function($) {
+  const SELECTORS = {
+    options: '.analytics_genericVisitsFields',
+    parent: '.analytics_graphMacro',
+    canvas: 'canvas',
+    macroOptions: '.analytics_visitsGenericMacroOptions',
+    period: '.analytics_visitsGenericPeriods'
+  };
+
+  // A map to store charts for dynamic updates.
+  let chartsMap = new Map();
+
+  // Listen for changes on period selector and creates a new chart with the new lables(dates).
+  $(document).on('change', SELECTORS.period, function() {
+    let period = $(this).val();
+    let parent = $(this).closest(SELECTORS.parent);
+    let canvas = parent.find(SELECTORS.canvas);
+    let cacheId = parent.attr('id');
+    let label = $('option:selected', parent.find(SELECTORS.options)).data('label');
+    let timeInterval = parent.find(SELECTORS.macroOptions).data('date');
+    let matomoMethod = parent.find(SELECTORS.macroOptions).data('method');
+    let field = parent.find(SELECTORS.options).val();
+    canvas.addClass("loading");
+    editCanvas(canvas, field, timeInterval, period, cacheId, matomoMethod, label);
+  });
+
+  // Listen for changes on options selector and updates displayed field.
+  $(document).on('change', SELECTORS.options, function() {
+    let field = $(this).val();
+    let label = $('option:selected', $(this)).data('label');
+    let parent = $(this).closest(SELECTORS.parent);
+    let canvas = parent.find(SELECTORS.canvas);
+    let cacheId = parent.attr('id');
+    const DATA = JSON.parse(sessionStorage.getItem(cacheId));
+
+    let dataset = {
+      label: label,
+      backgroundColor: 'rgb(255, 99, 132)',
+      borderColor: 'rgb(255, 99, 132)',
+      data: DATA[field],
+      pointRadius: 0,
+      pointHoverRadius: 5
+    };
+    // We can update the dataset directly because the lables(dates) are the same.
+    let chart = chartsMap.get(cacheId);
+    chart.data.datasets = [dataset];
+    chart.update();
+  });
+
+  // Function to create a new chart.
+  function createChart(canvas, labels, values, yAxeName) {
+    return new Chart(canvas, {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: yAxeName,
+          backgroundColor: 'rgb(255, 99, 132)',
+          borderColor: 'rgb(255, 99, 132)',
+          data: values,
+          pointRadius: 0,
+          pointHoverRadius: 5,
+        }]
+      },
+      options: {
+        scales: {
+          xAxes: [{
+            ticks: {
+              autoSkip: true,
+              maxRotation: 90,
+              autoSkipPadding: 3,
+              maxTicksLimit: 40
+            }
+          }],
+          yAxes: [{
+            beginAtZero: true
+          }]
+        },
+        tooltips: {
+          mode: 'index',
+          intersect: false,
+        },
+        hover: {
+          mode: 'nearest',
+          intersect: true
+        }
+      }
+    });
+  }
+
+  //Updates the chart when the labels(dates change) or are intialized.
+  function editCanvas(canvas, field, date, period, cacheId, matomoMethod, yAxeName) {
+    let requestPageRef = XWiki.Model.resolve('Analytics.Code.Macros.VisitsSummaryJson', XWiki.EntityType.DOCUMENT);
+    let url = new XWiki.Document(requestPageRef).getURL('get');
+    const queryString = $.param({
+      'date': date,
+      'apiMethod': matomoMethod,
+      'period': period
+    });
+
+    $.getJSON(`${url}?${queryString}`)
+      .done(function(data) {
+        // Destroy the chart to avoid flickering caused updating the labels(dates).
+        let chart = chartsMap.get(cacheId);
+        if (chart != undefined) {
+          chart.destroy();
+        }
+        chartsMap.set(cacheId, createChart(canvas, data.labels, data[field], yAxeName));
+        canvas.removeClass("loading");
+        sessionStorage.setItem(cacheId, JSON.stringify(data));
+      })
+      .fail(function(jqxhr, textStatus, error) {
+        const err = `${textStatus}, ${error}`;
+        console.error(`Request Failed: ${err}`);
+      });
+  }
+
+  // Initialize on document ready.
+  $(document).ready(function() {
+    $(".visitsOverview").each(function() {
+      let cacheId = $(this).attr('id');
+      let field = $(this).find(SELECTORS.options).val();
+      let label = $('option:selected', $(this).find(SELECTORS.options)).data('label');
+      let canvas = $(this).find(SELECTORS.canvas);
+      let timeInterval = $(this).find(SELECTORS.macroOptions).data('date');
+      let matomoMethod = $(this).find(SELECTORS.macroOptions).data('method');
+      let period = $(this).find(SELECTORS.period).val();
+      editCanvas(canvas, field, timeInterval, period, cacheId, matomoMethod, label);
+    });
+  });
+});
+</code>
+    </property>
+    <property>
+      <name/>
+    </property>
+    <property>
+      <parse>1</parse>
+    </property>
+    <property>
+      <use/>
+    </property>
+  </object>
+</xwikidoc>
