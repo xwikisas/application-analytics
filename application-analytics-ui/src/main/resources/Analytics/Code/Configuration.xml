@@ -114,13 +114,13 @@
       </trackingCode>
     </class>
     <property>
-      <authToken>fe64799ced2886fb84884f57c03dc126</authToken>
+      <authToken/>
     </property>
     <property>
-      <requestAddress>http://130.61.233.19/matomo/</requestAddress>
+      <requestAddress/>
     </property>
     <property>
-      <siteId>3</siteId>
+      <siteId/>
     </property>
     <property>
       <trackingCode/>
