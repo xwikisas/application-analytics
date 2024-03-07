@@ -227,9 +227,9 @@ rendering.macro.screenResolution.parameter.endDate.description=End time of the d
 rendering.macro.screenResolution.parameter.startDate.name=End date
 rendering.macro.screenResolution.parameter.startDate.description=Start time of the date interval used for this macro.
 
-## Web-Browser Lanugage
+## Web browser Language
 analytics.webBrowserLanguage.header.actions=Actions
-analytics.webBrowserLanguage.header.country.hint=The name of the lanugage.
+analytics.webBrowserLanguage.header.country.hint=The name of the language.
 analytics.webBrowserLanguage.header.country=Language
 analytics.webBrowserLanguage.header.visits.hint=The total number of site visits originating from users of this language.
 analytics.webBrowserLanguage.header.visits=Visits

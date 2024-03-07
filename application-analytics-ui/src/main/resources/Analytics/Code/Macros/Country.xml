@@ -387,17 +387,17 @@
 #macro(executeMacro)
   #analytics_displayMacroTitle('Analytics.Code.Macros.Country', 'rendering.macro.country.description', 'rendering.macro.country.name')
   #analytics_getDate()
-  #set ($discard =$xwiki.jsx.use('Analytics.Code.Macros.RowEvolution'))
-  #set ($discard =$xwiki.ssx.use('Analytics.Code.Macros.Country'))
+  #set ($discard = $xwiki.jsx.use('Analytics.Code.Macros.RowEvolution'))
+  #set ($discard = $xwiki.ssx.use('Analytics.Code.Macros.Country'))
   #set ($parameters = $escapetool.url({
-    'resultPage': 'Analytics.Code.Macros.countryJSON',
+    'resultPage': 'Analytics.Code.Macros.CountryJSON',
     'date': $date,
     'period': 'range',
     'limitEntries': '-1',
     'translationPrefix': 'analytics.country.header.',
     'apiMethod': 'UserCountry.getCountry'
   }))
-  #set ($liveDataConfig={
+  #set ($liveDataConfig = {
     'meta': {
       'propertyDescriptors': [
         {'id': 'country', 'displayer': 'html'},
