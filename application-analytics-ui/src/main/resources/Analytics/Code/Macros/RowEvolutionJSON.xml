@@ -88,6 +88,12 @@
 #elseif ($request.macroName == 'EntryPages')
   #set ($discard = $parameters.put('pageUrl', $request.rowIdentifier))
   #set ($discard = $parameters.put('method', 'Actions.getPageUrl'))
+#elseif ($request.macroName == 'WebBrowserLanguage')
+    #set ($discard = $parameters.put('segment', $request.rowIdentifier))
+    #set ($discard = $parameters.put('method', 'UserLanguage.getLanguage'))
+#elseif ($request.macroName == 'Country')
+    #set ($discard = $parameters.put('segment', $request.rowIdentifier))
+    #set ($discard = $parameters.put('method', 'UserLanguage.getLanguage'))
 #end
 #set ($analyticsResult = $services.analytics.makeRequest($parameters, $filters, 'RowEvolution'))
 #jsonResponse($analyticsResult)
