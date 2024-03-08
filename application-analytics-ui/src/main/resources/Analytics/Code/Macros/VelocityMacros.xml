@@ -281,7 +281,7 @@ API as it is faster
     &lt;div class="col-xs-6"&gt;
       &lt;select class="form-control analytics_genericVisitsFields" title="$escapetool.xml($services.localization.render('analytics.visitsOverview.options.description'))"&gt;
         #foreach ($entry in $options.entrySet())
-          #analytics_graphOptions($entry.getKey(), $entry.getValue())
+          #analytics_graphOptions($entry.getKey(), $entry.getValue()[0], $entry.getValue()[1])
         #end
       &lt;/select&gt;
     &lt;/div&gt;
@@ -299,8 +299,9 @@ API as it is faster
 #end
 
 
-#macro (analytics_graphOptions, $key, $value)
-  &lt;option data-label="$escapetool.xml($services.localization.render( $key + '.option'))" value="$value"&gt;
+#macro (analytics_graphOptions, $key, $value, $endpoints)
+  &lt;option data-endpoints="$escapetool.xml($endpoints)" data-label="$escapetool.xml($services.localization.render(
+    $key + '.option'))" value="$value"&gt;
     $escapetool.xml($services.localization.render( $key + '.option'))
   &lt;/option&gt;
 #end

@@ -41,52 +41,57 @@ import java.util.Arrays;
  * @since 1.0
  */
 @Component
-@Named("VisitsSummary")
+@Named(VisitsJsonNormaliser.HINT)
 @Unstable
 @Singleton
 public class VisitsJsonNormaliser extends AbstractJsonNormaliser
 {
-
     /**
      * Hint for the VisitsJsonNormaliser.
      */
     public static final String HINT = "VisitsSummary";
+
     private static final String LABEL = "labels";
+
+    private static final String VALUES = "VALUES";
+
+    private static final String[] FIELDS =
+        { "nb_visits", "avg_time_on_site", "bounce_count", "nb_actions_per_visit", "max_actions" };
+
     @Override
     public String getIdentifier()
     {
         return VisitsJsonNormaliser.HINT;
     }
 
-
     @Override
     protected JsonNode processObjectNode(JsonNode jsonNode, Map<String, String> filters) throws JsonProcessingException
     {
-        List<String> labels = new ArrayList<>();
-        Map<String, List<Integer>> resultsMap = new HashMap<>();
-        String [] fields = {"nb_visits", "avg_time_on_site", "bounce_count", "nb_actions_per_visit", "max_actions"};
-        Arrays.stream(fields).forEach(field -> resultsMap.put(field, new ArrayList<>()));
-
-        jsonNode.fieldNames().forEachRemaining(currentDate -> {
-            JsonNode content = jsonNode.get(currentDate);
-            labels.add(currentDate);
-            Arrays.stream(fields).forEach(field ->
-            {
-                JsonNode fieldValue = content.get(field);
-                resultsMap.get(field).add(fieldValue != null ? fieldValue.asInt() : 0);
-
-            });
-        });
-
         ObjectNode result = OBJECT_MAPPER.createObjectNode();
-        result.set(LABEL, OBJECT_MAPPER.valueToTree(labels));
-        resultsMap.forEach((key, value) -> result.set(key, OBJECT_MAPPER.valueToTree(value)));
+        List<String> labels = new ArrayList<>();
+        if (!jsonNode.get(jsonNode.fieldNames().next()).isInt()) {
+            Map<String, List<Integer>> resultsMap = new HashMap<>();
+            Arrays.stream(FIELDS).forEach(field -> resultsMap.put(field, new ArrayList<>()));
+            jsonNode.fieldNames().forEachRemaining(currentDate -> {
+                JsonNode content = jsonNode.get(currentDate);
+                labels.add(currentDate);
+                Arrays.stream(FIELDS).forEach(field -> {
+                    JsonNode fieldValue = content.get(field);
+                    resultsMap.get(field).add(fieldValue != null ? fieldValue.asInt() : 0);
+                });
+            });
+            result.set(LABEL, OBJECT_MAPPER.valueToTree(labels));
+            resultsMap.forEach((key, value) -> result.set(key, OBJECT_MAPPER.valueToTree(value)));
+        } else {
+            List<Integer> values = new ArrayList<>();
+            jsonNode.fieldNames().forEachRemaining(currentDate -> {
+                labels.add(currentDate);
+                values.add(jsonNode.get(currentDate).asInt());
+            });
+            result.set(LABEL, OBJECT_MAPPER.valueToTree(labels));
+            result.set(VALUES, OBJECT_MAPPER.valueToTree(values));
+        }
         return result;
     }
 
-    @Override
-    protected JsonNode processNode(JsonNode currentNode, Map<String, String> extraValues)
-    {
-        return null;
-    }
 }

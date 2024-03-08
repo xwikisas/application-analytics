@@ -383,24 +383,22 @@
 
 {{velocity}}
 #macro(executeMacro)
-  #set ($discard =$xwiki.ssx.use('Analytics.Code.Macros.VisitsOverview'))
-  #set ($discard =$xwiki.jsx.use('Analytics.Code.Macros.VisitsSummary'))
+  #set ($discard = $xwiki.ssx.use('Analytics.Code.Macros.VisitsOverview'))
+  #set ($discard = $xwiki.jsx.use('Analytics.Code.Macros.VisitsSummary'))
   #analytics_displayMacroTitle('Analytics.Code.Macros.VisitsOverview', 'rendering.macro.visitsOverview.description', 'rendering.macro.visitsOverview.name')
-  
   #analytics_getMacroId('visitsOverview', $macroId)
   #analytics_getDate()
   #set ($options = {
-    "analytics.visitsOverview.visits":'nb_visits',
-    "analytics.visitsOverview.averageVisitDuration":'avg_time_on_site',
-    "analytics.visitsOverview.bounced":'bounce_count',
-    "analytics.visitsOverview.nb_actions":'nb_actions_per_visit',
-    "analytics.visitsOverview.maxActionsInOneVisit":'max_actions'
+    "analytics.visitsOverview.visits":['nb_visits', "VisitsSummary.get"],
+    "analytics.visitsOverview.averageVisitDuration":['avg_time_on_site', "VisitsSummary.get"],
+    "analytics.visitsOverview.bounced":['bounce_count', "VisitsSummary.get"],
+    "analytics.visitsOverview.nb_actions":['nb_actions_per_visit', "VisitsSummary.get"],
+    "analytics.visitsOverview.maxActionsInOneVisit":['max_actions', "VisitsSummary.get"],
+    "analytics.visitsOverview.viewsAndUnique":['VALUES&amp;VALUES', "VisitsSummary.getVisits&amp;VisitsSummary.getUniqueVisitors"]
   })
+
   #analytics_createGraph($macroId, $options, "visitsOverview", $date, "VisitsSummary.get")
-
 #end
-
-
 #if ($services.licensing.licensor.hasLicensureForEntity(
   $services.model.createDocumentReference('', ['Analytics', 'Code'], 'ConfigurationClass')))
   #if ($xwiki.hasAccessLevel('view', 'Analytics.WebHome'))

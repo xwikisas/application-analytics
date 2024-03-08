@@ -240,6 +240,7 @@ analytics.visitsOverview.period.description=The period you request the statistic
 analytics.visitsOverview.period.month.option=Month
 analytics.visitsOverview.period.week.option=Week
 analytics.visitsOverview.period.year.option=Year
+analytics.visitsOverview.viewsAndUnique.option=Views &amp; Unique views
 analytics.visitsOverview.visits.option=Visits
 rendering.macro.visitsOverview.description=This is an overview of the visit evolution.
 rendering.macro.visitsOverview.name=Visits overview

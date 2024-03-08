@@ -131,89 +131,75 @@
   }
 });
 
-require(['jquery', 'chart'], function($) {
+require(['jquery', 'chart'], function ($) {
   const SELECTORS = {
     options: '.analytics_genericVisitsFields',
     parent: '.analytics_graphMacro',
     canvas: 'canvas',
     macroOptions: '.analytics_visitsGenericMacroOptions',
-    period: '.analytics_visitsGenericPeriods'
+    period: '.analytics_visitsGenericPeriods',
+    updateCanvas: '.analytics_visitsGenericPeriods, .analytics_genericVisitsFields'
   };
+  const RGBS = [`rgb(255, 0, 0)`, `rgb(0, 255, 0)`, `rgb(0, 0, 255)`]
 
   // A map to store charts for dynamic updates.
   let chartsMap = new Map();
 
-  // Listen for changes on period selector and creates a new chart with the new lables(dates).
-  $(document).on('change', SELECTORS.period, function() {
-    let period = $(this).val();
+  // Listen for changes on period selector and creates a new chart with the new labels(dates).
+  $(document).on('change', SELECTORS.updateCanvas, function () {
     let parent = $(this).closest(SELECTORS.parent);
-    let canvas = parent.find(SELECTORS.canvas);
     let cacheId = parent.attr('id');
-    let label = $('option:selected', parent.find(SELECTORS.options)).data('label');
     let timeInterval = parent.find(SELECTORS.macroOptions).data('date');
-    let matomoMethod = parent.find(SELECTORS.macroOptions).data('method');
-    let field = parent.find(SELECTORS.options).val();
-    canvas.addClass("loading");
-    editCanvas(canvas, field, timeInterval, period, cacheId, matomoMethod, label);
-  });
-
-  // Listen for changes on options selector and updates displayed field.
-  $(document).on('change', SELECTORS.options, function() {
-    let field = $(this).val();
-    let label = $('option:selected', $(this)).data('label');
-    let parent = $(this).closest(SELECTORS.parent);
     let canvas = parent.find(SELECTORS.canvas);
-    let cacheId = parent.attr('id');
-    const DATA = JSON.parse(sessionStorage.getItem(cacheId));
-
-    let dataset = {
-      label: label,
-      backgroundColor: 'rgb(255, 99, 132)',
-      borderColor: 'rgb(255, 99, 132)',
-      data: DATA[field],
-      pointRadius: 0,
-      pointHoverRadius: 5
-    };
-    // We can update the dataset directly because the lables(dates) are the same.
-    let chart = chartsMap.get(cacheId);
-    chart.data.datasets = [dataset];
-    chart.update();
+    let yAxeNames = $('option:selected', parent.find(SELECTORS.options)).data('label').split('&amp;');
+    let endpoints = $('option:selected', parent.find(SELECTORS.options)).data('endpoints').split('&amp;');
+    let fields =parent.find(SELECTORS.options).val().split('&amp;');
+    let period = parent.find(SELECTORS.period).val()
+    canvas.addClass("loading");
+    editCanvas(canvas, cacheId, timeInterval, endpoints,fields ,period, yAxeNames);
   });
 
   // Function to create a new chart.
-  function createChart(canvas, labels, values, yAxeName) {
+  function createChart(canvas, labels, values, yAxeNames) {
+    let data = {
+      labels: labels,
+      datasets: []
+    };
+    yAxeNames.forEach((yAxeName, i) =&gt; {
+      data.datasets.push({
+        label: yAxeName,
+        borderColor: RGBS[i],
+        data: values[i],
+        pointRadius: 0,
+        pointHoverRadius: 5,
+        // Makes the second line wider to be able to view the overlapping parts
+        borderWidth: 2 + i*3+1
+      });
+    });
     return new Chart(canvas, {
       type: 'line',
-      data: {
-        labels: labels,
-        datasets: [{
-          label: yAxeName,
-          backgroundColor: 'rgb(255, 99, 132)',
-          borderColor: 'rgb(255, 99, 132)',
-          data: values,
-          pointRadius: 0,
-          pointHoverRadius: 5,
-        }]
-      },
+      data: data,
       options: {
         scales: {
-          xAxes: [{
+          x: {
             ticks: {
               autoSkip: true,
               maxRotation: 90,
               autoSkipPadding: 3,
               maxTicksLimit: 40
             }
-          }],
-          yAxes: [{
+          },
+          y: {
             beginAtZero: true
-          }]
+          }
         },
-        tooltips: {
-          mode: 'index',
-          intersect: false,
+        plugins: {
+          tooltip: {
+            mode: 'index',
+            intersect: false,
+          }
         },
-        hover: {
+        interaction: {
           mode: 'nearest',
           intersect: true
         }
@@ -221,44 +207,55 @@ require(['jquery', 'chart'], function($) {
     });
   }
 
-  //Updates the chart when the labels(dates change) or are intialized.
-  function editCanvas(canvas, field, date, period, cacheId, matomoMethod, yAxeName) {
+  function makeRequest(url, queryString) {
+    return new Promise((resolve, reject) =&gt; {
+      $.getJSON(`${url}?${queryString}`)
+        .done(resolve)
+        .fail(function (jqxhr, textStatus, error) {
+          const err = `${textStatus}, ${error}`;
+          console.error(`Request Failed: ${err}`);
+          reject(err);
+        });
+    });
+  }
+  // Updates the chart when the labels(dates change) or are initialized.
+  function editCanvas(canvas, cacheId, date, endpoints, fields, period, yAxeNames) {
     let requestPageRef = XWiki.Model.resolve('Analytics.Code.Macros.VisitsSummaryJson', XWiki.EntityType.DOCUMENT);
     let url = new XWiki.Document(requestPageRef).getURL('get');
-    const queryString = $.param({
-      'date': date,
-      'apiMethod': matomoMethod,
-      'period': period
-    });
-
-    $.getJSON(`${url}?${queryString}`)
-      .done(function(data) {
-        // Destroy the chart to avoid flickering caused updating the labels(dates).
-        let chart = chartsMap.get(cacheId);
-        if (chart != undefined) {
-          chart.destroy();
-        }
-        chartsMap.set(cacheId, createChart(canvas, data.labels, data[field], yAxeName));
-        canvas.removeClass("loading");
-        sessionStorage.setItem(cacheId, JSON.stringify(data));
-      })
-      .fail(function(jqxhr, textStatus, error) {
-        const err = `${textStatus}, ${error}`;
-        console.error(`Request Failed: ${err}`);
+    let requests = []; // This is correctly defined
+    for (let i = 0; i &lt; endpoints.length; i++) {
+      let queryString = $.param({
+        'date': date,
+        'apiMethod': endpoints[i],
+        'period': period
       });
+      requests.push(makeRequest(url, queryString));
+    }
+    Promise.all(requests).then(responses =&gt; {
+      let chart = chartsMap.get(cacheId);
+      if (chart != undefined) {
+        chart.destroy();
+      }
+      let values = fields.map((field, i) =&gt; responses[i][field]);
+      // Map the chart to the id of the macro to be able to edit the canvas.
+      chartsMap.set(cacheId, createChart(canvas, responses[0]["labels"], values, yAxeNames));
+      canvas.removeClass("loading");
+    }).catch(error =&gt; {
+      console.error("Request failed while in the VisitsSummary macros:", error)
+    })
   }
 
   // Initialize on document ready.
-  $(document).ready(function() {
-    $(".visitsOverview").each(function() {
+  $(document).ready(function () {
+    $(".visitsOverview").each(function () {
       let cacheId = $(this).attr('id');
-      let field = $(this).find(SELECTORS.options).val();
-      let label = $('option:selected', $(this).find(SELECTORS.options)).data('label');
-      let canvas = $(this).find(SELECTORS.canvas);
       let timeInterval = $(this).find(SELECTORS.macroOptions).data('date');
-      let matomoMethod = $(this).find(SELECTORS.macroOptions).data('method');
+      let fields = $(this).find(SELECTORS.options).val().split('&amp;');
+      let yAxeNames = $('option:selected', $(this).find(SELECTORS.options)).data('label').split('&amp;');
+      let endpoints = $('option:selected', $(this).find(SELECTORS.options)).data('endpoints').split('&amp;');
+      let canvas = $(this).find(SELECTORS.canvas);
       let period = $(this).find(SELECTORS.period).val();
-      editCanvas(canvas, field, timeInterval, period, cacheId, matomoMethod, label);
+      editCanvas(canvas, cacheId, timeInterval, endpoints, fields, period, yAxeNames);
     });
   });
 });
