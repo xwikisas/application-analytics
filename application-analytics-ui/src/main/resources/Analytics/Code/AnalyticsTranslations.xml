@@ -227,6 +227,40 @@ rendering.macro.screenResolution.parameter.endDate.description=End time of the d
 rendering.macro.screenResolution.parameter.startDate.name=End date
 rendering.macro.screenResolution.parameter.startDate.description=Start time of the date interval used for this macro.
 
+## Web browser Language
+analytics.webBrowserLanguage.header.actions=Actions
+analytics.webBrowserLanguage.header.country.hint=The name of the language.
+analytics.webBrowserLanguage.header.country=Language
+analytics.webBrowserLanguage.header.visits.hint=The total number of site visits originating from users of this language.
+analytics.webBrowserLanguage.header.visits=Visits
+analytics.webBrowserLanguage.header.timeSpent.hint=The time spent on the website by users of this language.
+analytics.webBrowserLanguage.header.timeSpent=Time spent
+analytics.webBrowserLanguage.header.userActions.hint=The total number of actions performed on the website by users of this language.
+analytics.webBrowserLanguage.header.userActions=Actions
+analytics.webBrowserLanguage.parameter.label.endDate=End time of the date interval used for this macro
+analytics.webBrowserLanguage.parameter.label.startDate=Start time of the date interval used for this macro
+rendering.macro.webBrowserLanguage.description=Shows which language the visitor's browsers are using. (e.g. "French")
+rendering.macro.webBrowserLanguage.name=Web browser language
+rendering.macro.webBrowserLanguage.startDate=Start date
+rendering.macro.webBrowserLanguage.endDate=End date
+
+## Country
+analytics.country.header.actions=Actions
+analytics.country.header.country=Language
+analytics.country.header.country.hint=The name of the country.
+analytics.country.header.timeSpent=Time spent
+analytics.country.header.timeSpent.hint=The time that the user from this country have spent on the website.
+analytics.country.header.userActions=Actions
+analytics.country.header.userActions.hint=The total number of actions performed on the website by users of this country.
+analytics.country.header.visits=Visits
+analytics.country.header.visits.hint=Number of visits that came from the language.
+analytics.country.parameter.label.endDate=End time of the date interval used for this macro
+analytics.country.parameter.label.startDate=Start time of the date interval used for this macro
+rendering.macro.country.description=Shows which country your visitors connected from when accessing your website.
+rendering.macro.country.endDate=End date
+rendering.macro.country.name=Country
+rendering.macro.country.startDate=Start date
+
 ## VisitsOverview Macro
 analytics.visitsOverview.averageVisitDuration.option=Average visit duration
 analytics.visitsOverview.bounced.option=Bounce count
