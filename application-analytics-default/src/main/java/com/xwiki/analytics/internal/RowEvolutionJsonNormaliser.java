@@ -64,11 +64,11 @@ public class RowEvolutionJsonNormaliser extends AbstractJsonNormaliser
      * to identify from what period the statistics are.
      *
      * @param jsonNode JSON response from Matomo
-     * @param filters holds the criteria for filtering a dataset
+     * @param filters  holds the criteria for filtering a dataset
      * @return filtered array of processed JSONs
      */
     @Override
-    protected ArrayNode processObjectNode(JsonNode jsonNode, Map<String, String> filters) throws JsonProcessingException
+    protected JsonNode processObjectNode(JsonNode jsonNode, Map<String, String> filters) throws JsonProcessingException
     {
         ArrayNode arrayNode = OBJECT_MAPPER.createArrayNode();
         Iterator<String> fieldNames = jsonNode.fieldNames();
