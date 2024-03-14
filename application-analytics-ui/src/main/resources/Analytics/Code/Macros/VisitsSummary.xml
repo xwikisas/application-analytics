@@ -140,12 +140,12 @@ require(['jquery', 'chart'], function ($) {
     period: '.analytics_visitsGenericPeriods',
     updateCanvas: '.analytics_visitsGenericPeriods, .analytics_genericVisitsFields'
   };
-  const RGBS = [`rgb(255, 0, 0)`, `rgb(0, 255, 0)`, `rgb(0, 0, 255)`]
+  const RGB = [`rgb(255, 0, 0)`, `rgb(0, 255, 0)`, `rgb(0, 0, 255)`]
 
   // A map to store charts for dynamic updates.
   let chartsMap = new Map();
 
-  // Listen for changes on period selector and creates a new chart with the new labels(dates).
+  // Listen for changes on the period or the field that is displayed and update the chart.
   $(document).on('change', SELECTORS.updateCanvas, function () {
     let parent = $(this).closest(SELECTORS.parent);
     let cacheId = parent.attr('id');
@@ -168,7 +168,7 @@ require(['jquery', 'chart'], function ($) {
     yAxeNames.forEach((yAxeName, i) =&gt; {
       data.datasets.push({
         label: yAxeName,
-        borderColor: RGBS[i],
+        borderColor: RGB[i],
         data: values[i],
         pointRadius: 0,
         pointHoverRadius: 5,
@@ -206,7 +206,7 @@ require(['jquery', 'chart'], function ($) {
       }
     });
   }
-
+  //  Makes a request to an endpoint and returns the promise.
   function makeRequest(url, queryString) {
     return new Promise((resolve, reject) =&gt; {
       $.getJSON(`${url}?${queryString}`)
@@ -218,11 +218,13 @@ require(['jquery', 'chart'], function ($) {
         });
     });
   }
-  // Updates the chart when the labels(dates change) or are initialized.
+
+  // Updates the chart.
   function editCanvas(canvas, cacheId, date, endpoints, fields, period, yAxeNames) {
     let requestPageRef = XWiki.Model.resolve('Analytics.Code.Macros.VisitsSummaryJson', XWiki.EntityType.DOCUMENT);
     let url = new XWiki.Document(requestPageRef).getURL('get');
     let requests = []; // This is correctly defined
+    // A field can have multiple endpoints(lines) call all of them and store the promise in vector for later use.
     for (let i = 0; i &lt; endpoints.length; i++) {
       let queryString = $.param({
         'date': date,
@@ -231,6 +233,7 @@ require(['jquery', 'chart'], function ($) {
       });
       requests.push(makeRequest(url, queryString));
     }
+    // After all the promises are completed update the chart with the new data.
     Promise.all(requests).then(responses =&gt; {
       let chart = chartsMap.get(cacheId);
       if (chart != undefined) {
@@ -246,8 +249,8 @@ require(['jquery', 'chart'], function ($) {
   }
 
   // Initialize on document ready.
-  $(document).ready(function () {
-    $(".visitsOverview").each(function () {
+  $(function() {
+    $(".visitsOverview").each(function() {
       let cacheId = $(this).attr('id');
       let timeInterval = $(this).find(SELECTORS.macroOptions).data('date');
       let fields = $(this).find(SELECTORS.options).val().split('&amp;');

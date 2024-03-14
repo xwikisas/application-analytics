@@ -46,9 +46,9 @@
     'format' : 'json',
     'method' : $request.apiMethod
   })
-#set ($filters = {})
-#set ($analyticsResult = $services.analytics.makeRequest($parameters, $filters, 'VisitsSummary'))
-#jsonResponse($analyticsResult)
+  #set ($filters = {})
+  #set ($analyticsResult = $services.analytics.makeRequest($parameters, $filters, 'VisitsSummary'))
+  #jsonResponse($analyticsResult)
 #end
 {{/velocity}}
 </content>
