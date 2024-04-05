@@ -277,7 +277,7 @@
         {'id': 'visits', 'displayer': 'html'},
         {'id': 'nbOfActions', 'displayer': 'html'},
         {'id': 'timeSpent', 'displayer': 'html'},
-        {'id': 'bounceRate', 'displayer': 'html'},
+        {'id': 'bounceCount', 'displayer': 'html'},
         {'id': 'conversionRate', 'displayer': 'html'},
         {'id': 'actions','filterable': false, 'sortable': false, 'displayer': 'html'}
       ],
@@ -290,7 +290,7 @@
 
   {{liveData
     id="$macroId"
-    properties='engines, visits, nbOfActions, timeSpent, bounceRate, conversionRate, actions'
+    properties='engines, visits, nbOfActions, timeSpent, bounceCount, conversionRate, actions'
     source='liveTable'
     sourceParameters="$parameters"
     sort='visits:desc'
@@ -300,7 +300,7 @@
     'visits': 'nb_visits',
     'actions': 'nb_actions',
     'timeSpent': 'sum_visit_length',
-    'bounceRate': 'bounce_count',
+    'bounceCount': 'bounce_count',
     'conversionRate': 'nb_visits_converted'
   })
   #analytics_modalRowEvolution($rowEvolutionParams, 'BrowserEngines', $macroId)

@@ -130,7 +130,11 @@ public class MostViewedJsonNormaliser extends AbstractJsonNormaliser
         EntityResourceReference entityResourceReference =
             (EntityResourceReference) this.getResourceReferenceFromStringURL(objNode.get(URL).asText());
         if (entityResourceReference != null) {
-            objNode.put(LABEL, entityResourceReference.getEntityReference().getName());
+            // If the page name is WebHome we display the name of it's parent to not display a bunch of WebHomes.
+            String pageName = (entityResourceReference.getEntityReference().getName().equals("WebHome"))
+                ? entityResourceReference.getEntityReference().getParent().getName()
+                : entityResourceReference.getEntityReference().getName();
+            objNode.put(LABEL, pageName);
         }
     }
 }

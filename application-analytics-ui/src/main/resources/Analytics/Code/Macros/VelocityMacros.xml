@@ -208,7 +208,7 @@
   #end
 #end
 
-#macro (getTime, $totalSeconds)
+#macro (analytics_getTime, $totalSeconds)
   #if ($totalSeconds)
     #set ($duration = $xwiki.jodatime.getDuration($totalSeconds * 1000))
     #set ($days = $duration.getStandardDays())

@@ -46,7 +46,7 @@
     'visits': 'nb_visits',
     'nbOfActions': 'nb_actions',
     'timeSpent': 'sum_visit_length',
-    'bounceRate': 'bounce_count',
+    'bounceCount': 'bounce_count',
     'conversionRate': 'nb_visits_converted'
   })
 
@@ -106,7 +106,7 @@
       'visits':  $currentEntry.get('nb_visits').asText(),
       'nbOfActions': $currentEntry.get('nb_actions').asText(),
       'timeSpent': $time,
-      'bounceRate': $currentEntry.get('bounce_count').asText(),
+      'bounceCount': $currentEntry.get('bounce_count').asText(),
       'conversionRate': $conversionRate,
       'actions': "#analytics_actions($segment)"
     }))
