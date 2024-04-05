@@ -114,6 +114,7 @@ analytics.rowEvolution.modal.field.actions=Actions
 analytics.rowEvolution.modal.field.avgTime=Time spent on page
 analytics.rowEvolution.modal.field.bounces=Bounces
 analytics.rowEvolution.modal.field.bounceRate=Bounce rate(%)
+analytics.rowEvolution.modal.field.bounceCount=Bounce count
 analytics.rowEvolution.modal.field.clickedSearchResult=Clicked in search results
 analytics.rowEvolution.modal.field.conversionRate=Conversion rate
 analytics.rowEvolution.modal.field.entrances=Entrances
@@ -162,6 +163,8 @@ The most important information for web developers is what kind of rendering engi
 analytics.softwareDevices.header.actions=Actions
 analytics.softwareDevices.header.bounceRate.hint=The percentage of visits that only had a single pageview. This means that the visitor left the website directly from the entrance page.
 analytics.softwareDevices.header.bounceRate=Bounce rate
+analytics.softwareDevices.header.bounceCount=Bounces
+analytics.softwareDevices.header.bounceCount.hint=How many times the users have bounced from this page.
 analytics.softwareDevices.header.browser=Browser
 analytics.softwareDevices.header.configurations=Configuration
 analytics.softwareDevices.header.conversionRate.hint=The percentage of visits that triggered a goal conversion.

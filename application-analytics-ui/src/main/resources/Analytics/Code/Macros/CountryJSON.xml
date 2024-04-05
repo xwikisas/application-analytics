@@ -85,7 +85,7 @@
   #set ($address = $services.analytics.getConfiguration().getRequestAddress())
   #foreach ($currentEntry in $resultList)
     #set ($flagAddress = $address + "/" + $currentEntry.get('logo').asText())
-    #getTime($currentEntry.get('sum_visit_length').asInt())
+    #analytics_getTime($currentEntry.get('sum_visit_length').asInt())
     #if ($request.apiMethod != 'UserCountry.getCountry')
       #set ($country = $currentEntry.get('label').asText())
     #else

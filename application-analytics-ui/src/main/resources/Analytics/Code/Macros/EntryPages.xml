@@ -260,8 +260,8 @@
 
 {{velocity}}
 #macro(executeMacro)
-  #displayAnalyticsMacroTitle('Analytics.Code.Macros.EntryPages', 'rendering.macro.entryPages.description', 'rendering.macro.entryPages.name')
-  #getDate()
+  #analytics_displayMacroTitle('Analytics.Code.Macros.EntryPages', 'rendering.macro.entryPages.description', 'rendering.macro.entryPages.name')
+  #analytics_getDate()
   #set ($discard = $xwiki.jsx.use('Analytics.Code.Macros.RowEvolution'))
   #set ($parameters = $escapetool.url({
     'resultPage': 'Analytics.Code.Macros.EntryPagesJSON',
@@ -284,7 +284,7 @@
       }
     }
   })
-  #getAnalyticsMacroId('entryPagesMacro', $macroId)
+  #analytics_getMacroId('entryPagesMacro', $macroId)
 
   {{liveData
     id="$macroId"
@@ -300,7 +300,7 @@
     'bounceRate': 'bounce_rate',
     'exitRate': 'exit_rate'
   })
-  #modalRowEvolution($rowEvolutionParams, 'EntryPages', $macroId)
+  #analytics_modalRowEvolution($rowEvolutionParams, 'EntryPages', $macroId)
 #end
 #if ($services.licensing.licensor.hasLicensureForEntity(
     $services.model.createDocumentReference('', ['Analytics', 'Code'], 'ConfigurationClass')))

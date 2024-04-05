@@ -39,6 +39,7 @@
   <content>{{include reference='Analytics.Code.Macros.VelocityMacros'/}}
 
 {{velocity}}
+#if ($xcontext.action == 'get')
   #analytics_livedataPagination()
 
   ## Mapping between the livedata columns and the Matomo fields.
@@ -73,7 +74,7 @@
   #set ($analyticsResult = $services.analytics.makeRequest($parameters, $filters, 'MostViewedPages'))
   #if ($offset &lt; $analyticsResult.size())
     #set ($toIndex = $mathtool.min($mathtool.add($offset, $limit), $analyticsResult.size()))
-    #subSet($analyticsResult, $offset, $toIndex, $resultList)
+    #analytics_subSet($analyticsResult, $offset, $toIndex, $resultList)
   #end
 
   #set ($results = {
@@ -85,13 +86,12 @@
   })
   #foreach ($currentEntry in $resultList)
     #set ($url = $currentEntry.get('url').asText())
-    #getTime($currentEntry.get('sum_time_spent').asInt())
     #set ($discard = $results.rows.add({
-      'pageTitle' : "#createLinkElement($currentEntry.get('label').asText(), $url)",
+      'pageTitle' : "#analytics_createLinkElement($currentEntry.get('label').asText(), $url)",
       'visits' :  $currentEntry.get('nb_visits').asText(),
       'entrances' :  $currentEntry.get('entry_nb_visits').asText(),
       'bounces' :  $currentEntry.get('entry_bounce_count').asText(),
-      'actions' : "#analyticsActions($url)"
+      'actions' : "#analytics_actions($url)"
     }))
   #end
   #jsonResponse($results)
