@@ -86,7 +86,6 @@
   })
   #foreach ($currentEntry in $resultList)
     #set ($url = $currentEntry.get('url').asText())
-    #getTime($currentEntry.get('sum_time_spent').asInt())
     #set ($discard = $results.rows.add({
       'pageTitle' : "#analytics_createLinkElement($currentEntry.get('label').asText(), $url)",
       'visits' :  $currentEntry.get('nb_visits').asText(),
