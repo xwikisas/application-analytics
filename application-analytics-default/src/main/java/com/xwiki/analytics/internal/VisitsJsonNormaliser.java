@@ -35,7 +35,7 @@ import java.util.Arrays;
 
 
 /**
- * Normalizes the response needed by the RowEvolution feature.
+ * Normalizes the response required by macros, which consist of graphs.
  *
  * @version $Id$
  * @since 1.0

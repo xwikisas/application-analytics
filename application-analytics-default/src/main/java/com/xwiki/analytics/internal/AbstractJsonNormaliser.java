@@ -134,11 +134,14 @@ public abstract class AbstractJsonNormaliser implements JsonNormaliser
     }
 
     /**
-     * Process the current node returns the processed node.
+     * Processes the specified {@code currentNode} and returns a processed version of the node. The processing may
+     * involve adding or modifying values within the node. For instance, this method is utilized to obtain the XWiki
+     * object from an URL.
      *
-     * @param currentNode the current json that has to be processed
-     * @param extraValues map of values that can be used for processing the node
-     * @return returns null if not implemented otherwise returns the processed node.
+     * @param currentNode the JSON node that is to be processed
+     * @param extraValues a {@code Map<String, String>} containing additional values that may be utilized during the
+     *     processing of the node
+     * @return the processed node, or {@code null} if the method is not implemented or processing cannot be completed
      */
     protected JsonNode processNode(JsonNode currentNode, Map<String, String> extraValues)
     {
