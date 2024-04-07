@@ -24,7 +24,7 @@
   <parent>
     <groupId>com.xwiki.analytics</groupId>
     <artifactId>application-analytics</artifactId>
-    <version>1.0-rc-2-SNAPSHOT</version>
+    <version>1.0-rc-2</version>
   </parent>
   <artifactId>application-analytics-api</artifactId>
   <packaging>jar</packaging>
