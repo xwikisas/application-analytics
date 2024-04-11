@@ -390,15 +390,16 @@
   #analytics_getDate()
   ## key : [fields, endpoints]
   #set ($options = {
-    "analytics.visitsOverview.visits": ['nb_visits', "VisitsSummary.get"],
-    "analytics.visitsOverview.averageVisitDuration": ['avg_time_on_site', "VisitsSummary.get"],
-    "analytics.visitsOverview.bounced": ['bounce_count', "VisitsSummary.get"],
-    "analytics.visitsOverview.nb_actions": ['nb_actions_per_visit', "VisitsSummary.get"],
-    "analytics.visitsOverview.maxActionsInOneVisit": ['max_actions', "VisitsSummary.get"],
-    "analytics.visitsOverview.viewsAndUnique": ['VALUES&amp;VALUES', "VisitsSummary.getVisits&amp;VisitsSummary.getUniqueVisitors"]
+    "analytics.visitsOverview.visits": ['nb_visits', 'VisitsSummary.get'],
+    "analytics.visitsOverview.averageVisitDuration": ['avg_time_on_site', 'VisitsSummary.get'],
+    "analytics.visitsOverview.bounced": ['bounce_count', 'VisitsSummary.get'],
+    "analytics.visitsOverview.nb_actions": ['nb_actions_per_visit', 'VisitsSummary.get'],
+    "analytics.visitsOverview.maxActionsInOneVisit": ['max_actions', 'VisitsSummary.get'],
+    "analytics.visitsOverview.viewsAndUnique": ['VALUES&amp;VALUES',
+    'VisitsSummary.getVisits&amp;VisitsSummary.getUniqueVisitors']
   })
 
-  #analytics_createGraph($macroId, $options, "visitsOverview", $date, "VisitsSummary.get")
+  #analytics_createGraph($macroId, $options, 'visitsOverview', $date, 'VisitsSummary.get')
 #end
 #if ($services.licensing.licensor.hasLicensureForEntity(
   $services.model.createDocumentReference('', ['Analytics', 'Code'], 'ConfigurationClass')))
