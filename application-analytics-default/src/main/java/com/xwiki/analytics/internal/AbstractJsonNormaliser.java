@@ -82,7 +82,7 @@ public abstract class AbstractJsonNormaliser implements JsonNormaliser
      * @param filters holds the criteria for filtering a dataset
      * @return array of jsons
      */
-    protected ArrayNode processArrayNode(JsonNode jsonNode, Map<String, String> filters)
+    protected JsonNode processArrayNode(JsonNode jsonNode, Map<String, String> filters)
     {
         ArrayNode arrayNode = OBJECT_MAPPER.createArrayNode();
         for (JsonNode objNode : jsonNode) {
@@ -102,7 +102,7 @@ public abstract class AbstractJsonNormaliser implements JsonNormaliser
      * @param filters holds the criteria for filtering a dataset
      * @return array of jsons that have been processed
      */
-    protected ArrayNode processObjectNode(JsonNode jsonNode, Map<String, String> filters) throws JsonProcessingException
+    protected JsonNode processObjectNode(JsonNode jsonNode, Map<String, String> filters) throws JsonProcessingException
     {
         ArrayNode arrayNode = OBJECT_MAPPER.createArrayNode();
         Iterator<String> fieldNames = jsonNode.fieldNames();
@@ -134,10 +134,17 @@ public abstract class AbstractJsonNormaliser implements JsonNormaliser
     }
 
     /**
-     * Process the current node and add it to the final array of jsons.
+     * Processes the specified {@code currentNode} and returns a processed version of the node. The processing may
+     * involve adding or modifying values within the node. For instance, this method is utilized to obtain the XWiki
+     * object from an URL.
      *
-     * @param currentNode the current json that has to be processed
-     * @param extraValues map of values that can be used for processing  the node
+     * @param currentNode the JSON node that is to be processed
+     * @param extraValues a {@code Map<String, String>} containing additional values that may be utilized during the
+     *     processing of the node
+     * @return the processed node, or {@code null} if the method is not implemented or processing cannot be completed
      */
-    protected abstract JsonNode processNode(JsonNode currentNode, Map<String, String> extraValues);
+    protected JsonNode processNode(JsonNode currentNode, Map<String, String> extraValues)
+    {
+        return null;
+    }
 }

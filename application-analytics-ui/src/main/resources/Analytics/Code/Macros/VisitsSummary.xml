@@ -1,0 +1,287 @@
+<?xml version="1.1" encoding="UTF-8"?>
+
+<!--
+ * See the NOTICE file distributed with this work for additional
+ * information regarding copyright ownership.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+-->
+
+<xwikidoc version="1.5" reference="Analytics.Code.Macros.VisitsSummary" locale="">
+  <web>Analytics.Code.Macros</web>
+  <name>VisitsSummary</name>
+  <language/>
+  <defaultLanguage/>
+  <translation>0</translation>
+  <creator>xwiki:XWiki.Admin</creator>
+  <parent>Main.WebHome</parent>
+  <author>xwiki:XWiki.Admin</author>
+  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+  <version>1.1</version>
+  <title>VisitsSummary</title>
+  <comment/>
+  <minorEdit>false</minorEdit>
+  <syntaxId>xwiki/2.1</syntaxId>
+  <hidden>true</hidden>
+  <content/>
+  <object>
+    <name>Analytics.Code.Macros.VisitsSummary</name>
+    <number>0</number>
+    <className>XWiki.JavaScriptExtension</className>
+    <guid>b09f973f-c0c4-4db8-847a-5ac0d98f82b7</guid>
+    <class>
+      <name>XWiki.JavaScriptExtension</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <cache>
+        <cache>0</cache>
+        <defaultValue>long</defaultValue>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <freeText>forbidden</freeText>
+        <largeStorage>0</largeStorage>
+        <multiSelect>0</multiSelect>
+        <name>cache</name>
+        <number>5</number>
+        <prettyName>Caching policy</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators>|, </separators>
+        <size>1</size>
+        <unmodifiable>0</unmodifiable>
+        <values>long|short|default|forbid</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </cache>
+      <code>
+        <contenttype>PureText</contenttype>
+        <disabled>0</disabled>
+        <editor>PureText</editor>
+        <name>code</name>
+        <number>2</number>
+        <prettyName>Code</prettyName>
+        <restricted>0</restricted>
+        <rows>20</rows>
+        <size>50</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </code>
+      <name>
+        <disabled>0</disabled>
+        <name>name</name>
+        <number>1</number>
+        <prettyName>Name</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </name>
+      <parse>
+        <disabled>0</disabled>
+        <displayFormType>select</displayFormType>
+        <displayType>yesno</displayType>
+        <name>parse</name>
+        <number>4</number>
+        <prettyName>Parse content</prettyName>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+      </parse>
+      <use>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <freeText>forbidden</freeText>
+        <largeStorage>0</largeStorage>
+        <multiSelect>0</multiSelect>
+        <name>use</name>
+        <number>3</number>
+        <prettyName>Use this extension</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators>|, </separators>
+        <size>1</size>
+        <unmodifiable>0</unmodifiable>
+        <values>currentPage|onDemand|always</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </use>
+    </class>
+    <property>
+      <cache>long</cache>
+    </property>
+    <property>
+      <code>define('analyticsGraphMessages', {
+  prefix: 'analytics.graph.',
+  keys: [
+    'error'
+  ]
+});
+
+require.config({
+  paths: {
+    chart: "$services.webjars.url('org.webjars:chartjs', 'Chart.bundle.min.js')"
+  }
+});
+
+require(['jquery', 'xwiki-l10n!analyticsGraphMessages', 'chart'], function ($, l10n) {
+  const SELECTORS = {
+    options: '.analytics_genericVisitsFields',
+    parent: '.analytics_graphMacro',
+    canvas: 'canvas',
+    macroOptions: '.analytics_visitsGenericMacroOptions',
+    period: '.analytics_visitsGenericPeriods',
+    updateCanvas: '.analytics_visitsGenericPeriods, .analytics_genericVisitsFields'
+  };
+  const RGB = [`rgb(255, 0, 0)`, `rgb(0, 255, 0)`, `rgb(0, 0, 255)`]
+
+  // A map to store charts for dynamic updates.
+  let chartsMap = new Map();
+
+  // Listen for changes on the period or the field that is displayed and update the chart.
+  $(document).on('change', SELECTORS.updateCanvas, function () {
+    let parent = $(this).closest(SELECTORS.parent);
+    let cacheId = parent.attr('id');
+    let timeInterval = parent.find(SELECTORS.macroOptions).data('date');
+    let canvas = parent.find(SELECTORS.canvas);
+    let axis = $('option:selected', parent.find(SELECTORS.options)).data('label').split('&amp;');
+    let endpoints = $('option:selected', parent.find(SELECTORS.options)).data('endpoints').split('&amp;');
+    let fields = parent.find(SELECTORS.options).val().split('&amp;');
+    let period = parent.find(SELECTORS.period).val()
+    canvas.addClass('loading');
+    editCanvas(canvas, cacheId, timeInterval, endpoints, fields, period, axis);
+  });
+
+  // Create a new chart.
+  function createChart(canvas, labels, values, axis) {
+    let data = {
+      labels: labels,
+      datasets: []
+    };
+    axis.forEach((yAxisName, i) =&gt; {
+      data.datasets.push({
+        label: yAxisName,
+        borderColor: RGB[i],
+        data: values[i],
+        pointRadius: 0,
+        pointHoverRadius: 5,
+        // Makes the second line wider to be able to view the overlapping parts.
+        borderWidth: 2 + i * 3 + 1
+      });
+    });
+    return new Chart(canvas, {
+      type: 'line',
+      data: data,
+      options: {
+        scales: {
+          x: {
+            ticks: {
+              autoSkip: true,
+              maxRotation: 90,
+              autoSkipPadding: 3,
+              maxTicksLimit: 40
+            }
+          },
+          y: {
+            beginAtZero: true
+          }
+        },
+        plugins: {
+          tooltip: {
+            mode: 'index',
+            intersect: false,
+          }
+        },
+        interaction: {
+          mode: 'nearest',
+          intersect: true
+        }
+      }
+    });
+  }
+
+  //  Makes a request to an endpoint and returns the promise.
+  function makeRequest(url, queryString) {
+    return new Promise((resolve, reject) =&gt; {
+      $.getJSON(`${url}?${queryString}`)
+        .done(resolve)
+        .fail(function (jqxhr, textStatus, error) {
+          const err = `${textStatus}, ${error}`;
+          console.error(`Request Failed: ${err}`);
+          reject(err);
+        });
+    });
+  }
+
+  // Updates the chart.
+  function editCanvas(canvas, cacheId, date, endpoints, fields, period, axis) {
+    let requestPageRef = XWiki.Model.resolve('Analytics.Code.Macros.VisitsSummaryJson', XWiki.EntityType.DOCUMENT);
+    let url = new XWiki.Document(requestPageRef).getURL('get');
+    let requestsPromises = [];
+    // A field can have multiple endpoints (lines in the graph, e.g. Unique Views and Views). Call all of them and store
+    // the promise in vector for later use.
+    endpoints.forEach(endpoint =&gt; {
+      let queryString = $.param({
+        'date': date,
+        'apiMethod': endpoint,
+        'period': period
+      });
+      requestsPromises.push(makeRequest(url, queryString));
+    });
+    // After all the promises are completed update the chart with the new data.
+    Promise.all(requestsPromises).then(responses =&gt; {
+      let chart = chartsMap.get(cacheId);
+      if (chart != undefined) {
+        chart.destroy();
+      }
+      let values = fields.map((field, i) =&gt; responses[i][field]);
+      // Map the chart to the id of the macro to be able to edit the canvas.
+      chartsMap.set(cacheId, createChart(canvas, responses[0]['labels'], values, axis));
+      canvas.removeClass('loading');
+    }).catch(error =&gt; {
+      new XWiki.widgets.Notification(l10n['error'], 'error');
+      console.error('Request failed while in the VisitsSummary macros: ', error)
+    })
+  }
+
+  // Initialize on document ready.
+  $(function () {
+    $('.visitsOverview').each(function () {
+      let cacheId = $(this).attr('id');
+      let timeInterval = $(this).find(SELECTORS.macroOptions).data('date');
+      let fields = $(this).find(SELECTORS.options).val().split('&amp;');
+      let axis = $('option:selected', $(this).find(SELECTORS.options)).data('label').split('&amp;');
+      let endpoints = $('option:selected', $(this).find(SELECTORS.options)).data('endpoints').split('&amp;');
+      let canvas = $(this).find(SELECTORS.canvas);
+      let period = $(this).find(SELECTORS.period).val();
+      editCanvas(canvas, cacheId, timeInterval, endpoints, fields, period, axis);
+    });
+  });
+});
+</code>
+    </property>
+    <property>
+      <name/>
+    </property>
+    <property>
+      <parse>1</parse>
+    </property>
+    <property>
+      <use/>
+    </property>
+  </object>
+</xwikidoc>

@@ -278,5 +278,51 @@ API as it is faster
     &lt;/div&gt;
   &lt;/div&gt;
 #end
+
+#macro (analytics_createGraph, $id, $options, $class, $date)
+{{html}}
+&lt;div id="$id" class="container-fluid $class analytics_graphMacro"&gt;
+  &lt;div class="analytics_visitsGenericMacroOptions hidden" data-date="$date"&gt;&lt;/div&gt;
+  &lt;div class="row"&gt;
+    &lt;div class="col-xs-12"&gt;
+      &lt;canvas class="loading analytics_fullWidthCanvas"&gt;&lt;/canvas&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="row"&gt;
+    &lt;div class="col-xs-6"&gt;
+      &lt;select class="form-control analytics_genericVisitsFields"
+        title="$escapetool.xml($services.localization.render('analytics.visitsOverview.options.description'))"&gt;
+        #foreach ($entry in $options.entrySet())
+          #analytics_graphOptions($entry.getKey(), $entry.getValue()[0], $entry.getValue()[1])
+        #end
+      &lt;/select&gt;
+    &lt;/div&gt;
+    &lt;div class="col-xs-6"&gt;
+      &lt;select class="form-control analytics_visitsGenericPeriods"
+        title="$escapetool.xml($services.localization.render('analytics.visitsOverview.period.description'))"&gt;
+        #analytics_periodOptions('analytics.visitsOverview.period.day.option', 'day')
+        #analytics_periodOptions('analytics.visitsOverview.period.week.option', 'week')
+        #analytics_periodOptions('analytics.visitsOverview.period.month.option', 'month')
+        #analytics_periodOptions('analytics.visitsOverview.period.year.option', 'year')
+      &lt;/select&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+{{/html}}
+#end
+
+#macro (analytics_periodOptions, $translationKey, $value)
+  &lt;option data-label="$escapetool.xml($services.localization.render($translationKey))" value="$escapetool.xml($value)"&gt;
+    $escapetool.xml($services.localization.render($translationKey))
+  &lt;/option&gt;
+#end
+
+#macro (analytics_graphOptions, $key, $value, $endpoints)
+  &lt;option
+  data-endpoints="$escapetool.xml($endpoints)"
+    data-label="$escapetool.xml($services.localization.render( $key + '.option'))"
+    value="$escapetool.xml($value)"
+  &gt;$escapetool.xml($services.localization.render( $key + '.option'))&lt;/option&gt;
+#end
 {{/velocity}}</content>
 </xwikidoc>
