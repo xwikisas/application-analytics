@@ -291,7 +291,7 @@ API as it is faster
   &lt;div class="row"&gt;
     &lt;div class="col-xs-6"&gt;
       &lt;select class="form-control analytics_genericVisitsFields"
-      title="$escapetool.xml($services.localization.render('analytics.visitsOverview.options.description'))"&gt;
+        title="$escapetool.xml($services.localization.render('analytics.visitsOverview.options.description'))"&gt;
         #foreach ($entry in $options.entrySet())
           #analytics_graphOptions($entry.getKey(), $entry.getValue()[0], $entry.getValue()[1])
         #end
@@ -299,7 +299,7 @@ API as it is faster
     &lt;/div&gt;
     &lt;div class="col-xs-6"&gt;
       &lt;select class="form-control analytics_visitsGenericPeriods"
-      title="$escapetool.xml($services.localization.render('analytics.visitsOverview.period.description'))"&gt;
+        title="$escapetool.xml($services.localization.render('analytics.visitsOverview.period.description'))"&gt;
         #analytics_periodOptions('analytics.visitsOverview.period.day.option', 'day')
         #analytics_periodOptions('analytics.visitsOverview.period.week.option', 'week')
         #analytics_periodOptions('analytics.visitsOverview.period.month.option', 'month')

@@ -162,24 +162,24 @@ require(['jquery', 'xwiki-l10n!analyticsGraphMessages', 'chart'], function ($, l
     let endpoints = $('option:selected', parent.find(SELECTORS.options)).data('endpoints').split('&amp;');
     let fields = parent.find(SELECTORS.options).val().split('&amp;');
     let period = parent.find(SELECTORS.period).val()
-    canvas.addClass("loading");
+    canvas.addClass('loading');
     editCanvas(canvas, cacheId, timeInterval, endpoints, fields, period, axis);
   });
 
-  // Function to create a new chart.
+  // Create a new chart.
   function createChart(canvas, labels, values, axis) {
     let data = {
       labels: labels,
       datasets: []
     };
-    axis.forEach((yAxeName, i) =&gt; {
+    axis.forEach((axe, i) =&gt; {
       data.datasets.push({
-        label: yAxeName,
+        label: axe,
         borderColor: RGB[i],
         data: values[i],
         pointRadius: 0,
         pointHoverRadius: 5,
-        // Makes the second line wider to be able to view the overlapping parts
+        // Makes the second line wider to be able to view the overlapping parts.
         borderWidth: 2 + i * 3 + 1
       });
     });
@@ -232,11 +232,12 @@ require(['jquery', 'xwiki-l10n!analyticsGraphMessages', 'chart'], function ($, l
     let requestPageRef = XWiki.Model.resolve('Analytics.Code.Macros.VisitsSummaryJson', XWiki.EntityType.DOCUMENT);
     let url = new XWiki.Document(requestPageRef).getURL('get');
     let requestsPromises = [];
-    // A field can have multiple endpoints(lines in the graph eg Unique Views and Views) call all of them and store the promise in vector for later use.
-    endpoints.forEach(endopint =&gt; {
+    // A field can have multiple endpoints (lines in the graph e.g. Unique Views and Views). Call all of them and store
+    // the promise in vector for later use.
+    endpoints.forEach(endpoint =&gt; {
       let queryString = $.param({
         'date': date,
-        'apiMethod': endopint,
+        'apiMethod': endpoint,
         'period': period
       });
       requestsPromises.push(makeRequest(url, queryString));
@@ -250,10 +251,10 @@ require(['jquery', 'xwiki-l10n!analyticsGraphMessages', 'chart'], function ($, l
       let values = fields.map((field, i) =&gt; responses[i][field]);
       // Map the chart to the id of the macro to be able to edit the canvas.
       chartsMap.set(cacheId, createChart(canvas, responses[0]['labels'], values, axis));
-      canvas.removeClass("loading");
+      canvas.removeClass('loading');
     }).catch(error =&gt; {
       new XWiki.widgets.Notification(l10n['error'], 'error');
-      console.error('Request failed while in the VisitsSummary macros:', error)
+      console.error('Request failed while in the VisitsSummary macros: ', error)
     })
   }
 
