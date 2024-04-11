@@ -232,7 +232,7 @@ require(['jquery', 'xwiki-l10n!analyticsGraphMessages', 'chart'], function ($, l
     let requestPageRef = XWiki.Model.resolve('Analytics.Code.Macros.VisitsSummaryJson', XWiki.EntityType.DOCUMENT);
     let url = new XWiki.Document(requestPageRef).getURL('get');
     let requestsPromises = [];
-    // A field can have multiple endpoints (lines in the graph e.g. Unique Views and Views). Call all of them and store
+    // A field can have multiple endpoints (lines in the graph, e.g. Unique Views and Views). Call all of them and store
     // the promise in vector for later use.
     endpoints.forEach(endpoint =&gt; {
       let queryString = $.param({
