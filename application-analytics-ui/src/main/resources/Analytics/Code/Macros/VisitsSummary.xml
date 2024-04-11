@@ -172,9 +172,9 @@ require(['jquery', 'xwiki-l10n!analyticsGraphMessages', 'chart'], function ($, l
       labels: labels,
       datasets: []
     };
-    axis.forEach((yAxName, i) =&gt; {
+    axis.forEach((yAxisName, i) =&gt; {
       data.datasets.push({
-        label: yAxName,
+        label: yAxisName,
         borderColor: RGB[i],
         data: values[i],
         pointRadius: 0,
