@@ -141,7 +141,9 @@ require(['jquery', 'chart'], ($) =&gt; {
     period: '.rowEvolutionPeriod',
     loading: '.loading',
     chart: '.chartDisplay',
-    button:'.analyticsActions .analyticsRowEvolution'
+    button:'.analyticsActions .analyticsRowEvolution',
+    defaultPeriodOption: '.rowEvolutionPeriodLengthDay option:eq(1)',
+    defaultPeriod: '.rowEvolutionPeriodLengthDay'
   };
   let chart;
   let currentModal;
@@ -249,8 +251,9 @@ require(['jquery', 'chart'], ($) =&gt; {
     modal.find(SELECTORS.options).data('period', 'day');
     modal.find(SELECTORS.field).prop('selectedIndex', 0);
     modal.find(SELECTORS.period).prop('selectedIndex', 0);
-    modal.find(SELECTORS.startsWithPeriodLength).not(`${SELECTORS.periodLength}Day`).hide();
-    modal.find(`${SELECTORS.periodLength}Day`).show();
+    modal.find(SELECTORS.startsWithPeriodLength).not(SELECTORS.defaultPeriod).hide();
+    modal.find(SELECTORS.defaultPeriodOption).prop('selected', true);
+    modal.find(SELECTORS.defaultPeriod).show();
   });
 
   $(document).on('keyup change', `${SELECTORS.modal} ${SELECTORS.field}`, function () {

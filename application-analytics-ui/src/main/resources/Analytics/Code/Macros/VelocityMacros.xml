@@ -169,7 +169,7 @@
         &lt;div class="col-md-3"&gt;
           &lt;label id=$id&gt;$escapetool.xml($services.localization.render('analytics.rowEvolution.modal.periodLength')):
           &lt;/label&gt;
-          #analytics_durationSelectList("rowEvolutionPeriodLengthDay" [30, 8, 60, 90, 180, 365, 500] $id)
+          #analytics_durationSelectList("rowEvolutionPeriodLengthDay" [8, 30, 60, 90, 180, 365, 500] $id)
           #analytics_durationSelectList("rowEvolutionPeriodLengthWeek" [4, 12, 26, 52, 104, 500] $id)
           #analytics_durationSelectList("rowEvolutionPeriodLengthMonth" [3, 6, 12, 24, 36, 120] $id)
           #analytics_durationSelectList("rowEvolutionPeriodLengthYear" [3, 5, 10] $id)
