@@ -53,6 +53,7 @@ public abstract class AbstractJsonNormaliser implements JsonNormaliser
      * @param jsonString a string that has the expected format
      * @param filters holds the criteria for filtering a dataset
      * @return the normalised json
+     * @throws JsonProcessingException
      */
     @Override
     public JsonNode normaliseData(String jsonString, Map<String, String> filters) throws JsonProcessingException
