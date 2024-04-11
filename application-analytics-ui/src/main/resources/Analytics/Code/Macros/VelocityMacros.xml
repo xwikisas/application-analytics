@@ -318,11 +318,10 @@ API as it is faster
 #end
 
 #macro (analytics_graphOptions, $key, $value, $endpoints)
-  &lt;option data-endpoints="$escapetool.xml($endpoints)"
+  &lt;option
+    data-endpoints="$escapetool.xml($endpoints)"
     data-label="$escapetool.xml($services.localization.render( $key + '.option'))"
-    value="$escapetool.xml($value)"&gt;
-    $escapetool.xml($services.localization.render( $key + '.option'))
-  &lt;/option&gt;
+    value="$escapetool.xml($value)"&gt;$escapetool.xml($services.localization.render( $key + '.option'))&lt;/option&gt;
 #end
 {{/velocity}}</content>
 </xwikidoc>
