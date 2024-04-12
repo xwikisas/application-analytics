@@ -47,7 +47,6 @@
     'visits': 'nb_visits',
     'hits' : 'nb_hits',
     'timeSpent' : 'sum_time_spent',
-    'entryNbActions' : 'entry_nb_actions',
     'bounceRate' : 'bounce_rate',
     'exitRate' : 'exit_rate'
   })
@@ -94,7 +93,6 @@
       'visits' :  $currentEntry.get('nb_visits').asText(),
       'hits' : $currentEntry.get('nb_hits').asText(),
       'timeSpent' : $time,
-      'entryNbActions' : $currentEntry.get('entry_nb_actions').asText(),
       'bounceRate' : $currentEntry.get('bounce_rate').asText(),
       'exitRate' : $currentEntry.get('exit_rate').asText(),
       'actions' : "#analytics_actions($url)"
