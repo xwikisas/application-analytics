@@ -379,8 +379,6 @@
     <property>
       <code>{{include reference='Analytics.Code.Macros.VelocityMacros'/}}
 
-
-
 {{velocity}}
 #macro(executeMacro)
   #set ($discard = $xwiki.ssx.use('Analytics.Code.Macros.VisitsOverview'))

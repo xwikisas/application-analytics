@@ -256,8 +256,6 @@
     <property>
       <code>{{include reference='Analytics.Code.Macros.VelocityMacros'/}}
 
-
-
 {{velocity}}
 #macro(executeMacro)
   #analytics_displayMacroTitle('Analytics.Code.Macros.ExitPages', 'rendering.macro.exitPages.description', 'rendering.macro.exitPages.name')

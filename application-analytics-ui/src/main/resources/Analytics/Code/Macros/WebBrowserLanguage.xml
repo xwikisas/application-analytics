@@ -381,8 +381,6 @@
     <property>
       <code>{{include reference='Analytics.Code.Macros.VelocityMacros'/}}
 
-
-
 {{velocity}}
 #macro(executeMacro)
   #analytics_displayMacroTitle('Analytics.Code.Macros.WebBrowserLanguage', 'rendering.macro.webBrowserLanguage.description', 'rendering.macro.webBrowserLanguage.name')

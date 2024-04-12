@@ -256,7 +256,6 @@
     <property>
       <code>{{include reference='Analytics.Code.Macros.VelocityMacros'/}}
 
-
 {{velocity}}
 #macro(executeMacro)
   #analytics_displayMacroTitle('Analytics.Code.Macros.MostViewedPages', 'rendering.macro.mostViewedPages.description', 'rendering.macro.mostViewedPages.name')
