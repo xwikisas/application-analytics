@@ -381,8 +381,6 @@
     <property>
       <code>{{include reference='Analytics.Code.Macros.VelocityMacros'/}}
 
-{{include reference="Licenses.Code.VelocityMacros"/}}
-
 {{velocity}}
 #macro(executeMacro)
   #analytics_displayMacroTitle('Analytics.Code.Macros.WebBrowserLanguage', 'rendering.macro.webBrowserLanguage.description', 'rendering.macro.webBrowserLanguage.name')
@@ -436,7 +434,7 @@
     {{error}}{{translation key="analytics.accessDenied" /}}{{/error}}
   #end
 #else
-  {{error}}#getMissingLicenseMessage('analytics.extension.name'){{/error}}
+  {{missingLicenseMessage extensionName='analytics.extension.name' /}}
 #end
 {{/velocity}}</code>
     </property>
