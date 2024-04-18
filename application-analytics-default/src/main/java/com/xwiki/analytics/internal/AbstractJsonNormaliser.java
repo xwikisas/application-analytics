@@ -87,7 +87,11 @@ public abstract class AbstractJsonNormaliser implements JsonNormaliser
         ArrayNode arrayNode = OBJECT_MAPPER.createArrayNode();
         for (JsonNode objNode : jsonNode) {
             if (objNode.isObject() && matchesAllFilters(objNode, filters)) {
-                arrayNode.add(processNode(objNode, null));
+                // If the resultNode is null it should be skipped.
+                JsonNode resultNode = processNode(objNode, null);
+                if (resultNode != null) {
+                    arrayNode.add(resultNode);
+                }
             }
         }
         return arrayNode;
@@ -111,7 +115,11 @@ public abstract class AbstractJsonNormaliser implements JsonNormaliser
             JsonNode childNode = jsonNode.get(date);
             for (JsonNode objNode : childNode) {
                 if (objNode.isObject() && matchesAllFilters(objNode, filters)) {
-                    arrayNode.add(processNode(objNode, null));
+                    // Handles the case when the processNode returns null and skip the node
+                    JsonNode resultNode = processNode(objNode, null);
+                    if (resultNode != null) {
+                        arrayNode.add(resultNode);
+                    }
                 }
             }
         }

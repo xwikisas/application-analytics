@@ -69,17 +69,17 @@
   "Response": [
 
     {
-      "label": "/xwiki/bin/view/Analytics/Code/Macros/MostViewedPage",
+      "label": "label",
       "nb_hits": 278,
       "url": "http://localhost:8080/xwiki/bin/view/Analytics/Code/Macros/MostViewedPage"
     },
     {
-      "label": "/xwiki/bin/edit/Analytics/Code/Macros/MostViewedPage?editor=wiki",
+      "label": "label",
       "nb_hits": 27,
       "url": "http://localhost:8080/xwiki/bin/edit/Analytics/Code/Macros/MostViewedPage?editor=wiki"
     },
     {
-      "label": "/xwiki/bin/view/Analytics/Code/Macros/MostViewedPageJSON",
+      "label": "label",
       "nb_hits": 27,
       "url": "http://localhost:8080/xwiki/bin/view/Analytics/Code/Macros/MostViewedPageJSON"
     }
