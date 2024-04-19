@@ -88,10 +88,7 @@ public abstract class AbstractJsonNormaliser implements JsonNormaliser
         for (JsonNode objNode : jsonNode) {
             if (objNode.isObject() && matchesAllFilters(objNode, filters)) {
                 // If the resultNode is null it should be skipped.
-                JsonNode resultNode = processNode(objNode, null);
-                if (resultNode != null) {
-                    arrayNode.add(resultNode);
-                }
+                addNode(objNode, arrayNode);
             }
         }
         return arrayNode;
@@ -116,10 +113,7 @@ public abstract class AbstractJsonNormaliser implements JsonNormaliser
             for (JsonNode objNode : childNode) {
                 if (objNode.isObject() && matchesAllFilters(objNode, filters)) {
                     // Handles the case when the processNode returns null and skip the node
-                    JsonNode resultNode = processNode(objNode, null);
-                    if (resultNode != null) {
-                        arrayNode.add(resultNode);
-                    }
+                    addNode(objNode, arrayNode);
                 }
             }
         }
@@ -154,5 +148,19 @@ public abstract class AbstractJsonNormaliser implements JsonNormaliser
     protected JsonNode processNode(JsonNode currentNode, Map<String, String> extraValues)
     {
         return null;
+    }
+
+    /**
+     * Processes the objNode and adds it to the final list of nodes if the values is not @{code null}.
+     *
+     * @param objNode node to be processed
+     * @param arrayNode final list of nodes
+     */
+    private void addNode(JsonNode objNode, ArrayNode arrayNode)
+    {
+        JsonNode resultNode = processNode(objNode, null);
+        if (resultNode != null) {
+            arrayNode.add(resultNode);
+        }
     }
 }

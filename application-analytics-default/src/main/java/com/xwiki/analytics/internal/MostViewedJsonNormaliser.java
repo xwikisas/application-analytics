@@ -68,12 +68,6 @@ public class MostViewedJsonNormaliser extends AbstractJsonNormaliser
         return MostViewedJsonNormaliser.HINT;
     }
 
-    /**
-     * Process the current node by altering the label if available. The initial label is an url but the final JSON has
-     * the page title.
-     *
-     * @param currentNode the current JSON that has to be processed or {@code null}
-     */
     @Override
     protected JsonNode processNode(JsonNode currentNode, Map<String, String> extraValues)
     {
