@@ -19,11 +19,6 @@
  */
 package com.xwiki.analytics.internal;
 
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.util.Collections;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -31,21 +26,15 @@ import javax.inject.Named;
 import javax.inject.Singleton;
 
 import org.xwiki.component.annotation.Component;
-import org.xwiki.resource.CreateResourceReferenceException;
-import org.xwiki.resource.CreateResourceTypeException;
-import org.xwiki.resource.ResourceReference;
-import org.xwiki.resource.ResourceReferenceResolver;
-import org.xwiki.resource.ResourceType;
-import org.xwiki.resource.ResourceTypeResolver;
-import org.xwiki.resource.UnsupportedResourceReferenceException;
-import org.xwiki.resource.entity.EntityResourceReference;
-import org.xwiki.url.ExtendedURL;
+import org.xwiki.model.EntityType;
+import org.xwiki.model.reference.EntityReference;
+import org.xwiki.model.reference.EntityReferenceResolver;
+import org.xwiki.security.authorization.ContextualAuthorizationManager;
+import org.xwiki.security.authorization.Right;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.xwiki.analytics.JsonNormaliser;
-
-import org.apache.commons.lang3.exception.ExceptionUtils;
 
 /**
  * Implementation for {@link JsonNormaliser}.
@@ -66,10 +55,12 @@ public class MostViewedJsonNormaliser extends AbstractJsonNormaliser
     private static final String URL = "url";
 
     @Inject
-    private ResourceReferenceResolver<ExtendedURL> resourceReferenceResolver;
+    @Named("resource/standardURL")
+    private EntityReferenceResolver<String> urlToReferenceResolver;
 
     @Inject
-    private ResourceTypeResolver<ExtendedURL> resourceTypeResolver;
+    private ContextualAuthorizationManager contextualAuthorizationManager;
+
 
     @Override
     public String getIdentifier()
@@ -77,64 +68,57 @@ public class MostViewedJsonNormaliser extends AbstractJsonNormaliser
         return MostViewedJsonNormaliser.HINT;
     }
 
-    /**
-     * Process the current node by altering the label. The initial label is an url but the final JSON has the page
-     * title.
-     *
-     * @param currentNode the current JSON that has to be processed
-     */
     @Override
     protected JsonNode processNode(JsonNode currentNode, Map<String, String> extraValues)
     {
-        if (currentNode.has(URL)) {
-            this.handleURLNode((ObjectNode) currentNode);
+        if (!currentNode.has(URL)) {
+            return currentNode;
         }
+        EntityReference pageReference = getPageReferenceFromUrl((ObjectNode) currentNode);
+        if (pageReference == null) {
+            return null;
+        }
+        updateNodeLabel((ObjectNode) currentNode, pageReference);
         return currentNode;
     }
 
     /**
-     * Process the URL of a page to obtain the documentReference. This is necessary to retrieve the document name for
-     * display when rendering the table.
+     * Get the page reference from the URL.
      *
-     * @param resourceReferenceURL the URL of the page
-     * @return the reference associated to the given URL, or {@code null} in case it couldn't be resolved
+     * @param objectNode a JSON object
+     * @return reference of the page if the resolver returned a valid value, otherwise {@code null}
      */
-    private ResourceReference getResourceReferenceFromStringURL(String resourceReferenceURL)
+    private EntityReference getPageReferenceFromUrl(ObjectNode objectNode)
     {
-        try {
-
-            // The URL provided by Matomo is an unencoded string. For utilization with the resourceTypeResolver,
-            // this URL needs proper encoding. This is achieved by creating a URL object to split the URL into its
-            // respective components and after that the URL is encoded using the URI constructor.
-            URL url = new URL(resourceReferenceURL);
-            URL encodedUrl = new URI(url.getProtocol(), url.getUserInfo(), url.getHost(), url.getPort(), url.getPath(),
-                url.getQuery(), url.getRef()).toURL();
-            ExtendedURL extendedURL = new ExtendedURL(encodedUrl, null);
-            ResourceType resourceType = this.resourceTypeResolver.resolve(extendedURL, Collections.emptyMap());
-            return this.resourceReferenceResolver.resolve(extendedURL, resourceType, Collections.emptyMap());
-        } catch (MalformedURLException | CreateResourceReferenceException | CreateResourceTypeException
-                 | UnsupportedResourceReferenceException | URISyntaxException e) {
-            this.logger.warn("Failed to get resource reference from URL: [{}]. Caused by [{}]", resourceReferenceURL,
-                ExceptionUtils.getRootCauseMessage(e));
+        String url = objectNode.get(URL).asText();
+        EntityReference entityReference = this.urlToReferenceResolver.resolve(url, EntityType.DOCUMENT);
+        if (entityReference == null || !contextualAuthorizationManager.hasAccess(Right.VIEW, entityReference)) {
             return null;
         }
+        return entityReference;
     }
 
     /**
-     * Change the label node to contain the actual page name instead of an URL.
+     * Replace the url with the actual title of the page.
      *
-     * @param objNode a JSON object
+     * @param objectNode a JSON object
+     * @param entityReference reference of the page
      */
-    private void handleURLNode(ObjectNode objNode)
+    private void updateNodeLabel(ObjectNode objectNode, EntityReference entityReference)
     {
-        EntityResourceReference entityResourceReference =
-            (EntityResourceReference) this.getResourceReferenceFromStringURL(objNode.get(URL).asText());
-        if (entityResourceReference != null) {
-            // If the page name is WebHome we display the name of it's parent to not display a bunch of WebHomes.
-            String pageName = (entityResourceReference.getEntityReference().getName().equals("WebHome"))
-                ? entityResourceReference.getEntityReference().getParent().getName()
-                : entityResourceReference.getEntityReference().getName();
-            objNode.put(LABEL, pageName);
-        }
+        String pageName = getPageName(entityReference);
+        objectNode.put(LABEL, pageName);
+    }
+
+    /**
+     * Gets the name of the page if the page name is WebHome returns the name of the parent.
+     *
+     * @param entityReference reference of the page
+     * @return name of the page
+     */
+    private String getPageName(EntityReference entityReference)
+    {
+        return entityReference.getName().equals("WebHome") ? entityReference.getParent().getName()
+            : entityReference.getName();
     }
 }

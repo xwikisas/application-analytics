@@ -11,7 +11,7 @@
   ],
   "Response": [
     {
-      "label": "/xwiki/bin/view/Analytics/Code/MostViewedPages",
+      "label": "label",
       "url": "http://localhost:8080/xwiki/bin/view/Analytics/Code/MostViwedPages"
     }
   ]

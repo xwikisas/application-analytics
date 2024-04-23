@@ -23,24 +23,30 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
 
+import javax.inject.Inject;
+import javax.inject.Named;
+
+import static org.mockito.ArgumentMatchers.anyMap;
 import static org.mockito.Mockito.eq;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
-import org.xwiki.component.util.ReflectionUtils;
-import org.xwiki.resource.ResourceReferenceResolver;
-import org.xwiki.resource.ResourceTypeResolver;
+import org.xwiki.model.EntityType;
+import org.xwiki.model.reference.EntityReference;
+import org.xwiki.model.reference.EntityReferenceResolver;
+import org.xwiki.security.authorization.ContextualAuthorizationManager;
 import org.xwiki.test.junit5.mockito.ComponentTest;
 import org.xwiki.test.junit5.mockito.InjectMockComponents;
 import org.xwiki.test.junit5.mockito.MockComponent;
 import org.xwiki.url.ExtendedURL;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 /**
@@ -55,10 +61,11 @@ public class MostViewedJsonNormalizerTest extends JsonNormalizerTest
     private MostViewedJsonNormaliser mostViewedJsonNormaliser;
 
     @MockComponent
-    private ResourceReferenceResolver<ExtendedURL> resourceReferenceResolver;
+    @Named("resource/standardURL")
+    private EntityReferenceResolver<String> urlToReferenceResolver;
 
     @MockComponent
-    private ResourceTypeResolver<ExtendedURL> resourceTypeResolver;
+    private ContextualAuthorizationManager contextualAuthorizationManager;
 
     @MockComponent
     private Logger logger;
@@ -70,6 +77,7 @@ public class MostViewedJsonNormalizerTest extends JsonNormalizerTest
     void normalizeDataWithObjectResponseWithoutFilters() throws Exception
     {
         JsonNode node = getTestJSONS("/mostViewedPages/normalizeDataWithObjectResponseWithoutFilters.json");
+
         assertEquals(node.get("Response"),
             mostViewedJsonNormaliser.normaliseData(node.get("JSON").toString(), null));
     }
@@ -82,7 +90,7 @@ public class MostViewedJsonNormalizerTest extends JsonNormalizerTest
     void normalizeDataWithArrayResponseWithoutFilters() throws Exception
     {
         JsonNode node = getTestJSONS("/mostViewedPages/normalizeDataWithArrayResponseWithoutFilters.json");
-        assertEquals(node.get("JSON"), mostViewedJsonNormaliser.normaliseData(node.get("JSON").toString(), null));
+        assertEquals(node.get("Response"), mostViewedJsonNormaliser.normaliseData(node.get("JSON").toString(), null));
     }
 
     /**
@@ -128,21 +136,6 @@ public class MostViewedJsonNormalizerTest extends JsonNormalizerTest
     }
 
     /**
-     * Will test the case when the url is invalid.
-     */
-    @Test
-    void normalizeDataWithMalformedUrl() throws Exception
-    {
-        ReflectionUtils.setFieldValue(this.mostViewedJsonNormaliser, "logger", this.logger);
-        JsonNode node = getTestJSONS("/mostViewedPages/normalizeDataWithMalformedUrl.json");
-        HashMap<String, String> filters = new HashMap<>();
-        assertEquals(node.get("JSON"), mostViewedJsonNormaliser.normaliseData(node.get("JSON").toString(), filters));
-        verify(logger).warn("Failed to get resource reference from URL: [{}]. Caused by [{}]",
-            "htttp://localhost:8080/xwiki/bin/view/Analytics/Code/MostViwedPages",
-            "MalformedURLException: unknown protocol: htttp");
-    }
-
-    /**
      * Will test if the normaliser works properly when the response from Matomo is an array of jsons.
      */
     @Test
@@ -155,6 +148,10 @@ public class MostViewedJsonNormalizerTest extends JsonNormalizerTest
     @BeforeEach
     void setupAnyURL() throws Exception
     {
-        when(resourceTypeResolver.resolve(any(ExtendedURL.class), eq(Collections.emptyMap()))).thenReturn(null);
+        EntityReference parentReference = mock(EntityReference.class);
+
+        when(urlToReferenceResolver.resolve(any(), any())).thenReturn(
+            new EntityReference("label", EntityType.DOCUMENT, parentReference, Collections.emptyMap()));
+        when(contextualAuthorizationManager.hasAccess(any(), any())).thenReturn(true);
     }
 }
