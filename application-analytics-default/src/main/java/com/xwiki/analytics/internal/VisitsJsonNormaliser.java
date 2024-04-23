@@ -52,7 +52,7 @@ public class VisitsJsonNormaliser extends AbstractJsonNormaliser
 
     private static final String LABEL = "labels";
 
-    private static final String VALUES = "VALUES";
+    private static final String VALUES = "values";
 
     @Override
     public String getIdentifier()
@@ -69,7 +69,7 @@ public class VisitsJsonNormaliser extends AbstractJsonNormaliser
         jsonNode.fieldNames().forEachRemaining(currentDate -> {
             labels.add(currentDate);
             JsonNode currentNode = jsonNode.get(currentDate);
-            // If there are missing values for a day Matomo returns and empty array.
+            // If there are missing values for a day, Matomo returns and empty array.
             if (currentNode.isInt()) {
                 values.add(currentNode.asInt());
             } else {

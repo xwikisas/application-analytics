@@ -393,7 +393,7 @@
     "analytics.visitsOverview.bounced": ['bounce_count', 'VisitsSummary.get'],
     "analytics.visitsOverview.nb_actions": ['nb_actions_per_visit', 'VisitsSummary.get'],
     "analytics.visitsOverview.maxActionsInOneVisit": ['max_actions', 'VisitsSummary.get'],
-    "analytics.visitsOverview.viewsAndUnique": ['VALUES&amp;VALUES',
+    "analytics.visitsOverview.viewsAndUnique": ['values&amp;values',
     'VisitsSummary.getVisits&amp;VisitsSummary.getUniqueVisitors']
   })
 

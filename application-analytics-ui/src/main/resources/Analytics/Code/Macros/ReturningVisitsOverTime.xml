@@ -388,16 +388,16 @@
   #analytics_getDate()
   ## key : [fields, endpoints]
   #set ($options = {
-    "analytics.returningVisitsOverTime.returningVisits": ['nb_visits_returning', 'VisitFrequency.get'],
-    "analytics.returningVisitsOverTime.visitDurationForReturningVisitors": ['avg_time_on_site_returning', 'VisitFrequency.get'],
-    "analytics.returningVisitsOverTime.nbActionsPerVisitReturning": ['nb_actions_per_visit_returning', 'VisitFrequency.get'],
-    "analytics.returningVisitsOverTime.returningVisitsThatHaveBounced": ['bounce_rate_returning', 'VisitFrequency.get'],
-    "analytics.returningVisitsOverTime.nbActionsByTheReturningVisits": ['nb_actions_returning', 'VisitFrequency.get'],
-    "analytics.returningVisitsOverTime.nbVisitsNew": ['nb_visits_new', 'VisitFrequency.get'],
-    "analytics.returningVisitsOverTime.avgTimeOnSiteNew": ['avg_time_on_site_new', 'VisitFrequency.get'],
-    "analytics.returningVisitsOverTime.nbActionsPerVisitNew": ['nb_actions_per_visit_new', 'VisitFrequency.get'],
-    "analytics.returningVisitsOverTime.bounceRateNew": ['bounce_rate_new', 'VisitFrequency.get'],
-    "analytics.returningVisitsOverTime.nbActionsNew": ['nb_actions_returning', 'VisitFrequency.get']
+    'analytics.returningVisitsOverTime.returningVisits': ['nb_visits_returning', 'VisitFrequency.get'],
+    'analytics.returningVisitsOverTime.visitDurationForReturningVisitors': ['avg_time_on_site_returning', 'VisitFrequency.get'],
+    'analytics.returningVisitsOverTime.nbActionsPerVisitReturning': ['nb_actions_per_visit_returning', 'VisitFrequency.get'],
+    'analytics.returningVisitsOverTime.returningVisitsThatHaveBounced': ['bounce_rate_returning', 'VisitFrequency.get'],
+    'analytics.returningVisitsOverTime.nbActionsByTheReturningVisits': ['nb_actions_returning', 'VisitFrequency.get'],
+    'analytics.returningVisitsOverTime.nbVisitsNew': ['nb_visits_new', 'VisitFrequency.get'],
+    'analytics.returningVisitsOverTime.avgTimeOnSiteNew': ['avg_time_on_site_new', 'VisitFrequency.get'],
+    'analytics.returningVisitsOverTime.nbActionsPerVisitNew': ['nb_actions_per_visit_new', 'VisitFrequency.get'],
+    'analytics.returningVisitsOverTime.bounceRateNew': ['bounce_rate_new', 'VisitFrequency.get'],
+    'analytics.returningVisitsOverTime.nbActionsNew': ['nb_actions_returning', 'VisitFrequency.get']
   })
 
   #analytics_createGraph($macroId, $options, 'returningVisitsOverTime', $date, 'VisitsSummary.get')
@@ -407,7 +407,7 @@
   #if ($xwiki.hasAccessLevel('view', 'Analytics.WebHome'))
     #executeMacro()
   #else
-    {{error}}{{translation key="analytics.accessDenied" /}}{{/error}}
+    {{error}}{{translation key='analytics.accessDenied' /}}{{/error}}
   #end
 #else
   {{missingLicenseMessage extensionName='analytics.extension.name' /}}
