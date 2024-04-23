@@ -68,7 +68,7 @@
   ],
   "Response": [
     {
-      "label": "/xwiki/bin/edit/Analytics/Code/Macros/MostViewedPage?editor=wiki",
+      "label": "label",
       "nb_hits": 27,
       "url": "http://localhost:8080/xwiki/bin/edit/Analytics/Code/Macros/MostViewedPage?editor=wiki"
     }

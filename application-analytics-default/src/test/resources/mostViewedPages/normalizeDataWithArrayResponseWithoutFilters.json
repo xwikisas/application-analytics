@@ -8,5 +8,15 @@
       "label": "/xwiki/bin/view/Main/",
       "url": "http://localhost:8081/xwiki/bin/view/Main/"
     }
+  ],
+  "Response": [
+    {
+      "label": "label",
+      "url": "http://localhost:8080/xwiki/bin/view/Analytics/Code/MostViwedPages"
+    },
+    {
+      "label": "label",
+      "url": "http://localhost:8081/xwiki/bin/view/Main/"
+    }
   ]
 }
