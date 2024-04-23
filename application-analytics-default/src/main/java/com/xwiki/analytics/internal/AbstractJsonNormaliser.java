@@ -151,7 +151,7 @@ public abstract class AbstractJsonNormaliser implements JsonNormaliser
     }
 
     /**
-     * Processes the objNode and adds it to the final list of nodes if the values is not @{code null}.
+     * Processes the objNode and adds it to the final list of nodes if the value is not @{code null}.
      *
      * @param objNode node to be processed
      * @param arrayNode final list of nodes
