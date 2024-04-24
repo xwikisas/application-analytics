@@ -282,6 +282,24 @@ analytics.visitsOverview.visits.option=Visits
 rendering.macro.visitsOverview.description=This is an overview of the visit evolution.
 rendering.macro.visitsOverview.name=Visits overview
 
+## ReturningVisitsOverTime Macro
+analytics.returningVisitsOverTime.avgTimeOnSiteNew.option=Average visit duration for new visitors
+analytics.returningVisitsOverTime.bounceRateNew.option=New visits have bounced(left the website after one page)%
+analytics.returningVisitsOverTime.nbActionsByTheReturningVisits.option=Actions by the returning visits
+analytics.returningVisitsOverTime.nbActionsNew.option=Actions by the new visits
+analytics.returningVisitsOverTime.nbActionsPerVisitNew.option=Actions per new visit
+analytics.returningVisitsOverTime.nbActionsPerVisitReturning.option=Actions per returning visit
+analytics.returningVisitsOverTime.nbVisitsNew.option=New visits
+analytics.returningVisitsOverTime.parameter.label.endDate=End time of the date interval used for this macro
+analytics.returningVisitsOverTime.parameter.label.startDate=Start time of the date interval used for this macro
+analytics.returningVisitsOverTime.returningVisits.option=Returning visits
+analytics.returningVisitsOverTime.returningVisitsThatHaveBounced.option=Returning visits have bounced (left the website after one page)%
+analytics.returningVisitsOverTime.visitDurationForReturningVisitors.option=Average visit duration for returning visitors
+rendering.macro.returningVisitsOverTime.description=This is an overview of the returning visits. It is broken down into various reports, which are displayed at the bottom of the macro
+rendering.macro.returningVisitsOverTime.endDate=End date
+rendering.macro.returningVisitsOverTime.name=Returning visits over time
+rendering.macro.returningVisitsOverTime.startDate=Start date
+
 ## Graph errors
 analytics.graph.error=Something went wrong while getting data for the chart.
 

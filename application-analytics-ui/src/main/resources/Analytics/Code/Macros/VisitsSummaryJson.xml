@@ -44,7 +44,8 @@
     'date' : $request.date,
     'module' : 'API',
     'format' : 'json',
-    'method' : $request.apiMethod
+    'method' : $request.apiMethod,
+    'columns' : $request.column
   })
   #set ($filters = {})
   #set ($analyticsResult = $services.analytics.makeRequest($parameters, $filters, 'VisitsSummary'))

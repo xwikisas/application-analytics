@@ -234,11 +234,12 @@ require(['jquery', 'xwiki-l10n!analyticsGraphMessages', 'chart'], function ($, l
     let requestsPromises = [];
     // A field can have multiple endpoints (lines in the graph, e.g. Unique Views and Views). Call all of them and store
     // the promise in vector for later use.
-    endpoints.forEach(endpoint =&gt; {
+    endpoints.forEach((endpoint, index) =&gt; {
       let queryString = $.param({
         'date': date,
         'apiMethod': endpoint,
-        'period': period
+        'period': period,
+        'column': fields[index]
       });
       requestsPromises.push(makeRequest(url, queryString));
     });
@@ -248,7 +249,7 @@ require(['jquery', 'xwiki-l10n!analyticsGraphMessages', 'chart'], function ($, l
       if (chart != undefined) {
         chart.destroy();
       }
-      let values = fields.map((field, i) =&gt; responses[i][field]);
+      let values = fields.map((field, i) =&gt; responses[i]['values']);
       // Map the chart to the id of the macro to be able to edit the canvas.
       chartsMap.set(cacheId, createChart(canvas, responses[0]['labels'], values, axis));
       canvas.removeClass('loading');
@@ -260,7 +261,7 @@ require(['jquery', 'xwiki-l10n!analyticsGraphMessages', 'chart'], function ($, l
 
   // Initialize on document ready.
   $(function () {
-    $('.visitsOverview').each(function () {
+    $('.visitsOverview, .returningVisitsOverTime').each(function () {
       let cacheId = $(this).attr('id');
       let timeInterval = $(this).find(SELECTORS.macroOptions).data('date');
       let fields = $(this).find(SELECTORS.options).val().split('&amp;');

@@ -1,44 +1,16 @@
 {
   "JSON": {
-    "2023": {
-      "nb_visits": 189,
-      "avg_time_on_site": 1292,
-      "bounce_count": 41,
-      "nb_actions_per_visit": 19.9,
-      "max_actions": 208
-    },
-    "2024": {
-      "nb_visits": 5,
-      "avg_time_on_site": 154,
-      "bounce_count": 1,
-      "nb_actions_per_visit": 5,
-      "max_actions": 8
-    }
+    "2023": 20,
+    "2024": 30
   },
   "response": {
     "labels": [
       "2023",
       "2024"
     ],
-    "nb_actions_per_visit": [
-      19,
-      5
-    ],
-    "max_actions": [
-      208,
-      8
-    ],
-    "nb_visits": [
-      189,
-      5
-    ],
-    "bounce_count": [
-      41,
-      1
-    ],
-    "avg_time_on_site": [
-      1292,
-      154
+    "values": [
+      20,
+      30
     ]
   }
 }

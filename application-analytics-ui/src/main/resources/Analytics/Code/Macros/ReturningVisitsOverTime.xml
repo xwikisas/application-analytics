@@ -20,9 +20,9 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc version="1.5" reference="Analytics.Code.Macros.VisitsOverview" locale="">
+<xwikidoc version="1.5" reference="Analytics.Code.Macros.ReturningVisitsOverTime" locale="">
   <web>Analytics.Code.Macros</web>
-  <name>VisitsOverview</name>
+  <name>ReturningVisitsOverTime</name>
   <language/>
   <defaultLanguage/>
   <translation>0</translation>
@@ -31,19 +31,19 @@
   <author>xwiki:XWiki.Admin</author>
   <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
   <version>1.1</version>
-  <title>VisitsOverview</title>
+  <title>ReturningVisitsOverTime</title>
   <comment/>
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>true</hidden>
   <content>{{analyticsFilter/}}
 
-{{visitsOverview/}}</content>
+{{returningVisitsOverTime/}}</content>
   <object>
-    <name>Analytics.Code.Macros.VisitsOverview</name>
+    <name>Analytics.Code.Macros.ReturningVisitsOverTime</name>
     <number>0</number>
     <className>XWiki.StyleSheetExtension</className>
-    <guid>dede6241-25e1-4ff6-b8ef-d391d3f70edd</guid>
+    <guid>e039d226-547c-4bd2-8e62-9280041e4210</guid>
     <class>
       <name>XWiki.StyleSheetExtension</name>
       <customClass/>
@@ -163,10 +163,10 @@
     </property>
   </object>
   <object>
-    <name>Analytics.Code.Macros.VisitsOverview</name>
+    <name>Analytics.Code.Macros.ReturningVisitsOverTime</name>
     <number>0</number>
     <className>XWiki.WikiMacroClass</className>
-    <guid>792b611f-d9a5-442a-8684-307f66f8a428</guid>
+    <guid>6bd2a97d-6f87-41a4-bfaf-62642f256d7c</guid>
     <class>
       <name>XWiki.WikiMacroClass</name>
       <customClass/>
@@ -381,30 +381,33 @@
 
 {{velocity}}
 #macro(executeMacro)
-  #set ($discard = $xwiki.ssx.use('Analytics.Code.Macros.VisitsOverview'))
+  #set ($discard = $xwiki.ssx.use('Analytics.Code.Macros.ReturningVisitsOverTime'))
   #set ($discard = $xwiki.jsx.use('Analytics.Code.Macros.VisitsSummary'))
-  #analytics_displayMacroTitle('Analytics.Code.Macros.VisitsOverview', 'rendering.macro.visitsOverview.description', 'rendering.macro.visitsOverview.name')
-  #analytics_getMacroId('visitsOverview', $macroId)
+  #analytics_displayMacroTitle('Analytics.Code.Macros.ReturningVisitsOverTime', 'rendering.macro.returningVisitsOverTime.description', 'rendering.macro.returningVisitsOverTime.name')
+  #analytics_getMacroId('returningVisitsOverTime', $macroId)
   #analytics_getDate()
   ## key : [fields, endpoints]
   #set ($options = {
-    "analytics.visitsOverview.visits": ['nb_visits', 'VisitsSummary.get'],
-    "analytics.visitsOverview.averageVisitDuration": ['avg_time_on_site', 'VisitsSummary.get'],
-    "analytics.visitsOverview.bounced": ['bounce_count', 'VisitsSummary.get'],
-    "analytics.visitsOverview.nb_actions": ['nb_actions_per_visit', 'VisitsSummary.get'],
-    "analytics.visitsOverview.maxActionsInOneVisit": ['max_actions', 'VisitsSummary.get'],
-    "analytics.visitsOverview.viewsAndUnique": ['values&amp;values',
-    'VisitsSummary.getVisits&amp;VisitsSummary.getUniqueVisitors']
+    'analytics.returningVisitsOverTime.returningVisits': ['nb_visits_returning', 'VisitFrequency.get'],
+    'analytics.returningVisitsOverTime.visitDurationForReturningVisitors': ['avg_time_on_site_returning', 'VisitFrequency.get'],
+    'analytics.returningVisitsOverTime.nbActionsPerVisitReturning': ['nb_actions_per_visit_returning', 'VisitFrequency.get'],
+    'analytics.returningVisitsOverTime.returningVisitsThatHaveBounced': ['bounce_rate_returning', 'VisitFrequency.get'],
+    'analytics.returningVisitsOverTime.nbActionsByTheReturningVisits': ['nb_actions_returning', 'VisitFrequency.get'],
+    'analytics.returningVisitsOverTime.nbVisitsNew': ['nb_visits_new', 'VisitFrequency.get'],
+    'analytics.returningVisitsOverTime.avgTimeOnSiteNew': ['avg_time_on_site_new', 'VisitFrequency.get'],
+    'analytics.returningVisitsOverTime.nbActionsPerVisitNew': ['nb_actions_per_visit_new', 'VisitFrequency.get'],
+    'analytics.returningVisitsOverTime.bounceRateNew': ['bounce_rate_new', 'VisitFrequency.get'],
+    'analytics.returningVisitsOverTime.nbActionsNew': ['nb_actions_returning', 'VisitFrequency.get']
   })
 
-  #analytics_createGraph($macroId, $options, 'visitsOverview', $date, 'VisitsSummary.get')
+  #analytics_createGraph($macroId, $options, 'returningVisitsOverTime', $date, 'VisitsSummary.get')
 #end
 #if ($services.licensing.licensor.hasLicensureForEntity(
   $services.model.createDocumentReference('', ['Analytics', 'Code'], 'ConfigurationClass')))
   #if ($xwiki.hasAccessLevel('view', 'Analytics.WebHome'))
     #executeMacro()
   #else
-    {{error}}{{translation key="analytics.accessDenied" /}}{{/error}}
+    {{error}}{{translation key='analytics.accessDenied' /}}{{/error}}
   #end
 #else
   {{missingLicenseMessage extensionName='analytics.extension.name' /}}
@@ -429,10 +432,10 @@
       <description/>
     </property>
     <property>
-      <id>visitsOverview</id>
+      <id>returningVisitsOverTime</id>
     </property>
     <property>
-      <name>Visits Overview</name>
+      <name>Returning Visits Over Time</name>
     </property>
     <property>
       <priority/>
@@ -442,6 +445,164 @@
     </property>
     <property>
       <visibility>Current Wiki</visibility>
+    </property>
+  </object>
+  <object>
+    <name>Analytics.Code.Macros.ReturningVisitsOverTime</name>
+    <number>0</number>
+    <className>XWiki.WikiMacroParameterClass</className>
+    <guid>2bc3a4d5-085a-4f55-b32d-64784ea8d1ef</guid>
+    <class>
+      <name>XWiki.WikiMacroParameterClass</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <defaultValue>
+        <disabled>0</disabled>
+        <name>defaultValue</name>
+        <number>4</number>
+        <prettyName>Parameter default value</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </defaultValue>
+      <description>
+        <disabled>0</disabled>
+        <name>description</name>
+        <number>2</number>
+        <prettyName>Parameter description</prettyName>
+        <restricted>0</restricted>
+        <rows>5</rows>
+        <size>40</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </description>
+      <mandatory>
+        <disabled>0</disabled>
+        <displayFormType>select</displayFormType>
+        <displayType>yesno</displayType>
+        <name>mandatory</name>
+        <number>3</number>
+        <prettyName>Parameter mandatory</prettyName>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+      </mandatory>
+      <name>
+        <disabled>0</disabled>
+        <name>name</name>
+        <number>1</number>
+        <prettyName>Parameter name</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </name>
+      <type>
+        <disabled>0</disabled>
+        <name>type</name>
+        <number>5</number>
+        <prettyName>Parameter type</prettyName>
+        <size>60</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </type>
+    </class>
+    <property>
+      <defaultValue/>
+    </property>
+    <property>
+      <description/>
+    </property>
+    <property>
+      <mandatory>0</mandatory>
+    </property>
+    <property>
+      <name>startDate</name>
+    </property>
+    <property>
+      <type>java.util.Date</type>
+    </property>
+  </object>
+  <object>
+    <name>Analytics.Code.Macros.ReturningVisitsOverTime</name>
+    <number>1</number>
+    <className>XWiki.WikiMacroParameterClass</className>
+    <guid>194c7269-5425-4062-a74b-4f889d071614</guid>
+    <class>
+      <name>XWiki.WikiMacroParameterClass</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <defaultValue>
+        <disabled>0</disabled>
+        <name>defaultValue</name>
+        <number>4</number>
+        <prettyName>Parameter default value</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </defaultValue>
+      <description>
+        <disabled>0</disabled>
+        <name>description</name>
+        <number>2</number>
+        <prettyName>Parameter description</prettyName>
+        <restricted>0</restricted>
+        <rows>5</rows>
+        <size>40</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </description>
+      <mandatory>
+        <disabled>0</disabled>
+        <displayFormType>select</displayFormType>
+        <displayType>yesno</displayType>
+        <name>mandatory</name>
+        <number>3</number>
+        <prettyName>Parameter mandatory</prettyName>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+      </mandatory>
+      <name>
+        <disabled>0</disabled>
+        <name>name</name>
+        <number>1</number>
+        <prettyName>Parameter name</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </name>
+      <type>
+        <disabled>0</disabled>
+        <name>type</name>
+        <number>5</number>
+        <prettyName>Parameter type</prettyName>
+        <size>60</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </type>
+    </class>
+    <property>
+      <defaultValue/>
+    </property>
+    <property>
+      <description/>
+    </property>
+    <property>
+      <mandatory>0</mandatory>
+    </property>
+    <property>
+      <name>endDate</name>
+    </property>
+    <property>
+      <type>java.util.Date</type>
     </property>
   </object>
 </xwikidoc>
