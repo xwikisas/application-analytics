@@ -70,6 +70,7 @@
     'flat' : '1'
   })
 
+   #set ($discard = $filters.put("entry_nb_visits", ""))
   ## Get the JSON response from Matomo.
   #set ($analyticsResult = $services.analytics.makeRequest($parameters, $filters, 'MostViewedPages'))
   #if ($offset &lt; $analyticsResult.size())
