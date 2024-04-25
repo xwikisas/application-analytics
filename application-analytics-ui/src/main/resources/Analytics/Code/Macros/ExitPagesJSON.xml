@@ -69,7 +69,7 @@
     'expanded' : '1',
     'flat' : '1'
   })
-
+  #set ($discard = $filters.put('exit_nb_visits', ''))
   ## Get the JSON response from Matomo.
   #set ($analyticsResult = $services.analytics.makeRequest($parameters, $filters, 'MostViewedPages'))
   #if ($offset &lt; $analyticsResult.size())
