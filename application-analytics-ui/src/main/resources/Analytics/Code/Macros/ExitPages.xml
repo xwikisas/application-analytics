@@ -321,10 +321,9 @@
       <contentType>No content</contentType>
     </property>
     <property>
-      <defaultCategories/>
-    </property>
-    <property>
-      <defaultCategory>Analytics</defaultCategory>
+      <defaultCategories>
+        <value>Analytics</value>
+      </defaultCategories>
     </property>
     <property>
       <description/>
