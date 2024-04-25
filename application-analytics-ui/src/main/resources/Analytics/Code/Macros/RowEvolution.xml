@@ -206,7 +206,7 @@ require(['jquery', 'chart'], ($) =&gt; {
    * the  data in session storage for easy access. This allows the user to display a different field for the same time
    * interval without making a new request and updates the chart.
    *
-   * @rowIdentifier will help identify a single row in the matomo tables
+   * @param rowIdentifier will help identify a single row in the Matomo tables
    */
   const fetchChartData = (rowIdentifier) =&gt; {
     currentOptions.data('rowIdentifier', rowIdentifier);
