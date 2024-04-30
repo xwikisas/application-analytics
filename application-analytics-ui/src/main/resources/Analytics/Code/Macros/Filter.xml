@@ -434,6 +434,7 @@
 #macro(executeMacro)
 #set ($discard =  $xwiki.ssx.use('Analytics.Code.Macros.Filter'))
 #set ($placeholderStart = '2007-01-01')
+#set ($placeholderEnd = $datetool.get('yyyy-MM-dd'))
 #if ($request.analyticsStartDate &amp;&amp; $request.analyticsStartDate != '')
   #set ($placeholderStart = $request.analyticsStartDate)
 #end
