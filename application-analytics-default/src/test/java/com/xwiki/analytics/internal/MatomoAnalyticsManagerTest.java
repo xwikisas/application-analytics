@@ -84,7 +84,7 @@ public class MatomoAnalyticsManagerTest
     {
         ReflectionUtils.setFieldValue(this.matomoAnalyticsManager, "logger", this.logger);
         when(configuration.getAuthenticationToken()).thenReturn("token");
-        when(configuration.getRequestAddress()).thenReturn("http://130.61.233.19/matomo");
+        when(configuration.getRequestAddress()).thenReturn("https://matomo-url/");
         when(configuration.getIdSite()).thenReturn("3");
         RuntimeException exception = assertThrows(RuntimeException.class, () -> {
             matomoAnalyticsManager.requestData(null, new HashMap<>(), MostViewedJsonNormaliser.HINT);
@@ -101,7 +101,7 @@ public class MatomoAnalyticsManagerTest
     {
         ReflectionUtils.setFieldValue(this.matomoAnalyticsManager, "logger", this.logger);
         when(this.configuration.getAuthenticationToken()).thenReturn("token");
-        when(this.configuration.getRequestAddress()).thenReturn("http://130.61.233.19/matomo");
+        when(this.configuration.getRequestAddress()).thenReturn("https://matomo-url/");
         when(this.configuration.getIdSite()).thenReturn("3");
         when(this.jsonNormalizerProvider.get()).thenReturn(new ArrayList<>());
         RuntimeException exception = assertThrows(RuntimeException.class, () -> {
