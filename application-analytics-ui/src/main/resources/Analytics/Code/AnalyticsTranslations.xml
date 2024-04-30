@@ -324,6 +324,7 @@ analytics.livedata.action.rowEvolution.title=Row Evolution
 analytics.accessDenied=You do not have access to view this macro. Please contact the administrator to resolve this issue.
 analytics.extension.name=Analytics Application (Pro)
 analytics.extension.title=Analytics
+analytics.extension.warning.message.others=Matomo displays a limited number of entries per row and it groups the remaining entries into a single category called "others". If you wish to display all the entires, check the documentation where all the necessary steps are provided.
 rendering.macro.analyticsFilter.apply=Apply
 rendering.macro.analyticsFilter.description=Add filtering options for the analytics macros of the current page. The filtering criteria will be saved in the current URL, to have a reproducible state, and will also override eventual filter set at macro level.
 rendering.macro.analyticsFilter.endDate=End date
