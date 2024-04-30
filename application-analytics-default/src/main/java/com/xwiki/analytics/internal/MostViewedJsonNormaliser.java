@@ -71,15 +71,19 @@ public class MostViewedJsonNormaliser extends AbstractJsonNormaliser
     @Override
     protected JsonNode processNode(JsonNode currentNode, Map<String, String> extraValues)
     {
-        if (!currentNode.has(URL)) {
+        try {
+            if (!currentNode.has(URL)) {
+                return currentNode;
+            }
+            EntityReference pageReference = getPageReferenceFromUrl((ObjectNode) currentNode);
+            if (pageReference == null) {
+                return null;
+            }
+            updateNodeLabel((ObjectNode) currentNode, pageReference);
+            return currentNode;
+        } catch (Exception e) {
             return currentNode;
         }
-        EntityReference pageReference = getPageReferenceFromUrl((ObjectNode) currentNode);
-        if (pageReference == null) {
-            return null;
-        }
-        updateNodeLabel((ObjectNode) currentNode, pageReference);
-        return currentNode;
     }
 
     /**
