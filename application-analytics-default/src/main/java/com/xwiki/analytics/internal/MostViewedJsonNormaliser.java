@@ -71,6 +71,9 @@ public class MostViewedJsonNormaliser extends AbstractJsonNormaliser
     @Override
     protected JsonNode processNode(JsonNode currentNode, Map<String, String> extraValues)
     {
+        // The try-catch is needed because the resolver can throw a very generic error, and if it isn't caught, the
+        // app will fail. We also return the currentNode without modifications because we want to display all
+        // the entries inside the UI.
         try {
             if (!currentNode.has(URL)) {
                 return currentNode;
