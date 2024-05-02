@@ -71,15 +71,22 @@ public class MostViewedJsonNormaliser extends AbstractJsonNormaliser
     @Override
     protected JsonNode processNode(JsonNode currentNode, Map<String, String> extraValues)
     {
-        if (!currentNode.has(URL)) {
+        // The try-catch is needed because the resolver can throw a very generic error, and if it isn't caught, the
+        // app will fail. We also return the currentNode without modifications because we want to display all
+        // the entries inside the UI.
+        try {
+            if (!currentNode.has(URL)) {
+                return currentNode;
+            }
+            EntityReference pageReference = getPageReferenceFromUrl((ObjectNode) currentNode);
+            if (pageReference == null) {
+                return null;
+            }
+            updateNodeLabel((ObjectNode) currentNode, pageReference);
+            return currentNode;
+        } catch (Exception e) {
             return currentNode;
         }
-        EntityReference pageReference = getPageReferenceFromUrl((ObjectNode) currentNode);
-        if (pageReference == null) {
-            return null;
-        }
-        updateNodeLabel((ObjectNode) currentNode, pageReference);
-        return currentNode;
     }
 
     /**
