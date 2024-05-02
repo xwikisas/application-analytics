@@ -52,9 +52,10 @@
     #set ($endDate = $datetool.format('yyyy-MM-dd', $endDateObj))
   #end
   ## Check if startDate or endDate are not defined and replace them with some default values, in order to match the end
-  ## of the time interval. For startDate we use '2007-01-01' since it's the oldest one accepted by Matomo.
+  ## of the time interval. For startDate we use the last week.
   #if (!$startDate || $startDate == '')
-    #set ($startDate = '2007-01-01')
+    #set ($fmt = $xwiki.jodatime.getDateTimeFormatterForPattern("yyyy-MM-dd"))
+    #set ($startDate = $xwiki.jodatime.getDateTime().minusWeeks(1).toString($fmt))
   #end
   #if (!$endDate || $endDate == '')
     #set ($endDate = $datetool.get('yyyy-MM-dd'))
