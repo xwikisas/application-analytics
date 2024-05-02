@@ -433,7 +433,9 @@
       <code>{{velocity}}
 #macro(executeMacro)
 #set ($discard =  $xwiki.ssx.use('Analytics.Code.Macros.Filter'))
-#set ($placeholderStart = '2007-01-01')
+#set ($fmt = $xwiki.jodatime.getDateTimeFormatterForPattern("yyyy-MM-dd"))
+#set ($startDate = $xwiki.jodatime.getDateTime().minusWeeks(1).toString($fmt))
+#set ($placeholderStart = $startDate)
 #set ($placeholderEnd = $datetool.get('yyyy-MM-dd'))
 #if ($request.analyticsStartDate &amp;&amp; $request.analyticsStartDate != '')
   #set ($placeholderStart = $request.analyticsStartDate)
