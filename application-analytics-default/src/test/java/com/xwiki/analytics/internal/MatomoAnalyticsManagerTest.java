@@ -27,6 +27,7 @@ import java.util.List;
 import javax.inject.Named;
 import javax.inject.Provider;
 
+import org.apache.http.HttpEntity;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.xwiki.component.util.ReflectionUtils;
@@ -39,10 +40,13 @@ import com.xwiki.analytics.configuration.AnalyticsConfiguration;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
 
 /**
  * Unit test for {@link MatomoAnalyticsManager}
@@ -68,6 +72,9 @@ public class MatomoAnalyticsManagerTest
     @MockComponent
     private Provider<List<JsonNormaliser>> jsonNormalizerProvider;
 
+    @MockComponent
+    private HttpClientBuilderFactory builderFactory;
+
     /**
      * Will test the Manager with a valid hint.
      */
@@ -75,14 +82,21 @@ public class MatomoAnalyticsManagerTest
     void requestDataWithCorrectHintForNormaliser() throws IOException
     {
         List<JsonNormaliser> normalisers = new ArrayList<>();
+        HttpClient mockClient = mock(HttpClient.class);
+        HttpResponse mockResponse = mock(HttpResponse.class);
+        HttpEntity mockEntity = mock(HttpEntity.class);
+
         normalisers.add(this.jsonNormaliser);
         when(this.configuration.getAuthenticationToken()).thenReturn("token");
-        when(this.configuration.getRequestAddress()).thenReturn("http://130.61.233.19/matomo");
+        when(this.configuration.getRequestAddress()).thenReturn("https://matomo-url/");
         when(this.configuration.getIdSite()).thenReturn("3");
         when(this.jsonNormalizerProvider.get()).thenReturn(normalisers);
         when(this.jsonNormaliser.getIdentifier()).thenReturn(MostViewedJsonNormaliser.HINT);
+        when(this.builderFactory.create()).thenReturn(mockClient);
+        when(mockClient.execute(any())).thenReturn(mockResponse);
+        when(mockResponse.getEntity()).thenReturn(mockEntity);
         this.matomoAnalyticsManager.requestData(new HashMap<>(), new HashMap<>(), MostViewedJsonNormaliser.HINT);
-        verify(this.jsonNormaliser).normaliseData(any(String.class), eq(new HashMap<>()));
+        verify(this.jsonNormaliser).normaliseData(any(), eq(new HashMap<>()));
     }
 
     /**
@@ -93,7 +107,7 @@ public class MatomoAnalyticsManagerTest
     {
         ReflectionUtils.setFieldValue(this.matomoAnalyticsManager, "logger", this.logger);
         when(configuration.getAuthenticationToken()).thenReturn("token");
-        when(configuration.getRequestAddress()).thenReturn("http://130.61.233.19/matomo");
+        when(configuration.getRequestAddress()).thenReturn("https://matomo-url/");
         when(configuration.getIdSite()).thenReturn("3");
         RuntimeException exception = assertThrows(RuntimeException.class, () -> {
             matomoAnalyticsManager.requestData(null, new HashMap<>(), MostViewedJsonNormaliser.HINT);
@@ -110,7 +124,7 @@ public class MatomoAnalyticsManagerTest
     {
         ReflectionUtils.setFieldValue(this.matomoAnalyticsManager, "logger", this.logger);
         when(this.configuration.getAuthenticationToken()).thenReturn("token");
-        when(this.configuration.getRequestAddress()).thenReturn("http://130.61.233.19/matomo");
+        when(this.configuration.getRequestAddress()).thenReturn("https://matomo-url/");
         when(this.configuration.getIdSite()).thenReturn("3");
         when(this.jsonNormalizerProvider.get()).thenReturn(new ArrayList<>());
         RuntimeException exception = assertThrows(RuntimeException.class, () -> {
