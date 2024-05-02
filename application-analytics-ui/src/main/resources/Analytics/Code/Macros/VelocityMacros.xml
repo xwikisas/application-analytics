@@ -64,11 +64,11 @@
 #end
 
 #macro (analytics_createLinkElement $label $link)
-#if($link)
-  &lt;a href = $link&gt;$label&lt;/a&gt;
-#else
-  &lt;div title="$escapetool.xml($services.localization.render('analytics.extension.warning.message.others'))"&gt; $label &lt;/div&gt;
-#end
+  #if($link)
+    &lt;a href = "$escapetool.xml($link)">$escapetool.xml($label)&lt;/a>
+  #else
+    &lt;div title="$escapetool.xml($services.localization.render('analytics.extension.warning.message.others'))">$escapetool.xml($label) &lt;/div>
+  #end
 #end
 
 #macro (analytics_subSet $object $start $end $resultList)
