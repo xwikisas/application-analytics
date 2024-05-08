@@ -40,16 +40,7 @@
 
 {{velocity}}
 #if ($xcontext.action == 'get')
-  #set ($offset = $numbertool.toNumber($request.offset).intValue())
-  ## The offset sent by the livedata starts at 1.
-  #set ($offset = $offset - 1)
-  #if (!$offset || $offset &lt; 0)
-    #set ($offset = 0)
-  #end
-  #set ($limit = $numbertool.toNumber($request.limit).intValue())
-  #if (!$limit)
-    #set ($limit = 15)
-  #end
+  #analytics_livedataPagination()
   ##
   #set ($matomoKeysMapping = {
     'destinationPage': 'label',
@@ -57,8 +48,8 @@
     'pageViews': 'nb_hits',
     'loadTime': 'avg_page_load_time'
   })
-  #set ($sort = 'destinationPage')
-  #set ($order = 'asc')
+  #set ($sort = 'nb_hits_following_search')
+  #set ($order = 'desc')
   #if ($request.sort)
     #set ($sort = $matomoKeysMapping.get($request.sort))
     #set ($order = $request.dir)
@@ -105,7 +96,7 @@
       'clicked': $currentEntry.get('nb_hits_following_search').asText(),
       'pageViews': $currentEntry.get('nb_hits').asText(),
       'loadTime': $mathtool.roundTo(2, $currentEntry.get('avg_page_load_time').asDouble()),
-      'actions': "#analytics_actions($rowIdentifier)"
+      'rowEvolution': "#analytics_actions($rowIdentifier)"
     }))
   #end
   #jsonResponse($results)

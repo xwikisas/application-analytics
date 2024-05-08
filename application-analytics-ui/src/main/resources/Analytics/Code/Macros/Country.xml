@@ -386,6 +386,7 @@
   #analytics_displayMacroTitle('Analytics.Code.Macros.Country', 'rendering.macro.country.description', 'rendering.macro.country.name')
   #analytics_getDate()
   #set ($discard = $xwiki.jsx.use('Analytics.Code.Macros.RowEvolution'))
+  #set ($discard = $xwiki.ssx.use('Analytics.Code.Macros.RowEvolution'))
   #set ($discard = $xwiki.ssx.use('Analytics.Code.Macros.Country'))
   #set ($parameters = $escapetool.url({
     'resultPage': 'Analytics.Code.Macros.CountryJSON',
@@ -402,7 +403,7 @@
         {'id': 'visits', 'displayer': 'html'},
         {'id': 'userActions', 'displayer': 'html'},
         {'id': 'timeSpent', 'displayer': 'html'},
-        {'id': 'actions', 'filterable': false, 'sortable': false, 'displayer': 'html'}
+        {'id': 'rowEvolution', 'filterable': false, 'sortable': false, 'displayer': 'html'}
       ],
       'entryDescriptor': {
         'idProperty': 'pageTitle'
@@ -413,11 +414,11 @@
 
   {{liveData
     id="$macroId"
-    properties="country, visits, userActions, timeSpent, actions"
+    properties="country, visits, userActions, timeSpent, rowEvolution"
     source='liveTable'
     sourceParameters="$parameters"
     sort='visits:desc'
-  }}$jsontool.serialize($liveDataConfig){{/liveData}}
+  	"limit"="10"}}$jsontool.serialize($liveDataConfig){{/liveData}}
 
   #set ($rowEvolutionParams = {
     'visits': 'nb_visits',

@@ -262,6 +262,7 @@
   #analytics_displayMacroTitle('Analytics.Code.Macros.PagesFollowingASiteSearch', 'rendering.macro.PagesFollowingASiteSearch.description', 'rendering.macro.PagesFollowingASiteSearch.name')
   #analytics_getDate()
   #set ($discard = $xwiki.jsx.use('Analytics.Code.Macros.RowEvolution'))
+  #set ($discard = $xwiki.ssx.use('Analytics.Code.Macros.RowEvolution'))
   #set ($parameters = $escapetool.url({
     'date': $date,
     'period': 'range',
@@ -276,7 +277,7 @@
         {'id': 'clicked', 'displayer': 'html'},
         {'id': 'pageViews', 'displayer': 'html'},
         {'id': 'loadTime', 'displayer': 'html'},
-        {'id': 'actions', 'filterable': false, 'sortable': false, 'displayer': 'html'}
+        {'id': 'rowEvolution', 'filterable': false, 'sortable': false, 'displayer': 'html'}
       ],
       'entryDescriptor': {
         'idProperty': 'destinationPage'
@@ -287,10 +288,10 @@
 
   {{liveData
     id="$macroId"
-    properties='destinationPage, clicked, pageViews, loadTime, actions'
+    properties='destinationPage, clicked, pageViews, loadTime, rowEvolution'
     source='liveTable'
     sourceParameters="$parameters"
-  }}$jsontool.serialize($liveDataConfig){{/liveData}}
+  	"limit"="10"}}$jsontool.serialize($liveDataConfig){{/liveData}}
 
   #set ($rowEvolutionParams = {
     'pageViews': 'nb_hits',

@@ -95,7 +95,7 @@
       'timeSpent' : $time,
       'bounceRate' : $currentEntry.get('bounce_rate').asText(),
       'exitRate' : $currentEntry.get('exit_rate').asText(),
-      'actions' : "#analytics_actions($url)"
+      'rowEvolution' : "#analytics_actions($url)"
     }))
   #end
   #jsonResponse($results)

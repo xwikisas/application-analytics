@@ -260,7 +260,9 @@
 #macro(executeMacro)
   #analytics_displayMacroTitle('Analytics.Code.Macros.OperatingSystemVersions', 'rendering.macro.operatingSystemVersions.description', 'rendering.macro.operatingSystemVersions.name')
   #analytics_getDate()
-  #set ($discard = $xwiki.jsx.use('Analytics.Code.Macros.RowEvolution'))#set ($parameters = $escapetool.url({
+  #set ($discard = $xwiki.jsx.use('Analytics.Code.Macros.RowEvolution'))
+  #set ($discard = $xwiki.ssx.use('Analytics.Code.Macros.RowEvolution'))
+  #set ($parameters = $escapetool.url({
     'resultPage': 'Analytics.Code.Macros.SoftwareDevicesJSON',
     'date': $date,
     'period': 'range',
@@ -278,7 +280,7 @@
         {'id': 'timeSpent', 'displayer': 'html'},
         {'id': 'bounceCount', 'displayer': 'html'},
         {'id': 'conversionRate', 'displayer': 'html'},
-        {'id': 'actions','filterable': false, 'sortable': false, 'displayer': 'html'}
+        {'id': 'rowEvolution','filterable': false, 'sortable': false, 'displayer': 'html'}
       ],
       'entryDescriptor': {
         'idProperty': 'osVersion'
@@ -289,11 +291,11 @@
 
   {{liveData
     id="$macroId"
-    properties='osVersion, visits, nbOfActions, timeSpent, bounceCount, conversionRate, actions'
+    properties='osVersion, visits, nbOfActions, timeSpent, bounceCount, conversionRate, rowEvolution'
     source='liveTable'
     sourceParameters="$parameters"
     sort='visits:desc'
-  }}$jsontool.serialize($liveDataConfig){{/liveData}}
+  	"limit"="10"}}$jsontool.serialize($liveDataConfig){{/liveData}}
 
   #set ($rowEvolutionParams = {
     'visits': 'nb_visits',

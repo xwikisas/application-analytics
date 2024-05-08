@@ -261,6 +261,7 @@
   #analytics_displayMacroTitle('Analytics.Code.Macros.MostViewedPages', 'rendering.macro.mostViewedPages.description', 'rendering.macro.mostViewedPages.name')
   #analytics_getDate()
   #set ($discard =$xwiki.jsx.use('Analytics.Code.Macros.RowEvolution'))
+  #set ($discard = $xwiki.ssx.use('Analytics.Code.Macros.RowEvolution'))
   #set ($parameters = $escapetool.url({
     'resultPage': 'Analytics.Code.Macros.MostViewedPagesJSON',
     'date': $date,
@@ -277,7 +278,7 @@
         {'id': 'timeSpent', 'displayer': 'html'},
         {'id': 'bounceRate', 'displayer': 'html'},
         {'id': 'exitRate', 'displayer': 'html'},
-        {'id': 'actions', 'filterable': false, 'sortable': false, 'displayer': 'html'}
+        {'id': 'rowEvolution', 'filterable': false, 'sortable': false, 'displayer': 'html'}
       ],
       'entryDescriptor': {
         'idProperty': 'pageTitle'
@@ -288,11 +289,11 @@
 
   {{liveData
     id="$macroId"
-    properties="pageTitle, visits, hits, timeSpent, bounceRate, exitRate, actions"
+    properties="pageTitle,hits, visits, timeSpent, bounceRate, exitRate, rowEvolution"
     source='liveTable'
     sourceParameters="$parameters"
     sort='hits:desc'
-  }}$jsontool.serialize($liveDataConfig){{/liveData}}
+  	"limit"="10"}}$jsontool.serialize($liveDataConfig){{/liveData}}
 
   #set ($rowEvolutionParams = {
     'pageViews': 'nb_hits',

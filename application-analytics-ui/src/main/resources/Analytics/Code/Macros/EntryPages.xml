@@ -261,6 +261,7 @@
   #analytics_displayMacroTitle('Analytics.Code.Macros.EntryPages', 'rendering.macro.entryPages.description', 'rendering.macro.entryPages.name')
   #analytics_getDate()
   #set ($discard = $xwiki.jsx.use('Analytics.Code.Macros.RowEvolution'))
+  #set ($discard = $xwiki.ssx.use('Analytics.Code.Macros.RowEvolution'))
   #set ($parameters = $escapetool.url({
     'resultPage': 'Analytics.Code.Macros.EntryPagesJSON',
     'date': $date,
@@ -274,8 +275,8 @@
         {'id': 'pageTitle', 'displayer': 'html'},
         {'id': 'entrances', 'displayer': 'html'},
         {'id': 'visits', 'displayer': 'html'},
-        {'id': 'bounces', 'displayer': 'html'},
-        {'id': 'actions', 'filterable': false, 'sortable': false, 'displayer': 'html'}
+        {'id': 'bounceRate', 'displayer': 'html'},
+        {'id': 'rowEvolution', 'filterable': false, 'sortable': false, 'displayer': 'html'}
       ],
       'entryDescriptor': {
         'idProperty': 'pageTitle'
@@ -286,11 +287,11 @@
 
   {{liveData
     id="$macroId"
-    properties="pageTitle, entrances, visits, bounces, actions"
+    properties="pageTitle, entrances, visits, bounceRate, rowEvolution"
     source='liveTable'
     sourceParameters="$parameters"
     sort='entrances:desc'
-  }}$jsontool.serialize($liveDataConfig){{/liveData}}
+  	"limit"="10"}}$jsontool.serialize($liveDataConfig){{/liveData}}
 
   #set ($rowEvolutionParams = {
     'entrances': 'entry_nb_visits',
