@@ -305,7 +305,11 @@
 #if ($services.licensing.licensor.hasLicensureForEntity(
   $services.model.createDocumentReference('', ['Analytics', 'Code'], 'ConfigurationClass')))
   #if ($xwiki.hasAccessLevel('view', 'Analytics.WebHome'))
-    #executeMacro()
+    #if($xwiki.hasAccessLevel('view', 'Analytics.Code.Macros.VelocityMacros'))
+      #executeMacro()
+    #else
+      {{error}}{{translation key="analytics.incompletePemissions" /}}{{/error}}
+    #end
   #else
     {{error}}{{translation key="analytics.accessDenied" /}}{{/error}}
   #end

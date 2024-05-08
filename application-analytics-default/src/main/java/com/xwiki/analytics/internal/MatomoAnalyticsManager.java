@@ -30,9 +30,9 @@ import javax.inject.Provider;
 import javax.inject.Singleton;
 import javax.ws.rs.core.UriBuilder;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.xwiki.component.annotation.Component;
@@ -100,10 +100,12 @@ public class MatomoAnalyticsManager implements AnalyticsManager
      */
     private String executeHttpRequest(Map<String, String> parameters) throws IOException
     {
-        HttpClient client = httpClientBuilderFactory.create();
-        HttpGet request = new HttpGet(buildURI(parameters));
-        HttpResponse response = client.execute(request);
-        return EntityUtils.toString(response.getEntity());
+        try (CloseableHttpClient client = httpClientBuilderFactory.create()) {
+            HttpGet request = new HttpGet(buildURI(parameters));
+            try (CloseableHttpResponse response = client.execute(request)) {
+                return EntityUtils.toString(response.getEntity());
+            }
+        }
     }
 
     /**
