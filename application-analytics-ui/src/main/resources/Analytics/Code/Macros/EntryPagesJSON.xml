@@ -45,9 +45,9 @@
   ## Mapping between the livedata columns and the Matomo fields.
   #set ($matomoKeysMapping = {
     'pageTitle' : 'label',
-    'visits': 'nb_visits',
+    'bounces': 'entry_bounce_count',
     'entrances': 'entry_nb_visits',
-    'bounces': 'entry_bounce_count'
+    'bounceRate': 'bounce_rate'
   })
   #set ($sort = 'nb_hits')
   #set ($order = 'desc')
@@ -89,10 +89,10 @@
     #set ($url = $currentEntry.get('url').asText())
     #set ($discard = $results.rows.add({
       'pageTitle' : "#analytics_createLinkElement($currentEntry.get('label').asText(), $url)",
-      'visits' :  $currentEntry.get('nb_visits').asText(),
-      'entrances' :  $currentEntry.get('entry_nb_visits').asText(),
       'bounces' :  $currentEntry.get('entry_bounce_count').asText(),
-      'actions' : "#analytics_actions($url)"
+      'entrances' :  $currentEntry.get('entry_nb_visits').asText(),
+      'bounceRate' :  $currentEntry.get('bounce_rate').asText(),
+      'rowEvolution' : "#analytics_actions($url)"
     }))
   #end
   #jsonResponse($results)

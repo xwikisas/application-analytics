@@ -19,7 +19,7 @@
  */
 package com.xwiki.analytics.internal;
 
-import org.apache.http.client.HttpClient;
+import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.stability.Unstable;
@@ -42,7 +42,7 @@ public class HttpClientBuilderFactory
      *
      * @return a new HttpClient
      */
-    public HttpClient create()
+    public CloseableHttpClient create()
     {
         return HttpClients.createDefault();
     }

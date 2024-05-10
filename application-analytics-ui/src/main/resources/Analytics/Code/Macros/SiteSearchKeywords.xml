@@ -262,6 +262,7 @@
   #analytics_displayMacroTitle('Analytics.Code.Macros.SiteSearchKeywords', 'rendering.macro.siteSearchKeywords.description', 'rendering.macro.siteSearchKeywords.name')
   #analytics_getDate()
   #set ($discard =$xwiki.jsx.use('Analytics.Code.Macros.RowEvolution'))
+  #set ($discard = $xwiki.ssx.use('Analytics.Code.Macros.RowEvolution'))
   #set ($parameters = $escapetool.url({
     'date': $date,
     'period': 'range',
@@ -277,7 +278,7 @@
         {'id': 'searches', 'displayer': 'html'},
         {'id': 'nbOfResultPages', 'displayer': 'html'},
         {'id': 'exitRate', 'displayer': 'html'},
-        {'id': 'actions','filterable': false, 'sortable': false, 'displayer': 'html'}
+        {'id': 'rowEvolution','filterable': false, 'sortable': false, 'displayer': 'html'}
       ],
       'entryDescriptor': {
          'idProperty': 'keyword'
@@ -289,10 +290,11 @@
 
   {{liveData
     id="$macroId"
-    properties="keyword, searches, nbOfResultPages, exitRate, actions"
+    properties="keyword, searches, nbOfResultPages, exitRate, rowEvolution"
     source='liveTable'
     sourceParameters="$parameters"
-  }}$jsontool.serialize($liveDataConfig){{/liveData}}
+    sort='searches:desc'
+  	"limit"="10"}}$jsontool.serialize($liveDataConfig){{/liveData}}
 
   #set ($rowEvolutionParams = {
     'searches': 'nb_visits',
@@ -304,7 +306,11 @@
 #if ($services.licensing.licensor.hasLicensureForEntity(
   $services.model.createDocumentReference('', ['Analytics', 'Code'], 'ConfigurationClass')))
   #if ($xwiki.hasAccessLevel('view', 'Analytics.WebHome'))
-    #executeMacro()
+    #if($xwiki.hasAccessLevel('view', 'Analytics.Code.Macros.VelocityMacros'))
+      #executeMacro()
+    #else
+      {{error}}{{translation key="analytics.incompletePemissions" /}}{{/error}}
+    #end
   #else
     {{error}}{{translation key="analytics.accessDenied" /}}{{/error}}
   #end

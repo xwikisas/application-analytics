@@ -40,16 +40,7 @@
 
 {{velocity}}
 #if ($xcontext.action == 'get')
-  #set ($offset = $numbertool.toNumber($request.offset).intValue())
-  ## The offset sent by the live table starts at 1.
-  #set ($offset = $offset - 1)
-  #if (!$offset || $offset &lt; 0)
-    #set ($offset = 0)
-  #end
-  #set ($limit = $numbertool.toNumber($request.limit).intValue())
-  #if (!$limit)
-    #set ($limit = 15)
-  #end
+  #analytics_livedataPagination()
   ##
   #set ($matomoKeysMapping = {
     'keyword': 'label',
@@ -57,7 +48,7 @@
     'nbOfResultPages': 'nb_pages_per_search',
     'exitRate': 'exit_rate'
   })
-  #set ($sort = 'nb_hits')
+  #set ($sort = 'nb_visits')
   #set ($order = 'desc')
   #if ($request.sort)
     #set ($sort = $matomoKeysMapping.get($request.sort))
@@ -103,7 +94,7 @@
       'searches': $currentEntry.get('nb_visits').asText(),
       'nbOfResultPages': $currentEntry.get('nb_pages_per_search').asText(),
       'exitRate': $currentEntry.get('exit_rate').asText(),
-      'actions': "#analytics_actions($parameter)"
+      'rowEvolution': "#analytics_actions($parameter)"
     }))
   #end
   #jsonResponse($results)

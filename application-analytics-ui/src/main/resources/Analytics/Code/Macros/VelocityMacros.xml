@@ -78,7 +78,7 @@
     #set ($element = $object.get($i))
     #set ($discard = $resultList.add($element))
   #end
-#end 
+#end
 
 #macro(analytics_actions $parameter)
 &lt;div class="analyticsActions"&gt;
@@ -259,7 +259,7 @@ API as it is faster
   #end
   #set ($limit = $numbertool.toNumber($request.limit).intValue())
   #if (!$limit)
-    #set ($limit = 15)
+    #set ($limit = 10)
   #end
 #end
 

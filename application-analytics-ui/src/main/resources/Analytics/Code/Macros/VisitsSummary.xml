@@ -147,7 +147,7 @@ require(['jquery', 'xwiki-l10n!analyticsGraphMessages', 'chart'], function ($, l
     period: '.analytics_visitsGenericPeriods',
     updateCanvas: '.analytics_visitsGenericPeriods, .analytics_genericVisitsFields'
   };
-  const RGB = [`rgb(255, 0, 0)`, `rgb(0, 255, 0)`, `rgb(0, 0, 255)`]
+  const RGB = [`rgb(47, 111, 175)`, `rgb(47, 80, 195)`, `rgb(0, 0, 255)`]
 
   // A map to store charts for dynamic updates.
   let chartsMap = new Map();

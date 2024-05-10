@@ -108,7 +108,7 @@
       'timeSpent': $time,
       'bounceCount': $currentEntry.get('bounce_count').asText(),
       'conversionRate': $conversionRate,
-      'actions': "#analytics_actions($segment)"
+      'rowEvolution': "#analytics_actions($segment)"
     }))
   #end
   #jsonResponse($results)

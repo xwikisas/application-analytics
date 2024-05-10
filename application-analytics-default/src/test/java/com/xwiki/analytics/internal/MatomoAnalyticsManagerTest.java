@@ -28,6 +28,8 @@ import javax.inject.Named;
 import javax.inject.Provider;
 
 import org.apache.http.HttpEntity;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.impl.client.CloseableHttpClient;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.xwiki.component.util.ReflectionUtils;
@@ -82,8 +84,8 @@ public class MatomoAnalyticsManagerTest
     void requestDataWithCorrectHintForNormaliser() throws IOException
     {
         List<JsonNormaliser> normalisers = new ArrayList<>();
-        HttpClient mockClient = mock(HttpClient.class);
-        HttpResponse mockResponse = mock(HttpResponse.class);
+        CloseableHttpClient mockClient = mock(CloseableHttpClient.class);
+        CloseableHttpResponse mockResponse = mock(CloseableHttpResponse.class);
         HttpEntity mockEntity = mock(HttpEntity.class);
 
         normalisers.add(this.jsonNormaliser);

@@ -97,7 +97,7 @@
       'visits' :  $currentEntry.get('nb_visits').asText(),
       'userActions': $currentEntry.get('nb_actions').asText(),
       'timeSpent': $time,
-      'actions' : "#analytics_actions($currentEntry.get('segment').asText())"
+      'rowEvolution' : "#analytics_actions($currentEntry.get('segment').asText())"
     }))
   #end
   #jsonResponse($results)

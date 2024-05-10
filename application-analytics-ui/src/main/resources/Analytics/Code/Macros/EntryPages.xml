@@ -261,6 +261,7 @@
   #analytics_displayMacroTitle('Analytics.Code.Macros.EntryPages', 'rendering.macro.entryPages.description', 'rendering.macro.entryPages.name')
   #analytics_getDate()
   #set ($discard = $xwiki.jsx.use('Analytics.Code.Macros.RowEvolution'))
+  #set ($discard = $xwiki.ssx.use('Analytics.Code.Macros.RowEvolution'))
   #set ($parameters = $escapetool.url({
     'resultPage': 'Analytics.Code.Macros.EntryPagesJSON',
     'date': $date,
@@ -273,9 +274,9 @@
       'propertyDescriptors': [
         {'id': 'pageTitle', 'displayer': 'html'},
         {'id': 'entrances', 'displayer': 'html'},
-        {'id': 'visits', 'displayer': 'html'},
         {'id': 'bounces', 'displayer': 'html'},
-        {'id': 'actions', 'filterable': false, 'sortable': false, 'displayer': 'html'}
+        {'id': 'bounceRate', 'displayer': 'html'},
+        {'id': 'rowEvolution', 'filterable': false, 'sortable': false, 'displayer': 'html'}
       ],
       'entryDescriptor': {
         'idProperty': 'pageTitle'
@@ -286,11 +287,11 @@
 
   {{liveData
     id="$macroId"
-    properties="pageTitle, entrances, visits, bounces, actions"
+    properties="pageTitle, entrances, bounces, bounceRate, rowEvolution"
     source='liveTable'
     sourceParameters="$parameters"
     sort='entrances:desc'
-  }}$jsontool.serialize($liveDataConfig){{/liveData}}
+  	"limit"="10"}}$jsontool.serialize($liveDataConfig){{/liveData}}
 
   #set ($rowEvolutionParams = {
     'entrances': 'entry_nb_visits',
@@ -301,9 +302,13 @@
   #analytics_modalRowEvolution($rowEvolutionParams, 'EntryPages', $macroId)
 #end
 #if ($services.licensing.licensor.hasLicensureForEntity(
-    $services.model.createDocumentReference('', ['Analytics', 'Code'], 'ConfigurationClass')))
-  #if($services.security.authorization.hasAccess('view', 'Analytics.WebHome'))
-    #executeMacro()
+  $services.model.createDocumentReference('', ['Analytics', 'Code'], 'ConfigurationClass')))
+  #if ($xwiki.hasAccessLevel('view', 'Analytics.WebHome'))
+    #if($xwiki.hasAccessLevel('view', 'Analytics.Code.Macros.VelocityMacros'))
+      #executeMacro()
+    #else
+      {{error}}{{translation key="analytics.incompletePemissions" /}}{{/error}}
+    #end
   #else
     {{error}}{{translation key="analytics.accessDenied" /}}{{/error}}
   #end

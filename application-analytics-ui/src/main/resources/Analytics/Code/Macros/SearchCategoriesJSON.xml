@@ -40,17 +40,7 @@
 
 {{velocity}}
 #if ($xcontext.action == 'get')
-  #set ($offset = $numbertool.toNumber($request.offset).intValue())
-  ## The offset sent by the livedata starts at 1.
-  #set ($offset = $offset - 1)
-  #if (!$offset || $offset &lt; 0)
-    #set ($offset = 0)
-  #end
-  #set ($limit = $numbertool.toNumber($request.limit).intValue())
-  #if (!$limit)
-    #set ($limit = 15)
-  #end
-  ##
+  #analytics_livedataPagination()
   #set ($matomoKeysMapping = {
     'category': 'label',
     'searches': 'nb_visits',
@@ -106,7 +96,7 @@
       'category': $currentEntry.get('label').asText(),
       'searches': $currentEntry.get('nb_visits').asText(),
       'searchResultsPages': $currentEntry.get('nb_pages_per_search').asText(),
-      'actions': "#analytics_actions($rowIdentifier)"
+      'rowEvolution': "#analytics_actions($rowIdentifier)"
     }))
   #end
   #jsonResponse($results)

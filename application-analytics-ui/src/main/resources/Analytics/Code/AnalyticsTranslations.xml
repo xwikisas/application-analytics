@@ -37,7 +37,7 @@
   <syntaxId>plain/1.0</syntaxId>
   <hidden>true</hidden>
   <content>## Most Viewed Pages Macro
-analytics.mostViewedPages.header.actions=Actions
+analytics.mostViewedPages.header.rowEvolution=Evolution
 analytics.mostViewedPages.header.bounceRate.hint=The percentage of visits that started on this page and left the website straight away.
 analytics.mostViewedPages.header.bounceRate=Bounce rate
 analytics.mostViewedPages.header.date=Date
@@ -60,25 +60,24 @@ rendering.macro.mostViewedPages.description=When visitors search on your website
 rendering.macro.mostViewedPages.name=Most viewed pages
 
 ## Entry Pages
-analytics.entryPages.header.actions=Actions
+analytics.entryPages.header.rowEvolution=Evolution
 analytics.entryPages.header.bounces.hint=Number of visits that started and ended on this page.
 analytics.entryPages.header.bounces=Bounces
+analytics.entryPages.header.bounceRate=Bounce rate
 analytics.entryPages.header.entrances.hint=Number of visits that started on this page.
 analytics.entryPages.header.entrances=Entrances
 analytics.entryPages.header.pageTitle=Title
-analytics.entryPages.header.visits.hint=The number of visits that included this page. If a page was viewed multiple times during one visit, it is only counted once.
-analytics.entryPages.header.visits=Unique visitors
 analytics.entryPages.parameter.label.endDate=End time of the date interval used for this macro
 analytics.entryPages.parameter.label.startDate=Start time of the date interval used for this macro
 rendering.macro.entryPages.description=This report contains information about the entry pages that were used during the specified period. An entry page is the first page that a user views during their visit.
 rendering.macro.entryPages.name=Entry pages
 rendering.macro.entryPages.parameter.endDate.name=End date
 rendering.macro.entryPages.parameter.endDate.description=End time of the date interval used for this macro.
-rendering.macro.entryPages.parameter.startDate.name=End date
+rendering.macro.entryPages.parameter.startDate.name=Start date
 rendering.macro.entryPages.parameter.startDate.description=Start time of the date interval used for this macro.
 
 ## Exit Pages
-analytics.exitPages.header.actions=Actions
+analytics.exitPages.header.rowEvolution=Evolution
 analytics.exitPages.header.exitRate.hint=The percentage of visits that left the website after viewing this page.
 analytics.exitPages.header.exitRate=Exit rate
 analytics.exitPages.header.exitNbVisits.hint=Number of visits that ended on this page.
@@ -95,7 +94,7 @@ rendering.macro.exitPages.startDate=Start date
 rendering.macro.exitPages.endDate=End date
 
 ## Pages following a site search
-analytics.PagesFollowingASiteSearchJSON.header.actions=Actions
+analytics.PagesFollowingASiteSearchJSON.header.rowEvolution=Evolution
 analytics.PagesFollowingASiteSearchJSON.header.clicked.hint=The number of times this page was visited after a visitor did a search on your website, and clicked on this page in the search results.
 analytics.PagesFollowingASiteSearchJSON.header.clicked=Clicked in search results
 analytics.PagesFollowingASiteSearchJSON.header.date=Date
@@ -110,7 +109,7 @@ rendering.macro.PagesFollowingASiteSearch.name=Pages following a site search
 ## Row Evolution
 analytics.rowEvolution.modal.close=Close
 analytics.rowEvolution.modal.day.label=Day
-analytics.rowEvolution.modal.field.actions=Actions
+analytics.rowEvolution.modal.field.rowEvolution=Row Evolution
 analytics.rowEvolution.modal.field.avgTime=Time spent on page
 analytics.rowEvolution.modal.field.bounces=Bounces
 analytics.rowEvolution.modal.field.bounceRate=Bounce rate(%)
@@ -135,8 +134,8 @@ analytics.rowEvolution.modal.week.label=Week
 analytics.rowEvolution.modal.year.label=Year
 
 ## Site Search Keywords Macro
-analytics.action.hover.rowEvolution=Row evolution
-analytics.siteSearchKeywords.header.actions=Actions
+analytics.action.hover.rowEvolution=Evolution
+analytics.siteSearchKeywords.header.rowEvolution=Evolution
 analytics.siteSearchKeywords.header.exitRate.hint=The percentage of visits that left the website after searching for this Keyword on your Site Search engine.
 analytics.siteSearchKeywords.header.exitRate=Search exists(%)
 analytics.siteSearchKeywords.header.keyword=Keyword
@@ -148,7 +147,7 @@ rendering.macro.siteSearchKeywords.description=This report lists the Search Keyw
 rendering.macro.siteSearchKeywords.name=Site search keywords
 
 ## Search Categories
-analytics.searchCategories.header.actions=Actions
+analytics.searchCategories.header.rowEvolution=Evolution
 analytics.searchCategories.header.category=Category
 analytics.searchCategories.header.searchResultsPages.hint=Visitors will search on your website, and sometimes click "next" to view more results. This is the average number of search results pages viewed for this keyword.
 analytics.searchCategories.header.searchResultsPages=Search result pages
@@ -160,7 +159,7 @@ rendering.macro.searchCategories.name=Search categories
 
 ## Software/Devices Macros
 The most important information for web developers is what kind of rendering engine their visitors are using. The labels contain the names of the engines followed by the most common browser using that engine in brackets.
-analytics.softwareDevices.header.actions=Actions
+analytics.softwareDevices.header.rowEvolution=Evolution
 analytics.softwareDevices.header.bounceRate.hint=The percentage of visits that only had a single pageview. This means that the visitor left the website directly from the entrance page.
 analytics.softwareDevices.header.bounceRate=Bounce rate
 analytics.softwareDevices.header.bounceCount=Bounces
@@ -185,53 +184,53 @@ rendering.macro.browserEngines.description=This report shows your visitors' brow
 rendering.macro.browserEngines.name=Browser engines
 rendering.macro.browserEngines.parameter.endDate.name=End date
 rendering.macro.browserEngines.parameter.endDate.description=End time of the date interval used for this macro.
-rendering.macro.browserEngines.parameter.startDate.name=End date
+rendering.macro.browserEngines.parameter.startDate.name=Start date
 rendering.macro.browserEngines.parameter.startDate.description=Start time of the date interval used for this macro.
 rendering.macro.browsers.description=This report contains information about what kind of browser your visitors were using.
 rendering.macro.browsers.name=Browsers
 rendering.macro.browsers.parameter.endDate.name=End date
 rendering.macro.browsers.parameter.endDate.description=End time of the date interval used for this macro.
-rendering.macro.browsers.parameter.startDate.name=End date
+rendering.macro.browsers.parameter.startDate.name=Start date
 rendering.macro.browsers.parameter.startDate.description=Start time of the date interval used for this macro.
 rendering.macro.configurations.description=This report shows the most common overall configurations that your visitors had. A configuration is the combination of an operating system, a browser type and a screen resolution.
 rendering.macro.configurations.name=Configurations
 rendering.macro.configurations.parameter.endDate.name=End date
 rendering.macro.configurations.parameter.endDate.description=End time of the date interval used for this macro.
-rendering.macro.configurations.parameter.startDate.name=End date
+rendering.macro.configurations.parameter.startDate.name=Start date
 rendering.macro.configurations.parameter.startDate.description=Start time of the date interval used for this macro.
 rendering.macro.deviceBrand.description=This report shows the brands / manufacturers of the devices your visitors were using. In most cases this information is only available for non-desktop devices.
 rendering.macro.deviceBrand.name=Device brand
 rendering.macro.deviceBrand.parameter.endDate.name=End date
 rendering.macro.deviceBrand.parameter.endDate.description=End time of the date interval used for this macro.
-rendering.macro.deviceBrand.parameter.startDate.name=End date
+rendering.macro.deviceBrand.parameter.startDate.name=Start date
 rendering.macro.deviceBrand.parameter.startDate.description=Start time of the date interval used for this macro.
 rendering.macro.deviceModel.description=This report shows the devices your visitors are using. Each model is displayed combined with the device brand as some model names are used by multiple brands.
 rendering.macro.deviceModel.name=Device model
 rendering.macro.deviceModel.parameter.endDate.name=End date
 rendering.macro.deviceModel.parameter.endDate.description=End time of the date interval used for this macro.
-rendering.macro.deviceModel.parameter.startDate.name=End date
+rendering.macro.deviceModel.parameter.startDate.name=Start date
 rendering.macro.deviceModel.parameter.startDate.description=Start time of the date interval used for this macro.
 rendering.macro.deviceType.description=This report shows the types of devices your visitors were using. This report will always show all device types Matomo is able to detect, even if there were no visits with a specific type.
 rendering.macro.deviceType.name=Device type
 rendering.macro.deviceType.parameter.endDate.name=End date
 rendering.macro.deviceType.parameter.endDate.description=End time of the date interval used for this macro.
-rendering.macro.deviceType.parameter.startDate.name=End date
+rendering.macro.deviceType.parameter.startDate.name=Start date
 rendering.macro.deviceType.parameter.startDate.description=Start time of the date interval used for this macro.
 rendering.macro.operatingSystemVersions.description=This report shows you the operating systems your visitors are using. Each version and distribution is shown separately.
 rendering.macro.operatingSystemVersions.name=Operating system versions
 rendering.macro.operatingSystemVersions.parameter.endDate.name=End date
 rendering.macro.operatingSystemVersions.parameter.endDate.description=End time of the date interval used for this macro.
-rendering.macro.operatingSystemVersions.parameter.startDate.name=End date
+rendering.macro.operatingSystemVersions.parameter.startDate.name=Start date
 rendering.macro.operatingSystemVersions.parameter.startDate.description=Start time of the date interval used for this macro.
 rendering.macro.screenResolution.description=This report shows the screen resolutions your visitors used when viewing your website.
 rendering.macro.screenResolution.name=Screen Resolution
 rendering.macro.screenResolution.parameter.endDate.name=End date
 rendering.macro.screenResolution.parameter.endDate.description=End time of the date interval used for this macro.
-rendering.macro.screenResolution.parameter.startDate.name=End date
+rendering.macro.screenResolution.parameter.startDate.name=Start date
 rendering.macro.screenResolution.parameter.startDate.description=Start time of the date interval used for this macro.
 
 ## Web browser Language
-analytics.webBrowserLanguage.header.actions=Actions
+analytics.webBrowserLanguage.header.rowEvolution=Evolution
 analytics.webBrowserLanguage.header.country.hint=The name of the language.
 analytics.webBrowserLanguage.header.country=Language
 analytics.webBrowserLanguage.header.visits.hint=The total number of site visits originating from users of this language.
@@ -248,7 +247,7 @@ rendering.macro.webBrowserLanguage.startDate=Start date
 rendering.macro.webBrowserLanguage.endDate=End date
 
 ## Country
-analytics.country.header.actions=Actions
+analytics.country.header.rowEvolution=Evolution
 analytics.country.header.country=Language
 analytics.country.header.country.hint=The name of the country.
 analytics.country.header.timeSpent=Time spent
@@ -318,9 +317,10 @@ analytics.config.checkConnection.loading=Checking connection to Matomo.
 analytics.config.checkConnection.success=Test connection succeeded!
 
 ## Livedata keys
-analytics.livedata.action.rowEvolution.title=Row Evolution
+analytics.livedata.action.rowEvolution.title=Evolution
 
 ## Others
+analytics.incompletePemissions=You don't have viewing rights over the Velocity macros of the app. Please contact the administrator to resolve this issue.
 analytics.accessDenied=You do not have access to view this macro. Please contact the administrator to resolve this issue.
 analytics.extension.name=Analytics Application (Pro)
 analytics.extension.title=Analytics

@@ -261,6 +261,7 @@
   #analytics_displayMacroTitle('Analytics.Code.Macros.BrowserEngines', 'rendering.macro.browserEngines.description', 'rendering.macro.browserEngines.name')
   #analytics_getDate()
   #set ($discard = $xwiki.jsx.use('Analytics.Code.Macros.RowEvolution'))
+  #set ($discard = $xwiki.ssx.use('Analytics.Code.Macros.RowEvolution'))
   #set ($parameters = $escapetool.url({
     'resultPage': 'Analytics.Code.Macros.SoftwareDevicesJSON',
     'date': $date,
@@ -279,7 +280,7 @@
         {'id': 'timeSpent', 'displayer': 'html'},
         {'id': 'bounceCount', 'displayer': 'html'},
         {'id': 'conversionRate', 'displayer': 'html'},
-        {'id': 'actions','filterable': false, 'sortable': false, 'displayer': 'html'}
+        {'id': 'rowEvolution','filterable': false, 'sortable': false, 'displayer': 'html'}
       ],
       'entryDescriptor': {
         'idProperty': 'engines'
@@ -290,11 +291,11 @@
 
   {{liveData
     id="$macroId"
-    properties='engines, visits, nbOfActions, timeSpent, bounceCount, conversionRate, actions'
+    properties='engines, visits, nbOfActions, timeSpent, bounceCount, conversionRate, rowEvolution'
     source='liveTable'
     sourceParameters="$parameters"
     sort='visits:desc'
-  }}$jsontool.serialize($liveDataConfig){{/liveData}}
+  	"limit"="10"}}$jsontool.serialize($liveDataConfig){{/liveData}}
 
   #set ($rowEvolutionParams = {
     'visits': 'nb_visits',
@@ -308,7 +309,11 @@
 #if ($services.licensing.licensor.hasLicensureForEntity(
   $services.model.createDocumentReference('', ['Analytics', 'Code'], 'ConfigurationClass')))
   #if ($xwiki.hasAccessLevel('view', 'Analytics.WebHome'))
-    #executeMacro()
+    #if($xwiki.hasAccessLevel('view', 'Analytics.Code.Macros.VelocityMacros'))
+      #executeMacro()
+    #else
+      {{error}}{{translation key="analytics.incompletePemissions" /}}{{/error}}
+    #end
   #else
     {{error}}{{translation key="analytics.accessDenied" /}}{{/error}}
   #end
