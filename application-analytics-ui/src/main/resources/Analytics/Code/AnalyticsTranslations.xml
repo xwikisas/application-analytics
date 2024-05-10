@@ -62,12 +62,11 @@ rendering.macro.mostViewedPages.name=Most viewed pages
 ## Entry Pages
 analytics.entryPages.header.rowEvolution=Evolution
 analytics.entryPages.header.bounces.hint=Number of visits that started and ended on this page.
+analytics.entryPages.header.bounces=Bounces
 analytics.entryPages.header.bounceRate=Bounce rate
 analytics.entryPages.header.entrances.hint=Number of visits that started on this page.
 analytics.entryPages.header.entrances=Entrances
 analytics.entryPages.header.pageTitle=Title
-analytics.entryPages.header.visits.hint=The number of visits that included this page. If a page was viewed multiple times during one visit, it is only counted once.
-analytics.entryPages.header.visits=Unique visitors
 analytics.entryPages.parameter.label.endDate=End time of the date interval used for this macro
 analytics.entryPages.parameter.label.startDate=Start time of the date interval used for this macro
 rendering.macro.entryPages.description=This report contains information about the entry pages that were used during the specified period. An entry page is the first page that a user views during their visit.
@@ -321,6 +320,7 @@ analytics.config.checkConnection.success=Test connection succeeded!
 analytics.livedata.action.rowEvolution.title=Evolution
 
 ## Others
+analytics.incompletePemissions=You don't have viewing rights over the Velocity macros of the app. Please contact the administrator to resolve this issue.
 analytics.accessDenied=You do not have access to view this macro. Please contact the administrator to resolve this issue.
 analytics.extension.name=Analytics Application (Pro)
 analytics.extension.title=Analytics

@@ -289,6 +289,7 @@
     properties="category, searches, searchResultsPages, rowEvolution"
     source='liveTable'
     sourceParameters="$parameters"
+    sort='searches:desc'
   	"limit"="10"}}$jsontool.serialize($liveDataConfig){{/liveData}}
 
   #set ($rowEvolutionParams = {

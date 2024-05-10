@@ -274,7 +274,7 @@
       'propertyDescriptors': [
         {'id': 'pageTitle', 'displayer': 'html'},
         {'id': 'entrances', 'displayer': 'html'},
-        {'id': 'visits', 'displayer': 'html'},
+        {'id': 'bounces', 'displayer': 'html'},
         {'id': 'bounceRate', 'displayer': 'html'},
         {'id': 'rowEvolution', 'filterable': false, 'sortable': false, 'displayer': 'html'}
       ],
@@ -287,7 +287,7 @@
 
   {{liveData
     id="$macroId"
-    properties="pageTitle, entrances, visits, bounceRate, rowEvolution"
+    properties="pageTitle, entrances, bounces, bounceRate, rowEvolution"
     source='liveTable'
     sourceParameters="$parameters"
     sort='entrances:desc'
