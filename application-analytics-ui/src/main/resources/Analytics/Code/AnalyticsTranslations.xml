@@ -109,6 +109,7 @@ rendering.macro.PagesFollowingASiteSearch.name=Pages following a site search
 ## Row Evolution
 analytics.rowEvolution.modal.close=Close
 analytics.rowEvolution.modal.day.label=Day
+analytics.rowEvolution.modal.field.actions= Actions
 analytics.rowEvolution.modal.field.rowEvolution=Row Evolution
 analytics.rowEvolution.modal.field.avgTime=Time spent on page
 analytics.rowEvolution.modal.field.bounces=Bounces
