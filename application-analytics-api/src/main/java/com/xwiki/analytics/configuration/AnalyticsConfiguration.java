@@ -53,7 +53,8 @@ public interface AnalyticsConfiguration
     String getTrackingCode();
 
     /**
+     * @since 1.0.2
      * @return true if the tracking is enabled, false otherwise.
      */
-    boolean getEnabled();
+    boolean isEnabled();
 }

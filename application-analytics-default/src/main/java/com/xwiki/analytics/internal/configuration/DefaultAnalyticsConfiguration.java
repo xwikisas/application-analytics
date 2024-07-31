@@ -74,7 +74,7 @@ public class DefaultAnalyticsConfiguration implements AnalyticsConfiguration
     }
 
     @Override
-    public boolean getEnabled()
+    public boolean isEnabled()
     {
         return this.configDocument.getProperty("enabled", false);
     }
