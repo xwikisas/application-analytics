@@ -51,4 +51,9 @@ public interface AnalyticsConfiguration
      * @return the tracking code for Matomo.
      */
     String getTrackingCode();
+
+    /**
+     * @return true if the tracking is enabled, false otherwise.
+     */
+    boolean getEnabled();
 }

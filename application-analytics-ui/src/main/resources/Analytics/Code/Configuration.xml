@@ -67,6 +67,21 @@
         <validationRegExp/>
         <classType>com.xpn.xwiki.objects.classes.PasswordClass</classType>
       </authToken>
+      <enabled>
+        <customDisplay/>
+        <defaultValue>0</defaultValue>
+        <disabled>0</disabled>
+        <displayFormType>checkbox</displayFormType>
+        <displayType/>
+        <hint/>
+        <name>enabled</name>
+        <number>5</number>
+        <prettyName>enabled</prettyName>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+      </enabled>
       <requestAddress>
         <customDisplay/>
         <disabled>0</disabled>
@@ -482,7 +497,8 @@
   keys: [
     'error',
     'loading',
-    'success'
+    'success',
+    'disabled'
   ]
 });
 
@@ -509,7 +525,6 @@ require(['jquery', 'xwiki-l10n!analyticsConfigMessages', 'xwiki-meta'], ($, l10n
 
   function checkConnection() {
     const params = {
-      'type': 'tracker',
       'pageUrl': $('#checkMatomoConnection').attr('src')
     }
     const queryString = $.param(params);
@@ -517,7 +532,11 @@ require(['jquery', 'xwiki-l10n!analyticsConfigMessages', 'xwiki-meta'], ($, l10n
     let url = new XWiki.Document(getLastVisitsDetailsJSONRef).getURL('get');
     $.getJSON(`${url}?${queryString}`)
       .done((data) =&gt; {
-        if (data.length) {
+        if(data.stauts === "successTrackingDisabled")
+        {
+          notification.replace(new XWiki.widgets.Notification(l10n['disabled'], 'done'));
+        }
+        else if (data.length) {
           notification.replace(new XWiki.widgets.Notification(l10n['success'], 'done'));
         } else {
           notification.replace(new XWiki.widgets.Notification(l10n['error'], 'error'));

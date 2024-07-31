@@ -62,6 +62,21 @@
       <validationRegExp/>
       <classType>com.xpn.xwiki.objects.classes.PasswordClass</classType>
     </authToken>
+    <enabled>
+      <customDisplay/>
+      <defaultValue>0</defaultValue>
+      <disabled>0</disabled>
+      <displayFormType>checkbox</displayFormType>
+      <displayType/>
+      <hint/>
+      <name>enabled</name>
+      <number>5</number>
+      <prettyName>enabled</prettyName>
+      <unmodifiable>0</unmodifiable>
+      <validationMessage/>
+      <validationRegExp/>
+      <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+    </enabled>
     <requestAddress>
       <customDisplay/>
       <disabled>0</disabled>

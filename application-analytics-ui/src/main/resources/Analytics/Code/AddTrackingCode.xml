@@ -166,7 +166,8 @@
       <content>{{velocity}}
 #set ($configuration = $services.analytics.configuration)
 #set ($trackingCode = $configuration.trackingCode)
-#if ($trackingCode)
+#set ($enabled = $configuration.enabled)
+#if ($trackingCode &amp;&amp; $enabled)
   {{html clean="false"}}
     $trackingCode
   {{/html}}
