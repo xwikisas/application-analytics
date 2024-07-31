@@ -40,7 +40,7 @@
 #if ($xcontext.action == "get")
   #set ($enabled = $services.analytics.configuration.enabled)
   #if (!$enabled)
-    #jsonResponse({"stauts":"successTrackingDisabled"})
+    #jsonResponse({"status":"successTrackingDisabled"})
   #else
     #set ($segment = "pageUrl==$request.pageUrl")
     #set ($parameters = {

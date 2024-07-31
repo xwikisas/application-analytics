@@ -532,7 +532,7 @@ require(['jquery', 'xwiki-l10n!analyticsConfigMessages', 'xwiki-meta'], ($, l10n
     let url = new XWiki.Document(getLastVisitsDetailsJSONRef).getURL('get');
     $.getJSON(`${url}?${queryString}`)
       .done((data) =&gt; {
-        if (data.stauts === "successTrackingDisabled")
+        if (data.status === "successTrackingDisabled")
         {
           notification.replace(new XWiki.widgets.Notification(l10n['disabled'], 'done'));
         }
