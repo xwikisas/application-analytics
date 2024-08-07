@@ -535,8 +535,7 @@ require(['jquery', 'xwiki-l10n!analyticsConfigMessages', 'xwiki-meta'], ($, l10n
         if (data.status === "trackingDisabled")
         {
           notification.replace(new XWiki.widgets.Notification(l10n['disabled'], 'done'));
-        }
-        else if (data.length) {
+        } else if (data.length) {
           notification.replace(new XWiki.widgets.Notification(l10n['success'], 'done'));
         } else {
           notification.replace(new XWiki.widgets.Notification(l10n['error'], 'error'));
