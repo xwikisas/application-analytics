@@ -79,6 +79,7 @@
   #showProperty('authToken')
   #showProperty('siteId')
   #showProperty('requestAddress')
+  #showProperty('enabled')
 #if ($xcontext.action == 'admin')
   &lt;p&gt;
     &lt;input type="submit" class="btn btn-primary" name="action_saveandcontinue"

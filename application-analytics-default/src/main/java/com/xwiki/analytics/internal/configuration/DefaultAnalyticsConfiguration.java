@@ -72,4 +72,10 @@ public class DefaultAnalyticsConfiguration implements AnalyticsConfiguration
     {
         return this.configDocument.getProperty("trackingCode", "");
     }
+
+    @Override
+    public boolean isEnabled()
+    {
+        return this.configDocument.getProperty("enabled", false);
+    }
 }

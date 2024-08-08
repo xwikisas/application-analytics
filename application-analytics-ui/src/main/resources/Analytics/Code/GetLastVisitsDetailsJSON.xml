@@ -37,17 +37,22 @@
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>true</hidden>
   <content>{{velocity}}
-#if ($request.type=='tracker')
-  #set ($segment = "pageUrl==$request.pageUrl")
-  #set ($parameters = {
-    'module': 'API',
-    'method': 'Live.getLastVisitsDetails',
-    'period': 'day',
-    'date': 'today',
-    'format': 'json',
-    'segment': $segment
-  })
-  #jsonResponse($services.analytics.makeRequest($parameters, {}, 'MostViewedPages'))
+#if ($xcontext.action == 'get')
+  #set ($enabled = $services.analytics.configuration.enabled)
+  #if (!$enabled)
+    #jsonResponse({'status': 'trackingDisabled'})
+  #else
+    #set ($segment = "pageUrl==$request.pageUrl")
+    #set ($parameters = {
+      'module': 'API',
+      'method': 'Live.getLastVisitsDetails',
+      'period': 'day',
+      'date': 'today',
+      'format': 'json',
+      'segment': $segment
+    })
+    #jsonResponse($services.analytics.makeRequest($parameters, {}, 'MostViewedPages'))
+  #end
 #end
 {{/velocity}}</content>
 </xwikidoc>
