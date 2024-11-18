@@ -255,13 +255,11 @@ require(['jquery', 'xwiki-l10n!analyticsGraphMessages', 'chart'], function ($, l
         responses[0]["labels"].unshift("")
         responses[0]["labels"].push("")
       }
-      if (values[0].length === 1)
-      {
-        for (let i=0; i &lt; values.length; i++)
-          {
-            values[i].unshift(0);
-            values[i].push(0);
-          }
+      if (values[0].length === 1) {
+        $.each(values, function (index, value) {
+          value.unshift(0);
+          value.push(0);
+        });
       }
       // Map the chart to the id of the macro to be able to edit the canvas.
       chartsMap.set(cacheId, createChart(canvas, responses[0]['labels'], values, axis));
