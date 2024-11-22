@@ -1,3 +1,7 @@
+com.xwiki.analytics.internal.aggregators.AggregatorDataHandler
+com.xwiki.analytics.internal.aggregators.AggregatorSaver
+com.xwiki.analytics.internal.AnalyticsApplicationListener
+com.xwiki.analytics.internal.aggregators.LastVisitAggregator
 com.xwiki.analytics.internal.configuration.AnalyticsConfigurationSource
 com.xwiki.analytics.internal.configuration.DefaultAnalyticsConfiguration
 com.xwiki.analytics.script.AnalyticsScriptService
@@ -6,3 +10,4 @@ com.xwiki.analytics.internal.MostViewedJsonNormaliser
 com.xwiki.analytics.internal.RowEvolutionJsonNormaliser
 com.xwiki.analytics.internal.VisitsJsonNormaliser
 com.xwiki.analytics.internal.HttpClientBuilderFactory
+

@@ -504,6 +504,26 @@
 
 require(['jquery', 'xwiki-l10n!analyticsConfigMessages', 'xwiki-meta'], ($, l10n, xm) =&gt; {
 
+  $(document).ready(() =&gt; {
+    const initialValue = $('#Analytics\\.Code\\.ConfigurationClass_0_interval').val();
+    if (initialValue !== "custom")
+    {
+      $('#Analytics\\.Code\\.ConfigurationClass_0_lastSeenStartDate').closest('dl').hide();
+      $('#Analytics\\.Code\\.ConfigurationClass_0_lastSeenEndDate').closest('dl').hide();
+    }
+  });
+  $('#Analytics\\.Code\\.ConfigurationClass_0_interval').on('change', function () {
+    const selectedValue = $(this).val();
+    if (selectedValue !== "custom")
+    {
+      $('#Analytics\\.Code\\.ConfigurationClass_0_lastSeenStartDate').closest('dl').hide();
+      $('#Analytics\\.Code\\.ConfigurationClass_0_lastSeenEndDate').closest('dl').hide();
+      return;
+    }
+    $('#Analytics\\.Code\\.ConfigurationClass_0_lastSeenStartDate').closest('dl').show();
+    $('#Analytics\\.Code\\.ConfigurationClass_0_lastSeenEndDate').closest('dl').show();
+  });
+
   let notification;
   $('#checkMatomoConnection').on('load', function () {
     notification = new XWiki.widgets.Notification(l10n['loading'], 'inprogress');

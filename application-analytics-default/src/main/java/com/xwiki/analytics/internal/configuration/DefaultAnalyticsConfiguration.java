@@ -74,6 +74,24 @@ public class DefaultAnalyticsConfiguration implements AnalyticsConfiguration
     }
 
     @Override
+    public String getInterval()
+    {
+        return this.configDocument.getProperty("interval", "");
+    }
+
+    @Override
+    public String lastSeenStartDate()
+    {
+        return this.configDocument.getProperty("lastSeenStartDate", "");
+    }
+
+    @Override
+    public String lastSeenEndDate()
+    {
+        return this.configDocument.getProperty("lastSeenEndDate", "");
+    }
+
+    @Override
     public boolean isEnabled()
     {
         return this.configDocument.getProperty("enabled", false);

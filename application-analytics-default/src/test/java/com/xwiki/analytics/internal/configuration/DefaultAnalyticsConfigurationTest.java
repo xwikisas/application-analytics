@@ -79,6 +79,27 @@ public class DefaultAnalyticsConfigurationTest
         when(this.analyticsConfigurationSource.getProperty("trackingCode", "")).thenReturn("TEST");
         assertEquals("TEST", this.defaultAnalyticsConfiguration.getTrackingCode());
     }
+
+    @Test
+    void getInterval(){
+        when(this.analyticsConfigurationSource.getProperty("interval", "")).thenReturn("year");
+        assertEquals("year", this.defaultAnalyticsConfiguration.getInterval());
+    }
+
+
+    @Test
+    void lastSeenEndDate(){
+        when(this.analyticsConfigurationSource.getProperty("lastSeenEndDate", "")).thenReturn("2020-01-01");
+        assertEquals("2020-01-01", this.defaultAnalyticsConfiguration.lastSeenEndDate());
+    }
+
+
+    @Test
+    void lastSeenStartDate(){
+        when(this.analyticsConfigurationSource.getProperty("lastSeenStartDate", "")).thenReturn("2020-01-01");
+        assertEquals("2020-01-01", this.defaultAnalyticsConfiguration.lastSeenStartDate());
+    }
+
     @BeforeEach
     void setLogger()
     {

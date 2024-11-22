@@ -75,11 +75,19 @@
 #else
   &lt;div class="analytics-config xform"&gt;
 #end
+  &lt;h1&gt;$services.localization.render('analytics.settings.generalSettings')&lt;/h1&gt;
+  &lt;hr/&gt;
   #showProperty('trackingCode')
   #showProperty('authToken')
   #showProperty('siteId')
   #showProperty('requestAddress')
   #showProperty('enabled')
+  &lt;h1&gt;$services.localization.render('analytics.settings.aggregatorMacros')&lt;/h1&gt;
+  &lt;hr/&gt;
+  &lt;h3&gt;$services.localization.render('analytics.macros.lastSeen')&lt;/h3&gt;
+  #showProperty('interval')
+  #showProperty('lastSeenStartDate')
+  #showProperty('lastSeenEndDate')
 #if ($xcontext.action == 'admin')
   &lt;p&gt;
     &lt;input type="submit" class="btn btn-primary" name="action_saveandcontinue"

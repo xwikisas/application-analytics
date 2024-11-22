@@ -17,59 +17,31 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package com.xwiki.analytics.configuration;
+
+package com.xwiki.analytics;
 
 import org.xwiki.component.annotation.Role;
 import org.xwiki.stability.Unstable;
 
 /**
- * Configuration for the Analytics Application.
+ * Provides APIs for aggregating data from multiple Matomo endpoints to make custom tables.
  *
  * @version $Id$
- * @since 1.0
+ * @since 1.1
  */
+
 @Role
 @Unstable
-public interface AnalyticsConfiguration
+public interface Aggregator
 {
     /**
-     * @return the address where the requests will be made
+     * Aggregates the data using the parameters.
      */
-    String getRequestAddress();
+    void aggregateData();
 
     /**
-     * @return the id of the site that we want to see the statistics for
+     * Will get the hin of the aggregator.
+     * @return hint of the aggregator
      */
-    String getIdSite();
-
-    /**
-     * @return the authentication token that permits to access the statistics
-     */
-    String getAuthenticationToken();
-
-    /**
-     * @return the tracking code for Matomo.
-     */
-    String getTrackingCode();
-
-    /**
-     * @return the update interval.
-     */
-    String getInterval();
-
-    /**
-     * @return start date of the interval in case of custom intervals.
-     */
-    String lastSeenStartDate();
-
-    /**
-     * @return end date of the interval in case of custom intervals.
-     */
-    String lastSeenEndDate();
-
-    /**
-     * @return true if the tracking is enabled, false otherwise.
-     * @since 1.0.2
-     */
-    boolean isEnabled();
+    String getHint();
 }
