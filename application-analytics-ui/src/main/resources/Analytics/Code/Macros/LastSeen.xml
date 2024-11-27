@@ -255,7 +255,8 @@
       <code>{{include reference='Analytics.Code.Macros.VelocityMacros'/}}
 
 {{velocity}}
-  #analytics_displayMacroTitle('Analytics.Code.Macros.LastSeenMacro', 'rendering.macro.lastSeenMacro.description', 'rendering.macro.lastSeenMacro.name')
+#macro(executeMacro)
+  #analytics_displayMacroTitle('Analytics.Code.Macros.LastSeen', 'rendering.macro.lastSeen.description', 'rendering.macro.lastSeen.name')
   #set ($parameters = $escapetool.url({
     'resultPage': 'Analytics.Code.Macros.LastSeenMacroJSON',
     'translationPrefix': 'analytics.lastSeenMacro.header.'
@@ -280,7 +281,21 @@
     sort='serverDatePretty:desc'
     sourceParameters="$parameters"
   	"limit"="10"}}$jsontool.serialize($liveDataConfig){{/liveData}}
-
+#end
+#if ($services.licensing.licensor.hasLicensureForEntity(
+  $services.model.createDocumentReference('', ['Analytics', 'Code'], 'ConfigurationClass')))
+  #if ($xwiki.hasAccessLevel('view', 'Analytics.WebHome'))
+    #if($xwiki.hasAccessLevel('view', 'Analytics.Code.Macros.VelocityMacros'))
+      #executeMacro()
+    #else
+      {{error}}{{translation key="analytics.incompletePemissions" /}}{{/error}}
+    #end
+  #else
+    {{error}}{{translation key="analytics.accessDenied" /}}{{/error}}
+  #end
+#else
+  {{missingLicenseMessage extensionName='analytics.extension.name' /}}
+#end
 {{/velocity}}</code>
     </property>
     <property>
@@ -290,10 +305,12 @@
       <contentJavaType/>
     </property>
     <property>
-      <contentType/>
+      <contentType>No content</contentType>
     </property>
     <property>
-      <defaultCategories/>
+      <defaultCategories>
+        <value>Analytics</value>
+      </defaultCategories>
     </property>
     <property>
       <description/>
@@ -308,7 +325,7 @@
       <priority/>
     </property>
     <property>
-      <supportsInlineMode/>
+      <supportsInlineMode>0</supportsInlineMode>
     </property>
     <property>
       <visibility/>

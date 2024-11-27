@@ -19,7 +19,6 @@
  */
 package com.xwiki.analytics.internal.aggregators;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -42,14 +41,12 @@ import com.xpn.xwiki.doc.XWikiDocument;
  * Handles the storage of aggregated data.
  *
  * @version $Id$
- * @since 1.13
+ * @since 1.2
  */
 @Component(roles = AggregatorSaver.class)
 @Singleton
 public class AggregatorSaver
 {
-    private static final List<String> SPACE = List.of("Analytics", "Code", "AggregateData");
-
     @Inject
     private Provider<XWikiContext> contextProvider;
 
@@ -60,25 +57,24 @@ public class AggregatorSaver
      * Saves the aggregated data on a xwiki page.
      *
      * @param data data that you want to store
+     * @param spaces space where you want your data to be stored.
      * @param pageName name of the page where you want your data
      */
-    public void saveData(ArrayNode data, String pageName)
+    public void saveData(ArrayNode data, List<String> spaces, String pageName)
     {
         XWikiContext context = contextProvider.get();
         XWiki xwiki = context.getWiki();
-        SpaceReference spaceReference = new SpaceReference(context.getWikiId(), SPACE);
+        SpaceReference spaceReference = new SpaceReference(context.getWikiId(), spaces);
         DocumentReference documentReference = new DocumentReference(pageName, spaceReference);
         try {
-            // I don't really know witch user should be used when saving the data
-            context.setUserReference(xwiki.getUser(context).getUser().getUserReference());
             XWikiDocument document = xwiki.getDocument(documentReference, context);
             document.setContent(data.toString());
-            // Plain  text to make sure that we create a vulnerability.
+            // Plain  text to make sure that we don't create a vulnerability.
             document.setSyntax(Syntax.PLAIN_1_0);
             if (!document.isContentDirty()) {
-                logger.info("The local cache is still up to date and it wasn't updated!");
+                logger.warn("The local cache is still up to date and it wasn't updated!");
             } else {
-                xwiki.saveDocument(document, String.format("Update the data %s", LocalDateTime.now()), context);
+                xwiki.saveDocument(document, "Update the data", context);
             }
         } catch (XWikiException e) {
             logger.error("Error while saving aggregate data", e);

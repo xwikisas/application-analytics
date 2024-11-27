@@ -55,9 +55,13 @@ public class AggregatorDataHandler
     @Inject
     private Provider<XWikiContext> contextProvider;
 
+    @Inject
+    private AggregatorDispatcher aggregatorDispatcher;
+
     /**
      * Process the data stored locally.
-     * @param dataSource page where the data is stored
+     *
+     * @param hint for the aggregator used
      * @param order in which order you want the data asc/desc
      * @param sortField filed after you want to sort
      * @param filters map where the keys are the fields and the values are the value you want to filter after
@@ -67,10 +71,13 @@ public class AggregatorDataHandler
      * @throws JsonProcessingException
      * @throws XWikiException
      */
-    public Pair<Integer, List<JsonNode>> handleData(DocumentReference dataSource, String order, String sortField,
+    public Pair<Integer, List<JsonNode>> handleData(String hint, String order, String sortField,
         Map<String, String> filters, int pageSize, int pageCount) throws JsonProcessingException, XWikiException
     {
-        XWikiDocument document = contextProvider.get().getWiki().getDocument(dataSource, contextProvider.get());
+
+        XWikiContext context = contextProvider.get();
+        DocumentReference documentReference = aggregatorDispatcher.getSaveLocation(hint, context);
+        XWikiDocument document = contextProvider.get().getWiki().getDocument(documentReference, context);
         String data = document.getContent();
         List<JsonNode> nodeList = OBJECT_MAPPER.readValue(data,
             OBJECT_MAPPER.getTypeFactory().constructCollectionType(List.class, JsonNode.class));

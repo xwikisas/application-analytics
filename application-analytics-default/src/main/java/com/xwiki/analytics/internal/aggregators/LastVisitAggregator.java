@@ -21,6 +21,7 @@ package com.xwiki.analytics.internal.aggregators;
 
 import java.net.URI;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -36,7 +37,8 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 /**
- * Aggregates.
+ * Aggregates the data between the user and last visit endpoints to create a json with all the users and their last
+ * login date.
  *
  * @version $Id$
  * @since 1.1
@@ -64,6 +66,8 @@ public class LastVisitAggregator extends AbstractAggregator
 
     private static final String LAST_VISIT_STORAGE = "LastVisitStorage";
 
+    private static final List<String> SPACE = List.of("Analytics", "Code", "AggregateData");
+
     @Inject
     private Logger logger;
 
@@ -71,8 +75,7 @@ public class LastVisitAggregator extends AbstractAggregator
     public void aggregateData()
     {
 
-        logger.warn("Stared aggregating data");
-
+        logger.warn("Started aggregating data");
         Map<String, String> commonQueryParameters = new HashMap<>();
         commonQueryParameters.put("module", "API");
         commonQueryParameters.put("format", "json");
@@ -89,12 +92,13 @@ public class LastVisitAggregator extends AbstractAggregator
         Map<String, String> lastVisitParameters = new HashMap<>(commonQueryParameters);
         lastVisitParameters.put(METHOD, LAST_VISIT_ENDPOINT);
         lastVisitParameters.put(SHOW_COLUMNS, "serverTimestamp,serverDatePretty");
-        //A trick to get only the last visit.
+        // A trick to get only the last visit.
         lastVisitParameters.put("filter_limit", "1");
         try {
 
             ArrayNode resultNode = this.processData(getUsers, lastVisitParameters);
-            this.aggregatorSaver.saveData(resultNode, LAST_VISIT_STORAGE);
+            logger.warn("Finished aggregating data");
+            this.aggregatorSaver.saveData(resultNode, SPACE, LAST_VISIT_STORAGE);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
@@ -106,6 +110,17 @@ public class LastVisitAggregator extends AbstractAggregator
         return LastVisitAggregator.HINT;
     }
 
+    @Override
+    public String getPage()
+    {
+        return LAST_VISIT_STORAGE;
+    }
+
+    @Override
+    public List<String> getSpace()
+    {
+        return SPACE;
+    }
 
     private ArrayNode processData(URI getUser, Map<String, String> lastVisitParameters) throws JsonProcessingException
     {

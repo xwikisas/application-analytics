@@ -31,7 +31,7 @@ import org.xwiki.test.junit5.mockito.InjectMockComponents;
 import org.xwiki.test.junit5.mockito.MockComponent;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
 /**
@@ -82,8 +82,8 @@ public class DefaultAnalyticsConfigurationTest
 
     @Test
     void getInterval(){
-        when(this.analyticsConfigurationSource.getProperty("interval", "")).thenReturn("year");
-        assertEquals("year", this.defaultAnalyticsConfiguration.getInterval());
+        when(this.analyticsConfigurationSource.getProperty("lastSeenUpdateInterval", "")).thenReturn("year");
+        assertEquals("year", this.defaultAnalyticsConfiguration.getLastSeenUpdateInterval());
     }
 
 
@@ -98,6 +98,12 @@ public class DefaultAnalyticsConfigurationTest
     void lastSeenStartDate(){
         when(this.analyticsConfigurationSource.getProperty("lastSeenStartDate", "")).thenReturn("2020-01-01");
         assertEquals("2020-01-01", this.defaultAnalyticsConfiguration.lastSeenStartDate());
+    }
+
+    @Test
+    void isEnabledTest(){
+        when(this.analyticsConfigurationSource.getProperty("enabled", false)).thenReturn(true);
+        assertTrue(this.defaultAnalyticsConfiguration.isEnabled());
     }
 
     @BeforeEach

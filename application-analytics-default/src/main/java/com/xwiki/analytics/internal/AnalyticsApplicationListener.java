@@ -109,7 +109,7 @@ public class AnalyticsApplicationListener extends AbstractEventListener implemen
         if (event instanceof ExtensionUpgradedEvent) {
             // Unscheduled and reschedule the jobs
             prepareJobs(true);
-        } else if (isAnalyticsInsallEvent(event)) {
+        } else if (isAnalyticsInstallEvent(event)) {
             prepareJobs(false);
         }
     }
@@ -140,7 +140,7 @@ public class AnalyticsApplicationListener extends AbstractEventListener implemen
         }
     }
 
-    private static boolean isAnalyticsInsallEvent(Event event)
+    private static boolean isAnalyticsInstallEvent(Event event)
     {
         return event instanceof ExtensionInstalledEvent && ANALYTICS_APPLICATION_ID.equals(
             ((ExtensionEvent) event).getExtensionId().getId());

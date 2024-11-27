@@ -57,7 +57,7 @@
     #set ($sort = "serverTimestamp")
   #end
   ## Get the JSON response from Matomo.
-  #set ($data = $services.analytics.handleData($xwiki.getDocument('Analytics.Code.AggregateData.LastVisitStorage'), $order , $sort, $filters, $limit, $mathtool.idiv($offset, $limit)))
+  #set ($data = $services.analytics.handleData('last_visit', $order , $sort, $filters, $limit, $mathtool.idiv($offset, $limit)))
   #set ($totalRows =  $data.getLeft())
   #set ($entries = $data.getRight())
   #set ($results = {
@@ -69,7 +69,7 @@
   })
   #foreach ($currentEntry in $entries)
     #set ($discard = $results.rows.add({
-      'label' : $currentEntry.get('label').asText(),
+      'label' : "#analytics_getAvatar($currentEntry.get('label').asText())",
       'serverDatePretty' :  $currentEntry.get('serverDatePretty').asText()
     }))
   #end

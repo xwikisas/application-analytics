@@ -74,9 +74,9 @@ public class DefaultAnalyticsConfiguration implements AnalyticsConfiguration
     }
 
     @Override
-    public String getInterval()
+    public String getLastSeenUpdateInterval()
     {
-        return this.configDocument.getProperty("interval", "");
+        return this.configDocument.getProperty("lastSeenUpdateInterval", "");
     }
 
     @Override

@@ -329,5 +329,13 @@ API as it is faster
     value="$escapetool.xml($value)"
   &gt;$escapetool.xml($services.localization.render( $key + '.option'))&lt;/option&gt;
 #end
+#macro (analytics_getAvatar $userReference)
+ #set ($userPage = $xwiki.getDocument($userReference))
+ #if($xwiki.exists($userPage))
+     &lt;a href="$userPage.getURL()"&gt;$userPage.getName()&lt;/a&gt;
+ #else
+   $userReference
+ #end
+#end
 {{/velocity}}</content>
 </xwikidoc>

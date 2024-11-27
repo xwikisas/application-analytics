@@ -53,9 +53,9 @@ public interface AnalyticsConfiguration
     String getTrackingCode();
 
     /**
-     * @return the update interval.
+     * @return the update interval of the local cache of the last seen macro.
      */
-    String getInterval();
+    String getLastSeenUpdateInterval();
 
     /**
      * @return start date of the interval in case of custom intervals.

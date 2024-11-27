@@ -149,7 +149,7 @@
       <contextUser>XWiki.superadmin</contextUser>
     </property>
     <property>
-      <cron>0 0/5 * * * ?</cron>
+      <cron>0 0 0 ? * SUN</cron>
     </property>
     <property>
       <jobClass>com.xpn.xwiki.plugin.scheduler.GroovyJob</jobClass>
@@ -161,7 +161,10 @@
       <jobName>JobLastSeenUser</jobName>
     </property>
     <property>
-      <script>services.analytics.aggregate("last_visit")</script>
+      <script>if (services.licensing.licensor.hasLicensureForEntity(services.model.createDocumentReference('', ['Analytics', 'Code'], 'ConfigurationClass'))) {
+  services.analytics.aggregate("last_visit")
+}
+</script>
     </property>
     <property>
       <status>Normal</status>

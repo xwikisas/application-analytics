@@ -74,25 +74,25 @@ public abstract class AbstractAggregator implements Aggregator
         // Formatter for yyyy-MM-dd format
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-        if (configuration.getInterval().equals("custom")) {
+        if (configuration.getLastSeenUpdateInterval().equals("custom")) {
             return configuration.lastSeenStartDate().substring(0, configuration.lastSeenStartDate().indexOf(" "))
                 + SEPARATOR + configuration.lastSeenEndDate()
                 .substring(0, configuration.lastSeenEndDate().indexOf(" "));
-        } else if (configuration.getInterval().equals("year")) {
+        } else if (configuration.getLastSeenUpdateInterval().equals("year")) {
             LocalDate now = LocalDate.now();
             // January 1st
             LocalDate startOfYear = now.withDayOfYear(1);
             // December 31st
             LocalDate endOfYear = now.withDayOfYear(now.lengthOfYear());
             return startOfYear.format(formatter) + SEPARATOR + endOfYear.format(formatter);
-        } else if (configuration.getInterval().equals("month")) {
+        } else if (configuration.getLastSeenUpdateInterval().equals("month")) {
             LocalDate now = LocalDate.now();
             // 1st day of the month
             LocalDate startOfMonth = now.withDayOfMonth(1);
             // Last day of the month
             LocalDate endOfMonth = now.withDayOfMonth(now.lengthOfMonth());
             return startOfMonth.format(formatter) + SEPARATOR + endOfMonth.format(formatter);
-        } else if (configuration.getInterval().equals("week")) {
+        } else if (configuration.getLastSeenUpdateInterval().equals("week")) {
             LocalDate now = LocalDate.now();
             // Start of the week
             LocalDate startOfWeek = now.with(ChronoField.DAY_OF_WEEK, 1);
@@ -100,7 +100,8 @@ public abstract class AbstractAggregator implements Aggregator
             LocalDate endOfWeek = startOfWeek.plusDays(6);
             return startOfWeek.format(formatter) + SEPARATOR + endOfWeek.format(formatter);
         } else {
-            throw new IllegalArgumentException("Unsupported interval type: " + configuration.getInterval());
+            throw new IllegalArgumentException(
+                "Unsupported interval type: " + configuration.getLastSeenUpdateInterval());
         }
     }
 
@@ -133,22 +134,6 @@ public abstract class AbstractAggregator implements Aggregator
     {
         UriBuilder uriBuilder = UriBuilder.fromUri(baseURI).path("index.php");
 
-        for (Map.Entry<String, String> entry : parameters.entrySet()) {
-            uriBuilder.queryParam(entry.getKey(), entry.getValue());
-        }
-        return uriBuilder.build();
-    }
-
-    /**
-     * Constructs a new URI from the base URI.
-     *
-     * @param baseURI URI with the default parameters
-     * @param parameters new parameters
-     * @return URI with new parameters.
-     */
-    protected URI buildFinalURI(URI baseURI, Map<String, String> parameters)
-    {
-        UriBuilder uriBuilder = UriBuilder.fromUri(baseURI);
         for (Map.Entry<String, String> entry : parameters.entrySet()) {
             uriBuilder.queryParam(entry.getKey(), entry.getValue());
         }

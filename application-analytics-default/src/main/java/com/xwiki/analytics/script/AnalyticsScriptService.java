@@ -24,12 +24,10 @@ import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.inject.Provider;
 import javax.inject.Singleton;
 
 import org.apache.commons.lang3.tuple.Pair;
 import org.xwiki.component.annotation.Component;
-import org.xwiki.model.reference.DocumentReference;
 import org.xwiki.script.service.ScriptService;
 import org.xwiki.stability.Unstable;
 
@@ -40,6 +38,7 @@ import com.xwiki.analytics.Aggregator;
 import com.xwiki.analytics.AnalyticsManager;
 import com.xwiki.analytics.configuration.AnalyticsConfiguration;
 import com.xwiki.analytics.internal.aggregators.AggregatorDataHandler;
+import com.xwiki.analytics.internal.aggregators.AggregatorDispatcher;
 
 /**
  * Script service for the Analytics Application.
@@ -64,7 +63,7 @@ public class AnalyticsScriptService implements ScriptService
     private AggregatorDataHandler aggregatorDataHandler;
 
     @Inject
-    private Provider<List<Aggregator>> aggregators;
+    private AggregatorDispatcher aggregatorDispatcher;
 
     /**
      * Get data from the analytics API, in normalized JSON format.
@@ -75,8 +74,7 @@ public class AnalyticsScriptService implements ScriptService
      *     resulted format depends on the context were is used.
      * @return a normalized JSON format
      */
-    public JsonNode makeRequest(Map<String, String> parameters, Map<String, String> filters,
-        String jsonNormaliserHint)
+    public JsonNode makeRequest(Map<String, String> parameters, Map<String, String> filters, String jsonNormaliserHint)
     {
         try {
             return analyticsManager.requestData(parameters, filters, jsonNormaliserHint);
@@ -92,18 +90,19 @@ public class AnalyticsScriptService implements ScriptService
      */
     public void aggregate(String hint)
     {
+        Aggregator aggregator = aggregatorDispatcher.getAggregator(hint);
 
-        for (Aggregator aggregator : aggregators.get()) {
-            if (hint.equals(aggregator.getHint())) {
-                aggregator.aggregateData();
-                return;
-            }
+        if (aggregator != null) {
+            aggregator.aggregateData();
+        } else {
+            throw new RuntimeException(String.format("No aggregator found for [%s]", hint));
         }
     }
 
     /**
      * Endpoint for handling aggregated data for livedata.
-     * @param dataSource page where the data is stored
+     *
+     * @param hint for the aggregator used.
      * @param asc if you want the data to be in ascending or descending order
      * @param sortField the field that you want to sort after
      * @param filters map where the keys are the fields and the values are the text that you want to filter after
@@ -113,10 +112,10 @@ public class AnalyticsScriptService implements ScriptService
      * @throws JsonProcessingException thrown if the dataSource doesn't store the data in JSON format
      * @throws XWikiException
      */
-    public Pair<Integer, List<JsonNode>> handleData(DocumentReference dataSource, String asc, String sortField,
+    public Pair<Integer, List<JsonNode>> handleData(String hint, String asc, String sortField,
         Map<String, String> filters, int pageSize, int pageCount) throws JsonProcessingException, XWikiException
     {
-        return this.aggregatorDataHandler.handleData(dataSource, asc, sortField, filters, pageSize, pageCount);
+        return this.aggregatorDataHandler.handleData(hint, asc, sortField, filters, pageSize, pageCount);
     }
 
     /**

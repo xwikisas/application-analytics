@@ -20,6 +20,8 @@
 
 package com.xwiki.analytics;
 
+import java.util.List;
+
 import org.xwiki.component.annotation.Role;
 import org.xwiki.stability.Unstable;
 
@@ -29,19 +31,33 @@ import org.xwiki.stability.Unstable;
  * @version $Id$
  * @since 1.1
  */
-
 @Role
 @Unstable
 public interface Aggregator
 {
     /**
-     * Aggregates the data using the parameters.
+     * Aggregates the data from multiple endpoints.
      */
     void aggregateData();
 
     /**
-     * Will get the hin of the aggregator.
+     * Will get the hint of the aggregator.
+     *
      * @return hint of the aggregator
      */
     String getHint();
+
+    /**
+     * Returns the name of the page where the data is saved.
+     *
+     * @return name of the page where the data is saved.
+     */
+    String getPage();
+
+    /**
+     * Returns the space where the page storing the aggregated data is located.
+     *
+     * @return a list of space names as strings.
+     */
+    List<String> getSpace();
 }

@@ -82,31 +82,6 @@
         <validationRegExp/>
         <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
       </enabled>
-      <interval>
-        <cache>0</cache>
-        <customDisplay/>
-        <defaultValue>year</defaultValue>
-        <disabled>0</disabled>
-        <displayType>select</displayType>
-        <freeText/>
-        <hint/>
-        <largeStorage>0</largeStorage>
-        <multiSelect>0</multiSelect>
-        <name>interval</name>
-        <number>6</number>
-        <picker>1</picker>
-        <prettyName>interval</prettyName>
-        <relationalStorage>0</relationalStorage>
-        <separator> </separator>
-        <separators>|, </separators>
-        <size>1</size>
-        <sort/>
-        <unmodifiable>0</unmodifiable>
-        <validationMessage/>
-        <validationRegExp/>
-        <values>year|month|week|custom</values>
-        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
-      </interval>
       <lastSeenEndDate>
         <customDisplay/>
         <dateFormat>yyyy-MM-dd</dateFormat>
@@ -139,6 +114,31 @@
         <validationRegExp/>
         <classType>com.xpn.xwiki.objects.classes.DateClass</classType>
       </lastSeenStartDate>
+      <lastSeenUpdateInterval>
+        <cache>0</cache>
+        <customDisplay/>
+        <defaultValue>year</defaultValue>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <freeText/>
+        <hint/>
+        <largeStorage>0</largeStorage>
+        <multiSelect>0</multiSelect>
+        <name>lastSeenUpdateInterval</name>
+        <number>6</number>
+        <picker>1</picker>
+        <prettyName/>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators>|, </separators>
+        <size>1</size>
+        <sort/>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <values>year|month|week|custom</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </lastSeenUpdateInterval>
       <requestAddress>
         <customDisplay/>
         <disabled>0</disabled>
@@ -562,14 +562,14 @@
 require(['jquery', 'xwiki-l10n!analyticsConfigMessages', 'xwiki-meta'], ($, l10n, xm) =&gt; {
 
   $(document).ready(() =&gt; {
-    const initialValue = $('#Analytics\\.Code\\.ConfigurationClass_0_interval').val();
+    const initialValue = $('#Analytics\\.Code\\.ConfigurationClass_0_lastSeenUpdateInterval').val();
     if (initialValue !== "custom")
     {
       $('#Analytics\\.Code\\.ConfigurationClass_0_lastSeenStartDate').closest('dl').hide();
       $('#Analytics\\.Code\\.ConfigurationClass_0_lastSeenEndDate').closest('dl').hide();
     }
   });
-  $('#Analytics\\.Code\\.ConfigurationClass_0_interval').on('change', function () {
+  $('#Analytics\\.Code\\.ConfigurationClass_0_lastSeenUpdateInterval').on('change', function () {
     const selectedValue = $(this).val();
     if (selectedValue !== "custom")
     {
