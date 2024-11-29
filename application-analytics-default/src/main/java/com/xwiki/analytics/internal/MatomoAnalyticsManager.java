@@ -30,6 +30,7 @@ import javax.inject.Provider;
 import javax.inject.Singleton;
 import javax.ws.rs.core.UriBuilder;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -38,10 +39,15 @@ import org.slf4j.Logger;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.stability.Unstable;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.xpn.xwiki.XWikiException;
+import com.xwiki.analytics.Aggregator;
 import com.xwiki.analytics.AnalyticsManager;
 import com.xwiki.analytics.JsonNormaliser;
 import com.xwiki.analytics.configuration.AnalyticsConfiguration;
+import com.xwiki.analytics.internal.aggregators.AggregatorDataHandler;
+import com.xwiki.analytics.internal.aggregators.AggregatorDispatcher;
 
 /**
  * Handle Matomo request and response manipulation.
@@ -68,6 +74,32 @@ public class MatomoAnalyticsManager implements AnalyticsManager
 
     @Inject
     private Provider<List<JsonNormaliser>> jsonNormalizerProvider;
+
+    @Inject
+    private AggregatorDispatcher aggregatorDispatcher;
+
+    @Inject
+    private AggregatorDataHandler aggregatorDataHandler;
+
+    @Override
+    public void aggregate(String hint)
+    {
+
+        Aggregator aggregator = aggregatorDispatcher.getAggregator(hint);
+
+        if (aggregator != null) {
+            aggregator.aggregateData();
+        } else {
+            throw new RuntimeException(String.format("No aggregator found for [%s]", hint));
+        }
+    }
+
+    @Override
+    public Pair<Integer, List<JsonNode>> handleData(String hint, String asc, String sortField,
+        Map<String, String> filters, int pageSize, int pageCount) throws JsonProcessingException, XWikiException
+    {
+        return this.aggregatorDataHandler.handleData(hint, asc, sortField, filters, pageSize, pageCount);
+    }
 
     /**
      * Request specific data from Matomo and return an enhanced response.

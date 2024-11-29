@@ -83,12 +83,6 @@
   #showProperty('requestAddress')
   #showProperty('enabled')
   &lt;hr/&gt;
-  &lt;h1&gt;$escapetool.xml($services.localization.render('analytics.settings.aggregatorMacros'))&lt;/h1&gt;
-  &lt;hr/&gt;
-  &lt;h3&gt;$escapetool.xml($services.localization.render('rendering.macro.lastSeen.name'))&lt;/h3&gt;
-  #showProperty('lastSeenUpdateInterval')
-  #showProperty('lastSeenStartDate')
-  #showProperty('lastSeenEndDate')
 #if ($xcontext.action == 'admin')
   &lt;p&gt;
     &lt;input type="submit" class="btn btn-primary" name="action_saveandcontinue"

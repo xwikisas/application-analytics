@@ -37,6 +37,7 @@ import org.slf4j.Logger;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xwiki.analytics.Aggregator;
+import com.xwiki.analytics.configuration.AggregatorConfiguration;
 import com.xwiki.analytics.configuration.AnalyticsConfiguration;
 import com.xwiki.analytics.internal.HttpClientBuilderFactory;
 
@@ -56,7 +57,7 @@ public abstract class AbstractAggregator implements Aggregator
     protected AggregatorSaver aggregatorSaver;
 
     @Inject
-    protected AnalyticsConfiguration configuration;
+    protected AnalyticsConfiguration matomoServerConfig;
 
     @Inject
     private HttpClientBuilderFactory httpClientBuilderFactory;
@@ -69,30 +70,30 @@ public abstract class AbstractAggregator implements Aggregator
      *
      * @return time interval for witch the users expects the data.
      */
-    protected String computeInterval()
+    protected String computeInterval(AggregatorConfiguration configuration)
     {
         // Formatter for yyyy-MM-dd format
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-        if (configuration.getLastSeenUpdateInterval().equals("custom")) {
-            return configuration.lastSeenStartDate().substring(0, configuration.lastSeenStartDate().indexOf(" "))
-                + SEPARATOR + configuration.lastSeenEndDate()
-                .substring(0, configuration.lastSeenEndDate().indexOf(" "));
-        } else if (configuration.getLastSeenUpdateInterval().equals("year")) {
+        if (configuration.getTimeIntervalForStatistics().equals("custom")) {
+            return configuration.getStartDate().substring(0, configuration.getStartDate().indexOf(" "))
+                + SEPARATOR + configuration.getEndDate()
+                .substring(0, configuration.getEndDate().indexOf(" "));
+        } else if (configuration.getTimeIntervalForStatistics().equals("year")) {
             LocalDate now = LocalDate.now();
             // January 1st
             LocalDate startOfYear = now.withDayOfYear(1);
             // December 31st
             LocalDate endOfYear = now.withDayOfYear(now.lengthOfYear());
             return startOfYear.format(formatter) + SEPARATOR + endOfYear.format(formatter);
-        } else if (configuration.getLastSeenUpdateInterval().equals("month")) {
+        } else if (configuration.getTimeIntervalForStatistics().equals("month")) {
             LocalDate now = LocalDate.now();
             // 1st day of the month
             LocalDate startOfMonth = now.withDayOfMonth(1);
             // Last day of the month
             LocalDate endOfMonth = now.withDayOfMonth(now.lengthOfMonth());
             return startOfMonth.format(formatter) + SEPARATOR + endOfMonth.format(formatter);
-        } else if (configuration.getLastSeenUpdateInterval().equals("week")) {
+        } else if (configuration.getTimeIntervalForStatistics().equals("week")) {
             LocalDate now = LocalDate.now();
             // Start of the week
             LocalDate startOfWeek = now.with(ChronoField.DAY_OF_WEEK, 1);
@@ -101,7 +102,7 @@ public abstract class AbstractAggregator implements Aggregator
             return startOfWeek.format(formatter) + SEPARATOR + endOfWeek.format(formatter);
         } else {
             throw new IllegalArgumentException(
-                "Unsupported interval type: " + configuration.getLastSeenUpdateInterval());
+                "Unsupported interval type: " + configuration.getTimeIntervalForStatistics());
         }
     }
 

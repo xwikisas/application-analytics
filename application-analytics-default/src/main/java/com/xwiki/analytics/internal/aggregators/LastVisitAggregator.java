@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 import org.slf4j.Logger;
@@ -35,6 +36,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.xwiki.analytics.configuration.AggregatorConfiguration;
 
 /**
  * Aggregates the data between the user and last visit endpoints to create a json with all the users and their last
@@ -69,6 +71,10 @@ public class LastVisitAggregator extends AbstractAggregator
     private static final List<String> SPACE = List.of("Analytics", "Code", "AggregateData");
 
     @Inject
+    @Named("lastSeenConfig")
+    private AggregatorConfiguration aggregatorConfiguration;
+
+    @Inject
     private Logger logger;
 
     @Override
@@ -79,15 +85,15 @@ public class LastVisitAggregator extends AbstractAggregator
         Map<String, String> commonQueryParameters = new HashMap<>();
         commonQueryParameters.put("module", "API");
         commonQueryParameters.put("format", "json");
-        commonQueryParameters.put("idSite", configuration.getIdSite());
-        commonQueryParameters.put("token_auth", configuration.getAuthenticationToken());
+        commonQueryParameters.put("idSite", this.matomoServerConfig.getIdSite());
+        commonQueryParameters.put("token_auth", this.matomoServerConfig.getAuthenticationToken());
         commonQueryParameters.put("period", "range");
-        commonQueryParameters.put("date", this.computeInterval());
+        commonQueryParameters.put("date", this.computeInterval(aggregatorConfiguration));
 
         Map<String, String> getUserParameters = new HashMap<>(commonQueryParameters);
         getUserParameters.put(METHOD, GET_USERS_METHOD);
         getUserParameters.put(SHOW_COLUMNS, "idvisitor,label");
-        URI getUsers = this.buildBaseURI(configuration.getRequestAddress(), getUserParameters);
+        URI getUsers = this.buildBaseURI(this.matomoServerConfig.getRequestAddress(), getUserParameters);
 
         Map<String, String> lastVisitParameters = new HashMap<>(commonQueryParameters);
         lastVisitParameters.put(METHOD, LAST_VISIT_ENDPOINT);
@@ -131,7 +137,7 @@ public class LastVisitAggregator extends AbstractAggregator
             String userId = users.get("idvisitor").asText();
             String segment = String.format("visitorId==%s", userId);
             lastVisitParameters.put("segment", segment);
-            URI composedURI = this.buildBaseURI(configuration.getRequestAddress(), lastVisitParameters);
+            URI composedURI = this.buildBaseURI(matomoServerConfig.getRequestAddress(), lastVisitParameters);
             // The result is an array with only one element, and we need to get the node directly.
             JsonNode lastVisitDetails = OBJECT_MAPPER.readTree(this.makeHttpRequest(composedURI)).get(0);
             jsonBuilder(resultNode, users, lastVisitDetails);

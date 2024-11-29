@@ -21,6 +21,8 @@ package com.xwiki.analytics.internal.aggregators;
 
 import java.util.List;
 
+import javax.inject.Named;
+
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
@@ -33,7 +35,9 @@ import org.xwiki.test.junit5.mockito.MockComponent;
 
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.xwiki.analytics.configuration.AggregatorConfiguration;
 import com.xwiki.analytics.configuration.AnalyticsConfiguration;
+import com.xwiki.analytics.internal.configuration.LastSeenAggregatorConfigs;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyList;
@@ -58,6 +62,9 @@ public class LastVisitAggregatorTest
     @MockComponent
     private AnalyticsConfiguration configuration;
 
+    @MockComponent
+    @Named("lastSeenConfig")
+    private AggregatorConfiguration lastSeenAggregatorConfigs;
 
 
     @MockComponent
@@ -102,8 +109,8 @@ public class LastVisitAggregatorTest
         when(configuration.getIdSite()).thenReturn("testSite");
         when(configuration.getAuthenticationToken()).thenReturn("testToken");
         when(configuration.getRequestAddress()).thenReturn("http://example.com");
-        when(configuration.getLastSeenUpdateInterval()).thenReturn("week");
-        when(lastVisitAggregator.computeInterval()).thenReturn("2024-01-01,2024-12-31");
+        when(lastSeenAggregatorConfigs.getTimeIntervalForStatistics()).thenReturn("week");
+        when(lastVisitAggregator.computeInterval(lastSeenAggregatorConfigs)).thenReturn("2024-01-01,2024-12-31");
 
         // Mock HTTP request responses
         String userResponse = "[{\"idvisitor\":\"1234\",\"label\":\"Test User\"}]";
@@ -138,9 +145,9 @@ public class LastVisitAggregatorTest
     @Test
     void testComputeInterval()
     {
-        when(configuration.getLastSeenUpdateInterval()).thenReturn("custom");
-        when(configuration.lastSeenStartDate()).thenReturn("2024-11-01 00:00");
-        when(configuration.lastSeenEndDate()).thenReturn("2024-11-26 23:59");
-        assertEquals("2024-11-01,2024-11-26", lastVisitAggregator.computeInterval());
+        when(lastSeenAggregatorConfigs.getTimeIntervalForStatistics()).thenReturn("custom");
+        when(lastSeenAggregatorConfigs.getStartDate()).thenReturn("2024-11-01 00:00");
+        when(lastSeenAggregatorConfigs.getEndDate()).thenReturn("2024-11-26 23:59");
+        assertEquals("2024-11-01,2024-11-26", lastVisitAggregator.computeInterval(lastSeenAggregatorConfigs));
     }
 }

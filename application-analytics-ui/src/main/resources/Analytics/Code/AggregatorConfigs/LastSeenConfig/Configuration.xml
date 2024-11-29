@@ -20,14 +20,14 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc version="1.5" reference="Analytics.Code.Configuration" locale="">
-  <web>Analytics.Code</web>
+<xwikidoc version="1.5" reference="Analytics.Code.AggregatorConfigs.LastSeenConfig.Configuration" locale="">
+  <web>Analytics.Code.AggregatorConfigs.LastSeenConfig</web>
   <name>Configuration</name>
   <language/>
   <defaultLanguage/>
   <translation>0</translation>
   <creator>xwiki:XWiki.Admin</creator>
-  <parent>WebHome</parent>
+  <parent>Analytics.Code.AggregatorConfigs.LastSeenConfig.ConfigurationSheet</parent>
   <author>xwiki:XWiki.Admin</author>
   <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
   <version>1.1</version>
@@ -38,12 +38,12 @@
   <hidden>true</hidden>
   <content/>
   <object>
-    <name>Analytics.Code.Configuration</name>
+    <name>Analytics.Code.AggregatorConfigs.LastSeenConfig.Configuration</name>
     <number>0</number>
-    <className>Analytics.Code.ConfigurationClass</className>
-    <guid>32650844-6ba2-4398-b782-7c364e062917</guid>
+    <className>Analytics.Code.AggregatorConfigs.LastSeenConfig.ConfigurationClass</className>
+    <guid>458d34f0-8977-40a2-a6d3-cacb08836168</guid>
     <class>
-      <name>Analytics.Code.ConfigurationClass</name>
+      <name>Analytics.Code.AggregatorConfigs.LastSeenConfig.ConfigurationClass</name>
       <customClass/>
       <customMapping/>
       <defaultViewSheet/>
@@ -51,70 +51,39 @@
       <defaultWeb/>
       <nameField/>
       <validationScript/>
-      <authToken>
-        <algorithm/>
+      <endDate>
         <customDisplay/>
+        <dateFormat>yyyy-MM-dd</dateFormat>
         <disabled>0</disabled>
+        <emptyIsToday>1</emptyIsToday>
         <hint/>
-        <name>authToken</name>
+        <name>endDate</name>
         <number>3</number>
         <picker>1</picker>
-        <prettyName>Authentication Token </prettyName>
-        <size>30</size>
-        <storageType>Clear</storageType>
-        <unmodifiable>0</unmodifiable>
-        <validationMessage/>
-        <validationRegExp/>
-        <classType>com.xpn.xwiki.objects.classes.PasswordClass</classType>
-      </authToken>
-      <enabled>
-        <customDisplay/>
-        <defaultValue>0</defaultValue>
-        <disabled>0</disabled>
-        <displayFormType>checkbox</displayFormType>
-        <displayType/>
-        <hint/>
-        <name>enabled</name>
-        <number>5</number>
-        <prettyName>enabled</prettyName>
-        <unmodifiable>0</unmodifiable>
-        <validationMessage/>
-        <validationRegExp/>
-        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
-      </enabled>
-      <lastSeenEndDate>
-        <customDisplay/>
-        <dateFormat>yyyy-MM-dd</dateFormat>
-        <disabled>0</disabled>
-        <emptyIsToday>1</emptyIsToday>
-        <hint/>
-        <name>lastSeenEndDate</name>
-        <number>8</number>
-        <picker>1</picker>
-        <prettyName>lastSeenEndDate</prettyName>
+        <prettyName>endDate</prettyName>
         <size>20</size>
         <unmodifiable>0</unmodifiable>
         <validationMessage/>
         <validationRegExp/>
         <classType>com.xpn.xwiki.objects.classes.DateClass</classType>
-      </lastSeenEndDate>
-      <lastSeenStartDate>
+      </endDate>
+      <startDate>
         <customDisplay/>
         <dateFormat>yyyy-MM-dd</dateFormat>
         <disabled>0</disabled>
         <emptyIsToday>1</emptyIsToday>
         <hint/>
-        <name>lastSeenStartDate</name>
-        <number>7</number>
+        <name>startDate</name>
+        <number>2</number>
         <picker>1</picker>
-        <prettyName>lastSeenStartDate</prettyName>
+        <prettyName>startDate</prettyName>
         <size>20</size>
         <unmodifiable>0</unmodifiable>
         <validationMessage/>
         <validationRegExp/>
         <classType>com.xpn.xwiki.objects.classes.DateClass</classType>
-      </lastSeenStartDate>
-      <lastSeenUpdateInterval>
+      </startDate>
+      <timeIntervalForStatistics>
         <cache>0</cache>
         <customDisplay/>
         <defaultValue>year</defaultValue>
@@ -124,10 +93,10 @@
         <hint/>
         <largeStorage>0</largeStorage>
         <multiSelect>0</multiSelect>
-        <name>lastSeenUpdateInterval</name>
-        <number>6</number>
+        <name>timeIntervalForStatistics</name>
+        <number>1</number>
         <picker>1</picker>
-        <prettyName/>
+        <prettyName>timeIntervalForStatistics</prettyName>
         <relationalStorage>0</relationalStorage>
         <separator> </separator>
         <separators>|, </separators>
@@ -138,71 +107,23 @@
         <validationRegExp/>
         <values>year|month|week|custom</values>
         <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
-      </lastSeenUpdateInterval>
-      <requestAddress>
-        <customDisplay/>
-        <disabled>0</disabled>
-        <hint/>
-        <name>requestAddress</name>
-        <number>4</number>
-        <picker>1</picker>
-        <prettyName>requestAddress</prettyName>
-        <size>30</size>
-        <unmodifiable>0</unmodifiable>
-        <validationMessage/>
-        <validationRegExp/>
-        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-      </requestAddress>
-      <siteId>
-        <customDisplay/>
-        <disabled>0</disabled>
-        <hint/>
-        <name>siteId</name>
-        <number>3</number>
-        <numberType>long</numberType>
-        <prettyName>ID Site</prettyName>
-        <size>30</size>
-        <unmodifiable>0</unmodifiable>
-        <validationMessage/>
-        <validationRegExp/>
-        <classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
-      </siteId>
-      <trackingCode>
-        <contenttype>PureText</contenttype>
-        <customDisplay/>
-        <disabled>0</disabled>
-        <editor>PureText</editor>
-        <hint/>
-        <name>trackingCode</name>
-        <number>1</number>
-        <picker>1</picker>
-        <prettyName>Tracking Code</prettyName>
-        <rows>20</rows>
-        <size>40</size>
-        <unmodifiable>0</unmodifiable>
-        <validationMessage/>
-        <validationRegExp/>
-        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
-      </trackingCode>
+      </timeIntervalForStatistics>
     </class>
     <property>
-      <authToken/>
+      <endDate/>
     </property>
     <property>
-      <requestAddress/>
+      <startDate/>
     </property>
     <property>
-      <siteId/>
-    </property>
-    <property>
-      <trackingCode/>
+      <timeIntervalForStatistics>year</timeIntervalForStatistics>
     </property>
   </object>
   <object>
-    <name>Analytics.Code.Configuration</name>
+    <name>Analytics.Code.AggregatorConfigs.LastSeenConfig.Configuration</name>
     <number>0</number>
     <className>XWiki.ConfigurableClass</className>
-    <guid>79bf1e4b-b5e0-4bd7-9376-9766d181a58a</guid>
+    <guid>241a23f6-c755-4ded-8ed2-9bd12d7d6ca9</guid>
     <class>
       <name>XWiki.ConfigurableClass</name>
       <customClass/>
@@ -424,14 +345,12 @@
       <categoryIcon/>
     </property>
     <property>
-      <codeToExecute>{{display reference="Analytics.Code.Configuration"/}}
-
-{{velocity}}
-#set ($discard =$xwiki.jsx.use('Analytics.Code.Configuration'))
+      <codeToExecute>{{velocity}}
+#set ($discard =$xwiki.jsx.use('Analytics.Code.AggregatorConfigs.LastSeenConfig.Configuration'))
 {{/velocity}}</codeToExecute>
     </property>
     <property>
-      <configurationClass/>
+      <configurationClass>Analytics.Code.AggregatorConfigs.LastSeenConfig.ConfigurationClass</configurationClass>
     </property>
     <property>
       <displayBeforeCategory/>
@@ -443,7 +362,7 @@
       <displayInSection>analytics.application</displayInSection>
     </property>
     <property>
-      <heading/>
+      <heading>$services.localization.render('rendering.macro.lastSeen.name')</heading>
     </property>
     <property>
       <iconAttachment/>
@@ -458,14 +377,14 @@
       <scope>WIKI</scope>
     </property>
     <property>
-      <sectionOrder>0</sectionOrder>
+      <sectionOrder>1</sectionOrder>
     </property>
   </object>
   <object>
-    <name>Analytics.Code.Configuration</name>
+    <name>Analytics.Code.AggregatorConfigs.LastSeenConfig.Configuration</name>
     <number>0</number>
     <className>XWiki.JavaScriptExtension</className>
-    <guid>3ac70a70-0269-4be0-843f-f0c30ac0d15c</guid>
+    <guid>81fa3e6a-4739-49f9-9c8f-deaf7bd832c2</guid>
     <class>
       <name>XWiki.JavaScriptExtension</name>
       <customClass/>
@@ -549,59 +468,44 @@
       <cache>long</cache>
     </property>
     <property>
-      <code>define('analyticsConfigMessages', {
-  prefix: 'analytics.config.checkConnection.',
-  keys: [
-    'error',
-    'loading',
-    'success',
-    'disabled'
-  ]
-});
+      <code>require(['jquery'], ($) =&gt; {
+  $(document).ready(() =&gt; {
+    // This element is added by the configurable class, but I couldn't find a translation key in the documentation.
+    $("#HAnalytics\\.Code\\.AggregatorConfigs\\.LastSeenConfig\\.Configuration\\:").hide()
 
-require(['jquery', 'xwiki-l10n!analyticsConfigMessages', 'xwiki-meta'], ($, l10n, xm) =&gt; {
+    // Function to toggle the visibility of startDate and endDate along with their labels
+    const toggleDateInputs = (value) =&gt; {
+      const isCustom = value === "custom";
 
-  let notification;
-  $('#checkMatomoConnection').on('load', function () {
-    notification = new XWiki.widgets.Notification(l10n['loading'], 'inprogress');
-   // Wait for Matomo to process the request.
-    setTimeout(() =&gt; {
-        checkConnection();
-    }, 2000);
+      // Select the startDate and endDate inputs and their labels
+      const startDateInput = $('#Analytics\\.Code\\.AggregatorConfigs\\.LastSeenConfig\\.Configuration_Analytics\\.Code\\.AggregatorConfigs\\.LastSeenConfig\\.ConfigurationClass_0_startDate');
+      const startDateLabel = $('label[for="Analytics.Code.AggregatorConfigs.LastSeenConfig.Configuration_Analytics.Code.AggregatorConfigs.LastSeenConfig.ConfigurationClass_0_startDate"]').closest('dt');
+
+      const endDateInput = $('#Analytics\\.Code\\.AggregatorConfigs\\.LastSeenConfig\\.Configuration_Analytics\\.Code\\.AggregatorConfigs\\.LastSeenConfig\\.ConfigurationClass_0_endDate');
+      const endDateLabel = $('label[for="Analytics.Code.AggregatorConfigs.LastSeenConfig.Configuration_Analytics.Code.AggregatorConfigs.LastSeenConfig.ConfigurationClass_0_endDate"]').closest('dt');
+
+      // Show or hide the inputs and their labels
+      if (isCustom) {
+        startDateInput.show();
+        startDateLabel.show();
+        endDateInput.show();
+        endDateLabel.show();
+      } else {
+        startDateInput.hide();
+        startDateLabel.hide();
+        endDateInput.hide();
+        endDateLabel.hide();
+      }
+    };
+
+    const initialValue = $('#Analytics\\.Code\\.AggregatorConfigs\\.LastSeenConfig\\.Configuration_Analytics\\.Code\\.AggregatorConfigs\\.LastSeenConfig\\.ConfigurationClass_0_timeIntervalForStatistics').val();
+    toggleDateInputs(initialValue);
+
+    // Event listener for changes to the dropdown
+    $('#Analytics\\.Code\\.AggregatorConfigs\\.LastSeenConfig\\.Configuration_Analytics\\.Code\\.AggregatorConfigs\\.LastSeenConfig\\.ConfigurationClass_0_timeIntervalForStatistics').on('change', function () {
+      toggleDateInputs($(this).val());
+    });
   });
-
-  // On save, check that the added configurations are correct. For this, a hidden iframe is used to load a page with
-  // these configuration and then it's checked if the request was registered by Matomo.
-  $(document).on('xwiki:document:saved', function (e) {
-    let currentURL = new URL(window.location.href);
-    let random = Math.random().toString().substring(2, 15);
-    // Add a token to the current URL in order to identify the request on the Matomo side.
-    currentURL.searchParams.set("checkMatomoConnection", `${xm.userReference}${random}`);
-    $('#checkMatomoConnection').attr('src', currentURL.toString());
-  });
-
-  function checkConnection() {
-    const params = {
-      'pageUrl': $('#checkMatomoConnection').attr('src')
-    }
-    const queryString = $.param(params);
-    let getLastVisitsDetailsJSONRef = XWiki.Model.resolve('Analytics.Code.GetLastVisitsDetailsJSON', XWiki.EntityType.DOCUMENT);
-    let url = new XWiki.Document(getLastVisitsDetailsJSONRef).getURL('get');
-    $.getJSON(`${url}?${queryString}`)
-      .done((data) =&gt; {
-        if (data.status === "trackingDisabled")
-        {
-          notification.replace(new XWiki.widgets.Notification(l10n['disabled'], 'done'));
-        } else if (data.length) {
-          notification.replace(new XWiki.widgets.Notification(l10n['success'], 'done'));
-        } else {
-          notification.replace(new XWiki.widgets.Notification(l10n['error'], 'error'));
-        }
-      })
-      .fail(() =&gt; {
-        notification.replace(new XWiki.widgets.Notification(l10n['error'], 'error'));
-      });
-  }
 });
 </code>
     </property>
@@ -612,7 +516,7 @@ require(['jquery', 'xwiki-l10n!analyticsConfigMessages', 'xwiki-meta'], ($, l10n
       <parse>0</parse>
     </property>
     <property>
-      <use>currentPage</use>
+      <use>onDemand</use>
     </property>
   </object>
 </xwikidoc>

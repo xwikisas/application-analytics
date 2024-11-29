@@ -336,6 +336,12 @@ analytics.config.checkConnection.success=Test connection succeeded!
 analytics.config.checkConnection.disabled=Tracking is disabled. You can still view the statistics if you used the correct address, ID, and authentication token.
 analytics.settings.generalSettings=General settings
 analytics.settings.aggregatorMacros=Aggregator macros
+Analytics.Code.AggregatorConfigs.LastSeenConfig.ConfigurationClass_timeIntervalForStatistics=Time interval
+Analytics.Code.AggregatorConfigs.LastSeenConfig.ConfigurationClass_timeIntervalForStatistics.hint=Time interval for which you want the statistics.
+Analytics.Code.AggregatorConfigs.LastSeenConfig.ConfigurationClass_startDate=Start date
+Analytics.Code.AggregatorConfigs.LastSeenConfig.ConfigurationClass_startDate.hint=Start date of the interval.
+Analytics.Code.AggregatorConfigs.LastSeenConfig.ConfigurationClass_endDate=End date
+Analytics.Code.AggregatorConfigs.LastSeenConfig.ConfigurationClass_endDate.hint=End date of the interval.
 
 ## Livedata keys
 analytics.livedata.action.rowEvolution.title=Evolution

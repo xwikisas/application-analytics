@@ -23,38 +23,31 @@ import org.xwiki.component.annotation.Role;
 import org.xwiki.stability.Unstable;
 
 /**
- * Configuration for the Analytics Application.
+ * Provides a common interface for all the aggregator configurations.
  *
  * @version $Id$
  * @since 1.0
  */
 @Role
 @Unstable
-public interface AnalyticsConfiguration
+public interface AggregatorConfiguration
 {
     /**
-     * @return the address where the requests will be made
+     * Time interval for the aggregated statistics: e.g. current year,month, year or custom.
+     * @return time interval to compute aggregated statistics.
      */
-    String getRequestAddress();
+    String getTimeIntervalForStatistics();
 
     /**
-     * @return the id of the site that we want to see the statistics for
+     * Start date of the time interval in case the user selected custom.
+     * @return stat date of the interval
      */
-    String getIdSite();
+    String getStartDate();
 
     /**
-     * @return the authentication token that permits to access the statistics
+     * End date of the time interval in case the user selected custom.
+     * @return stat date of the interval
      */
-    String getAuthenticationToken();
-
-    /**
-     * @return the tracking code for Matomo.
-     */
-    String getTrackingCode();
-
-    /**
-     * @return true if the tracking is enabled, false otherwise.
-     * @since 1.0.2
-     */
-    boolean isEnabled();
+    String getEndDate();
 }
+

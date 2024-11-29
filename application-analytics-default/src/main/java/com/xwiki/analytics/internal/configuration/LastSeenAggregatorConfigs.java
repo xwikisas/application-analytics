@@ -23,58 +23,43 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
-import org.slf4j.Logger;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.configuration.ConfigurationSource;
 import org.xwiki.stability.Unstable;
 
-import com.xwiki.analytics.configuration.AnalyticsConfiguration;
+import com.xwiki.analytics.configuration.AggregatorConfiguration;
 
 /**
- * Default implementation of {@link AnalyticsConfiguration}.
+ * Config implementation for the last seen macro.
  *
  * @version $Id$
- * @since 1.0
+ * @since 1.2
  */
 @Component
 @Singleton
+@Named("lastSeenConfig")
 @Unstable
-public class DefaultAnalyticsConfiguration implements AnalyticsConfiguration
+public class LastSeenAggregatorConfigs implements AggregatorConfiguration
 {
     @Inject
-    @Named("analytics")
+    @Named("analyticsAggregatorLastSeen")
     private ConfigurationSource configDocument;
 
-    @Inject
-    private Logger logger;
-
     @Override
-    public String getRequestAddress()
+    public String getTimeIntervalForStatistics()
     {
-        return this.configDocument.getProperty("requestAddress", "");
+        return this.configDocument.getProperty("timeIntervalForStatistics", "year");
     }
 
     @Override
-    public String getIdSite()
+    public String getStartDate()
     {
-        return this.configDocument.getProperty("siteId", "");
+        return this.configDocument.getProperty("startDate", "");
     }
 
     @Override
-    public String getAuthenticationToken()
+    public String getEndDate()
     {
-        return this.configDocument.getProperty("authToken", "");
-    }
-
-    @Override
-    public String getTrackingCode()
-    {
-        return this.configDocument.getProperty("trackingCode", "");
-    }
-
-    @Override
-    public boolean isEnabled()
-    {
-        return this.configDocument.getProperty("enabled", false);
+        return this.configDocument.getProperty("endDate", "");
     }
 }

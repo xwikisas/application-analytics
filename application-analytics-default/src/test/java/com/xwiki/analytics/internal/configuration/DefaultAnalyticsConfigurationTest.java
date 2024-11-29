@@ -81,26 +81,6 @@ public class DefaultAnalyticsConfigurationTest
     }
 
     @Test
-    void getInterval(){
-        when(this.analyticsConfigurationSource.getProperty("lastSeenUpdateInterval", "")).thenReturn("year");
-        assertEquals("year", this.defaultAnalyticsConfiguration.getLastSeenUpdateInterval());
-    }
-
-
-    @Test
-    void lastSeenEndDate(){
-        when(this.analyticsConfigurationSource.getProperty("lastSeenEndDate", "")).thenReturn("2020-01-01");
-        assertEquals("2020-01-01", this.defaultAnalyticsConfiguration.lastSeenEndDate());
-    }
-
-
-    @Test
-    void lastSeenStartDate(){
-        when(this.analyticsConfigurationSource.getProperty("lastSeenStartDate", "")).thenReturn("2020-01-01");
-        assertEquals("2020-01-01", this.defaultAnalyticsConfiguration.lastSeenStartDate());
-    }
-
-    @Test
     void isEnabledTest(){
         when(this.analyticsConfigurationSource.getProperty("enabled", false)).thenReturn(true);
         assertTrue(this.defaultAnalyticsConfiguration.isEnabled());
