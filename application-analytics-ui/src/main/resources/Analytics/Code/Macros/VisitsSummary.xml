@@ -250,6 +250,8 @@ require(['jquery', 'xwiki-l10n!analyticsGraphMessages', 'chart'], function ($, l
         chart.destroy();
       }
       let values = fields.map((field, i) =&gt; responses[i]['values']);
+      // To actually display the line graph when we only have one point from Matomo we need to add 2 additional points
+      // to create the line.
       if(responses[0]["labels"].length === 1)
       {
         responses[0]["labels"].unshift("")
