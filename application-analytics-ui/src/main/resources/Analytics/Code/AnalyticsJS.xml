@@ -133,7 +133,7 @@
       $('[id^="gadget_"]').each(function () {
         let hiddenElement = $(this).find('.gadget-content .analytics-description');
         if (hiddenElement.length &gt; 0) {
-          let dataElement = $(`&lt;a class="${icon.cssClass} analyticsTitleMargin"&gt;&lt;/a&gt;`);
+          let dataElement = $(`&lt;a class="${icon.cssClass} analyticsTitleIcon"&gt;&lt;/a&gt;`);
           dataElement.attr('title', hiddenElement.data('description'));
           dataElement.attr('href', hiddenElement.data('url'));
           $(this).find('.gadget-title').append(dataElement);
@@ -260,9 +260,11 @@
       <cache>long</cache>
     </property>
     <property>
-      <code>.analyticsTitleMargin
+      <code>.analyticsTitleIcon
 {
   margin-left:2px;
+  /* This class is applied only to icons and should always have text decoration removed. */
+  text-decoration: none !important;
 }</code>
     </property>
     <property>
