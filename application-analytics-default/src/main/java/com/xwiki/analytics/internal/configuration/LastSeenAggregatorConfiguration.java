@@ -37,12 +37,12 @@ import com.xwiki.analytics.configuration.AggregatorConfiguration;
  */
 @Component
 @Singleton
-@Named("lastSeenConfig")
+@Named("last_visit")
 @Unstable
-public class LastSeenAggregatorConfigs implements AggregatorConfiguration
+public class LastSeenAggregatorConfiguration implements AggregatorConfiguration
 {
     @Inject
-    @Named("analyticsAggregatorLastSeen")
+    @Named("last_visit")
     private ConfigurationSource configDocument;
 
     @Override

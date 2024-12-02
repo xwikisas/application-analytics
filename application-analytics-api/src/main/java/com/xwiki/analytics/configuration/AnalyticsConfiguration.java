@@ -26,7 +26,7 @@ import org.xwiki.stability.Unstable;
  * Configuration for the Analytics Application.
  *
  * @version $Id$
- * @since 1.0
+ * @since 1.2
  */
 @Role
 @Unstable

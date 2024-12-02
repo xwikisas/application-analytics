@@ -127,7 +127,7 @@ public class AggregatorDataHandler
 
             for (String key : filters.keySet()) {
 
-                if (!node.has(key) || !node.get(key).asText().contains(filters.get(key))) {
+                if (!node.has(key) || !node.get(key).asText().toLowerCase().contains(filters.get(key).toLowerCase())) {
                     matchesAllFilters = false;
                     break;
                 }

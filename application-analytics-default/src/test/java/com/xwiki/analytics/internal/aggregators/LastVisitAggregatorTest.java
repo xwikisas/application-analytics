@@ -37,7 +37,6 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.xwiki.analytics.configuration.AggregatorConfiguration;
 import com.xwiki.analytics.configuration.AnalyticsConfiguration;
-import com.xwiki.analytics.internal.configuration.LastSeenAggregatorConfigs;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyList;
@@ -63,7 +62,7 @@ public class LastVisitAggregatorTest
     private AnalyticsConfiguration configuration;
 
     @MockComponent
-    @Named("lastSeenConfig")
+    @Named("last_visit")
     private AggregatorConfiguration lastSeenAggregatorConfigs;
 
 

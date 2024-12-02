@@ -71,7 +71,7 @@ public class LastVisitAggregator extends AbstractAggregator
     private static final List<String> SPACE = List.of("Analytics", "Code", "AggregateData");
 
     @Inject
-    @Named("lastSeenConfig")
+    @Named("last_visit")
     private AggregatorConfiguration aggregatorConfiguration;
 
     @Inject

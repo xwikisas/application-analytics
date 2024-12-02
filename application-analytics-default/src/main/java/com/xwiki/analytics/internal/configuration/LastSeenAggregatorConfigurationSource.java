@@ -35,11 +35,11 @@ import org.xwiki.stability.Unstable;
  * The Source for the last seen macro configurations.
  *
  * @version $Id$
- * @since 1.0
+ * @since 1.2
  */
 @Component
 @Singleton
-@Named("analyticsAggregatorLastSeen")
+@Named("last_visit")
 @Unstable
 public class LastSeenAggregatorConfigurationSource extends AbstractDocumentConfigurationSource
 {

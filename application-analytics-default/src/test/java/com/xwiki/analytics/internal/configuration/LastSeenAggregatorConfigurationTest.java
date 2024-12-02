@@ -32,7 +32,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
 /**
- * Unit test for {@link LastSeenAggregatorConfigs}
+ * Unit test for {@link LastSeenAggregatorConfiguration}
  *
  * @version $Id$
  */
@@ -40,10 +40,10 @@ import static org.mockito.Mockito.when;
 class LastSeenAggregatorConfigurationTest
 {
     @InjectMockComponents
-    private LastSeenAggregatorConfigs lastSeenAggregatorConfigs;
+    private LastSeenAggregatorConfiguration lastSeenAggregatorConfigs;
 
     @MockComponent
-    @Named("analyticsAggregatorLastSeen")
+    @Named("last_visit")
     private ConfigurationSource aggregatorConfiguration;
 
 
