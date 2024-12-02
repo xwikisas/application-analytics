@@ -84,7 +84,7 @@ public class LastVisitAggregatorTest
      * Tests the value returned by the getSpace method.
      */
     @Test
-    void getSpaceTes()
+    void getSpaceTest()
     {
         assertEquals(lastVisitAggregator.getSpace(), List.of("Analytics", "Code", "AggregateData"));
     }
