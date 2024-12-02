@@ -90,7 +90,7 @@ public class MatomoAnalyticsManager implements AnalyticsManager
         if (aggregator != null) {
             aggregator.aggregateData();
         } else {
-            throw new RuntimeException(String.format("No aggregator found for [%s]", hint));
+            throw new RuntimeException(String.format("ComponentNotFound with the hint: [%s]", hint));
         }
     }
 

@@ -63,7 +63,7 @@ public class AggregatorDispatcher
                 return aggregator;
             }
         }
-        logger.error(INVALID_HINT_FOR_AGGREGATOR, hint);
+        logger.warn(INVALID_HINT_FOR_AGGREGATOR, hint);
         return null;
     }
 
@@ -80,7 +80,7 @@ public class AggregatorDispatcher
                 return this.computeReference(aggregator, context);
             }
         }
-        logger.error(INVALID_HINT_FOR_AGGREGATOR, hint);
+        logger.warn(INVALID_HINT_FOR_AGGREGATOR, hint);
 
         return null;
     }
