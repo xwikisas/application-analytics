@@ -19,17 +19,21 @@
  */
 package com.xwiki.analytics.script;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.script.service.ScriptService;
 import org.xwiki.stability.Unstable;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.xpn.xwiki.XWikiException;
 import com.xwiki.analytics.AnalyticsManager;
 import com.xwiki.analytics.configuration.AnalyticsConfiguration;
 
@@ -61,14 +65,42 @@ public class AnalyticsScriptService implements ScriptService
      *     resulted format depends on the context were is used.
      * @return a normalized JSON format
      */
-    public JsonNode makeRequest(Map<String, String> parameters, Map<String, String> filters,
-        String jsonNormaliserHint)
+    public JsonNode makeRequest(Map<String, String> parameters, Map<String, String> filters, String jsonNormaliserHint)
     {
         try {
             return analyticsManager.requestData(parameters, filters, jsonNormaliserHint);
         } catch (Exception e) {
             throw new RuntimeException(String.format("Failed to get data for [%s]", jsonNormaliserHint), e);
         }
+    }
+
+    /**
+     * Endpoint for all the aggregator jobs.
+     *
+     * @param hint for which aggregator you want to use
+     */
+    public void aggregate(String hint)
+    {
+        analyticsManager.aggregate(hint);
+    }
+
+    /**
+     * Endpoint for handling aggregated data for livedata.
+     *
+     * @param hint for the aggregator used.
+     * @param asc if you want the data to be in ascending or descending order
+     * @param sortField the field that you want to sort after
+     * @param filters map where the keys are the fields and the values are the text that you want to filter after
+     * @param pageSize how many elements are on a page
+     * @param pageCount current page offset
+     * @return a list with jsons
+     * @throws JsonProcessingException thrown if the dataSource doesn't store the data in JSON format
+     * @throws XWikiException
+     */
+    public Pair<Integer, List<JsonNode>> handleData(String hint, String asc, String sortField,
+        Map<String, String> filters, int pageSize, int pageCount) throws JsonProcessingException, XWikiException
+    {
+        return analyticsManager.handleData(hint, asc, sortField, filters, pageSize, pageCount);
     }
 
     /**

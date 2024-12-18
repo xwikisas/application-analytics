@@ -19,62 +19,53 @@
  */
 package com.xwiki.analytics.internal.configuration;
 
-import javax.inject.Inject;
+import java.util.Arrays;
+import java.util.List;
+
 import javax.inject.Named;
 import javax.inject.Singleton;
 
-import org.slf4j.Logger;
 import org.xwiki.component.annotation.Component;
-import org.xwiki.configuration.ConfigurationSource;
+import org.xwiki.configuration.internal.AbstractDocumentConfigurationSource;
+import org.xwiki.model.reference.DocumentReference;
+import org.xwiki.model.reference.LocalDocumentReference;
 import org.xwiki.stability.Unstable;
 
-import com.xwiki.analytics.configuration.AnalyticsConfiguration;
-
 /**
- * Default implementation of {@link AnalyticsConfiguration}.
+ * The Source for the last seen macro configurations.
  *
  * @version $Id$
- * @since 1.0
+ * @since 1.2
  */
 @Component
 @Singleton
+@Named("last_visit")
 @Unstable
-public class DefaultAnalyticsConfiguration implements AnalyticsConfiguration
+public class LastSeenAggregatorConfigurationSource extends AbstractDocumentConfigurationSource
 {
-    @Inject
-    @Named("analytics")
-    private ConfigurationSource configDocument;
+    private static final List<String> SPACE_NAMES =
+        Arrays.asList("Analytics", "Code", "AggregatorConfigs", "LastSeenConfig");
+    private static final LocalDocumentReference DOCUMENT_REFERENCE =
+        new LocalDocumentReference(SPACE_NAMES, "Configuration");
 
-    @Inject
-    private Logger logger;
+    private static final LocalDocumentReference CLASS_REFERENCE =
+        new LocalDocumentReference(SPACE_NAMES, "ConfigurationClass");
 
     @Override
-    public String getRequestAddress()
+    protected DocumentReference getDocumentReference()
     {
-        return this.configDocument.getProperty("requestAddress", "");
+        return new DocumentReference(DOCUMENT_REFERENCE, this.getCurrentWikiReference());
     }
 
     @Override
-    public String getIdSite()
+    protected LocalDocumentReference getClassReference()
     {
-        return this.configDocument.getProperty("siteId", "");
+        return CLASS_REFERENCE;
     }
 
     @Override
-    public String getAuthenticationToken()
+    protected String getCacheId()
     {
-        return this.configDocument.getProperty("authToken", "");
-    }
-
-    @Override
-    public String getTrackingCode()
-    {
-        return this.configDocument.getProperty("trackingCode", "");
-    }
-
-    @Override
-    public boolean isEnabled()
-    {
-        return this.configDocument.getProperty("enabled", false);
+        return "configuration.document.analytics.aggregator.lastSeen";
     }
 }

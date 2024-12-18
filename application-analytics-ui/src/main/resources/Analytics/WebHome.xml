@@ -648,4 +648,71 @@
       <title>$services.localization.render('rendering.macro.siteSearchKeywords.name')</title>
     </property>
   </object>
+  <object>
+    <name>Analytics.WebHome</name>
+    <number>13</number>
+    <className>XWiki.GadgetClass</className>
+    <guid>08577315-11b9-4d35-8fbd-032c7ef85b0f</guid>
+    <class>
+      <name>XWiki.GadgetClass</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <content>
+        <disabled>0</disabled>
+        <editor>---</editor>
+        <name>content</name>
+        <number>2</number>
+        <picker>0</picker>
+        <prettyName>content</prettyName>
+        <rows>5</rows>
+        <size>40</size>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </content>
+      <position>
+        <disabled>0</disabled>
+        <name>position</name>
+        <number>3</number>
+        <picker>0</picker>
+        <prettyName>position</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </position>
+      <title>
+        <disabled>0</disabled>
+        <name>title</name>
+        <number>1</number>
+        <picker>0</picker>
+        <prettyName>title</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </title>
+    </class>
+    <property>
+      <content>{{info}}
+{{velocity}}
+$services.localization.render("analytics.message.nonlive.macros")
+{{velocity}}
+{{/info}}</content>
+    </property>
+    <property>
+      <position>2, 5</position>
+    </property>
+    <property>
+      <title>$services.localization.render('rendering.macro.info.name')</title>
+    </property>
+  </object>
 </xwikidoc>

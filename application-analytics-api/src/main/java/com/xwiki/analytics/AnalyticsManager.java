@@ -20,12 +20,16 @@
 package com.xwiki.analytics;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.xwiki.component.annotation.Role;
 import org.xwiki.stability.Unstable;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.xpn.xwiki.XWikiException;
 
 /**
  * The interface for the AnalyticManger.
@@ -47,4 +51,27 @@ public interface AnalyticsManager
      */
     JsonNode requestData(Map<String, String> parameters, Map<String, String> filters, String jsonNormaliserHint)
         throws IOException;
+
+    /**
+     * Aggregate data from multiple endpoints using a specific aggregator.
+     *
+     * @param hint which aggregator you want to use.
+     */
+    void aggregate(String hint);
+
+    /**
+     * Handles data aggregated from the analytics applications and stored directly in XWiki.
+     *
+     * @param hint for the aggregator used
+     * @param asc if you want the data to be in ascending or descending order
+     * @param sortField the field that you want to sort after
+     * @param filters map where the keys are the fields and the values are the text that you want to filter after
+     * @param pageSize how many elements are on a page
+     * @param pageCount current page offset
+     * @return a pair where the first element is the total number of entries that meet the criteria(filter), and the
+     * second element is a slice of the original list paginated using pageSize and pageCount
+     */
+    Pair<Integer, List<JsonNode>> handleData(String hint, String asc, String sortField,
+        Map<String, String> filters, int pageSize, int pageCount) throws JsonProcessingException, XWikiException;
+
 }

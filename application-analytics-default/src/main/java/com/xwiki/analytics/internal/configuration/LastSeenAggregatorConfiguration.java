@@ -17,44 +17,49 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package com.xwiki.analytics.configuration;
+package com.xwiki.analytics.internal.configuration;
 
-import org.xwiki.component.annotation.Role;
+import javax.inject.Inject;
+import javax.inject.Named;
+import javax.inject.Singleton;
+
+import org.xwiki.component.annotation.Component;
+import org.xwiki.configuration.ConfigurationSource;
 import org.xwiki.stability.Unstable;
 
+import com.xwiki.analytics.configuration.AggregatorConfiguration;
+
 /**
- * Configuration for the Analytics Application.
+ * Config implementation for the last seen macro.
  *
  * @version $Id$
  * @since 1.2
  */
-@Role
+@Component
+@Singleton
+@Named("last_visit")
 @Unstable
-public interface AnalyticsConfiguration
+public class LastSeenAggregatorConfiguration implements AggregatorConfiguration
 {
-    /**
-     * @return the address where the requests will be made
-     */
-    String getRequestAddress();
+    @Inject
+    @Named("last_visit")
+    private ConfigurationSource configDocument;
 
-    /**
-     * @return the id of the site that we want to see the statistics for
-     */
-    String getIdSite();
+    @Override
+    public String getTimeIntervalForStatistics()
+    {
+        return this.configDocument.getProperty("timeIntervalForStatistics", "year");
+    }
 
-    /**
-     * @return the authentication token that permits to access the statistics
-     */
-    String getAuthenticationToken();
+    @Override
+    public String getStartDate()
+    {
+        return this.configDocument.getProperty("startDate", "");
+    }
 
-    /**
-     * @return the tracking code for Matomo.
-     */
-    String getTrackingCode();
-
-    /**
-     * @return true if the tracking is enabled, false otherwise.
-     * @since 1.0.2
-     */
-    boolean isEnabled();
+    @Override
+    public String getEndDate()
+    {
+        return this.configDocument.getProperty("endDate", "");
+    }
 }

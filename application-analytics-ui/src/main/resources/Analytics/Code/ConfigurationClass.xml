@@ -77,6 +77,63 @@
       <validationRegExp/>
       <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
     </enabled>
+    <lastSeenEndDate>
+      <customDisplay/>
+      <dateFormat>yyyy-MM-dd</dateFormat>
+      <disabled>0</disabled>
+      <emptyIsToday>1</emptyIsToday>
+      <hint/>
+      <name>lastSeenEndDate</name>
+      <number>8</number>
+      <picker>1</picker>
+      <prettyName>lastSeenEndDate</prettyName>
+      <size>20</size>
+      <unmodifiable>0</unmodifiable>
+      <validationMessage/>
+      <validationRegExp/>
+      <classType>com.xpn.xwiki.objects.classes.DateClass</classType>
+    </lastSeenEndDate>
+    <lastSeenStartDate>
+      <customDisplay/>
+      <dateFormat>yyyy-MM-dd</dateFormat>
+      <disabled>0</disabled>
+      <emptyIsToday>1</emptyIsToday>
+      <hint/>
+      <name>lastSeenStartDate</name>
+      <number>7</number>
+      <picker>1</picker>
+      <prettyName>lastSeenStartDate</prettyName>
+      <size>20</size>
+      <unmodifiable>0</unmodifiable>
+      <validationMessage/>
+      <validationRegExp/>
+      <classType>com.xpn.xwiki.objects.classes.DateClass</classType>
+    </lastSeenStartDate>
+    <lastSeenUpdateInterval>
+      <cache>0</cache>
+      <customDisplay/>
+      <defaultValue>year</defaultValue>
+      <disabled>0</disabled>
+      <displayType>select</displayType>
+      <freeText/>
+      <hint/>
+      <largeStorage>0</largeStorage>
+      <multiSelect>0</multiSelect>
+      <name>lastSeenUpdateInterval</name>
+      <number>6</number>
+      <picker>1</picker>
+      <prettyName/>
+      <relationalStorage>0</relationalStorage>
+      <separator> </separator>
+      <separators>|, </separators>
+      <size>1</size>
+      <sort/>
+      <unmodifiable>0</unmodifiable>
+      <validationMessage/>
+      <validationRegExp/>
+      <values>year|month|week|custom</values>
+      <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+    </lastSeenUpdateInterval>
     <requestAddress>
       <customDisplay/>
       <disabled>0</disabled>

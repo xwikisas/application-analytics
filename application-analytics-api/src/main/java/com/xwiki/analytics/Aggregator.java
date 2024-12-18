@@ -17,44 +17,47 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package com.xwiki.analytics.configuration;
+
+package com.xwiki.analytics;
+
+import java.util.List;
 
 import org.xwiki.component.annotation.Role;
 import org.xwiki.stability.Unstable;
 
 /**
- * Configuration for the Analytics Application.
+ * Provides APIs for aggregating data from multiple Matomo endpoints to make custom tables.
  *
  * @version $Id$
- * @since 1.2
+ * @since 1.1
  */
 @Role
 @Unstable
-public interface AnalyticsConfiguration
+public interface Aggregator
 {
     /**
-     * @return the address where the requests will be made
+     * Aggregates the data from multiple endpoints.
      */
-    String getRequestAddress();
+    void aggregateData();
 
     /**
-     * @return the id of the site that we want to see the statistics for
+     * Will get the hint of the aggregator.
+     *
+     * @return hint of the aggregator
      */
-    String getIdSite();
+    String getHint();
 
     /**
-     * @return the authentication token that permits to access the statistics
+     * Returns the name of the page where the data is saved.
+     *
+     * @return name of the page where the data is saved.
      */
-    String getAuthenticationToken();
+    String getPage();
 
     /**
-     * @return the tracking code for Matomo.
+     * Returns the space where the page storing the aggregated data is located.
+     *
+     * @return a list of space names as strings.
      */
-    String getTrackingCode();
-
-    /**
-     * @return true if the tracking is enabled, false otherwise.
-     * @since 1.0.2
-     */
-    boolean isEnabled();
+    List<String> getSpace();
 }

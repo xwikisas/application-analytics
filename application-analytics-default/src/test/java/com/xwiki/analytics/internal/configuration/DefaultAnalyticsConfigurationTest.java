@@ -31,7 +31,7 @@ import org.xwiki.test.junit5.mockito.InjectMockComponents;
 import org.xwiki.test.junit5.mockito.MockComponent;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
 /**
@@ -79,6 +79,13 @@ public class DefaultAnalyticsConfigurationTest
         when(this.analyticsConfigurationSource.getProperty("trackingCode", "")).thenReturn("TEST");
         assertEquals("TEST", this.defaultAnalyticsConfiguration.getTrackingCode());
     }
+
+    @Test
+    void isEnabledTest(){
+        when(this.analyticsConfigurationSource.getProperty("enabled", false)).thenReturn(true);
+        assertTrue(this.defaultAnalyticsConfiguration.isEnabled());
+    }
+
     @BeforeEach
     void setLogger()
     {
