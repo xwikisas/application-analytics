@@ -4,7 +4,7 @@ com.xwiki.analytics.internal.aggregators.AggregatorSaver
 com.xwiki.analytics.internal.aggregators.LastVisitAggregator
 com.xwiki.analytics.internal.AnalyticsApplicationListener
 com.xwiki.analytics.internal.HttpClientBuilderFactory
-com.xwiki.analytics.internal.configuration.LastSeenAggregatorConfigs
+com.xwiki.analytics.internal.configuration.LastSeenAggregatorConfiguration
 com.xwiki.analytics.internal.configuration.LastSeenAggregatorConfigurationSource
 com.xwiki.analytics.internal.MatomoAnalyticsManager
 com.xwiki.analytics.internal.MostViewedJsonNormaliser
