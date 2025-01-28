@@ -48,7 +48,8 @@
     <xwiki.extension.licensing.excludedDocuments>
       Analytics.WebHome,
       Analytics.WebPreferences,
-      Analytics.Code.Configuration
+      Analytics.Code.Configuration,
+      Analytics.Code.AggregatorConfigs.LastSeenConfig.Configuration
     </xwiki.extension.licensing.excludedDocuments>
     <xwiki.clirr.skip>true</xwiki.clirr.skip>
   </properties>
