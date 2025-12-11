@@ -1,1 +1,399 @@
+<?xml version="1.1" encoding="UTF-8"?>
 
+<!--
+ * See the NOTICE file distributed with this work for additional
+ * information regarding copyright ownership.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+-->
+
+<xwikidoc version="1.5" reference="Analytics.Code.AnalyticsTranslations" locale="">
+  <web>Analytics.Code</web>
+  <name>AnalyticsTranslations</name>
+  <language/>
+  <defaultLanguage>en</defaultLanguage>
+  <translation>0</translation>
+  <creator>xwiki:XWiki.Admin</creator>
+  <parent>WebHome</parent>
+  <author>xwiki:XWiki.Admin</author>
+  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+  <version>1.1</version>
+  <title>AnalyticsTranslations</title>
+  <comment/>
+  <minorEdit>false</minorEdit>
+  <syntaxId>plain/1.0</syntaxId>
+  <hidden>true</hidden>
+  <content>## Most Viewed Pages Macro
+analytics.mostViewedPages.header.rowEvolution=Entwicklung
+### Missing: analytics.mostViewedPages.header.bounceRate.hint=The percentage of visits that started on this page and left the website straight away.
+### Missing: analytics.mostViewedPages.header.bounceRate=Bounce rate
+### Missing: analytics.mostViewedPages.header.date=Date
+### Missing: analytics.mostViewedPages.header.emptyvalue=-
+### Missing: analytics.mostViewedPages.header.entryNbActions.hint=The number of actions performed by the users.
+### Missing: analytics.mostViewedPages.header.entryNbActions=No. of actions
+### Missing: analytics.mostViewedPages.header.exitRate.hint=The percentage of visits that left the website after viewing this page.
+### Missing: analytics.mostViewedPages.header.exitRate=Exit rate
+### Missing: analytics.mostViewedPages.header.hits.hint=The number of times this page was visited.
+### Missing: analytics.mostViewedPages.header.hits=Views
+### Missing: analytics.mostViewedPages.header.pageTitle=Title
+### Missing: analytics.mostViewedPages.header.timeSpent.hint=The time that the user has spent on the page.
+### Missing: analytics.mostViewedPages.header.timeSpent=Time spent
+### Missing: analytics.mostViewedPages.header.visits.hint=The number of visits that included this page. If a page was viewed multiple times during one visit, it is only counted once.
+### Missing: analytics.mostViewedPages.header.visits=Unique visitors
+### Missing: analytics.mostViewedPages.header.year=Year
+### Missing: analytics.mostViewedPages.parameter.label.endDate=End time of the date interval used for this macro
+### Missing: analytics.mostViewedPages.parameter.label.startDate=Start time of the date interval used for this macro
+### Missing: rendering.macro.mostViewedPages.description=When visitors search on your website, they are looking for a particular page, content, product, or service. This report lists the pages that were clicked the most after an internal search.
+### Missing: rendering.macro.mostViewedPages.name=Most viewed pages
+
+## Entry Pages
+### Missing: analytics.entryPages.header.rowEvolution=Evolution
+### Missing: analytics.entryPages.header.bounces.hint=Number of visits that started and ended on this page.
+### Missing: analytics.entryPages.header.bounces=Bounces
+### Missing: analytics.entryPages.header.bounceRate=Bounce rate
+### Missing: analytics.entryPages.header.entrances.hint=Number of visits that started on this page.
+### Missing: analytics.entryPages.header.entrances=Entrances
+### Missing: analytics.entryPages.header.pageTitle=Title
+### Missing: analytics.entryPages.parameter.label.endDate=End time of the date interval used for this macro
+### Missing: analytics.entryPages.parameter.label.startDate=Start time of the date interval used for this macro
+### Missing: rendering.macro.entryPages.description=This report contains information about the entry pages that were used during the specified period. An entry page is the first page that a user views during their visit.
+### Missing: rendering.macro.entryPages.name=Entry pages
+### Missing: rendering.macro.entryPages.parameter.endDate.name=End date
+### Missing: rendering.macro.entryPages.parameter.endDate.description=End time of the date interval used for this macro.
+### Missing: rendering.macro.entryPages.parameter.startDate.name=Start date
+### Missing: rendering.macro.entryPages.parameter.startDate.description=Start time of the date interval used for this macro.
+
+## Exit Pages
+### Missing: analytics.exitPages.header.rowEvolution=Evolution
+### Missing: analytics.exitPages.header.exitRate.hint=The percentage of visits that left the website after viewing this page.
+### Missing: analytics.exitPages.header.exitRate=Exit rate
+### Missing: analytics.exitPages.header.exitNbVisits.hint=Number of visits that ended on this page.
+### Missing: analytics.exitPages.header.exitNbVisits=Exits
+### Missing: analytics.exitPages.header.pageTitle=Title
+### Missing: analytics.exitPages.header.visits.hint=The number of visits that included this page. If a page was viewed multiple times during one visit, it is only counted once.
+### Missing: analytics.exitPages.header.visits=Unique visitors
+### Missing: analytics.exitPages.header.year=Year
+### Missing: analytics.exitPages.parameter.label.endDate=End time of the date interval used for this macro
+### Missing: analytics.exitPages.parameter.label.startDate=Start time of the date interval used for this macro
+### Missing: rendering.macro.exitPages.description=This report contains information about the exit pages that occurred during the specified period.
+### Missing: rendering.macro.exitPages.name=Exit pages
+### Missing: rendering.macro.exitPages.startDate=Start date
+### Missing: rendering.macro.exitPages.endDate=End date
+
+## Pages following a site search
+### Missing: analytics.PagesFollowingASiteSearchJSON.header.rowEvolution=Evolution
+### Missing: analytics.PagesFollowingASiteSearchJSON.header.clicked.hint=The number of times this page was visited after a visitor did a search on your website, and clicked on this page in the search results.
+### Missing: analytics.PagesFollowingASiteSearchJSON.header.clicked=Clicked in search results
+### Missing: analytics.PagesFollowingASiteSearchJSON.header.date=Date
+### Missing: analytics.PagesFollowingASiteSearchJSON.header.destinationPage=Destination page
+### Missing: analytics.PagesFollowingASiteSearchJSON.header.loadTime.hint=Average time(in seconds) it takes from requesting a page until the page is fully rendered within the browser
+### Missing: analytics.PagesFollowingASiteSearchJSON.header.loadTime=Avg. load time
+### Missing: analytics.PagesFollowingASiteSearchJSON.header.pageViews.hint=The number of times this page was visited.
+### Missing: analytics.PagesFollowingASiteSearchJSON.header.pageViews=Views
+### Missing: rendering.macro.PagesFollowingASiteSearch.description=Displays pages users clicked on after a search.
+### Missing: rendering.macro.PagesFollowingASiteSearch.name=Pages following a site search
+
+## Row Evolution
+### Missing: analytics.rowEvolution.modal.close=Close
+### Missing: analytics.rowEvolution.modal.day.label=Day
+### Missing: analytics.rowEvolution.modal.field.actions=Actions
+### Missing: analytics.rowEvolution.modal.field.rowEvolution=Row Evolution
+### Missing: analytics.rowEvolution.modal.field.avgTime=Time spent on page
+### Missing: analytics.rowEvolution.modal.field.bounces=Bounces
+### Missing: analytics.rowEvolution.modal.field.bounceRate=Bounce rate(%)
+### Missing: analytics.rowEvolution.modal.field.bounceCount=Bounce count
+### Missing: analytics.rowEvolution.modal.field.clickedSearchResult=Clicked in search results
+### Missing: analytics.rowEvolution.modal.field.conversionRate=Conversion rate
+### Missing: analytics.rowEvolution.modal.field.entrances=Entrances
+### Missing: analytics.rowEvolution.modal.field.exitRate=Exit rate(%)
+### Missing: analytics.rowEvolution.modal.field.exits=Exits
+### Missing: analytics.rowEvolution.modal.field.pageViews=Page views
+### Missing: analytics.rowEvolution.modal.field.searchResultPages=Search result pages
+### Missing: analytics.rowEvolution.modal.field.searches=Searches
+### Missing: analytics.rowEvolution.modal.field.timeSpent=Time spent
+### Missing: analytics.rowEvolution.modal.field.uniqueViews=Unique views
+### Missing: analytics.rowEvolution.modal.field.visits=Visits
+### Missing: analytics.rowEvolution.modal.field=Field
+### Missing: analytics.rowEvolution.modal.label=Row Evolution
+### Missing: analytics.rowEvolution.modal.month.label=Month
+### Missing: analytics.rowEvolution.modal.period=Period
+### Missing: analytics.rowEvolution.modal.periodLength=Period length
+### Missing: analytics.rowEvolution.modal.week.label=Week
+### Missing: analytics.rowEvolution.modal.year.label=Year
+
+## Site Search Keywords Macro
+### Missing: analytics.action.hover.rowEvolution=Evolution
+### Missing: analytics.siteSearchKeywords.header.rowEvolution=Evolution
+### Missing: analytics.siteSearchKeywords.header.exitRate.hint=The percentage of visits that left the website after searching for this Keyword on your Site Search engine.
+### Missing: analytics.siteSearchKeywords.header.exitRate=Search exists(%)
+### Missing: analytics.siteSearchKeywords.header.keyword=Keyword
+### Missing: analytics.siteSearchKeywords.header.nbOfResultPages.hint=Visitors will search on your website, and sometimes click "next" to view more results this is the average number of search results pages viewed for this keyword.
+### Missing: analytics.siteSearchKeywords.header.nbOfResultPages=Search results pages
+### Missing: analytics.siteSearchKeywords.header.searches.hint=The number of visits that searched for this keyword on your website's search engine.
+### Missing: analytics.siteSearchKeywords.header.searches=Searches
+### Missing: rendering.macro.siteSearchKeywords.description=This report lists the Search Keywords that visitors searched for on your internal Search Engine.
+### Missing: rendering.macro.siteSearchKeywords.name=Site search keywords
+
+## Search Categories
+### Missing: analytics.searchCategories.header.rowEvolution=Evolution
+### Missing: analytics.searchCategories.header.category=Category
+### Missing: analytics.searchCategories.header.searchResultsPages.hint=Visitors will search on your website, and sometimes click "next" to view more results. This is the average number of search results pages viewed for this keyword.
+### Missing: analytics.searchCategories.header.searchResultsPages=Search result pages
+### Missing: analytics.searchCategories.header.searches.hint=The number of visits that searched for this keyword on your website's search engine.
+### Missing: analytics.searchCategories.header.searches=Searches
+### Missing: analytics.searchCategories.header.title=Search category
+### Missing: rendering.macro.searchCategories.description=This report lists the Categories that visitors selected when they made a Search on your website.
+### Missing: rendering.macro.searchCategories.name=Search categories
+
+## Software/Devices Macros
+### Missing: The most important information for web developers is what kind of rendering engine their visitors are using. The labels contain the names of the engines followed by the most common browser using that engine in brackets.
+### Missing: analytics.softwareDevices.header.rowEvolution=Evolution
+### Missing: analytics.softwareDevices.header.bounceRate.hint=The percentage of visits that only had a single pageview. This means that the visitor left the website directly from the entrance page.
+### Missing: analytics.softwareDevices.header.bounceRate=Bounce rate
+### Missing: analytics.softwareDevices.header.bounceCount=Bounces
+### Missing: analytics.softwareDevices.header.bounceCount.hint=How many times the users have bounced from this page.
+### Missing: analytics.softwareDevices.header.browser=Browser
+### Missing: analytics.softwareDevices.header.configurations=Configuration
+### Missing: analytics.softwareDevices.header.conversionRate.hint=The percentage of visits that triggered a goal conversion.
+### Missing: analytics.softwareDevices.header.conversionRate=Conversion(%)
+### Missing: analytics.softwareDevices.header.deviceBrand=Brand
+### Missing: analytics.softwareDevices.header.deviceModel=Device model
+### Missing: analytics.softwareDevices.header.deviceType=Device type
+### Missing: analytics.softwareDevices.header.engines=Browser engine
+### Missing: analytics.softwareDevices.header.nbOfActions.hint=The total number of actions performed by your visitors.
+### Missing: analytics.softwareDevices.header.nbOfActions=User actions
+### Missing: analytics.softwareDevices.header.osVersion=OS version
+### Missing: analytics.softwareDevices.header.resolution=Resolution
+### Missing: analytics.softwareDevices.header.timeSpent.hint=The time that the user have spent using a specific engine.
+### Missing: analytics.softwareDevices.header.timeSpent=Time spent
+### Missing: analytics.softwareDevices.header.visits.hint=If a vistor comes to your website for the first time or if they visit a page more than 30 minutes after their last page view, this will be recorded as new visit.
+### Missing: analytics.softwareDevices.header.visits=Visits
+### Missing: rendering.macro.browserEngines.description=This report shows your visitors' browsers broken down into browser engines.
+### Missing: rendering.macro.browserEngines.name=Browser engines
+### Missing: rendering.macro.browserEngines.parameter.endDate.name=End date
+### Missing: rendering.macro.browserEngines.parameter.endDate.description=End time of the date interval used for this macro.
+### Missing: rendering.macro.browserEngines.parameter.startDate.name=Start date
+### Missing: rendering.macro.browserEngines.parameter.startDate.description=Start time of the date interval used for this macro.
+### Missing: rendering.macro.browsers.description=This report contains information about what kind of browser your visitors were using.
+### Missing: rendering.macro.browsers.name=Browsers
+### Missing: rendering.macro.browsers.parameter.endDate.name=End date
+### Missing: rendering.macro.browsers.parameter.endDate.description=End time of the date interval used for this macro.
+### Missing: rendering.macro.browsers.parameter.startDate.name=Start date
+### Missing: rendering.macro.browsers.parameter.startDate.description=Start time of the date interval used for this macro.
+### Missing: rendering.macro.configurations.description=This report shows the most common overall configurations that your visitors had. A configuration is the combination of an operating system, a browser type and a screen resolution.
+### Missing: rendering.macro.configurations.name=Configurations
+### Missing: rendering.macro.configurations.parameter.endDate.name=End date
+### Missing: rendering.macro.configurations.parameter.endDate.description=End time of the date interval used for this macro.
+### Missing: rendering.macro.configurations.parameter.startDate.name=Start date
+### Missing: rendering.macro.configurations.parameter.startDate.description=Start time of the date interval used for this macro.
+### Missing: rendering.macro.deviceBrand.description=This report shows the brands / manufacturers of the devices your visitors were using. In most cases this information is only available for non-desktop devices.
+### Missing: rendering.macro.deviceBrand.name=Device brand
+### Missing: rendering.macro.deviceBrand.parameter.endDate.name=End date
+### Missing: rendering.macro.deviceBrand.parameter.endDate.description=End time of the date interval used for this macro.
+### Missing: rendering.macro.deviceBrand.parameter.startDate.name=Start date
+### Missing: rendering.macro.deviceBrand.parameter.startDate.description=Start time of the date interval used for this macro.
+### Missing: rendering.macro.deviceModel.description=This report shows the devices your visitors are using. Each model is displayed combined with the device brand as some model names are used by multiple brands.
+### Missing: rendering.macro.deviceModel.name=Device model
+### Missing: rendering.macro.deviceModel.parameter.endDate.name=End date
+### Missing: rendering.macro.deviceModel.parameter.endDate.description=End time of the date interval used for this macro.
+### Missing: rendering.macro.deviceModel.parameter.startDate.name=Start date
+### Missing: rendering.macro.deviceModel.parameter.startDate.description=Start time of the date interval used for this macro.
+### Missing: rendering.macro.deviceType.description=This report shows the types of devices your visitors were using. This report will always show all device types Matomo is able to detect, even if there were no visits with a specific type.
+### Missing: rendering.macro.deviceType.name=Device type
+### Missing: rendering.macro.deviceType.parameter.endDate.name=End date
+### Missing: rendering.macro.deviceType.parameter.endDate.description=End time of the date interval used for this macro.
+### Missing: rendering.macro.deviceType.parameter.startDate.name=Start date
+### Missing: rendering.macro.deviceType.parameter.startDate.description=Start time of the date interval used for this macro.
+### Missing: rendering.macro.operatingSystemVersions.description=This report shows you the operating systems your visitors are using. Each version and distribution is shown separately.
+### Missing: rendering.macro.operatingSystemVersions.name=Operating system versions
+### Missing: rendering.macro.operatingSystemVersions.parameter.endDate.name=End date
+### Missing: rendering.macro.operatingSystemVersions.parameter.endDate.description=End time of the date interval used for this macro.
+### Missing: rendering.macro.operatingSystemVersions.parameter.startDate.name=Start date
+### Missing: rendering.macro.operatingSystemVersions.parameter.startDate.description=Start time of the date interval used for this macro.
+### Missing: rendering.macro.screenResolution.description=This report shows the screen resolutions your visitors used when viewing your website.
+### Missing: rendering.macro.screenResolution.name=Screen Resolution
+### Missing: rendering.macro.screenResolution.parameter.endDate.name=End date
+### Missing: rendering.macro.screenResolution.parameter.endDate.description=End time of the date interval used for this macro.
+### Missing: rendering.macro.screenResolution.parameter.startDate.name=Start date
+### Missing: rendering.macro.screenResolution.parameter.startDate.description=Start time of the date interval used for this macro.
+
+## Web browser Language
+### Missing: analytics.webBrowserLanguage.header.rowEvolution=Evolution
+### Missing: analytics.webBrowserLanguage.header.country.hint=The name of the language.
+### Missing: analytics.webBrowserLanguage.header.country=Language
+### Missing: analytics.webBrowserLanguage.header.visits.hint=The total number of site visits originating from users of this language.
+### Missing: analytics.webBrowserLanguage.header.visits=Visits
+### Missing: analytics.webBrowserLanguage.header.timeSpent.hint=The time spent on the website by users of this language.
+### Missing: analytics.webBrowserLanguage.header.timeSpent=Time spent
+### Missing: analytics.webBrowserLanguage.header.userActions.hint=The total number of actions performed on the website by users of this language.
+### Missing: analytics.webBrowserLanguage.header.userActions=Actions
+### Missing: analytics.webBrowserLanguage.parameter.label.endDate=End time of the date interval used for this macro
+### Missing: analytics.webBrowserLanguage.parameter.label.startDate=Start time of the date interval used for this macro
+### Missing: rendering.macro.webBrowserLanguage.description=Shows which language the visitor's browsers are using. (e.g. "French")
+### Missing: rendering.macro.webBrowserLanguage.name=Web browser language
+### Missing: rendering.macro.webBrowserLanguage.startDate=Start date
+### Missing: rendering.macro.webBrowserLanguage.endDate=End date
+
+## Country
+### Missing: analytics.country.header.rowEvolution=Evolution
+### Missing: analytics.country.header.country=Language
+### Missing: analytics.country.header.country.hint=The name of the country.
+### Missing: analytics.country.header.timeSpent=Time spent
+### Missing: analytics.country.header.timeSpent.hint=The time that the user from this country have spent on the website.
+### Missing: analytics.country.header.userActions=Actions
+### Missing: analytics.country.header.userActions.hint=The total number of actions performed on the website by users of this country.
+### Missing: analytics.country.header.visits=Visits
+### Missing: analytics.country.header.visits.hint=Number of visits that came from the language.
+### Missing: analytics.country.parameter.label.endDate=End time of the date interval used for this macro
+### Missing: analytics.country.parameter.label.startDate=Start time of the date interval used for this macro
+### Missing: rendering.macro.country.description=Shows which country your visitors connected from when accessing your website.
+### Missing: rendering.macro.country.endDate=End date
+### Missing: rendering.macro.country.name=Country
+### Missing: rendering.macro.country.startDate=Start date
+
+## VisitsOverview Macro
+### Missing: analytics.visitsOverview.averageVisitDuration.option=Average visit duration
+### Missing: analytics.visitsOverview.bounced.option=Bounce count
+### Missing: analytics.visitsOverview.maxActionsInOneVisit.option=Max actions in one visit
+### Missing: analytics.visitsOverview.nb_actions.option=Number of actions
+### Missing: analytics.visitsOverview.options.description=The field that is displayed inside the graph.
+### Missing: analytics.visitsOverview.parameter.label.endDate=End time of the date interval used for this macro
+### Missing: analytics.visitsOverview.parameter.label.startDate=Start time of the date interval used for this macro
+### Missing: analytics.visitsOverview.period.day.option=Day
+### Missing: analytics.visitsOverview.period.description=The period you requested the statistics for. Can be any of: day, week, month, year.
+### Missing: analytics.visitsOverview.period.month.option=Month
+### Missing: analytics.visitsOverview.period.week.option=Week
+### Missing: analytics.visitsOverview.period.year.option=Year
+### Missing: analytics.visitsOverview.viewsAndUnique.option=Views &amp; Unique views
+### Missing: analytics.visitsOverview.visits.option=Visits
+### Missing: rendering.macro.visitsOverview.description=This is an overview of the visit evolution.
+### Missing: rendering.macro.visitsOverview.name=Visits overview
+
+## Last Seen Macro
+### Missing: analytics.lastSeenMacro.header.label=Label
+### Missing: analytics.lastSeenMacro.header.label.hint=The id of the user.
+### Missing: analytics.lastSeenMacro.header.serverDatePretty=Date
+### Missing: analytics.lastSeenMacro.header.serverDatePretty.hint=Last date when the user was active.
+### Missing: rendering.macro.lastSeen.description=This macro will show the last date when a user was online.
+### Missing: rendering.macro.lastSeen.name=Last seen macro
+
+
+## ReturningVisitsOverTime Macro
+### Missing: analytics.returningVisitsOverTime.avgTimeOnSiteNew.option=Average visit duration for new visitors
+### Missing: analytics.returningVisitsOverTime.bounceRateNew.option=New visits have bounced(left the website after one page)%
+### Missing: analytics.returningVisitsOverTime.nbActionsByTheReturningVisits.option=Actions by the returning visits
+### Missing: analytics.returningVisitsOverTime.nbActionsNew.option=Actions by the new visits
+### Missing: analytics.returningVisitsOverTime.nbActionsPerVisitNew.option=Actions per new visit
+### Missing: analytics.returningVisitsOverTime.nbActionsPerVisitReturning.option=Actions per returning visit
+### Missing: analytics.returningVisitsOverTime.nbVisitsNew.option=New visits
+### Missing: analytics.returningVisitsOverTime.parameter.label.endDate=End time of the date interval used for this macro
+### Missing: analytics.returningVisitsOverTime.parameter.label.startDate=Start time of the date interval used for this macro
+### Missing: analytics.returningVisitsOverTime.returningVisits.option=Returning visits
+### Missing: analytics.returningVisitsOverTime.returningVisitsThatHaveBounced.option=Returning visits have bounced (left the website after one page)%
+### Missing: analytics.returningVisitsOverTime.visitDurationForReturningVisitors.option=Average visit duration for returning visitors
+### Missing: rendering.macro.returningVisitsOverTime.description=This is an overview of the returning visits. It is broken down into various reports, which are displayed at the bottom of the macro
+### Missing: rendering.macro.returningVisitsOverTime.endDate=End date
+### Missing: rendering.macro.returningVisitsOverTime.name=Returning visits over time
+### Missing: rendering.macro.returningVisitsOverTime.startDate=Start date
+
+## Graph errors
+### Missing: analytics.graph.error=Something went wrong while getting data for the chart.
+
+## Admin section
+### Missing: Analytics.Code.ConfigurationClass_authToken.hint=Token generated by Matomo to be capable of using the API to view the data. This token can be generated from Settings -&gt; Personal -&gt; Security -&gt; Create New Token
+### Missing: Analytics.Code.ConfigurationClass_authToken=Authentication token
+### Missing: Analytics.Code.ConfigurationClass_lastSeenUpdateInterval=Update interval
+### Missing: Analytics.Code.ConfigurationClass_lastSeenUpdateInterval.hint=Interval for which you want the statistics.
+### Missing: Analytics.Code.ConfigurationClass_lastSeenStartDate=Start date
+### Missing: Analytics.Code.ConfigurationClass_lastSeenStartDate.hint=Start date of the interval.
+### Missing: Analytics.Code.ConfigurationClass_lastSeenEndDate.hint=End date of the interval.
+### Missing: Analytics.Code.ConfigurationClass_lastSeenEndDate=End date
+### Missing: Analytics.Code.ConfigurationClass_requestAddress.hint=The Matomo URL. This can be taken from Matomo server integration tab.
+### Missing: Analytics.Code.ConfigurationClass_requestAddress=Request address
+### Missing: Analytics.Code.ConfigurationClass_siteId.hint=The ID of the site that you want to see the statistics for. This can be taken from Matomo server integration tab
+### Missing: Analytics.Code.ConfigurationClass_siteId=Site ID
+### Missing: Analytics.Code.ConfigurationClass_trackingCode.hint=Tracking Code received from Matomo. The 'u' variable might be different than the one that is initially generated by Matomo if the server you want to track is on another machine. To fix this, go to the integration tab, copy the Matomo URL, and replace the value of 'u' with the Matomo URL.
+### Missing: Analytics.Code.ConfigurationClass_trackingCode=Tracking code
+### Missing: admin.analytics.application=Analytics
+### Missing: Analytics.Code.ConfigurationClass_enabled=Enabled
+### Missing: Analytics.Code.ConfigurationClass_enabled.hint=Allow Matomo to track your instance. Disabled by default.
+### Missing: analytics.config.checkConnection.error=Failed to connect to Matomo. Please check your configuration values.
+### Missing: analytics.config.checkConnection.loading=Checking connection to Matomo.
+### Missing: analytics.config.checkConnection.success=Test connection succeeded!
+### Missing: analytics.config.checkConnection.disabled=Tracking is disabled. You can still view the statistics if you used the correct address, ID, and authentication token.
+### Missing: analytics.settings.generalSettings=General settings
+### Missing: analytics.settings.aggregatorMacros=Aggregator macros
+### Missing: Analytics.Code.AggregatorConfigs.LastSeenConfig.ConfigurationClass_timeIntervalForStatistics=Time interval
+### Missing: Analytics.Code.AggregatorConfigs.LastSeenConfig.ConfigurationClass_timeIntervalForStatistics.hint=Time interval for which you want the statistics.
+### Missing: Analytics.Code.AggregatorConfigs.LastSeenConfig.ConfigurationClass_startDate=Start date
+### Missing: Analytics.Code.AggregatorConfigs.LastSeenConfig.ConfigurationClass_startDate.hint=Start date of the interval.
+### Missing: Analytics.Code.AggregatorConfigs.LastSeenConfig.ConfigurationClass_endDate=End date
+### Missing: Analytics.Code.AggregatorConfigs.LastSeenConfig.ConfigurationClass_endDate.hint=End date of the interval.
+
+## Livedata keys
+### Missing: analytics.livedata.action.rowEvolution.title=Evolution
+
+## Others
+### Missing: analytics.incompletePemissions=You don't have viewing rights over the Velocity macros of the app. Please contact the administrator to resolve this issue.
+### Missing: analytics.accessDenied=You do not have access to view this macro. Please contact the administrator to resolve this issue.
+### Missing: analytics.extension.name=Analytics Application (Pro)
+### Missing: analytics.extension.title=Analytics
+### Missing: analytics.extension.warning.message.others=Matomo displays a limited number of entries per row and it groups the remaining entries into a single category called "others". If you wish to display all the entires, check the documentation where all the necessary steps are provided.
+### Missing: rendering.macro.analyticsFilter.apply=Apply
+### Missing: rendering.macro.analyticsFilter.description=Add filtering options for the analytics macros of the current page. The filtering criteria will be saved in the current URL, to have a reproducible state, and will also override eventual filter set at macro level.
+### Missing: rendering.macro.analyticsFilter.endDate=End date
+### Missing: rendering.macro.analyticsFilter.name=Analytics filter
+### Missing: rendering.macro.analyticsFilter.startDate=Start date
+### Missing: analytics.message.nonlive.macros=Click [[here&gt;&gt;Analytics.Non live macros]] to see all the macros that are not live.
+</content>
+  <object>
+    <name>Analytics.Code.AnalyticsTranslations</name>
+    <number>0</number>
+    <className>XWiki.TranslationDocumentClass</className>
+    <guid>a8bf8377-6d46-4f84-bd57-bb4aa619259c</guid>
+    <class>
+      <name>XWiki.TranslationDocumentClass</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <scope>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <freeText>forbidden</freeText>
+        <largeStorage>0</largeStorage>
+        <multiSelect>0</multiSelect>
+        <name>scope</name>
+        <number>1</number>
+        <prettyName>Scope</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators>|, </separators>
+        <size>1</size>
+        <unmodifiable>0</unmodifiable>
+        <values>GLOBAL|WIKI|USER|ON_DEMAND</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </scope>
+    </class>
+    <property>
+      <scope>WIKI</scope>
+    </property>
+  </object>
+</xwikidoc>
