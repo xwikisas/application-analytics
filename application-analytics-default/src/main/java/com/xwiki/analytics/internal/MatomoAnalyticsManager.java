@@ -134,6 +134,7 @@ public class MatomoAnalyticsManager implements AnalyticsManager
     {
         try (CloseableHttpClient client = httpClientBuilderFactory.create()) {
             HttpGet request = new HttpGet(buildURI(parameters));
+            logger.debug("Executing request " + request.getRequestLine());
             try (CloseableHttpResponse response = client.execute(request)) {
                 return EntityUtils.toString(response.getEntity());
             }

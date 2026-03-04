@@ -58,6 +58,7 @@ public abstract class AbstractJsonNormaliser implements JsonNormaliser
     @Override
     public JsonNode normaliseData(String jsonString, Map<String, String> filters) throws JsonProcessingException
     {
+        logger.debug("Normalising data from json string: {}", jsonString);
         // Convert the string returned by Matomo in a JSON format to easily handle the processing of the nodes.
         JsonNode jsonRoot = OBJECT_MAPPER.readTree(jsonString);
         // Matomo may return several variants of JSON formats. In one scenario, when the period is set to
