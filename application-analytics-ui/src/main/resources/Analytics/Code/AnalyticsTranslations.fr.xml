@@ -20,12 +20,12 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc version="1.5" reference="Analytics.Code.AnalyticsTranslations" locale="">
+<xwikidoc version="1.5" reference="Analytics.Code.AnalyticsTranslations" locale="fr">
   <web>Analytics.Code</web>
   <name>AnalyticsTranslations</name>
-  <language/>
+  <language>fr</language>
   <defaultLanguage>en</defaultLanguage>
-  <translation>0</translation>
+  <translation>1</translation>
   <creator>xwiki:XWiki.Admin</creator>
   <parent>WebHome</parent>
   <author>xwiki:XWiki.Admin</author>
@@ -39,16 +39,16 @@
   <content>## Most Viewed Pages Macro
 analytics.mostViewedPages.header.rowEvolution=Évolution
 analytics.mostViewedPages.header.bounceRate.hint=Le pourcentage de visites qui ont commencé sur cette page et qui ont quitté le site web immédiatement.
-### Missing: analytics.mostViewedPages.header.bounceRate=Bounce rate
-### Missing: analytics.mostViewedPages.header.date=Date
-### Missing: analytics.mostViewedPages.header.emptyvalue=-
-### Missing: analytics.mostViewedPages.header.entryNbActions.hint=The number of actions performed by the users.
-### Missing: analytics.mostViewedPages.header.entryNbActions=No. of actions
-### Missing: analytics.mostViewedPages.header.exitRate.hint=The percentage of visits that left the website after viewing this page.
-### Missing: analytics.mostViewedPages.header.exitRate=Exit rate
-### Missing: analytics.mostViewedPages.header.hits.hint=The number of times this page was visited.
-### Missing: analytics.mostViewedPages.header.hits=Views
-### Missing: analytics.mostViewedPages.header.pageTitle=Title
+analytics.mostViewedPages.header.bounceRate=Taux de rebond
+analytics.mostViewedPages.header.date=Date
+analytics.mostViewedPages.header.emptyvalue=-
+analytics.mostViewedPages.header.entryNbActions.hint=Nombre d'actions réalisées par l'utilisateur.
+analytics.mostViewedPages.header.entryNbActions=Nbre d'actions
+analytics.mostViewedPages.header.exitRate.hint=Pourcentage de visites qui ont quitté le site après avoir vu la page.
+analytics.mostViewedPages.header.exitRate=Taux de départ
+analytics.mostViewedPages.header.hits.hint=Nombre de fois que cette page a été visitée.
+analytics.mostViewedPages.header.hits=Vues
+analytics.mostViewedPages.header.pageTitle=Titre
 ### Missing: analytics.mostViewedPages.header.timeSpent.hint=The time that the user has spent on the page.
 ### Missing: analytics.mostViewedPages.header.timeSpent=Time spent
 ### Missing: analytics.mostViewedPages.header.visits.hint=The number of visits that included this page. If a page was viewed multiple times during one visit, it is only counted once.
@@ -359,41 +359,4 @@ analytics.mostViewedPages.header.bounceRate.hint=Le pourcentage de visites qui o
 ### Missing: rendering.macro.analyticsFilter.startDate=Start date
 ### Missing: analytics.message.nonlive.macros=Click [[here&gt;&gt;Analytics.Non live macros]] to see all the macros that are not live.
 </content>
-  <object>
-    <name>Analytics.Code.AnalyticsTranslations</name>
-    <number>0</number>
-    <className>XWiki.TranslationDocumentClass</className>
-    <guid>a8bf8377-6d46-4f84-bd57-bb4aa619259c</guid>
-    <class>
-      <name>XWiki.TranslationDocumentClass</name>
-      <customClass/>
-      <customMapping/>
-      <defaultViewSheet/>
-      <defaultEditSheet/>
-      <defaultWeb/>
-      <nameField/>
-      <validationScript/>
-      <scope>
-        <cache>0</cache>
-        <disabled>0</disabled>
-        <displayType>select</displayType>
-        <freeText>forbidden</freeText>
-        <largeStorage>0</largeStorage>
-        <multiSelect>0</multiSelect>
-        <name>scope</name>
-        <number>1</number>
-        <prettyName>Scope</prettyName>
-        <relationalStorage>0</relationalStorage>
-        <separator> </separator>
-        <separators>|, </separators>
-        <size>1</size>
-        <unmodifiable>0</unmodifiable>
-        <values>GLOBAL|WIKI|USER|ON_DEMAND</values>
-        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
-      </scope>
-    </class>
-    <property>
-      <scope>WIKI</scope>
-    </property>
-  </object>
 </xwikidoc>
