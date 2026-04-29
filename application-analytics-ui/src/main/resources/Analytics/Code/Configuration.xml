@@ -189,6 +189,18 @@
       <authToken/>
     </property>
     <property>
+      <enabled/>
+    </property>
+    <property>
+      <lastSeenEndDate/>
+    </property>
+    <property>
+      <lastSeenStartDate/>
+    </property>
+    <property>
+      <lastSeenUpdateInterval/>
+    </property>
+    <property>
       <requestAddress/>
     </property>
     <property>
