@@ -79,9 +79,6 @@ public class AnalyticsApplicationListener extends AbstractEventListener implemen
      */
     public AnalyticsApplicationListener()
     {
-        //TODO: Filter by ExtensionInstallEvent with the help of the extension id when XCOMMONS-2526 is added to
-        // the platform and the analytics application depends on that parent.
-
         super(ROLE_HINT,
             Arrays.<Event>asList(new ExtensionUpgradedEvent(ANALYTICS_APPLICATION_ID), new ExtensionInstalledEvent()));
     }
