@@ -109,7 +109,7 @@ rendering.macro.PagesFollowingASiteSearch.name=Pages following a site search
 ## Row Evolution
 analytics.rowEvolution.modal.close=Close
 analytics.rowEvolution.modal.day.label=Day
-analytics.rowEvolution.modal.field.actions= Actions
+analytics.rowEvolution.modal.field.actions=Actions
 analytics.rowEvolution.modal.field.rowEvolution=Row Evolution
 analytics.rowEvolution.modal.field.avgTime=Time spent on page
 analytics.rowEvolution.modal.field.bounces=Bounces
@@ -138,9 +138,9 @@ analytics.rowEvolution.modal.year.label=Year
 analytics.action.hover.rowEvolution=Evolution
 analytics.siteSearchKeywords.header.rowEvolution=Evolution
 analytics.siteSearchKeywords.header.exitRate.hint=The percentage of visits that left the website after searching for this Keyword on your Site Search engine.
-analytics.siteSearchKeywords.header.exitRate=Search exists(%)
+analytics.siteSearchKeywords.header.exitRate=Search exits(%)
 analytics.siteSearchKeywords.header.keyword=Keyword
-analytics.siteSearchKeywords.header.nbOfResultPages.hint=Visitors will search on your website, and sometimes click "next" to view more results this is the average number of search results pages viewed for this keyword.
+analytics.siteSearchKeywords.header.nbOfResultPages.hint=Visitors will search on your website, and sometimes click "next" to view more results. This is the average number of search results pages viewed for this keyword.
 analytics.siteSearchKeywords.header.nbOfResultPages=Search results pages
 analytics.siteSearchKeywords.header.searches.hint=The number of visits that searched for this keyword on your website's search engine.
 analytics.siteSearchKeywords.header.searches=Searches
@@ -319,7 +319,7 @@ Analytics.Code.ConfigurationClass_lastSeenUpdateInterval=Update interval
 Analytics.Code.ConfigurationClass_lastSeenUpdateInterval.hint=Interval for which you want the statistics.
 Analytics.Code.ConfigurationClass_lastSeenStartDate=Start date
 Analytics.Code.ConfigurationClass_lastSeenStartDate.hint=Start date of the interval.
-  Analytics.Code.ConfigurationClass_lastSeenEndDate.hint=End date of the interval.
+Analytics.Code.ConfigurationClass_lastSeenEndDate.hint=End date of the interval.
 Analytics.Code.ConfigurationClass_lastSeenEndDate=End date
 Analytics.Code.ConfigurationClass_requestAddress.hint=The Matomo URL. This can be taken from Matomo server integration tab.
 Analytics.Code.ConfigurationClass_requestAddress=Request address
@@ -357,7 +357,8 @@ rendering.macro.analyticsFilter.description=Add filtering options for the analyt
 rendering.macro.analyticsFilter.endDate=End date
 rendering.macro.analyticsFilter.name=Analytics filter
 rendering.macro.analyticsFilter.startDate=Start date
-analytics.message.nonlive.macros=Click [[here&gt;&gt;Analytics.Non live macros]] to see all the macros that are not live.</content>
+analytics.message.nonlive.macros=Click [[here&gt;&gt;Analytics.Non live macros]] to see all the macros that are not live.
+</content>
   <object>
     <name>Analytics.Code.AnalyticsTranslations</name>
     <number>0</number>
