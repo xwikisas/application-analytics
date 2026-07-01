@@ -41,16 +41,18 @@
   ## If the analytics filter is used on a dashboard page, this could add filter parameters in the URL and these  have
   ## priority over what is set at the macro level.
   #if ($request.analyticsStartDate || $request.analyticsEndDate)
-    #set ($startDate = $request.analyticsStartDate )
-    #set ($endDate = $request.analyticsEndDate)
+    #set ($startDate = $datetool.toDate('yyyy-MM-dd', $request.analyticsStartDate))
+    #set ($endDate = $datetool.toDate('yyyy-MM-dd', $request.analyticsEndDate))
+    #set ($dateFormat = 'yyyy-MM-dd')
   #else
     #set ($startDate = $xcontext.macro.params.startDate.toString())
     #set ($endDate = $xcontext.macro.params.endDate.toString())
-    #set ($startDateObj = $datetool.toDate('yyyy/MM/dd HH:mm', $startDate))
-    #set ($startDate = $datetool.format('yyyy-MM-dd', $startDateObj))
-    #set ($endDateObj = $datetool.toDate('yyyy/MM/dd HH:mm', $endDate))
-    #set ($endDate = $datetool.format('yyyy-MM-dd', $endDateObj))
+    #set ($dateFormat = $xwiki.getXWikiPreference("dateformat"))
   #end
+  #set ($startDateObj = $datetool.toDate($dateFormat, $startDate))
+  #set ($startDate = $datetool.format('yyyy-MM-dd', $startDateObj))
+  #set ($endDateObj = $datetool.toDate($dateFormat, $endDate))
+  #set ($endDate = $datetool.format('yyyy-MM-dd', $endDateObj))
   ## Check if startDate or endDate are not defined and replace them with some default values, in order to match the end
   ## of the time interval. For startDate we use the last week.
   #if (!$startDate || $startDate == '')
