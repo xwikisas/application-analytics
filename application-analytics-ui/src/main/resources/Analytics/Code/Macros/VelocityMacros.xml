@@ -85,8 +85,8 @@
 #macro(analytics_actions $parameter)
 &lt;div class="analyticsActions"&gt;
   &lt;div class="analyticsRowEvolution"  data-row-identifier=$parameter&gt;
-    &lt;a class="action" title="$escapetool.xml($services.localization.render(
-      'analytics.livedata.action.rowEvolution.title'))" href="#"&gt;
+    &lt;a class="action btn" title="$escapetool.xml($services.localization.render(
+      'analytics.livedata.action.rowEvolution.title'))"&gt;
       &lt;span class="action-icon"&gt;$services.icon.renderHTML('eye')&lt;/span&gt;
     &lt;/a&gt;
   &lt;/div&gt;
