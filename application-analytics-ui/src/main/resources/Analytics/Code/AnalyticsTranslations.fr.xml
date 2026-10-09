@@ -141,10 +141,10 @@ analytics.siteSearchKeywords.header.exitRate.hint=Le pourcentage de visites qui 
 analytics.siteSearchKeywords.header.exitRate=Sortie après recherche (%)
 analytics.siteSearchKeywords.header.keyword=Mot clé
 analytics.siteSearchKeywords.header.nbOfResultPages.hint=Les visiteurs cherchent sur votre site, et parfois cliquent sur "suivant" pour voir plus de résultats. Ceci est le nombre moyen de pages de recherche vues pour ce mot clé.
-### Missing: analytics.siteSearchKeywords.header.nbOfResultPages=Search results pages
-### Missing: analytics.siteSearchKeywords.header.searches.hint=The number of visits that searched for this keyword on your website's search engine.
-### Missing: analytics.siteSearchKeywords.header.searches=Searches
-### Missing: rendering.macro.siteSearchKeywords.description=This report lists the Search Keywords that visitors searched for on your internal Search Engine.
+analytics.siteSearchKeywords.header.nbOfResultPages=Pages de résultat de recherche
+analytics.siteSearchKeywords.header.searches.hint=Le nombre de visites qui ont cherché ce mot-clé sur le moteur de recherche de votre site Web.
+analytics.siteSearchKeywords.header.searches=Recherches
+rendering.macro.siteSearchKeywords.description=Ce rapport liste les mots clés que les visiteurs ont recherché sur votre moteur de recherche interne.
 ### Missing: rendering.macro.siteSearchKeywords.name=Site search keywords
 
 ## Search Categories
