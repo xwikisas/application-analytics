@@ -293,7 +293,7 @@ rendering.macro.lastSeen.name=Macro dernière fois vu
 
 ## ReturningVisitsOverTime Macro
 analytics.returningVisitsOverTime.avgTimeOnSiteNew.option=Durée moyenne de visite pour les nouveaux visiteurs
-### Missing: analytics.returningVisitsOverTime.bounceRateNew.option=New visits have bounced(left the website after one page)%
+analytics.returningVisitsOverTime.bounceRateNew.option=Nouvelles visite ayant rebondi (quitté le site après ne page vue) en %
 analytics.returningVisitsOverTime.nbActionsByTheReturningVisits.option=Actions lors de visites récurrentes
 analytics.returningVisitsOverTime.nbActionsNew.option=Actions lors de nouvelles visites
 analytics.returningVisitsOverTime.nbActionsPerVisitNew.option=Actions par nouvelle visite
@@ -302,7 +302,7 @@ analytics.returningVisitsOverTime.nbVisitsNew.option=Nouvelles visites
 analytics.returningVisitsOverTime.parameter.label.endDate=Date de fin de l'intervalle utilisé pour cette macro
 analytics.returningVisitsOverTime.parameter.label.startDate=Date de début de l'intervalle utilisé pour cette macro
 analytics.returningVisitsOverTime.returningVisits.option=Visites récurrentes
-### Missing: analytics.returningVisitsOverTime.returningVisitsThatHaveBounced.option=Returning visits have bounced (left the website after one page)%
+analytics.returningVisitsOverTime.returningVisitsThatHaveBounced.option=Visites récurrentes ayant rebondi (quitté le site après une page vue) en %
 analytics.returningVisitsOverTime.visitDurationForReturningVisitors.option=Durée de visite moyenne pour les visiteurs récurrents
 rendering.macro.returningVisitsOverTime.description=Ceci est un aperçu des visites récurrentes. Il est réparti entre plusieurs rapports, qui sont affichés au bas de la macro
 ### Missing: rendering.macro.returningVisitsOverTime.endDate=End date
