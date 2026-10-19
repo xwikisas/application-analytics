@@ -159,7 +159,6 @@ rendering.macro.searchCategories.description=This report lists the Categories th
 rendering.macro.searchCategories.name=Search categories
 
 ## Software/Devices Macros
-The most important information for web developers is what kind of rendering engine their visitors are using. The labels contain the names of the engines followed by the most common browser using that engine in brackets.
 analytics.softwareDevices.header.rowEvolution=Evolution
 analytics.softwareDevices.header.bounceRate.hint=The percentage of visits that only had a single pageview. This means that the visitor left the website directly from the entrance page.
 analytics.softwareDevices.header.bounceRate=Bounce rate
@@ -173,6 +172,7 @@ analytics.softwareDevices.header.deviceBrand=Brand
 analytics.softwareDevices.header.deviceModel=Device model
 analytics.softwareDevices.header.deviceType=Device type
 analytics.softwareDevices.header.engines=Browser engine
+analytics.softwareDevices.header.engines.hint=The most important information for web developers is what kind of rendering engine their visitors are using. The labels contain the names of the engines followed by the most common browser using that engine in brackets.
 analytics.softwareDevices.header.nbOfActions.hint=The total number of actions performed by your visitors.
 analytics.softwareDevices.header.nbOfActions=User actions
 analytics.softwareDevices.header.osVersion=OS version
