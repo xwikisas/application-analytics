@@ -157,9 +157,6 @@ analytics.searchCategories.header.searches=Recherches
 analytics.searchCategories.header.title=Catégorie de recherche
 rendering.macro.searchCategories.description=Ce rapport liste les catégories que les visiteurs ont sélectionnées lorsqu'ils ont effectué une recherche sur votre site.
 rendering.macro.searchCategories.name=Catégories de recherche
-
-## Software/Devices Macros
-### Missing: The most important information for web developers is what kind of rendering engine their visitors are using. The labels contain the names of the engines followed by the most common browser using that engine in brackets.
 analytics.softwareDevices.header.rowEvolution=Évolution
 analytics.softwareDevices.header.bounceRate.hint=Le pourcentage de visites n'ayant vu qu'une seule page. Cela signifie que le visiteur a quitté le site directement après la page d'atterrissage.
 analytics.softwareDevices.header.bounceRate=Taux de rebond
@@ -173,6 +170,7 @@ analytics.softwareDevices.header.deviceBrand=Marque
 analytics.softwareDevices.header.deviceModel=Modèle de l'équipement
 analytics.softwareDevices.header.deviceType=Type d'équipement
 ### Missing: analytics.softwareDevices.header.engines=Browser engine
+analytics.softwareDevices.header.engines.hint=L'information la plus importante pour les développeurs web est le type de moteur de rendu utilisé par les visiteurs. Les labels contiennent les noms des moteurs suivis par les navigateurs les plus répandus utilisant ce moteur, entre parenthèses.
 analytics.softwareDevices.header.nbOfActions.hint=Le nombre total d'actions exécutées par vos visiteurs.
 ### Missing: analytics.softwareDevices.header.nbOfActions=User actions
 ### Missing: analytics.softwareDevices.header.osVersion=OS version
