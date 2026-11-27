@@ -67,7 +67,7 @@
     <dependency>
       <groupId>org.xwiki.contrib</groupId>
       <artifactId>application-chartjs-webjar</artifactId>
-      <version>1.6.3</version>
+      <version>1.6.4</version>
     </dependency>
   </dependencies>
   <build>
